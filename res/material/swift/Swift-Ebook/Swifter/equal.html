@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>判等 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_63">判等</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%88%A4%E7%AD%89" class="calibre1">判等</h1>
+<p class="calibre9">我们在 Objective-C 时代，通常使用 <code class="calibre13 pcalibre6 pcalibre5">-isEqualToString:</code> 来在已经能确定比较对象和待比较对象都是 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 的时候进行字符串判等。Swift 中的 <code class="calibre13 pcalibre6 pcalibre5">String</code> 类型中是没有 <code class="calibre13 pcalibre6 pcalibre5">-isEqualToString:</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">-isEqual:</code> 这样的方法的，因为这些毕竟是 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的东西。在 Swift 的字符串内容判等，我们简单地使用 <code class="calibre13 pcalibre6 pcalibre5">==</code> 操作符来进行：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> str1 = <span class="hljs-string">"快乐的字符串"</span>
+<span class="hljs-keyword">let</span> str2 = <span class="hljs-string">"快乐的字符串"</span>
+<span class="hljs-keyword">let</span> str3 = <span class="hljs-string">"开心的字符串"</span>
+
+str1 == str2  <span class="hljs-title">// true</span>
+str1 == str3  <span class="hljs-title">// false</span>
+</code></pre>
+<p class="calibre9">在判等上 Swift 的行为和 Objective-C 有着巨大的差别。在 Objective-C 中 <code class="calibre13 pcalibre6 pcalibre5">==</code> 这个符号的意思是判断两个对象是否指向同一块内存地址。其实很多时候这并不是我们经常所期望的判等，我们更关心的往往还是对象的内容相同，而这种意义的相等即使两个对象引用的不是同一块内存地址时，也是可以做到的。Objective-C 中我们通常通过对 <code class="calibre13 pcalibre6 pcalibre5">-isEqual:</code> 进行重写，或者更进一步去实现类似 <code class="calibre13 pcalibre6 pcalibre5">-isEqualToString:</code> 这样的 <code class="calibre13 pcalibre6 pcalibre5">-isEqualToClass:</code> 的带有类型信息的方法来进行内容判等。如果我们没有在任意子类重写 <code class="calibre13 pcalibre6 pcalibre5">-isEqual:</code> 的话，在调用这个方法时会直接使用 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 中的版本，去直接进行 Objective-C 的 <code class="calibre13 pcalibre6 pcalibre5">==</code> 判断。</p>
+<p class="calibre9">在 Swift 中情况大不一样，Swift 里的 <code class="calibre13 pcalibre6 pcalibre5">==</code> 是一个操作符的声明，在 <code class="calibre13 pcalibre6 pcalibre5">Equatable</code> 里声明了这个操作符的接口方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">Equatable</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> ==<span class="hljs-params">(lhs: <span class="hljs-keyword">Self</span>, rhs: <span class="hljs-keyword">Self</span>)</span></span> -&gt; <span class="hljs-func">Bool</span>
+}
+</code></pre>
+<p class="calibre9">实现这个接口的类型需要定义适合自己类型的 <code class="calibre13 pcalibre6 pcalibre5">==</code> 操作符，如果我们认为两个输入有相等关系的话，就应该返回 <code class="calibre13 pcalibre6 pcalibre5">true</code>。实现了 <code class="calibre13 pcalibre6 pcalibre5">Equatable</code> 的类型就可以使用 <code class="calibre13 pcalibre6 pcalibre5">==</code> 以及 <code class="calibre13 pcalibre6 pcalibre5">!=</code> 操作符来进行相等判定了 (在实现时我们只需要实现 <code class="calibre13 pcalibre6 pcalibre5">==</code>，<code class="calibre13 pcalibre6 pcalibre5">!=</code> 的话由标准库自动取反实现)。这和原来 Objective-C 的 <code class="calibre13 pcalibre6 pcalibre5">isEqual:</code> 的行为十分相似。比如我们在一个待办事项应用中，从数据库中取得带有使用 uuid 进行编号的待办条目，在实践中我们一般考虑就使用这个 uuid 来判定两个条目对象是不是同一条目。让这个表示条目的 <code class="calibre13 pcalibre6 pcalibre5">TodoItem</code> 类实现 <code class="calibre13 pcalibre6 pcalibre5">Equatable</code> 接口：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">TodoItem</span> </span>{
+    <span class="hljs-keyword">let</span> uuid: <span class="hljs-func">String</span>
+    <span class="hljs-keyword">var</span> title: <span class="hljs-func">String</span>
+
+    <span class="hljs-keyword">init</span>(uuid: <span class="hljs-func">String</span>, title: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.uuid = uuid
+        <span class="hljs-keyword">self</span>.title = title
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">TodoItem</span>: <span class="hljs-title">Equatable</span> </span>{
+
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> ==<span class="hljs-params">(lhs: TodoItem, rhs: TodoItem)</span></span> -&gt; <span class="hljs-func">Bool</span> {
+    <span class="hljs-keyword">return</span> lhs.uuid == rhs.uuid
+}
+</code></pre>
+<p class="calibre9">对于 <code class="calibre13 pcalibre6 pcalibre5">==</code> 的实现我们并没有像实现其他一些接口一样将其放在对应的 <code class="calibre13 pcalibre6 pcalibre5">extension</code> 里，而是放在了全局的 scope 中。这是合理的做法，因为你应该需要在全局范围内都能使用 <code class="calibre13 pcalibre6 pcalibre5">==</code>。事实上，Swift 的操作符都是全局的，关于操作符的更多信息，可以参看<a href="operator.html" class="pcalibre pcalibre2 pcalibre1 calibre4">操作符</a>一节。</p>
+<p class="calibre9">Swift 的基本类型都重载了自己对应版本的 <code class="calibre13 pcalibre6 pcalibre5">==</code>，而对于 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的子类来说，如果我们使用 <code class="calibre13 pcalibre6 pcalibre5">==</code> 并且没有对于这个子类的重载的话，将转为调用这个类的 <code class="calibre13 pcalibre6 pcalibre5">-isEqual:</code> 方法。这样如果这个 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 子类原来就实现了 <code class="calibre13 pcalibre6 pcalibre5">-isEqual:</code> 的话，直接使用 <code class="calibre13 pcalibre6 pcalibre5">==</code> 并不会造成它和 Swift 类型的行为差异；但是如果无法找到合适的重写的话，这个方法就将回滚到最初的 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 里的实现，对引用对象地址进行直接比较。因此对于 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 子类的判等你有两种选择，要么重载 <code class="calibre13 pcalibre6 pcalibre5">==</code>，要么重写 <code class="calibre13 pcalibre6 pcalibre5">-isEqual:</code>。如果你只在 Swift 中使用你的类的话，两种方式是等效的；但是如果你还需要在 Objective-C 中使用这个类的话，因为 Objective-C 不接受操作符重载，只能使用 <code class="calibre13 pcalibre6 pcalibre5">-isEqual:</code>，这时你应该考虑使用第二种方式。</p>
+<p class="calibre9">对于原来 Objective-C 中使用 <code class="calibre13 pcalibre6 pcalibre5">==</code> 进行的对象指针的判定，在 Swift 中提供的是另一个操作符 <code class="calibre13 pcalibre6 pcalibre5">===</code>。在 Swift 中 <code class="calibre13 pcalibre6 pcalibre5">===</code> 只有一种重载：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> ===<span class="hljs-params">(lhs: AnyObject?, rhs: AnyObject?)</span></span> -&gt; <span class="hljs-func">Bool</span>
+</code></pre>
+<p class="calibre9">它用来判断两个 <a href="any-anyObject.html" class="pcalibre pcalibre2 pcalibre1 calibre4"><code class="calibre13 pcalibre6 pcalibre5">AnyObject</code></a> 是否是同一个引用。</p>
+<p class="calibre9">对于判等，和它紧密相关的一个话题就是<a href="hash.html" class="pcalibre pcalibre2 pcalibre1 calibre4">哈希</a>，因为哈希是一个稍微复杂的话题，所以我将它分成了一个单节。但是如果在实际项目中你需要重载 <code class="calibre13 pcalibre6 pcalibre5">==</code> 或者重写 <code class="calibre13 pcalibre6 pcalibre5">-isEqual:</code> 来进行判等的话，很可能你也会想看看有关<a href="hash.html" class="pcalibre pcalibre2 pcalibre1 calibre4">哈希</a>的内容，重载了判等的话，我们还需要提供一个可靠的哈希算法使得判等的对象在字典中作为 key 时不会发生奇怪的事情。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

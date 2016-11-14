@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>@UIApplicationMain | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_48">@UIApplicationMain</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="-uiapplicationmain" class="calibre1">@UIApplicationMain</h1>
+<p class="calibre9">因为 Cocoa 开发环境已经在新建一个项目时帮助我们进行很多配置，这导致了不少刚接触 iOS 的开发者都存在基础比较薄弱的问题，其中一个最显著的现象就是很多人无法说清一个 app 启动的流程。程序到底是怎么开始的，<code class="calibre13 pcalibre6 pcalibre5">AppDelegate</code>  到底是什么，xib 或者 storyboard 是怎么被加载到屏幕上的？这一系列的问题虽然在开发中我们不会每次都去关心和自己配置，但是如果能进行一些了解的话对于程序各个部分的职责的明确会很有帮助。</p>
+<p class="calibre9">在 C 系语言中，程序的入口都是 <code class="calibre13 pcalibre6 pcalibre5">main</code> 函数。对于一个 Objective-C 的 iOS app 项目，在新建项目时， Xcode 将帮我们准备好一个 <code class="calibre13 pcalibre6 pcalibre5">main.m</code> 文件，其中就有这个 <code class="calibre13 pcalibre6 pcalibre5">main</code> 函数：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">int</span> main(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> * argv[])
+{
+    <span class="hljs-keyword">@autoreleasepool</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-params">UIApplicationMain</span>(argc, argv, <span class="hljs-params">nil</span>,
+                   <span class="hljs-params">NSStringFromClass</span>([AppDelegate class]));
+    }
+}
+</code></pre>
+<p class="calibre9">在这里我们调用了 UIKit 的 <code class="calibre13 pcalibre6 pcalibre5">UIApplicationMain</code> 方法。这个方法将根据第三个参数初始化一个 <code class="calibre13 pcalibre6 pcalibre5">UIApplication</code> 或其子类的对象并开始接收事件 (在这个例子中传入 <code class="calibre13 pcalibre6 pcalibre5">nil</code>，意味使用默认的 <code class="calibre13 pcalibre6 pcalibre5">UIApplication</code>)。最后一个参数指定了 <code class="calibre13 pcalibre6 pcalibre5">AppDelegate</code> 类作为应用的委托，它被用来接收类似 <code class="calibre13 pcalibre6 pcalibre5">didFinishLaunching</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">didEnterBackground</code> 这样的与应用生命周期相关的委托方法。另外，虽然这个方法标明为返回一个 <code class="calibre13 pcalibre6 pcalibre5">int</code>，但是其实它并不会真正返回。它会一直存在于内存中，直到用户或者系统将其强制终止。</p>
+<p class="calibre9">了解了这些后，我们就可以来看看 Swift 的项目中对应的情况了。新建一个 Swift 的 iOS app 项目后，我们会发现所有文件中都没有一个像 Objective-C 时那样的 <code class="calibre13 pcalibre6 pcalibre5">main</code> 文件，也不存在 <code class="calibre13 pcalibre6 pcalibre5">main</code> 函数。唯一和 <code class="calibre13 pcalibre6 pcalibre5">main</code> 有关系的是在默认的 <code class="calibre13 pcalibre6 pcalibre5">AppDelegate</code> 类的声明上方有一个 <code class="calibre13 pcalibre6 pcalibre5">@UIApplicationMain</code> 的标签。</p>
+<p class="calibre9">不说可能您也已经猜到，这个标签做的事情就是将被标注的类作为委托，去创建一个 <code class="calibre13 pcalibre6 pcalibre5">UIApplication</code> 并启动整个程序。在编译的时候，编译器将寻找这个标记的类，并自动插入像 <code class="calibre13 pcalibre6 pcalibre5">main</code> 函数这样的模板代码。我们可以试试看把 <code class="calibre13 pcalibre6 pcalibre5">@UIApplicationMain</code> 去掉会怎么样：</p>
+<blockquote class="calibre6">
+<p class="calibre7">Undefined symbols _main</p>
+</blockquote>
+<p class="calibre9">说明找不到 <code class="calibre13 pcalibre6 pcalibre5">main</code> 函数了。</p>
+<p class="calibre9">在一般情况下，我们并不需要对这个标签做任何修改，但是当我们如果想要使用 <code class="calibre13 pcalibre6 pcalibre5">UIApplication</code> 的子类而不是它本身的话，我们就需要对这部分内容 “做点手脚” 了。</p>
+<p class="calibre9">刚才说到，其实 Swift 的 app 也是需要 <code class="calibre13 pcalibre6 pcalibre5">main</code> 函数的，只不过默认情况下是 <code class="calibre13 pcalibre6 pcalibre5">@UIApplicationMain</code> 帮助我们自动生成了而已。和 C 系语言的 <code class="calibre13 pcalibre6 pcalibre5">main.c</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">main.m</code> 文件一样，Swift 项目也可以有一个名为 <code class="calibre13 pcalibre6 pcalibre5">main.swift</code> 特殊的文件。在这个文件中，我们不需要定义作用域，而可以直接书写代码。这个文件中的代码将作为 <code class="calibre13 pcalibre6 pcalibre5">main</code> 函数来执行。比如我们在删除 <code class="calibre13 pcalibre6 pcalibre5">@UIApplicationMain</code> 后，在项目中添加一个 <code class="calibre13 pcalibre6 pcalibre5">main.swift</code> 文件，然后加上这样的代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func">UIApplicationMain</span>(<span class="hljs-func">Process</span>.argc, <span class="hljs-func">Process</span>.unsafeArgv, <span class="hljs-params">nil</span>,
+    <span class="hljs-func">NSStringFromClass</span>(<span class="hljs-func">AppDelegate</span>))
+</code></pre>
+<p class="calibre9">现在编译运行，就不会再出现错误了。当然，我们还可以通过将第三个参数替换成自己的 <code class="calibre13 pcalibre6 pcalibre5">UIApplication</code> 子类，这样我们就可以轻易地做一些控制整个应用行为的事情了。比如将 <code class="calibre13 pcalibre6 pcalibre5">main.swift</code> 的内容换成：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">import</span> <span class="hljs-func">UIKit</span>
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApplication</span>: <span class="hljs-title">UIApplication</span> </span>{
+    <span class="hljs-keyword">override</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">sendEvent</span><span class="hljs-params">(event: UIEvent!)</span></span> {
+        <span class="hljs-keyword">super</span>.sendEvent(event)
+        <span class="hljs-params">println</span>(<span class="hljs-string">"Event sent: <span class="hljs-func">\(event)</span>"</span>);
+    }
+}
+
+<span class="hljs-func">UIApplicationMain</span>(<span class="hljs-func">Process</span>.argc, <span class="hljs-func">Process</span>.unsafeArgv,
+    <span class="hljs-func">NSStringFromClass</span>(<span class="hljs-func">MyApplication</span>), <span class="hljs-func">NSStringFromClass</span>(<span class="hljs-func">AppDelegate</span>))
+</code></pre>
+<p class="calibre9">这样每次发送事件 (比如点击按钮) 时，我们都可以监听到这个事件了。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

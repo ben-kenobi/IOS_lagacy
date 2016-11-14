@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>单例 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_45">单例</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%8D%95%E4%BE%8B" class="calibre1">单例</h1>
+<blockquote class="calibre6">
+<p class="calibre7">在 Swift 1.2 后，我们可以使用类变量了，所以 Swift 中的单例也有了比较理想的创建方式，参见本节最后。为了说明和比较，这里保留了 Swift 1.2 之前的一些讨论，以供参考。</p>
+</blockquote>
+<p class="calibre9">单例是一个在 Cocoa 中很常用的模式了。对于一些希望能在全局方便访问的实例，或者在 app 的生命周期中只应该存在一个的对象，我们一般都会使用单例来存储和访问。在 Objective-C 中单例的公认的写法类似下面这样：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">MyManager</span></span>
++ (<span class="hljs-keyword">id</span>)sharedManager {
+    <span class="hljs-keyword">static</span> MyManager *staticInstance = <span class="hljs-params">nil</span>;
+    <span class="hljs-keyword">static</span> <span class="hljs-params">dispatch_once_t</span> onceToken;
+
+    <span class="hljs-params">dispatch_once</span>(&amp;onceToken, ^{
+        staticInstance = [[<span class="hljs-keyword">self</span> alloc] init];
+    });
+    <span class="hljs-keyword">return</span> staticInstance;
+}
+<span class="hljs-keyword">@end</span>
+</code></pre>
+<p class="calibre9">使用 GCD 中的 <code class="calibre13 pcalibre6 pcalibre5">dispatch_once_t</code> 可以保证里面的代码只被调用一次，以此保证单例在线程上的安全。</p>
+<p class="calibre9">因为在 Swift 中可以无缝直接使用 GCD，所以我们可以很方便地把类似方式的单例用 Swift 进行改写：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyManager</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">var</span> <span class="hljs-title">sharedManager</span> : <span class="hljs-title">MyManager</span> </span>{
+        <span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">Static</span> </span>{
+            <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> onceToken : dispatch_once_t = <span class="hljs-params">0</span>
+            <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> staticInstance : <span class="hljs-func">MyManager</span>? = <span class="hljs-params">nil</span>
+        }
+
+        dispatch_once(&amp;<span class="hljs-func">Static</span>.onceToken) {
+            <span class="hljs-func">Static</span>.staticInstance = <span class="hljs-func">MyManager</span>()
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-func">Static</span>.staticInstance!
+    }
+}
+</code></pre>
+<p class="calibre9">因为 Swift 1.2 之前并不支持存储类型的类属性，所以我们需要使用一个 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 来存储类型变量。</p>
+<p class="calibre9">这样的写法当然没什么问题，但是在 Swift 里我们其实有一个更简单的保证线程安全的方式，那就是 <code class="calibre13 pcalibre6 pcalibre5">let</code>。把上面的写法简化一下，可以变成：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyManager</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">var</span> <span class="hljs-title">sharedManager</span> : <span class="hljs-title">MyManager</span> </span>{
+        <span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">Static</span> </span>{
+            <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> sharedInstance : <span class="hljs-func">MyManager</span> = <span class="hljs-func">MyManager</span>()
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-func">Static</span>.sharedInstance
+    }
+}
+</code></pre>
+<p class="calibre9">还有另一种更受大家欢迎，并被认为是 Swift 1.2 之前的最佳实践的做法。由于 Swift 1.2 之前 <code class="calibre13 pcalibre6 pcalibre5">class</code> 不支持存储式的 <code class="calibre13 pcalibre6 pcalibre5">property</code>，我们想要使用一个只存在一份的属性时，就只能将其定义在全局的 scope 中。值得庆幸的是，在 Swift 中是有访问级别的控制的，我们可以在变量定义前面加上 <code class="calibre13 pcalibre6 pcalibre5">private</code> 关键字，使这个变量只在当前文件中可以被访问。这样我们就可以写出一个没有嵌套的，语法上也更简单好看的单例了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">private <span class="hljs-keyword">let</span> sharedInstance = <span class="hljs-func">MyManager</span>()
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyManager</span>  </span>{
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">var</span> <span class="hljs-title">sharedManager</span> : <span class="hljs-title">MyManager</span> </span>{
+        <span class="hljs-keyword">return</span> sharedInstance
+    }
+}
+</code></pre>
+<blockquote class="calibre6">
+<h3 id="swift-1-2-%E4%B8%AD%E7%9A%84%E6%94%B9%E8%BF%9B" class="calibre16">Swift 1.2 中的改进</h3>
+<p class="calibre9">Swift 1.2 之前还不支持例如 <code class="calibre13 pcalibre6 pcalibre5">static let</code> 和 <code class="calibre13 pcalibre6 pcalibre5">static var</code> 这样的存储类变量。但是在 1.2 中 Swift 添加了类变量的支持，因此单例可以进一步简化。</p>
+<p class="calibre7">将上面全局的 <code class="calibre13 pcalibre6 pcalibre5">sharedInstance</code> 拿到 <code class="calibre13 pcalibre6 pcalibre5">class</code> 中，这样结构上就更紧凑和合理了。</p>
+</blockquote>
+<p class="calibre9">在 Swift 1.2 以及之后，如果没有特别的需求，我们推荐使用下面这样的方式来写一个单例：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyManager</span>  </span>{
+    private <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> sharedInstance = <span class="hljs-func">MyManager</span>()
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">var</span> <span class="hljs-title">sharedManager</span> : <span class="hljs-title">MyManager</span> </span>{
+        <span class="hljs-keyword">return</span> sharedInstance
+    }
+}
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

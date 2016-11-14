@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>闭包歧义 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_100">闭包歧义</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E9%97%AD%E5%8C%85%E6%AD%A7%E4%B9%89" class="calibre1">闭包歧义</h1>
+<p class="calibre9">Swift 的闭包写法很多，但是最正规的应该是完整地将闭包的输入和输出都写上，然后用 <code class="calibre13 pcalibre6 pcalibre5">in</code> 关键字隔离参数和实现。比如我们想实现一个 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 的 <code class="calibre13 pcalibre6 pcalibre5">extension</code>，使其可以执行闭包若干次，并同时将次数传递到闭包中：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">Int</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">times</span><span class="hljs-params">(f: Int -&gt; <span class="hljs-params">()</span></span></span>) {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Int"</span>)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-params">1</span>...<span class="hljs-keyword">self</span> {
+            f(i)
+        }
+    }
+}
+
+<span class="hljs-params">3</span>.times { (i: <span class="hljs-func">Int</span>) -&gt; () <span class="hljs-keyword">in</span>
+    <span class="hljs-params">print</span>(i)
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// Int</span>
+<span class="hljs-title">// 1</span>
+<span class="hljs-title">// 2</span>
+<span class="hljs-title">// 3</span>
+</code></pre>
+<p class="calibre9">这里闭包接受 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 输入且没有返回，在这种情况下，我们可以将这个闭包的调用进行简化，成为下面这样：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">3</span>.times { i <span class="hljs-keyword">in</span>
+    <span class="hljs-params">print</span>(i)
+}
+</code></pre>
+<blockquote class="calibre6">
+<p class="calibre7">注：在 Xcode 7 beta 6 中这样写会触发一个编译错误：(Any) -&gt; ()' is not compatible with expected type 'Int -&gt; ()'，这应该是一个编译器的 bug，或者 Apple 决定以更严格的形式来让开发者使用闭包。我之后会对此继续关注并再次进行更新。</p>
+</blockquote>
+<p class="calibre9">这是我们很常见的写法了，也是比较推荐的写法。但是比如某一天，我们觉得这种传入参数的 <code class="calibre13 pcalibre6 pcalibre5">times</code> 有些麻烦，很多时候我们并不需要当前的次数，而只是想简单地将一个闭包重复若干次的话，可能我们会写出 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 的另一个闭包无参数的扩展方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">Int</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">times</span><span class="hljs-params">(f: Void -&gt; Void)</span></span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Void"</span>)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-params">1</span>...<span class="hljs-keyword">self</span> {
+            f()
+        }
+    }
+}
+</code></pre>
+<p class="calibre9">你也许会这么解读这段代码：<code class="calibre13 pcalibre6 pcalibre5">Int</code> 有一个扩展方法 <code class="calibre13 pcalibre6 pcalibre5">times</code>，它接受一个叫做 <code class="calibre13 pcalibre6 pcalibre5">f</code> 的闭包，这个闭包不接受参数也没有返回；<code class="calibre13 pcalibre6 pcalibre5">times</code> 的作用是按照这个 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 本身的次数来执行 <code class="calibre13 pcalibre6 pcalibre5">f</code> 闭包若干次。</p>
+<p class="calibre9">在早期的 Swift 版本中，这里存在一个歧义调用。虽然在 Swift 1.2 之后的新版本中这个歧义调用问题已经由编译器解决了，但是在修订这个章节时，我认为保留之前的一些讨论可能会对理解整个问题有所帮助。</p>
+<p class="calibre9">如果我们在 Swift 1.2 之前的版本中运行这段代码时，输出将发生改变：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// Void</span>
+<span class="hljs-title">//</span>
+<span class="hljs-title">//</span>
+<span class="hljs-title">//</span>
+</code></pre>
+<p class="calibre9">现在的输出变成了 Void 后面接了三行空格。一个以 <code class="calibre13 pcalibre6 pcalibre5">i</code> 为参数原来正常工作的方法，在加入了一个“不接受参数”的新的方法情况下，却实际上调用了这个新的方法。我们在没有改变原来的代码的情况下，仅仅是加入了新的方法就让原来的代码失效了，这到底是为什么，又发生了什么？</p>
+<p class="calibre9">很明显，现在被调用的是 <code class="calibre13 pcalibre6 pcalibre5">Void</code> 版本的扩展方法。在继续之前，我们需要明确 Swift 中的 Void 到底是什么。在 Swift 的 module 定义中，<code class="calibre13 pcalibre6 pcalibre5">Void</code> 只是一个 typealias 而已，没什么特别：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">typealias</span> <span class="hljs-func">Void</span> = ()
+</code></pre>
+<p class="calibre9">那么，<code class="calibre13 pcalibre6 pcalibre5">()</code> 又是什么呢？在<a href="tuple.html" class="pcalibre pcalibre2 pcalibre1 calibre4">多元组</a>的最后我们指出了，其实 Swift 中任何东西都是放在多元组里的。<code class="calibre13 pcalibre6 pcalibre5">(42, 42)</code> 是含有两个 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 类型元素的多元组，<code class="calibre13 pcalibre6 pcalibre5">(42)</code> 是含有一个 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 的多元组，那么 <code class="calibre13 pcalibre6 pcalibre5">()</code> 是什么？没错，这是一个不含有任何元素的多元组。所以其实我们在 extention 里声明的 <code class="calibre13 pcalibre6 pcalibre5">func times(f: Void -&gt; Void)</code> 根本不是 “不接受参数” 的闭包，而是一个接受没有任何元素的多元组的闭包。这也不奇怪为什么我们的方法会调用错误了。</p>
+<p class="calibre9">当然，在实际使用中这种情况基本是不会发生的。之所以调用到了 <code class="calibre13 pcalibre6 pcalibre5">Void</code> 版本的方法，是因为我们并没有在调用的时候为编译器提供足够的类型推断信息，因此 Swift 为我们选择了代价最小的 <code class="calibre13 pcalibre6 pcalibre5">Void</code> 版本来执行。如果我们将调用的代码改为：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">3</span>.times { i <span class="hljs-keyword">in</span>
+    <span class="hljs-params">println</span>(i + <span class="hljs-params">1</span>)
+}
+</code></pre>
+<p class="calibre9">可以看到，这回的输出是：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// Int</span>
+<span class="hljs-title">// 2</span>
+<span class="hljs-title">// 3</span>
+<span class="hljs-title">// 4</span>
+</code></pre>
+<p class="calibre9">毫无疑问，因为 <code class="calibre13 pcalibre6 pcalibre5">Void</code> 是没有实现 <code class="calibre13 pcalibre6 pcalibre5">+ 1</code> 的，所以类型推断判定一定会调用到 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 类型的版本。</p>
+<p class="calibre9">其实不止是 <code class="calibre13 pcalibre6 pcalibre5">Void</code>，像是在使用多元组时也会有这样的疑惑。比如我们又加入了一个这样看起来是“接受两个参数”的闭包的版本：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">Int</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">times</span><span class="hljs-params">(f: <span class="hljs-params">(Int, Int)</span></span></span> -&gt; ()) {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Tuple"</span>)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-params">1</span>...<span class="hljs-keyword">self</span> {
+            f(i, i)
+        }
+    }
+}
+</code></pre>
+<p class="calibre9">如果我们先注释掉其他的歧义版本，我们可以看到 <code class="calibre13 pcalibre6 pcalibre5">i in</code> 这种接受一个参数的调用仍然可以编译和运行，它的输出会是：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// Tuple</span>
+<span class="hljs-title">// (1, 1)</span>
+<span class="hljs-title">// (2, 2)</span>
+<span class="hljs-title">// (3, 3)</span>
+</code></pre>
+<p class="calibre9">道理和 <code class="calibre13 pcalibre6 pcalibre5">Void</code> 是一样的，因此就不再赘述了。</p>
+<p class="calibre9">在 Swift 1.2 中，类似上面的有歧义的调用会导致编译器报错，并提醒我们发生歧义的方法。得益于新的编译环境，我们现在可以写出更安全和更有保证的代码。</p>
+<p class="calibre9">但无论如何，在使用可能存在歧义的闭包时，过度依赖于类型推断其实是一种比较危险的行为，可读性也很差 -- 除非你自己清楚地知道输入类型，否则很难判断调用的到底是哪个方法。为了增强可读性和安全性，最直接是在调用时尽量指明闭包参数的类型。虽然在写的时候会觉得要多写一些内容，但是在 IDE 的帮助下默认实现也是带有全部参数类型的，所以这并不是问题。相信在之后进行扩展和阅读时我们都会感谢当初将类型写全的决定。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">3</span>.times { (i: <span class="hljs-func">Int</span>)-&gt;() <span class="hljs-keyword">in</span>
+    <span class="hljs-params">print</span>(i)
+}
+
+<span class="hljs-params">3</span>.times { (i: <span class="hljs-func">Void</span>)-&gt;() <span class="hljs-keyword">in</span>
+    <span class="hljs-params">print</span>(i)
+}
+
+<span class="hljs-params">3</span>.times { (i: (<span class="hljs-func">Int</span>,<span class="hljs-func">Int</span>))-&gt;() <span class="hljs-keyword">in</span>
+    <span class="hljs-params">print</span>(i)
+}
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

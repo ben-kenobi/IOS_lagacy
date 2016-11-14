@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>AnyClass，元类型和 .self | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_29">AnyClass，元类型和 .self</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="anyclass%EF%BC%8C%E5%85%83%E7%B1%BB%E5%9E%8B%E5%92%8C-self" class="calibre1">AnyClass，元类型和 .self</h1>
+<p class="calibre9">在 Swift 中能够够表示 “任意” 这个概念的除了 <a href="any-anyObject.html" class="pcalibre pcalibre2 pcalibre1 calibre4">Any 和 AnyObject</a> 以外，还有一个 <code class="calibre13 pcalibre6 pcalibre5">AnyClass</code>。<code class="calibre13 pcalibre6 pcalibre5">AnyClass</code> 在 Swift 中被一个 <code class="calibre13 pcalibre6 pcalibre5">typealias</code> 所定义：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">typealias</span> <span class="hljs-func">AnyClass</span> = <span class="hljs-func">AnyObject</span>.<span class="hljs-func">Type</span>
+</code></pre>
+<p class="calibre9">通过 <code class="calibre13 pcalibre6 pcalibre5">AnyObject.Type</code> 这种方式所得到是一个元类型 (Meta)。在声明时我们总是在类型的名称后面加上 <code class="calibre13 pcalibre6 pcalibre5">.Type</code>，比如 <code class="calibre13 pcalibre6 pcalibre5">A.Type</code> 代表的是 A 这个类型的类型。也就是说，我们可以声明一个元类型来存储 A 这个类型本身，而在从 <code class="calibre13 pcalibre6 pcalibre5">A</code> 中取出其类型时，我们需要使用到 <code class="calibre13 pcalibre6 pcalibre5">.self</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>{
+
+}
+
+<span class="hljs-keyword">let</span> typeA: <span class="hljs-func">A</span>.<span class="hljs-func">Type</span> = <span class="hljs-func">A</span>.<span class="hljs-keyword">self</span>
+</code></pre>
+<blockquote class="calibre6">
+<p class="calibre7">其实在 Swift 中，<code class="calibre13 pcalibre6 pcalibre5">.self</code> 可以用在类型后面取得类型本身，也可以用在某个实例后面取得这个实例本身。前一种方法可以用来获得一个表示该类型的值，这在某些时候会很有用；而后者因为拿到的实例本身，所以暂时似乎没有太多需要这么使用的案例。</p>
+</blockquote>
+<p class="calibre9">了解了这个基础之后，我们就明白 <code class="calibre13 pcalibre6 pcalibre5">AnyObject.Type</code>，或者说 <code class="calibre13 pcalibre6 pcalibre5">AnyClass</code> 所表达的东西其实并没有什么奇怪，就是任意类型本身。所以，上面对于 <code class="calibre13 pcalibre6 pcalibre5">A</code> 的类型的取值，我们也可以强制让它是一个 <code class="calibre13 pcalibre6 pcalibre5">AnyClass</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>{
+
+}
+
+<span class="hljs-keyword">let</span> typeA: <span class="hljs-func">AnyClass</span> = <span class="hljs-func">A</span>.<span class="hljs-keyword">self</span>
+</code></pre>
+<p class="calibre9">这样，要是 <code class="calibre13 pcalibre6 pcalibre5">A</code> 中有一个类方法时，我们就可以通过 <code class="calibre13 pcalibre6 pcalibre5">typeA</code> 来对其进行调用了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">method</span>() </span>{
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Hello"</span>)
+    }
+}
+
+<span class="hljs-keyword">let</span> typeA: <span class="hljs-func">A</span>.<span class="hljs-func">Type</span> = <span class="hljs-func">A</span>.<span class="hljs-keyword">self</span>
+typeA.method()
+
+<span class="hljs-title">// 或者</span>
+<span class="hljs-keyword">let</span> anyClass: <span class="hljs-func">AnyClass</span> = <span class="hljs-func">A</span>.<span class="hljs-keyword">self</span>
+(anyClass <span class="hljs-keyword">as</span>! <span class="hljs-func">A</span>.<span class="hljs-func">Type</span>).method()
+</code></pre>
+<p class="calibre9">也许你会问，这样做有什么意义呢，我们难道不是可以直接使用 <code class="calibre13 pcalibre6 pcalibre5">A.method()</code> 来调用么？没错，对于单个独立的类型来说我们完全没有必要关心它的元类型，但是元类型或者元编程的概念可以变得非常灵活和强大，这在我们编写某些框架性的代码时会非常方便。比如我们想要传递一些类型的时候，就不需要不断地去改动代码了。在下面的这个例子中虽然我们是用代码声明的方式获取了 <code class="calibre13 pcalibre6 pcalibre5">MusicViewController</code> 和 <code class="calibre13 pcalibre6 pcalibre5">AlbumViewController</code> 的元类型，但是其实这一步骤完全可以通过读入配置文件之类的方式来完成的。而在将这些元类型存入数组并且传递给别的方法来进行配置这一点上，元类型编程就很难被替代了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MusicViewController</span>: <span class="hljs-title">UIViewController</span> </span>{
+
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">AlbumViewController</span>: <span class="hljs-title">UIViewController</span> </span>{
+
+}
+
+<span class="hljs-keyword">let</span> usingVCTypes: [<span class="hljs-func">AnyClass</span>] = [<span class="hljs-func">MusicViewController</span>.<span class="hljs-keyword">self</span>,
+    <span class="hljs-func">AlbumViewController</span>.<span class="hljs-keyword">self</span>]
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">setupViewControllers</span><span class="hljs-params">(vcTypes: [AnyClass])</span></span> {
+    <span class="hljs-keyword">for</span> vcType <span class="hljs-keyword">in</span> vcTypes {
+        <span class="hljs-keyword">if</span> vcType <span class="hljs-keyword">is</span> <span class="hljs-func">UIViewController</span>.<span class="hljs-func">Type</span> {
+            <span class="hljs-keyword">let</span> vc = (vcType <span class="hljs-keyword">as</span>! <span class="hljs-func">UIViewController</span>.<span class="hljs-func">Type</span>).<span class="hljs-keyword">init</span>()
+            <span class="hljs-params">print</span>(vc)
+        }
+
+    }
+}
+
+setupViewControllers(usingVCTypes)
+</code></pre>
+<p class="calibre9">这么一来，我们完全可以搭好框架，然后用 DSL 的方式进行配置，就可以在不触及 Swift 编码的情况下，很简单地完成一系列复杂操作了。</p>
+<p class="calibre9">另外，在 Cocoa API 中我们也常遇到需要一个 <code class="calibre13 pcalibre6 pcalibre5">AnyClass</code> 的输入，这时候我们也应该使用 <code class="calibre13 pcalibre6 pcalibre5">.self</code> 的方式来获取所需要的元类型，例如在注册 <code class="calibre13 pcalibre6 pcalibre5">tableView</code> 的 cell 的类型的时候：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">self</span>.tableView.registerClass(
+    <span class="hljs-func">UITableViewCell</span>.<span class="hljs-keyword">self</span>, forCellReuseIdentifier: <span class="hljs-string">"myCell"</span>)
+</code></pre>
+<blockquote class="calibre6">
+<p class="calibre7">.Type 表示的是某个类型的元类型，而在 Swift 中，除了 <code class="calibre13 pcalibre6 pcalibre5">class</code>，<code class="calibre13 pcalibre6 pcalibre5">struct</code> 和 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 这三个类型外，我们还可以定义 <code class="calibre13 pcalibre6 pcalibre5">protocol</code>。对于 <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 来说，有时候我们也会想取得接口的元类型。这时我们可以在某个 <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 的名字后面使用 .Protocol 来获取，使用的方法和 .Type 是类似的。</p>
+</blockquote>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

@@ -1,0 +1,67 @@
+//
+//  PrefixHeader.pch
+//  day21-ui-lottery03
+//
+//  Created by apple on 15/10/19.
+//  Copyright (c) 2015年 itheima. All rights reserved.
+//
+
+#ifndef day21_ui_lottery03_PrefixHeader_pch
+#define day21_ui_lottery03_PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif
+
+#define iScreen \
+                [UIScreen mainScreen]
+#define iScreenW iScreen.bounds.size.width
+#define iScreenH iScreen.bounds.size.height
+#define iBundle [NSBundle mainBundle]
+
+#define iPref(name)[[NSUserDefaults alloc] initWithSuiteName:(name)]
+
+
+#define iApp [UIApplication sharedApplication]
+
+#define iRes(res)  [[NSBundle mainBundle]pathForResource:(res) ofType:0]
+
+#define  iRes4dict(res)  [NSDictionary dictionaryWithContentsOfFile:iRes(res)]
+
+#define iRes4ary(res) [NSArray arrayWithContentsOfFile:iRes(res)]
+
+#define iURL(name) [NSURL URLWithString:(name)]
+
+#define iData(name) [NSData dataWithContentsOfURL:iURL(name)]
+
+#define iData4F(name) [NSData dataWithContentsOfFile:(name)]
+
+#define imgFromData(name) [UIImage imageWithData:iData(name)]
+
+#define imgFromData4F(name) [UIImage imageWithData:iData4F(name)]
+
+#define imgFromF(name) [UIImage imageWithContentsOfFile:(name)]
+
+#define img(name) [UIImage imageNamed:(name)]
+
+
+
+#define iLazy4Dict(na1,na2) -(NSMutableDictionary *)na1{\
+                            if(!na2){\
+                                na2=[NSMutableDictionary  dictionary];\
+                            }\
+                            return na2;\
+                        }
+
+#define iLazy4Ary(na1,na2) -(NSMutableArray *)na1{\
+                            if(!na2){\
+                            na2=[NSMutableArray  array];\
+                            }\
+                            return na2;\
+                            }
+
+
+#ifdef  __OBJC__
+#import "YFCate.h"
+#endif

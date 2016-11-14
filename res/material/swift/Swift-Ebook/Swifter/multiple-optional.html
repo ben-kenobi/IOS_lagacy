@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>多重 Optional | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_37">多重 Optional</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%A4%9A%E9%87%8D-optional" class="calibre1">多重 Optional</h1>
+<p class="calibre9">Optional 可以说是 Swift 的一大特色，它完全解决了 “有” 和 “无” 这两个困扰了 Objective-C 许久的哲学概念，也使得代码安全性得到了很大的增加。但是一个陷阱 -- 或者说一个很容易让人迷惑的概念 -- 也随之而来，那就是多重的 Optional。</p>
+<p class="calibre9">在深入讨论之前，可以让我们先看看 Optional 是什么。很多读者应该已经知道，我们使用的类型后加上 <code class="calibre13 pcalibre6 pcalibre5">?</code> 的语法只不过是 <code class="calibre13 pcalibre6 pcalibre5">Optional</code> 类型的语法糖，而实际上这个类型是一个 <code class="calibre13 pcalibre6 pcalibre5">enum</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">Optional</span>&lt;<span class="hljs-title">T</span>&gt; : <span class="hljs-title">_Reflectable</span>, <span class="hljs-title">NilLiteralConvertible</span> </span>{
+    <span class="hljs-keyword">case</span> <span class="hljs-func">None</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Some</span>(<span class="hljs-func">T</span>)
+
+    <span class="hljs-title">//...</span>
+}
+</code></pre>
+<p class="calibre9">在这个定义中，对 <code class="calibre13 pcalibre6 pcalibre5">T</code> 没有任何限制，也就是说，我们是可以在 <code class="calibre13 pcalibre6 pcalibre5">Optional</code> 中装入任意东西的，甚至也包括 <code class="calibre13 pcalibre6 pcalibre5">Optional</code> 对象自身。打个形象的比方，如果我们把 <code class="calibre13 pcalibre6 pcalibre5">Optional</code> 比作一个盒子，实际具体的 <code class="calibre13 pcalibre6 pcalibre5">String</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 这样的值比作糖果的话，当我们打开一个盒子 (unwrap) 时，可能的结果会有三个 -- 空气，糖果，或者另一个盒子。</p>
+<p class="calibre9">空气和糖果都很好理解，也十分直接。但是对于盒子中的盒子，有时候使用时就相当容易出错。特别是在和各种字面量转换混用的时候需要特别注意。</p>
+<p class="calibre9">对于下面这种形式的写法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> string: <span class="hljs-func">String</span>? = <span class="hljs-string">"string"</span>
+<span class="hljs-keyword">var</span> anotherString: <span class="hljs-func">String</span>?? = string
+</code></pre>
+<p class="calibre9">我们可以很明白地知道 <code class="calibre13 pcalibre6 pcalibre5">anotherString</code> 是 <code class="calibre13 pcalibre6 pcalibre5">Optinal&lt;Optional&lt;String&gt;&gt;</code>。但是除开将一个 <code class="calibre13 pcalibre6 pcalibre5">Optional</code> 值赋给多重 <code class="calibre13 pcalibre6 pcalibre5">Optional</code> 以外，我们也可以将直接的字面量值赋给它：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> literalOptional: <span class="hljs-func">String</span>?? = <span class="hljs-string">"string"</span>
+</code></pre>
+<p class="calibre9">这种情况还好，根据类型推断我们只能将 <code class="calibre13 pcalibre6 pcalibre5">Optional&lt;String&gt;</code> 放入到 <code class="calibre13 pcalibre6 pcalibre5">literalOptional</code> 中，所以可以猜测它与上面提到的 <code class="calibre13 pcalibre6 pcalibre5">anotherString</code> 是等效的。但是如果我们是将 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 赋值给它的话，情况就有所不同了。考虑下面的代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> aNil: <span class="hljs-func">String</span>? = <span class="hljs-params">nil</span>
+
+<span class="hljs-keyword">var</span> anotherNil: <span class="hljs-func">String</span>?? = aNil
+<span class="hljs-keyword">var</span> literalNil: <span class="hljs-func">String</span>?? = <span class="hljs-params">nil</span>
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">anotherNil</code> 和 <code class="calibre13 pcalibre6 pcalibre5">literalNil</code> 是不是等效的呢？答案是否定的。<code class="calibre13 pcalibre6 pcalibre5">anotherNil</code> 是盒子中包了一个盒子，打开内层盒子的时候我们会发现空气；但是 <code class="calibre13 pcalibre6 pcalibre5">literalNil</code> 是盒子中直接是空气。使用中一个最显著的区别在于：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> a = anotherNil {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"anotherNil"</span>)
+}
+
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> b = literalNil {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"literalNil"</span>)
+}
+</code></pre>
+<p class="calibre9">这样的代码只能输出 <code class="calibre13 pcalibre6 pcalibre5">anotherNil</code>。</p>
+<p class="calibre9">另一个值得注意的地方时在Playground 中运行时，或者在用 lldb 进行调试时，直接使用 <code class="calibre13 pcalibre6 pcalibre5">po</code> 指令打印 Optional 值的话，为了看起来方便，lldb 会将要打印的 Optional 进行展开。如果我们直接打印上面的 <code class="calibre13 pcalibre6 pcalibre5">anotherNil</code> 和 <code class="calibre13 pcalibre6 pcalibre5">literalNil</code>，得到的结果都是 <code class="calibre13 pcalibre6 pcalibre5">nil</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">(lldb) po anotherNil
+<span class="hljs-params">nil</span>
+
+(lldb) po literalNil
+<span class="hljs-params">nil</span>
+</code></pre>
+<p class="calibre9">如果我们遇到了多重 Optional 的麻烦的时候，这显然对我们是没有太大帮助的。我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">fr v -R</code> 命令来打印出变量的未加工过时的信息，就像这样：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">(lldb) fr v -<span class="hljs-func">R</span> anotherNil
+(<span class="hljs-func">Swift</span>.<span class="hljs-func">Optional</span>&lt;<span class="hljs-func">Swift</span>.<span class="hljs-func">Optional</span>&lt;<span class="hljs-func">Swift</span>.<span class="hljs-func">String</span>&gt;&gt;)
+    anotherNil = <span class="hljs-func">Some</span> {
+    ... 中略
+}
+(lldb) fr v -<span class="hljs-func">R</span> literalNil
+(<span class="hljs-func">Swift</span>.<span class="hljs-func">Optional</span>&lt;<span class="hljs-func">Swift</span>.<span class="hljs-func">Optional</span>&lt;<span class="hljs-func">Swift</span>.<span class="hljs-func">String</span>&gt;&gt;)
+    literalNil = <span class="hljs-func">None</span> {
+    ... 中略
+}
+</code></pre>
+<p class="calibre9">这样我们就能清晰地分辨出两者的区别了。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

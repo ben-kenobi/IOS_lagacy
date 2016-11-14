@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Lock | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_76">Lock</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="lock" class="calibre1">Lock</h1>
+<p class="calibre9">无并发，不编码。而只要一说到多线程或者并发的代码，我们可能就很难绕开对于锁的讨论。简单来说，为了在不同线程中安全地访问同一个资源，我们需要这些访问顺序进行。Cocoa 和 Objective-C 中加锁的方式有很多，但是其中在日常开发中最常用的应该是 <code class="calibre13 pcalibre6 pcalibre5">@synchronized</code>，这个关键字可以用来修饰一个变量，并为其自动加上和解除<a href="http://en.wikipedia.org/wiki/Mutual_exclusion" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">互斥锁</a>。这样，可以保证变量在作用范围内不会被其他线程改变。举个例子，如果我们有一个方法接受参数，需要这个方法是线程安全的话，就需要在参数上加锁：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">- (<span class="hljs-keyword">void</span>)myMethod:(<span class="hljs-keyword">id</span>)anObj {
+    <span class="hljs-keyword">@synchronized</span>(anObj) {
+        <span class="hljs-title">// 在括号内 anObj 不会被其他线程改变</span>
+    }
+}
+</code></pre>
+<p class="calibre9">如果没有锁的话，一旦 <code class="calibre13 pcalibre6 pcalibre5">anObj</code> 的内容被其他线程修改的话，这个方法的行为很可能就无法预测了。</p>
+<p class="calibre9">但是加锁和解锁都是要消耗一定性能的，因此我们不太可能为所有的方法都加上锁。另外其实在一个 app 中可能会涉及到多线程的部分是有限的，我们也没有必要为所有东西加上锁。过多的锁不仅没有意义，而且对于多线程编程来说，可能会产生很多像死锁这样的陷阱，也难以调试。因此在使用多线程时，我们应该尽量将保持简单作为第一要务。</p>
+<p class="calibre9">扯远了，我们回到 <code class="calibre13 pcalibre6 pcalibre5">@synchronized</code> 上来。虽然这个方法很简单好用，但是很不幸的是在 Swift 中它已经 (或者是暂时) 不存在了。其实 <code class="calibre13 pcalibre6 pcalibre5">@synchronized</code> 在幕后做的事情是调用了 <code class="calibre13 pcalibre6 pcalibre5">objc_sync</code> 中的 <code class="calibre13 pcalibre6 pcalibre5">objc_sync_enter</code> 和 <code class="calibre13 pcalibre6 pcalibre5">objc_sync_exit</code> 方法，并且加入了一些异常判断。因此，在 Swift 中，如果我们忽略掉那些异常的话，我们想要 lock 一个变量的话，可以这样写：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">myMethod</span><span class="hljs-params">(anObj: AnyObject!)</span></span> {
+    objc_sync_enter(anObj)
+
+    <span class="hljs-title">// 在 enter 和 exit 之间 anObj 不会被其他线程改变</span>
+
+    objc_sync_exit(anObj)
+}
+</code></pre>
+<p class="calibre9">更进一步，如果我们喜欢以前的那种形式，甚至可以写一个全局的方法，并接受一个闭包，来将 <code class="calibre13 pcalibre6 pcalibre5">objc_sync_enter</code> 和 <code class="calibre13 pcalibre6 pcalibre5">objc_sync_exit</code> 封装起来：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">synchronized</span><span class="hljs-params">(lock: AnyObject, closure: <span class="hljs-params">()</span></span></span> -&gt; ()) {
+    objc_sync_enter(lock)
+    closure()
+    objc_sync_exit(lock)
+}
+</code></pre>
+<p class="calibre9">再结合 Swift 的尾随闭包的语言特性，这样，使用起来的时候就和 Objective-C 中很像了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">myMethodLocked</span><span class="hljs-params">(anObj: AnyObject!)</span></span> {
+    synchronized(anObj) {
+        <span class="hljs-title">// 在括号内 anObj 不会被其他线程改变</span>
+    }
+}
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

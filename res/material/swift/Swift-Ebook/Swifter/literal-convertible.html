@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>字面量转换 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_12">字面量转换</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%AD%97%E9%9D%A2%E9%87%8F%E8%BD%AC%E6%8D%A2" class="calibre1">字面量转换</h1>
+<p class="calibre9">所谓字面量，就是指像特定的数字，字符串或者是布尔值这样，能够直截了当地指出自己的类型并为变量进行赋值的值。比如在下面：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> aNumber = <span class="hljs-params">3</span>
+<span class="hljs-keyword">let</span> aString = <span class="hljs-string">"Hello"</span>
+<span class="hljs-keyword">let</span> aBool = <span class="hljs-params">true</span>
+</code></pre>
+<p class="calibre9">中的 <code class="calibre13 pcalibre6 pcalibre5">3</code>，<code class="calibre13 pcalibre6 pcalibre5">Hello</code> 以及 <code class="calibre13 pcalibre6 pcalibre5">true</code> 就称为字面量。</p>
+<p class="calibre9">在 Swift 中，<code class="calibre13 pcalibre6 pcalibre5">Array</code> 和 <code class="calibre13 pcalibre6 pcalibre5">Dictionary</code> 在使用简单的描述赋值的时候，使用的也是字面量，比如：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> anArray = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>]
+<span class="hljs-keyword">let</span> aDictionary = [<span class="hljs-string">"key1"</span>: <span class="hljs-string">"value1"</span>, <span class="hljs-string">"key2"</span>: <span class="hljs-string">"value2"</span>]
+</code></pre>
+<p class="calibre9">Swift 为我们提供了一组非常有意思的接口，用来将字面量转换为特定的类型。对于那些实现了字面量转换接口的类型，在提供字面量赋值的时候，就可以简单地按照接口方法中定义的规则“无缝对应”地通过赋值的方式将值转换为对应类型。这些接口包括了各个原生的字面量，在实际开发中我们经常可能用到的有：</p>
+<ul class="calibre19">
+<li class="calibre3"><code class="calibre13 pcalibre6 pcalibre5">ArrayLiteralConvertible</code></li>
+<li class="calibre3"><code class="calibre13 pcalibre6 pcalibre5">BooleanLiteralConvertible</code></li>
+<li class="calibre3"><code class="calibre13 pcalibre6 pcalibre5">DictionaryLiteralConvertible</code></li>
+<li class="calibre3"><code class="calibre13 pcalibre6 pcalibre5">FloatLiteralConvertible</code></li>
+<li class="calibre3"><code class="calibre13 pcalibre6 pcalibre5">NilLiteralConvertible</code></li>
+<li class="calibre3"><code class="calibre13 pcalibre6 pcalibre5">IntegerLiteralConvertible</code></li>
+<li class="calibre3"><code class="calibre13 pcalibre6 pcalibre5">StringLiteralConvertible</code></li>
+</ul>
+<p class="calibre9">所有的字面量转换接口都定义了一个 <code class="calibre13 pcalibre6 pcalibre5">typealias</code> 和对应的 <code class="calibre13 pcalibre6 pcalibre5">init</code> 方法。拿 <code class="calibre13 pcalibre6 pcalibre5">BooleanLiteralConvertible</code> 举个例子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">BooleanLiteralConvertible</span> </span>{
+    <span class="hljs-keyword">typealias</span> <span class="hljs-func">BooleanLiteralType</span>
+
+    <span class="hljs-title">/// Create an instance initialized to `value`.</span>
+    <span class="hljs-keyword">init</span>(booleanLiteral value: <span class="hljs-func">BooleanLiteralType</span>)
+}
+</code></pre>
+<p class="calibre9">在这个接口中，<code class="calibre13 pcalibre6 pcalibre5">BooleanLiteralType</code> 在 Swift 标准库中已经有定义了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">/// The default type for an otherwise-unconstrained boolean literal</span>
+<span class="hljs-keyword">typealias</span> <span class="hljs-func">BooleanLiteralType</span> = <span class="hljs-func">Bool</span>
+</code></pre>
+<p class="calibre9">于是在我们需要自己实现一个字面量转换的时候，可以简单地只实现定义的 <code class="calibre13 pcalibre6 pcalibre5">init</code> 方法就行了。举个不太有实际意义的例子，比如我们想实现一个自己的 <code class="calibre13 pcalibre6 pcalibre5">Bool</code> 类型，可以这么做：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">MyBool</span>: <span class="hljs-title">Int</span> </span>{
+    <span class="hljs-keyword">case</span> myTrue, myFalse
+}
+
+<span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">MyBool</span>: <span class="hljs-title">BooleanLiteralConvertible</span> </span>{
+    <span class="hljs-keyword">init</span>(booleanLiteral value: <span class="hljs-func">Bool</span>) {
+        <span class="hljs-keyword">self</span> = value ? myTrue : myFalse
+    }
+}
+</code></pre>
+<p class="calibre9">这样我们就能很容易地直接使用 <code class="calibre13 pcalibre6 pcalibre5">Bool</code> 的 <code class="calibre13 pcalibre6 pcalibre5">true</code> 和 <code class="calibre13 pcalibre6 pcalibre5">false</code> 来对 <code class="calibre13 pcalibre6 pcalibre5">MyBool</code> 类型进行赋值了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> myTrue: <span class="hljs-func">MyBool</span> = <span class="hljs-params">true</span>
+<span class="hljs-keyword">let</span> myFalse: <span class="hljs-func">MyBool</span> = <span class="hljs-params">false</span>
+
+myTrue.rawValue    <span class="hljs-title">// 0</span>
+myFalse.rawValue   <span class="hljs-title">// 1</span>
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">BooleanLiteralType</code> 大概是最简单的形式，如果我们深入一点，就会发现像是 <code class="calibre13 pcalibre6 pcalibre5">StringLiteralConvertible</code> 这样的接口要复杂一些。这个接口不仅类似于上面布尔的情况，定义了 <code class="calibre13 pcalibre6 pcalibre5">StringLiteralType</code> 及接受其的初始化方法，这个接口本身还要求实现下面两个接口：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func">ExtendedGraphemeClusterLiteralConvertible</span>
+<span class="hljs-func">UnicodeScalarLiteralConvertible</span>
+</code></pre>
+<p class="calibre9">这两个接口我们在日常项目中基本上不会使用，它们对应<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Strings/Articles/stringsClusters.html" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">字符簇和字符</a>的字面量转换。虽然复杂一些，但是形式上还是一致的，只不过在实现 <code class="calibre13 pcalibre6 pcalibre5">StringLiteralConvertible</code> 时我们需要将这三个 <code class="calibre13 pcalibre6 pcalibre5">init</code> 方法都进行实现。</p>
+<p class="calibre9">还是以例子来说明，比如我们有个 <code class="calibre13 pcalibre6 pcalibre5">Person</code> 类，里面有这个人的名字：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>{
+    <span class="hljs-keyword">let</span> name: <span class="hljs-func">String</span>
+    <span class="hljs-keyword">init</span>(name value: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.name = value
+    }
+}
+</code></pre>
+<p class="calibre9">如果想要通过 <code class="calibre13 pcalibre6 pcalibre5">String</code> 赋值来生成 <code class="calibre13 pcalibre6 pcalibre5">Person</code> 对象的话，可以改写这个类：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>: <span class="hljs-title">StringLiteralConvertible</span> </span>{
+    <span class="hljs-keyword">let</span> name: <span class="hljs-func">String</span>
+    <span class="hljs-keyword">init</span>(name value: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.name = value
+    }
+
+    required <span class="hljs-keyword">init</span>(stringLiteral value: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.name = value
+    }
+
+    required <span class="hljs-keyword">init</span>(extendedGraphemeClusterLiteral value: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.name = value
+    }
+
+    required <span class="hljs-keyword">init</span>(unicodeScalarLiteral value: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.name = value
+    }
+}
+</code></pre>
+<p class="calibre9">在所有的接口定义的 <code class="calibre13 pcalibre6 pcalibre5">init</code> 前面我们都加上了 <code class="calibre13 pcalibre6 pcalibre5">required</code> 关键字，这是由<a href="designated-convenience.html" class="pcalibre pcalibre2 pcalibre1 calibre4">初始化方法的完备性需求</a>所决定的，这个类的子类都需要保证能够做类似的字面量转换，以确保类型安全。</p>
+<p class="calibre9">在上面的例子里有很多重复的对 <code class="calibre13 pcalibre6 pcalibre5">self.name</code> 赋值的代码，这是我们所不乐见的。一个改善的方式是在这些初始化方法中去调用原来的 <code class="calibre13 pcalibre6 pcalibre5">init(name value: String)</code>，这种情况下我们需要在这些初始化方法前加上 <a href="designated-convenience.html" class="pcalibre pcalibre2 pcalibre1 calibre4"><code class="calibre13 pcalibre6 pcalibre5">convenience</code></a>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>: <span class="hljs-title">StringLiteralConvertible</span> </span>{
+    <span class="hljs-keyword">let</span> name: <span class="hljs-func">String</span>
+    <span class="hljs-keyword">init</span>(name value: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.name = value
+    }
+
+    required convenience <span class="hljs-keyword">init</span>(stringLiteral value: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.<span class="hljs-keyword">init</span>(name: value)
+    }
+
+    required convenience <span class="hljs-keyword">init</span>(extendedGraphemeClusterLiteral value: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.<span class="hljs-keyword">init</span>(name: value)
+    }
+
+    required convenience <span class="hljs-keyword">init</span>(unicodeScalarLiteral value: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.<span class="hljs-keyword">init</span>(name: value)
+    }
+}
+
+<span class="hljs-keyword">let</span> p: <span class="hljs-func">Person</span> = <span class="hljs-string">"xiaoMing"</span>
+<span class="hljs-params">print</span>(p.name)
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// xiaoMing</span>
+</code></pre>
+<p class="calibre9">上面的 <code class="calibre13 pcalibre6 pcalibre5">Person</code> 的例子中，我们没有像 <code class="calibre13 pcalibre6 pcalibre5">MyBool</code> 中做的那样，使用一个 <code class="calibre13 pcalibre6 pcalibre5">extension</code> 的方式来扩展类使其可以用字面量赋值，这是因为在 <code class="calibre13 pcalibre6 pcalibre5">extension</code> 中，我们是不能定义 <code class="calibre13 pcalibre6 pcalibre5">required</code> 的初始化方法的。也就是说，我们无法为现有的非 <a href="final.html" class="pcalibre pcalibre2 pcalibre1 calibre4"><code class="calibre13 pcalibre6 pcalibre5">final</code></a> 的 <code class="calibre13 pcalibre6 pcalibre5">class</code> 添加字面量转换 (不过也许这在今后的 Swift 版本中能有所改善)。</p>
+<p class="calibre9">总结一下，字面量转换是一个很强大的特性，使用得当的话对缩短代码和清晰表意都很有帮助；但是这同时又是一个比较隐蔽的特性：因为你的代码并没有显式的赋值或者初始化，所以可能会给人造成迷惑：比如上面例子中为什么一个字符串能被赋值为 <code class="calibre13 pcalibre6 pcalibre5">Person</code>？你的同事在阅读代码的时候可能不得不去寻找这些负责字面量转换的代码进行查看 (而如果代码库很大的话，这不是一件容易的事情，因为你没有办法对字面量赋值进行 Cmd + 单击跳转)。</p>
+<p class="calibre9">和其他 Swift 的新鲜特性一样，我们究竟如何使用字面量转换，它的最佳实践到底是什么，都还是在研究及讨论中的。因此在使用这样的新特性时，必须力求表意清晰，没有误解，代码才能经受得住历史考验。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

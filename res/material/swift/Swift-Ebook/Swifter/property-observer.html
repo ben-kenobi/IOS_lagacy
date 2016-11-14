@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>属性观察 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_32">属性观察</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%B1%9E%E6%80%A7%E8%A7%82%E5%AF%9F" class="calibre1">属性观察</h1>
+<p class="calibre9">属性观察 (Property Observers) 是 Swift 中一个很特殊的特性，利用属性观察我们可以在当前类型内监视对于属性的设定，并作出一些响应。Swift 中为我们提供了两个属性观察的方法，它们分别是 <code class="calibre13 pcalibre6 pcalibre5">willSet</code> 和 <code class="calibre13 pcalibre6 pcalibre5">didSet</code>。</p>
+<p class="calibre9">使用这两个方法十分简单，我们只要在属性声明的时候添加相应的代码块，就可以对将要设定的值和已经设置的值进行监听了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-keyword">var</span> date: <span class="hljs-func">NSDate</span> {
+        <span class="hljs-keyword">willSet</span> {
+            <span class="hljs-keyword">let</span> d = date
+            <span class="hljs-params">print</span>(<span class="hljs-string">"即将将日期从 <span class="hljs-func">\(d)</span> 设定至 <span class="hljs-func">\(newValue)</span>"</span>)
+        }
+
+        <span class="hljs-keyword">didSet</span> {
+            <span class="hljs-params">print</span>(<span class="hljs-string">"已经将日期从 <span class="hljs-func">\(oldValue)</span> 设定至 <span class="hljs-func">\(date)</span>"</span>)
+        }
+    }
+
+    <span class="hljs-keyword">init</span>() {
+        date = <span class="hljs-func">NSDate</span>()
+    }
+}
+
+<span class="hljs-keyword">let</span> foo = <span class="hljs-func">MyClass</span>()
+foo.date = foo.date.dateByAddingTimeInterval(<span class="hljs-params">10086</span>)
+
+<span class="hljs-title">// 输出</span>
+<span class="hljs-title">// 即将将日期从 2014-08-23 12:47:36 +0000 设定至 2014-08-23 15:35:42 +0000</span>
+<span class="hljs-title">// 已经将日期从 2014-08-23 12:47:36 +0000 设定至 2014-08-23 15:35:42 +0000</span>
+</code></pre>
+<p class="calibre9">在 <code class="calibre13 pcalibre6 pcalibre5">willSet</code> 和 <code class="calibre13 pcalibre6 pcalibre5">didSet</code> 中我们分别可以使用 <code class="calibre13 pcalibre6 pcalibre5">newValue</code> 和 <code class="calibre13 pcalibre6 pcalibre5">oldValue</code> 来获取将要设定的和已经设定的值。属性观察的一个重要用处是作为设置值的验证，比如上面的例子中我们不希望 <code class="calibre13 pcalibre6 pcalibre5">date</code> 超过当前时间的一年以上的话，我们可以将 <code class="calibre13 pcalibre6 pcalibre5">didSet</code> 修改一下：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-keyword">let</span> oneYearInSecond: <span class="hljs-func">NSTimeInterval</span> = <span class="hljs-params">365</span> * <span class="hljs-params">24</span> * <span class="hljs-params">60</span> * <span class="hljs-params">60</span>
+    <span class="hljs-keyword">var</span> date: <span class="hljs-func">NSDate</span> {
+
+        <span class="hljs-title">//...</span>
+
+        <span class="hljs-keyword">didSet</span> {
+            <span class="hljs-keyword">if</span> (date.timeIntervalSinceNow &gt; oneYearInSecond) {
+                <span class="hljs-params">println</span>(<span class="hljs-string">"设定的时间太晚了！"</span>)
+                date = <span class="hljs-func">NSDate</span>().dateByAddingTimeInterval(oneYearInSecond)
+            }
+            <span class="hljs-params">print</span>(<span class="hljs-string">"已经将日期从 <span class="hljs-func">\(oldValue)</span> 设定至 <span class="hljs-func">\(date)</span>"</span>)
+        }
+    }
+
+    <span class="hljs-title">//...</span>
+}
+</code></pre>
+<p class="calibre9">更改一下调用，我们就能看到效果：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// 365 * 24 * 60 * 60 = 31_536_000</span>
+foo.date = foo.date.dateByAddingTimeInterval(<span class="hljs-params">100_000_000</span>)
+
+<span class="hljs-title">// 输出</span>
+<span class="hljs-title">// 即将将日期从 2014-08-23 13:24:14 +0000 设定至 2017-10-23 23:10:54 +0000</span>
+<span class="hljs-title">// 设定的时间太晚了！</span>
+<span class="hljs-title">// 已经将日期从 2014-08-23 13:24:14 +0000 设定至 2015-08-23 13:24:14 +0000</span>
+</code></pre>
+<blockquote class="calibre6">
+<p class="calibre7">初始化方法对属性的设定，以及在 <code class="calibre13 pcalibre6 pcalibre5">willSet</code> 和 <code class="calibre13 pcalibre6 pcalibre5">didSet</code> 中对属性的再次设定都不会再次触发属性观察的调用，一般来说这会是你所需要的行为，可以放心使用能够。</p>
+</blockquote>
+<p class="calibre9">我们知道，在 Swift 中所声明的属性包括存储属性和计算属性两种。其中存储属性将会在内存中实际分配地址对属性进行存储，而计算属性则不包括背后的存储，只是提供 <code class="calibre13 pcalibre6 pcalibre5">set</code> 和 <code class="calibre13 pcalibre6 pcalibre5">get</code> 两种方法。在同一个类型中，属性观察和计算属性是不能同时共存的。也就是说，想在一个属性定义中同时出现 <code class="calibre13 pcalibre6 pcalibre5">set</code> 和 <code class="calibre13 pcalibre6 pcalibre5">willSet</code> 或 <code class="calibre13 pcalibre6 pcalibre5">didSet</code> 是一件办不到的事情。计算属性中我们可以通过改写 <code class="calibre13 pcalibre6 pcalibre5">set</code> 中的内容来达到和 <code class="calibre13 pcalibre6 pcalibre5">willSet</code> 及 <code class="calibre13 pcalibre6 pcalibre5">didSet</code> 同样的属性观察的目的。如果我们无法改动这个类，又想要通过属性观察做一些事情的话，可能就需要子类化这个类，并且重写它的属性了。重写的属性并不知道父类属性的具体实现情况，而只从父类属性中继承名字和类型，因此在子类的重载属性中我们是可以对父类的属性任意地添加属性观察的，而不用在意父类中到底是存储属性还是计算属性：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>{
+    <span class="hljs-keyword">var</span> number :<span class="hljs-func">Int</span> {
+        <span class="hljs-keyword">get</span> {
+            <span class="hljs-params">print</span>(<span class="hljs-string">"get"</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-params">1</span>
+        }
+
+        <span class="hljs-keyword">set</span> {<span class="hljs-params">print</span>(<span class="hljs-string">"set"</span>)}
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>: <span class="hljs-title">A</span> </span>{
+    <span class="hljs-keyword">override</span> <span class="hljs-keyword">var</span> number: <span class="hljs-func">Int</span> {
+        <span class="hljs-keyword">willSet</span> {<span class="hljs-params">print</span>(<span class="hljs-string">"willSet"</span>)}
+        <span class="hljs-keyword">didSet</span> {<span class="hljs-params">print</span>(<span class="hljs-string">"didSet"</span>)}
+    }
+}
+</code></pre>
+<p class="calibre9">调用 <code class="calibre13 pcalibre6 pcalibre5">number</code> 的 <code class="calibre13 pcalibre6 pcalibre5">set</code> 方法可以看到工作的顺序</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> b = <span class="hljs-func">B</span>()
+b.number = <span class="hljs-params">0</span>
+
+<span class="hljs-title">// 输出</span>
+<span class="hljs-title">// get</span>
+<span class="hljs-title">// willSet</span>
+<span class="hljs-title">// set</span>
+<span class="hljs-title">// didSet</span>
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">set</code> 和对应的属性观察的调用都在我们的预想之中。这里要注意的是 <code class="calibre13 pcalibre6 pcalibre5">get</code> 首先被调用了一次。这是因为我们实现了 <code class="calibre13 pcalibre6 pcalibre5">didSet</code>，<code class="calibre13 pcalibre6 pcalibre5">didSet</code> 中会用到 <code class="calibre13 pcalibre6 pcalibre5">oldValue</code>，而这个值需要在整个 <code class="calibre13 pcalibre6 pcalibre5">set</code> 动作之前进行获取并存储待用，否则将无法确保正确性。如果我们不实现 <code class="calibre13 pcalibre6 pcalibre5">didSet</code> 的话，这次 <code class="calibre13 pcalibre6 pcalibre5">get</code> 操作也将不存在。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

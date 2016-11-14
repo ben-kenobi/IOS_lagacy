@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>列举 enum 类型 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_103">列举 enum 类型</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%88%97%E4%B8%BE-enum-%E7%B1%BB%E5%9E%8B" class="calibre1">列举 enum 类型</h1>
+<p class="calibre9">设想我们有这样一个需求，通过对于一副扑克牌的花色和牌面大小的 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 类型，凑出一套不含大小王的扑克牌的数组。</p>
+<p class="calibre9">扑克牌花色和牌面大小分别由下面两个 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 来定义：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">Suit</span>: <span class="hljs-title">String</span> </span>{
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Spades</span> = <span class="hljs-string">"黑桃"</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Hearts</span> = <span class="hljs-string">"红桃"</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Clubs</span> = <span class="hljs-string">"草花"</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Diamonds</span> = <span class="hljs-string">"方片"</span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">Rank</span>: <span class="hljs-title">Int</span>, <span class="hljs-title">Printable</span> </span>{
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Ace</span> = <span class="hljs-params">1</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Two</span>, <span class="hljs-func">Three</span>, <span class="hljs-func">Four</span>, <span class="hljs-func">Five</span>, <span class="hljs-func">Six</span>, <span class="hljs-func">Seven</span>, <span class="hljs-func">Eight</span>, <span class="hljs-func">Nine</span>, <span class="hljs-func">Ten</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Jack</span>, <span class="hljs-func">Queen</span>, <span class="hljs-func">King</span>
+    <span class="hljs-keyword">var</span> description: <span class="hljs-func">String</span> {
+        <span class="hljs-keyword">switch</span> <span class="hljs-keyword">self</span> {
+        <span class="hljs-keyword">case</span> .<span class="hljs-func">Ace</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"A"</span>
+        <span class="hljs-keyword">case</span> .<span class="hljs-func">Jack</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"J"</span>
+        <span class="hljs-keyword">case</span> .<span class="hljs-func">Queen</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"Q"</span>
+        <span class="hljs-keyword">case</span> .<span class="hljs-func">King</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"K"</span>
+        <span class="hljs-keyword">default</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-func">String</span>(<span class="hljs-keyword">self</span>.rawValue)
+        }
+    }
+}
+</code></pre>
+<p class="calibre9">最容易想到的方式当然不外乎对两个 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 进行两次循环，先循环取出 <code class="calibre13 pcalibre6 pcalibre5">Suit</code> 中的四种花色，然后在其中循环 <code class="calibre13 pcalibre6 pcalibre5">Rank</code> 类型取出数字后，就可以配合得到 52 张牌了。</p>
+<p class="calibre9">在其他很多语言中，我们可以对 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 类型或者其某个类似 <code class="calibre13 pcalibre6 pcalibre5">values</code> 的属性直接进行枚举，写出来的话，可能会是类似这样的代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">for</span> suit <span class="hljs-keyword">in</span> <span class="hljs-func">Suit</span>.values {
+    <span class="hljs-keyword">for</span> rank <span class="hljs-keyword">in</span> <span class="hljs-func">Rank</span>.values {
+        <span class="hljs-title">// ...</span>
+        <span class="hljs-title">// 处理数据</span>
+    }
+}
+</code></pre>
+<p class="calibre9">但是在 Swift 中，由于在 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 中的某一个 case 中我们是可以添加具体值的 (就是 <code class="calibre13 pcalibre6 pcalibre5">case Some(T)</code> 这样的情况)，因此直接使用 <code class="calibre13 pcalibre6 pcalibre5">for...in</code> 的方式在语义上是无法表达出所有情况的。不过因为在我们这个特定的情况中并没有带有参数的枚举类型，所以我们可以利用 static 的属性来获取一个可以进行循环的数据结构：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">EnumeratableEnumType</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> allValues: [<span class="hljs-func">Self</span>] {<span class="hljs-keyword">get</span>}
+}
+
+<span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">Suit</span>: <span class="hljs-title">EnumeratableEnumType</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> allValues: [<span class="hljs-func">Suit</span>] {
+        <span class="hljs-keyword">return</span> [.<span class="hljs-func">Spades</span>, .<span class="hljs-func">Hearts</span>, .<span class="hljs-func">Clubs</span>, .<span class="hljs-func">Diamonds</span>]
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">Rank</span>: <span class="hljs-title">EnumeratableEnumType</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> allValues: [<span class="hljs-func">Rank</span>] {
+        <span class="hljs-keyword">return</span> [.<span class="hljs-func">Ace</span>, .<span class="hljs-func">Two</span>, .<span class="hljs-func">Three</span>,
+            .<span class="hljs-func">Four</span>, .<span class="hljs-func">Five</span>, .<span class="hljs-func">Six</span>,
+            .<span class="hljs-func">Seven</span>, .<span class="hljs-func">Eight</span>, .<span class="hljs-func">Nine</span>,
+            .<span class="hljs-func">Ten</span>, .<span class="hljs-func">Jack</span>, .<span class="hljs-func">Queen</span>, .<span class="hljs-func">King</span>]
+    }
+}
+</code></pre>
+<p class="calibre9">在这里我们使用了一个接口来更好地定义适用的接口。关于其中的 <code class="calibre13 pcalibre6 pcalibre5">class</code> 和 <code class="calibre13 pcalibre6 pcalibre5">static</code> 的使用情景，可以参看<a href="static-class.html" class="pcalibre pcalibre2 pcalibre1 calibre4">这一篇总结</a>。在实现了 <code class="calibre13 pcalibre6 pcalibre5">allValues</code> 后，我们就可以按照上面的思路写出：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">for</span> suit <span class="hljs-keyword">in</span> <span class="hljs-func">Suit</span>.allValues {
+    <span class="hljs-keyword">for</span> rank <span class="hljs-keyword">in</span> <span class="hljs-func">Rank</span>.allValues {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"<span class="hljs-func">\(suit.rawValue)</span><span class="hljs-func">\(rank)</span>"</span>)
+    }
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// 黑桃A</span>
+<span class="hljs-title">// 黑桃2</span>
+<span class="hljs-title">// 黑桃3</span>
+<span class="hljs-title">// ...</span>
+<span class="hljs-title">// 方片K</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

@@ -1,0 +1,877 @@
+<!DOCTYPE HTML>
+<html lang="en-US" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <title>控制流 | Swift 简介</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 1.0.3">
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    
+    
+    
+    <link rel="next" href="../basic/loop.html" />
+    
+    
+    <link rel="prev" href="../basic/optional.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+<link rel="stylesheet" href="../gitbook/style.css">
+
+
+        
+    <div class="book"  data-level="0.2.3" data-basepath=".." data-revision="1448934061973">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+    	
+    	
+    	
+
+        
+
+        
+    
+        
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                        <i class="fa fa-check"></i>
+                        
+                         Swift 简介
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="0.1" data-path="primer/README.html">
+            
+                
+                    <a href="../primer/README.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.</b>
+                        
+                         快速体验
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="0.1.1" data-path="primer/playground.html">
+            
+                
+                    <a href="../primer/playground.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.1.</b>
+                        
+                         playground
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.1.2" data-path="primer/first app.html">
+            
+                
+                    <a href="../primer/first app.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.2.</b>
+                        
+                         项目开发体验
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.2" data-path="basic/README.html">
+            
+                
+                    <a href="../basic/README.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.</b>
+                        
+                         基本语法
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="0.2.1" data-path="basic/let and var.html">
+            
+                
+                    <a href="../basic/let and var.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.1.</b>
+                        
+                         常量和变量
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.2.2" data-path="basic/optional.html">
+            
+                
+                    <a href="../basic/optional.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.2.</b>
+                        
+                         Optional
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter active" data-level="0.2.3" data-path="basic/control flow.html">
+            
+                
+                    <a href="../basic/control flow.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.3.</b>
+                        
+                         控制流
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.2.4" data-path="basic/loop.html">
+            
+                
+                    <a href="../basic/loop.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.4.</b>
+                        
+                         循环
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.2.5" data-path="basic/string.html">
+            
+                
+                    <a href="../basic/string.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.5.</b>
+                        
+                         字符串
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.2.6" data-path="basic/collection.html">
+            
+                
+                    <a href="../basic/collection.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.6.</b>
+                        
+                         集合
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.3" data-path="func/README.html">
+            
+                
+                    <a href="../func/README.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.</b>
+                        
+                         函数
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="0.3.1" data-path="func/func.html">
+            
+                
+                    <a href="../func/func.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.1.</b>
+                        
+                         函数
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.3.2" data-path="func/closure.html">
+            
+                
+                    <a href="../func/closure.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.2.</b>
+                        
+                         闭包
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="0.3.2.1" data-path="func/closure define.html">
+            
+                
+                    <a href="../func/closure define.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.2.1.</b>
+                        
+                         闭包的定义
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.3.2.2" data-path="func/closure basic.html">
+            
+                
+                    <a href="../func/closure basic.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.2.2.</b>
+                        
+                         基本使用
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.3.2.3" data-path="func/closure retain cycle.html">
+            
+                
+                    <a href="../func/closure retain cycle.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.2.3.</b>
+                        
+                         循环引用
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.4" data-path="oop/README.html">
+            
+                
+                    <a href="../oop/README.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.</b>
+                        
+                         面向对象
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="0.4.1" data-path="oop/init basic.html">
+            
+                
+                    <a href="../oop/init basic.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.1.</b>
+                        
+                         构造函数基础
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.4.2" data-path="oop/overload init.html">
+            
+                
+                    <a href="../oop/overload init.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.2.</b>
+                        
+                         重载构造函数
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.4.3" data-path="oop/init kvc.html">
+            
+                
+                    <a href="../oop/init kvc.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.3.</b>
+                        
+                         KVC 构造函数
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.4.4" data-path="oop/init convenience.html">
+            
+                
+                    <a href="../oop/init convenience.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.4.</b>
+                        
+                         便利构造函数
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.4.5" data-path="oop/lazy.html">
+            
+                
+                    <a href="../oop/lazy.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.5.</b>
+                        
+                         懒加载
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.4.6" data-path="oop/read only.html">
+            
+                
+                    <a href="../oop/read only.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.6.</b>
+                        
+                         只读属性
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.5" data-path="network/README.html">
+            
+                
+                    <a href="../network/README.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.5.</b>
+                        
+                         网络访问
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.6" data-path="practice/README.html">
+            
+                
+                    <a href="../practice/README.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.6.</b>
+                        
+                         项目演练
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="0.6.1" data-path="practice/preparation.html">
+            
+                
+                    <a href="../practice/preparation.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.6.1.</b>
+                        
+                         准备工作
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.6.2" data-path="practice/load data.html">
+            
+                
+                    <a href="../practice/load data.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.6.2.</b>
+                        
+                         创建模型加载数据
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.6.3" data-path="practice/table view cell.html">
+            
+                
+                    <a href="../practice/table view cell.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.6.3.</b>
+                        
+                         自定义 Cell
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="0.6.4" data-path="practice/detail view controller.html">
+            
+                
+                    <a href="../practice/detail view controller.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.6.4.</b>
+                        
+                         明细控制器
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="http://www.gitbook.io/" target="blank" class="gitbook-link">Published using GitBook</a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Toggle search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Toggle font settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Toggle share dropdown"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">Twitter</button>
+                <button type="button" data-sharing="google-plus" class="button">Google</button>
+                <button type="button" data-sharing="facebook" class="button">Facebook</button>
+                <button type="button" data-sharing="weibo" class="button">Weibo</button>
+                <button type="button" data-sharing="instapaper" class="button">Instapaper</button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Share on Google Plus"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Share on Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Share on Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >Swift 简介</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-gitbook_11">
+                    
+                        <h1 id="">控制流</h1>
+<h2 id="if">if</h2>
+<ul>
+<li>Swift 中没有 C 语言中的<code>非零即真</code>概念</li>
+<li>在逻辑判断时必须显示地指明具体的判断条件 <code>true</code> / <code>false</code></li>
+<li>if 语句条件的 <code>()</code> 可以省略</li>
+<li>但是 <code>{}</code> 不能省略</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> num = <span class="hljs-number">200</span>
+<span class="hljs-keyword">if</span> num &lt; <span class="hljs-number">10</span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"比 10 小"</span>)
+} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> num &gt; <span class="hljs-number">100</span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"比 100 大"</span>)
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"10 ~ 100 之间的数字"</span>)
+}
+</code></pre>
+<h3 id="">三目运算</h3>
+<ul>
+<li>Swift 中的 <code>三目</code> 运算保持了和 OC 一致的风格</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-keyword">var</span> a = <span class="hljs-number">10</span>
+<span class="hljs-keyword">var</span> b = <span class="hljs-number">20</span>
+<span class="hljs-keyword">let</span> <span class="hljs-built_in">c</span> = a &gt; b ? a : b
+<span class="hljs-built_in">print</span>(<span class="hljs-built_in">c</span>)
+</code></pre>
+<blockquote>
+<p>适当地运用三目，能够让代码写得更加简洁</p>
+</blockquote>
+<h3 id="">可选项判断</h3>
+<ul>
+<li>由于可选项的内容可能为 <code>nil</code>，而一旦为 <code>nil</code> 则不允许参与计算</li>
+<li>因此在实际开发中，经常需要判断可选项的内容是否为 <code>nil</code></li>
+</ul>
+<h4 id="">单个可选项判断</h4>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> url = <span class="hljs-type">NSURL</span>(string: <span class="hljs-string">"http://www.baidu.com"</span>)
+
+<span class="hljs-comment">//: 方法1: 强行解包 - 缺陷，如果 url 为空，运行时会崩溃</span>
+<span class="hljs-keyword">let</span> request = <span class="hljs-type">NSURLRequest</span>(<span class="hljs-type">URL</span>: url!)
+
+<span class="hljs-comment">//: 方法2: 首先判断 - 代码中仍然需要使用 `!` 强行解包</span>
+<span class="hljs-keyword">if</span> url != <span class="hljs-built_in">nil</span> {
+    <span class="hljs-keyword">let</span> request = <span class="hljs-type">NSURLRequest</span>(<span class="hljs-type">URL</span>: url!)
+}
+
+<span class="hljs-comment">//: 方法3: 使用 `if let`，这种方式，表明一旦进入 if 分支，u 就不在是可选项</span>
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> u = url <span class="hljs-keyword">where</span> u.host == <span class="hljs-string">"www.baidu.com"</span> {
+    <span class="hljs-keyword">let</span> request = <span class="hljs-type">NSURLRequest</span>(<span class="hljs-type">URL</span>: u)
+}
+</code></pre>
+<h4 id="">可选项条件判断</h4>
+<pre><code class="lang-swift"><span class="hljs-comment">//: 1&gt; 初学 swift 一不小心就会让 if 的嵌套层次很深，让代码变得很丑陋</span>
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> u = url {
+    <span class="hljs-keyword">if</span> u.host == <span class="hljs-string">"www.baidu.com"</span> {
+        <span class="hljs-keyword">let</span> request = <span class="hljs-type">NSURLRequest</span>(<span class="hljs-type">URL</span>: u)
+    }
+}
+
+<span class="hljs-comment">//: 2&gt; 使用 where 关键字，</span>
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> u = url <span class="hljs-keyword">where</span> u.host == <span class="hljs-string">"www.baidu.com"</span> {
+    <span class="hljs-keyword">let</span> request = <span class="hljs-type">NSURLRequest</span>(<span class="hljs-type">URL</span>: u)
+}
+</code></pre>
+<ul>
+<li>小结<ul>
+<li><code>if let</code> 不能与使用 <code>&amp;&amp;</code>、<code>||</code> 等条件判断</li>
+<li>如果要增加条件，可以使用 <code>where</code> 子句</li>
+<li>注意：<code>where</code> 子句没有智能提示</li>
+</ul>
+</li>
+</ul>
+<h4 id="">多个可选项判断</h4>
+<pre><code class="lang-swift"><span class="hljs-comment">//: 3&gt; 可以使用 `,` 同时判断多个可选项是否为空</span>
+<span class="hljs-keyword">let</span> oName: <span class="hljs-type">String</span>? = <span class="hljs-string">"张三"</span>
+<span class="hljs-keyword">let</span> oNo: <span class="hljs-type">Int</span>? = <span class="hljs-number">100</span>
+
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> name = oName {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> no = oNo {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"姓名:"</span> + name + <span class="hljs-string">" 学号: "</span> + <span class="hljs-type">String</span>(no))
+    }
+}
+
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> name = oName, <span class="hljs-keyword">let</span> no = oNo {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"姓名:"</span> + name + <span class="hljs-string">" 学号: "</span> + <span class="hljs-type">String</span>(no))
+}
+</code></pre>
+<h4 id="">判断之后对变量需要修改</h4>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> oName: <span class="hljs-type">String</span>? = <span class="hljs-string">"张三"</span>
+<span class="hljs-keyword">let</span> oNum: <span class="hljs-type">Int</span>? = <span class="hljs-number">18</span>
+
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">var</span> name = oName, num = oNum {
+
+    name = <span class="hljs-string">"李四"</span>
+    num = <span class="hljs-number">1</span>
+
+    <span class="hljs-built_in">print</span>(name, num)
+}
+</code></pre>
+<h3 id="guard">guard</h3>
+<ul>
+<li><code>guard</code> 是与 <code>if let</code> 相反的语法，Swift 2.0 推出的</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> oName: <span class="hljs-type">String</span>? = <span class="hljs-string">"张三"</span>
+<span class="hljs-keyword">let</span> oNum: <span class="hljs-type">Int</span>? = <span class="hljs-number">18</span>
+
+guard <span class="hljs-keyword">let</span> name = oName <span class="hljs-keyword">else</span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"name 为空"</span>)
+    <span class="hljs-keyword">return</span>
+}
+
+guard <span class="hljs-keyword">let</span> num = oNum <span class="hljs-keyword">else</span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"num 为空"</span>)
+    <span class="hljs-keyword">return</span>
+}
+
+<span class="hljs-comment">// 代码执行至此，name &amp; num 都是有值的</span>
+<span class="hljs-built_in">print</span>(name)
+<span class="hljs-built_in">print</span>(num)
+</code></pre>
+<ul>
+<li>在程序编写时，条件检测之后的代码相对是比较复杂的</li>
+<li>使用 guard 的好处<ul>
+<li>能够判断每一个值</li>
+<li>在真正的代码逻辑部分，省略了一层嵌套</li>
+</ul>
+</li>
+</ul>
+<h2 id="switch">switch</h2>
+<ul>
+<li><code>switch</code> 不再局限于整数</li>
+<li><code>switch</code> 可以针对<code>任意数据类型</code>进行判断</li>
+<li>不再需要 <code>break</code></li>
+<li>每一个 <code>case</code>后面必须有可以执行的语句</li>
+<li>要保证处理所有可能的情况，不然编译器直接报错，不处理的条件可以放在 <code>default</code> 分支中</li>
+<li>每一个 <code>case</code> 中定义的变量仅在当前 <code>case</code> 中有效，而 OC 中需要使用 <code>{}</code></li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> score = <span class="hljs-string">"优"</span>
+
+<span class="hljs-keyword">switch</span> score {
+<span class="hljs-keyword">case</span> <span class="hljs-string">"优"</span>:
+    <span class="hljs-keyword">let</span> name = <span class="hljs-string">"学生"</span>
+    <span class="hljs-built_in">print</span>(name + <span class="hljs-string">"80~100分"</span>)
+<span class="hljs-keyword">case</span> <span class="hljs-string">"良"</span>: <span class="hljs-built_in">print</span>(<span class="hljs-string">"70~80分"</span>)
+<span class="hljs-keyword">case</span> <span class="hljs-string">"中"</span>: <span class="hljs-built_in">print</span>(<span class="hljs-string">"60~70分"</span>)
+<span class="hljs-keyword">case</span> <span class="hljs-string">"差"</span>: <span class="hljs-built_in">print</span>(<span class="hljs-string">"不及格"</span>)
+<span class="hljs-keyword">default</span>: <span class="hljs-keyword">break</span>
+}
+</code></pre>
+<ul>
+<li>switch 中同样能够赋值和使用 <code>where</code> 子句</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-keyword">let</span> point = <span class="hljs-type">CGPoint</span>(x: <span class="hljs-number">10</span>, y: <span class="hljs-number">10</span>)
+<span class="hljs-keyword">switch</span> point {
+<span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> p <span class="hljs-keyword">where</span> p.x == <span class="hljs-number">0</span> &amp;&amp; p.y == <span class="hljs-number">0</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"中心点"</span>)
+<span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> p <span class="hljs-keyword">where</span> p.x == <span class="hljs-number">0</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"Y轴"</span>)
+<span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> p <span class="hljs-keyword">where</span> p.y == <span class="hljs-number">0</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"X轴"</span>)
+<span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> p <span class="hljs-keyword">where</span> <span class="hljs-built_in">abs</span>(p.x) == <span class="hljs-built_in">abs</span>(p.y):
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"对角线"</span>)
+<span class="hljs-keyword">default</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"其他"</span>)
+}
+</code></pre>
+<ul>
+<li>如果只希望进行条件判断，赋值部分可以省略</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-keyword">switch</span> score {
+<span class="hljs-keyword">case</span> <span class="hljs-number">_</span> <span class="hljs-keyword">where</span> score &gt; <span class="hljs-number">80</span>: <span class="hljs-built_in">print</span>(<span class="hljs-string">"优"</span>)
+<span class="hljs-keyword">case</span> <span class="hljs-number">_</span> <span class="hljs-keyword">where</span> score &gt; <span class="hljs-number">60</span>: <span class="hljs-built_in">print</span>(<span class="hljs-string">"及格"</span>)
+<span class="hljs-keyword">default</span>: <span class="hljs-built_in">print</span>(<span class="hljs-string">"其他"</span>)
+}
+</code></pre>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../basic/optional.html" class="navigation navigation-prev " aria-label="Previous page: Optional"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../basic/loop.html" class="navigation navigation-next " aria-label="Next page: 循环"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+    
+    <script src="https://cdn.mathjax.org/mathjax/2.4-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

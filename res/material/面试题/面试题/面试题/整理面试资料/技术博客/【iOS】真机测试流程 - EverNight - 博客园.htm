@@ -1,0 +1,251 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0047)http://www.cnblogs.com/EverNight/p/3834452.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml"><HEAD><META 
+content="IE=10.0000" http-equiv="X-UA-Compatible">
+ 
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<TITLE>【iOS】真机测试流程 - EverNight - 博客园</TITLE> <LINK href="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/blog-common.css" 
+rel="stylesheet" type="text/css"> <LINK id="MainCss" href="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/style.css" 
+rel="stylesheet" type="text/css"> <LINK title="RSS" href="http://www.cnblogs.com/EverNight/rss" 
+rel="alternate" type="application/rss+xml"> <LINK title="RSD" href="http://www.cnblogs.com/EverNight/rsd.xml" 
+rel="EditURI" type="application/rsd+xml"> <LINK href="http://www.cnblogs.com/EverNight/wlwmanifest.xml" 
+rel="wlwmanifest" type="application/wlwmanifest+xml"> 
+<SCRIPT src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/jquery.js" type="text/javascript"></SCRIPT>
+  
+<SCRIPT type="text/javascript">var currentBlogApp = 'EverNight', cb_enable_mathjax=false;</SCRIPT>
+ 
+<SCRIPT src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/blog-common.js" type="text/javascript"></SCRIPT>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.9600.17207"></HEAD> 
+<BODY><A name="top"></A> <!--done--> 
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><A id="lnkBlogLogo" 
+href="http://www.cnblogs.com/EverNight/"><IMG id="blogLogo" alt="返回主页" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/logo.gif"></A>			
+		<!--done--> 
+<H1><A class="headermaintitle" id="Header1_HeaderTitle" href="http://www.cnblogs.com/EverNight/">幻想乡的技术宅</A></H1>
+<H2></H2></DIV><!--end: blogTitle 博客的标题和副标题 --> </DIV><!--end: header 头部 --> 
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow">
+<DIV id="navigator"><!--done-->			 
+<UL id="navList">
+  <LI><A class="menu" id="MyLinks1_HomeLink" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A class="menu" id="MyLinks1_IngLink" 
+  href="http://home.cnblogs.com/ing/">闪存</A></LI>
+  <LI><A class="menu" id="MyLinks1_MyHomeLink" href="http://www.cnblogs.com/EverNight/">首页</A></LI>
+  <LI><A class="menu" id="MyLinks1_NewPostLink" href="http://i.cnblogs.com/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A class="menu" id="MyLinks1_ContactLink" accesskey="9" href="http://space.cnblogs.com/msg/send/EverNight" 
+  rel="nofollow">联系</A></LI>
+  <LI><A class="menu" id="MyLinks1_Admin" href="http://i.cnblogs.com/" rel="nofollow">管理</A></LI>
+  <LI><A class="menu" id="MyLinks1_Syndication" href="http://www.cnblogs.com/EverNight/rss">订阅</A>
+  				 <A class="aHeaderXML" id="MyLinks1_XMLLink" href="http://www.cnblogs.com/EverNight/rss"><IMG 
+  alt="订阅" 
+src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/xml.gif"></A></LI></UL>
+<DIV class="blogStats"><!--done--> 随笔- 4&nbsp; 文章- 0&nbsp; 评论- 1&nbsp;				
+			 </DIV><!--end: blogStats -->		 </DIV><!--end: navigator 博客导航栏 -->		 <!--done--> 
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A class="postTitle2" id="cb_post_title_url" href="http://www.cnblogs.com/EverNight/p/3834452.html">【iOS】真机测试流程</A>
+		 </H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV id="cnblogs_post_body">
+<P>1：进入苹果开发者平台</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091559596929209.png"></P>
+<P>2：进入Member Center</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091610238798403.png"></P>
+<P>3：输入开发者账号和密码</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091611372857030.png"></P>
+<P>4：选择：Certificates, Identifiers &amp; Profiles</P>
+<P><IMG width="728" height="368" alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091612205206504.png"></P>
+<P>5：选择Certificates</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091614498171715.png"></P>
+<P>6：点击加号创建一个证书</P>
+<P>证书分两种，Development开发证书，Production发布证书</P>
+<P>测试的话使用发开证书</P>
+<P><IMG width="541" height="260" alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091621266143538.png"></P>
+<P>然后选择下一步</P>
+<P>7：上传CSR文件</P>
+<P>打开钥匙串</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091624437852444.png"><IMG 
+alt="" 
+src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091624490511619.png"><IMG alt="" 
+src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091624552701951.png"></P>
+<P>通过证书助理请求证书</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091627399266788.png"></P>
+<P>填写对应信息，选择保存到本地即可</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091631556607550.png"></P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091719191926664.png"></P>
+<P>上传文件</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091720002704980.png"></P>
+<P>创建完成</P>
+<P><IMG width="644" height="526" alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091746354898175.png"></P>
+<P>8：下载并安装证书</P>
+<P>点击Download下载证书，并双击添加到钥匙串中</P>
+<P>（如果双击添加时出现错误，直接将文件拖到钥匙串中即可）</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091749167235683.png"></P>
+<P>此时，在列表中可以看到刚创建的证书</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091750379106979.png"></P>
+<P>9：添加app id</P>
+<P><IMG width="768" height="356" alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091815174109250.png"></P>
+<P>按顺序填表</P>
+<P>app id 的描述（可以随便写）</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091823535674597.png"></P>
+<P>app id 的前缀（系统已经填好）</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091827255046881.png"></P>
+<P>app id 的后缀</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091828076764364.png"></P>
+<P>有两个选项</P>
+<P>第一个选项：明确的app id 与项目中的Bundle Identifier相对应</P>
+<P>如果你打算将应用程序中加入Game 
+Center，或在应用中使用应用内购买，进行数据保护，使用iCloud，或者想要给你的应用程序一个唯一的配置文件，你就必须申请Explicit App 
+ID。</P>
+<P>格式：com.companyName.appName</P>
+<P>第二个选项：通用app id</P>
+<P>可以在所有不需要明确id的app中使用</P>
+<P>格式：com.companyName.*</P>
+<P>填写需要的服务：</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091836234579266.png"></P>
+<P>然后提交，即可生成app id</P>
+<P>这时候可以在列表中找到刚生成的app id</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091840194107647.png"></P>
+<P>10：添加设备</P>
+<P><IMG width="781" height="369" alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091843575987057.png"></P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091848475515142.png"></P>
+<P>Name：设备的描述</P>
+<P>UDID：设备的标号</P>
+<P>将设备连接到电脑上，进入Xcode，将编号复制到对应位置</P>
+<P><IMG width="634" height="335" alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091850317399179.png"></P>
+<P>点击提交完成。</P>
+<P>11：申请描述文件</P>
+<P><IMG width="789" height="474" alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091901357705614.png"></P>
+<P>选择开发模式，点击继续</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091902513796114.png"></P>
+<P>选择刚才申请的app id</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091905274102012.png"></P>
+<P>选择开发者证书</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091907210357198.png"></P>
+<P>选择设备</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091910500207687.png"></P>
+<P>为描述文件起一个名字。完成创建并下载。</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091911565987980.png"></P>
+<P>12：配置xcode</P>
+<P>双击安装上一步下载的描述文件</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091915326141021.png"></P>
+<P>在Xcode中打开你的项目，修改Bundle id 与code signing中的信息</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091919318177342.png"></P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091919435672820.png"></P>
+<P>13：运行程序</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091924392709413.png"></P>
+<P>14：导出P12文件（授权其他电脑进行真机测试）</P>
+<P>打开钥匙串，导出p12文件</P>
+<P><IMG alt="" src="【iOS】真机测试流程%20-%20EverNight%20-%20博客园_files/091944413014219.png"></P>
+<P>将p12文件与provision profile文件和证书一起拷贝到其他mac上双击安装就可使用了。</P>
+<P>&nbsp;</P></DIV>
+<DIV id="MySignature"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="blog_post_info_block">
+<DIV id="BlogPostCategory"></DIV>
+<DIV id="EntryTag"></DIV>
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV></DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2014-07-09 19:48</SPAN> <A 
+href="http://www.cnblogs.com/EverNight/">EverNight</A> 阅读(<SPAN id="post_view_count">...</SPAN>) 
+评论(<SPAN id="post_comment_count">...</SPAN>)  <A href="http://i.cnblogs.com/EditPosts.aspx?postid=3834452" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(3834452);return false;" href="http://www.cnblogs.com/EverNight/p/3834452.html#">收藏</A></DIV></DIV>
+<SCRIPT type="text/javascript">var allowComments=true,isLogined=true,cb_blogId=189881,cb_entryId=3834452,cb_blogApp=currentBlogApp,cb_blogUserGuid='8638a865-1cfd-e311-8d02-90b11c0b17d6',cb_entryCreatedDate='2014/7/9 19:48:00';loadViewCount(cb_entryId);</SCRIPT>
+	 </DIV><!--end: topics 文章、评论容器--> <A name="!comments"></A>
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+ 
+<DIV class="commentform" id="comment_form"><A name="commentform"></A> 
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/EverNight/p/3834452.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/EverNight/p/3834452.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<DIV class="ad_text_commentbox" id="ad_text_under_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="开发者的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="opt_under_post"></DIV>
+<SCRIPT type="text/javascript">
+    var enableGoogleAd = true;var googletag = googletag || {};googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</SCRIPT>
+ 
+<DIV id="ad_under_post_holder">
+<SCRIPT type="text/javascript">
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        var gads = document.createElement('script');
+        gads.async = true;
+        gads.type = 'text/javascript';
+        var useSSL = 'https:' == document.location.protocol;
+        gads.src = (useSSL ? 'https:' : 'http:') +'//www.googletagservices.com/tag/js/gpt.js';
+        var node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(gads, node);
+    })();
+</SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+    try {
+        googletag.cmd.push(function () {
+            googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    } catch (e) { }
+</SCRIPT>
+ 
+<DIV class="c_ad_block" id="google_ad_c1">
+<DIV id="div-gpt-ad-1346480159711-0" style="width: 300px; height: 250px;">
+<SCRIPT type="text/javascript">
+    try{
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });
+    } catch (e) { }
+    </SCRIPT>
+     </DIV></DIV></DIV>
+<DIV id="blog_news_kb"></DIV>
+<DIV class="c_ad_block" id="HistoryToday"></DIV>
+<SCRIPT type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    $.ajax({ url: 'http://counter.cnblogs.com/blog/post/' + cb_entryId, type: 'get', dataType: 'script', cache: true });
+});
+</SCRIPT>
+ </DIV></DIV><!--end: forFlow -->	 </DIV><!--end: mainContent 主体内容容器-->	 
+<DIV id="sideBar">
+<DIV id="sideBarMain"><!--done--> 
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV>
+<SCRIPT type="text/javascript">loadBlogNews();</SCRIPT>
+ </DIV>
+<DIV id="calendar">
+<DIV id="blog-calendar" style="display: none;"></DIV>
+<SCRIPT type="text/javascript">loadBlogDefaultCalendar();</SCRIPT>
+</DIV>
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV>
+<SCRIPT type="text/javascript">loadBlogSideColumn();</SCRIPT>
+			 </DIV></DIV><!--end: sideBarMain -->	 </DIV><!--end: sideBar 侧边栏容器 -->	 
+<DIV class="clear"></DIV></DIV><!--end: main -->	 
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done--> Copyright ©2014 EverNight	 </DIV><!--end: footer --> 
+</DIV><!--end: home 自定义的最大容器 --> </BODY></HTML>

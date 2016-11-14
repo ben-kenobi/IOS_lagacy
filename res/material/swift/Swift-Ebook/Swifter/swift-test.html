@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Swift 中的测试 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_98">Swift 中的测试</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="swift-%E4%B8%AD%E7%9A%84%E6%B5%8B%E8%AF%95" class="calibre1">Swift 中的测试</h1>
+<p class="calibre9">在软件开发中，测试的重要性不言而喻。Xcode 中集成了 XCTest 作为测试框架，Swift 代码的测试默认也使用这个框架进行。</p>
+<p class="calibre9">关于 XCTest 的使用方法，比如像 <code class="calibre13 pcalibre6 pcalibre5">setUp</code>，<code class="calibre13 pcalibre6 pcalibre5">tearDown</code> 以及 <code class="calibre13 pcalibre6 pcalibre5">testxxx</code> 等在 Swift 下和以前也并没有什么不同，作为一本介绍 tip 的书籍，我不打算在此重复这些。如果对测试的理论基础和实践方法感兴趣的话，不妨看看 Objective-C 中国上相关的<a href="http://objccn.io/issue-15/" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">话题文章</a>。</p>
+<p class="calibre9">XCTest 中测试和待测试的 app 是分别独立存在于两个不同的 target 里的。这在 Swift 2.0 之前使测试 Swift 代码时面临了由访问权限带来的巨大困境。在 Objective-C 时代，测试的 target 通过依赖应用 target 并导入头文件来获取 app 的 API 并对其进行测试。而在 Swift 中因为 module 模块的管理方法和访问控制权限的设计，使得这个过程出现了问题：一般对于 app，我们都不会将方法标记为 <code class="calibre13 pcalibre6 pcalibre5">public</code>，而会遵循访问权限最小的原则，使用默认的 <code class="calibre13 pcalibre6 pcalibre5">internal</code> 或者是 <code class="calibre13 pcalibre6 pcalibre5">private</code>。对于有些 <code class="calibre13 pcalibre6 pcalibre5">internal</code> 的方法，其实我们是需要去进行测试的。但是由于测试的 target 和 app 的 target 是不同的，因此在测试中导入 app 的 module 后我们是访问不到那些默认 <code class="calibre13 pcalibre6 pcalibre5">internal</code> 的待测试方法的，这就使得测试变得不可能了。</p>
+<p class="calibre9">如果我们正在开发的是一个类库的话，为了别人能导入和使用我们的库，我们需要把对外的方法和成员都标记成 <code class="calibre13 pcalibre6 pcalibre5">public</code>，这样我们就能直接在测试 target 中导入类库 target 并访问到待测试 API 了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// 位于框架 target 的业务代码</span>
+public <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">methodToTest</span><span class="hljs-params">()</span></span> {
+
+}
+
+<span class="hljs-title">// 测试</span>
+<span class="hljs-keyword">import</span> <span class="hljs-func">MyFramework</span>
+
+<span class="hljs-title">//...</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">testMethodToTest</span><span class="hljs-params">()</span></span> {
+
+    <span class="hljs-title">// 配置测试</span>
+
+    someObj.methodToTest()
+
+    <span class="hljs-title">// 断言结果</span>
+}
+</code></pre>
+<p class="calibre9">对于类库来说，这种做法是没什么问题的 -- 那些被标记为 <code class="calibre13 pcalibre6 pcalibre5">public</code> 的东西恰好就是需要被测试的代码接口。但是对于 app 开发时的测试来说，我们需要尽可能地控制访问权限：我们没有理由为一些理论上不存在外部调用可能的代码赋予 <code class="calibre13 pcalibre6 pcalibre5">public</code> 这样高级的权限，这违背了最小权限的设计原则。对 app 的测试在 Swift 1.x 的时代中一直是一个很麻烦的问题。而在 Swift 2.0 中， Apple 为 app 的测试开了“后门”。现在我们可以通过在测试代码中导入 app 的 target 时，在之前追加 <code class="calibre13 pcalibre6 pcalibre5">@testable</code>，就可以访问到 app target 中 <code class="calibre13 pcalibre6 pcalibre5">internal</code> 的内容了。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// 位于 app target 的业务代码</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">methodToTest</span><span class="hljs-params">()</span></span> {
+
+}
+
+<span class="hljs-title">// 测试</span>
+@testable <span class="hljs-keyword">import</span> <span class="hljs-func">MyApp</span>
+
+<span class="hljs-title">//...</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">testMethodToTest</span><span class="hljs-params">()</span></span> {
+
+    <span class="hljs-title">// 配置测试</span>
+
+    someObj.methodToTest()
+
+    <span class="hljs-title">// 断言结果</span>
+}
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

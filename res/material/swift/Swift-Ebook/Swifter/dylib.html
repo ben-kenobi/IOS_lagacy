@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>调用 C 动态库 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_67">调用 C 动态库</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E8%B0%83%E7%94%A8-c-%E5%8A%A8%E6%80%81%E5%BA%93" class="calibre1">调用 C 动态库</h1>
+<p class="calibre9">C 是程序世界的宝库，在我们面向的设备系统中，也内置了大量的 C 动态库帮助我们完成各种任务。比如涉及到压缩的话我们很可能会借助于 <code class="calibre13 pcalibre6 pcalibre5">libz.dylib</code>，而像 xml 的解析的话一般链接 <code class="calibre13 pcalibre6 pcalibre5">libxml.dylib</code> 就会方便一些。</p>
+<p class="calibre9">因为 Objective-C 是 C 的超集，因此在以前我们可以无缝地访问 C 的内容，只需要指定依赖并且导入头文件就可以了。但是骄傲的 Swift 的目的之一就是甩开 C 的历史包袱，所以现在在 Swift 中直接使用 C 代码或者 C 的库是不可能的。举个例子，计算某个字符串的 <code class="calibre13 pcalibre6 pcalibre5">MD5</code> 这样简单地需求，在以前我们直接使用 <code class="calibre13 pcalibre6 pcalibre5">CommonCrypto</code> 中的 <code class="calibre13 pcalibre6 pcalibre5">CC_MD5</code> 就可以了，但是现在因为我们在 Swift 中无法直接写 <code class="calibre13 pcalibre6 pcalibre5">#import &lt;CommonCrypto/CommonCrypto.h&gt;</code> 这样的代码，这些动态库暂时也没有 module 化，因此快捷的方法就只有借助于通过 Objective-C 来进行调用了。因为 Swift 是可以通过 <code class="calibre13 pcalibre6 pcalibre5">{product-module-name}-Bridging-Header.h</code> 来调用 Objective-C 代码的，于是 C 作为 Objective-C 的子集，自然也一并被解决了。比如对于上面提到的 <code class="calibre13 pcalibre6 pcalibre5">MD5</code> 的例子，我们就可以通过头文件导入以及添加 <code class="calibre13 pcalibre6 pcalibre5">extension</code> 来解决：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// TargetName-Bridging-Header.h</span>
+#<span class="hljs-keyword">import</span> &lt;<span class="hljs-func">CommonCrypto</span>/<span class="hljs-func">CommonCrypto</span>.h&gt;
+
+<span class="hljs-title">// StringMD5.swift</span>
+<span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">String</span> </span>{
+     <span class="hljs-keyword">var</span> <span class="hljs-func">MD5</span>: <span class="hljs-func">String</span> {
+        <span class="hljs-keyword">let</span> cString = <span class="hljs-keyword">self</span>.cStringUsingEncoding(<span class="hljs-func">NSUTF8StringEncoding</span>)
+        <span class="hljs-keyword">let</span> length = <span class="hljs-func">CUnsignedInt</span>(
+                <span class="hljs-keyword">self</span>.lengthOfBytesUsingEncoding(<span class="hljs-func">NSUTF8StringEncoding</span>)
+            )
+        <span class="hljs-keyword">let</span> result = <span class="hljs-func">UnsafeMutablePointer</span>&lt;<span class="hljs-func">CUnsignedChar</span>&gt;.alloc(
+                        <span class="hljs-func">Int</span>(<span class="hljs-func">CC_MD5_DIGEST_LENGTH</span>)
+                     )
+
+        <span class="hljs-func">CC_MD5</span>(cString!, length, result)
+
+        <span class="hljs-keyword">return</span> <span class="hljs-func">String</span>(format:
+            <span class="hljs-string">"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"</span>,
+            result[<span class="hljs-params">0</span>], result[<span class="hljs-params">1</span>], result[<span class="hljs-params">2</span>], result[<span class="hljs-params">3</span>],
+            result[<span class="hljs-params">4</span>], result[<span class="hljs-params">5</span>], result[<span class="hljs-params">6</span>], result[<span class="hljs-params">7</span>],
+            result[<span class="hljs-params">8</span>], result[<span class="hljs-params">9</span>], result[<span class="hljs-params">10</span>], result[<span class="hljs-params">11</span>],
+            result[<span class="hljs-params">12</span>], result[<span class="hljs-params">13</span>], result[<span class="hljs-params">14</span>], result[<span class="hljs-params">15</span>])
+    }
+}
+
+<span class="hljs-title">// 测试</span>
+<span class="hljs-params">print</span>(<span class="hljs-string">"swifter.tips"</span>.<span class="hljs-func">MD5</span>)
+
+<span class="hljs-title">// 输出</span>
+<span class="hljs-title">// dff88de99ff03d109de22fed4f71a273</span>
+</code></pre>
+<p class="calibre9">当然，那些有强迫症的处女座读者可能不会希望在代码中沾上哪怕一点点 C 的东西，而更愿意面对纯纯的 Swift 代码，这样的话，也不妨重新制作 Swift 版本的轮子。比如对于 <code class="calibre13 pcalibre6 pcalibre5">CommonCrypto</code> 里的功能，已经可以在<a href="https://github.com/krzyzanowskim/CryptoSwift" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">这里</a>找到完整的 Swift 实现了，如果你只是需要 MD5 的话，<a href="https://github.com/onevcat/Kingfisher/blob/master/Kingfisher/String%2BMD5.swift" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">这里</a>也有一个实现。不过如果可能的话，暂时还是建议尽量使用现有的经过无数时间考验的 C 库。一方面现在 Swift 还很年轻，各种第三方库的引入和依赖机制还并不是很成熟；另外，使用动态库毕竟至少可以减少一些 app 尺寸，不是么？</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

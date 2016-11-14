@@ -1,0 +1,1227 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="exporter-version" content="Evernote Mac 5.5.1 (402628)"/><meta name="altitude" content="52.38969039916992"/><meta name="author" content="zhangzz7998@163.com"/><meta name="created" content="2015-07-30 13:15:32 +0000"/><meta name="latitude" content="40.03981955599307"/><meta name="longitude" content="116.2848196512762"/><meta name="source" content="desktop.mac"/><meta name="updated" content="2015-10-27 09:04:25 +0000"/><title>面试知识点</title></head><body style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<div><span style="font-size: 24px;"><b>Objc</b></span></div>
+<div><span style="font-size: 18px;"><b>一.三大特性</b></span></div>
+<div>1.封装_点语法</div>
+<div>1&gt; 本质</div>
+<div>//以下代码有什么问题</div>
+<div>- (void)setName:(NSString *)name {</div>
+<div>  self.name = name;  </div>
+<div>}</div>
+<div>- (NSString *)name {</div>
+<div>  return self.name;</div>
+<div>}</div>
+<div><br/></div>
+<div>点语法的本质是调用类的getter方法和setter方法，如果类中没有getter方法和setter方法就不能使用点语法。</div>
+<div><br/></div>
+<div>2.继承</div>
+<div>1&gt; 如何实现多重继承</div>
+<div><strong>消息转发    forwardingTargetForSelector   methodSignatureForSelector   forwardInvocation</strong></div>
+<div>
+<div><strong>delegate和protocol  </strong></div>
+</div>
+<div><strong>类别   </strong></div>
+<div><a href="http://www.cocoachina.com/ios/20130528/6295.html">http://www.cocoachina.com/ios/20130528/6295.html</a></div>
+<div><br/></div>
+<div>3.多态</div>
+<div>1&gt; 什么是多态</div>
+<div>  多态：不同对象以自己的方式响应相同的消息的能力叫做多态。</div>
+<div>  由于每个类都属于该类的名字空间，这使得多态称为可能。类定义中的名字和类定义外的名字并不会冲突。类的实例变量和类方法有如下特点：</div>
+<ul>
+<li>和C语言中结构体中的数据成员一样，类的实例变量也位于该类独有的名字空间。</li>
+</ul>
+<ul>
+<li>类方法也同样位于该类独有的名字空间。与C语言中的方法名不同，类的方法名并不是一个全局符号。一个类中的方法名不会和其他类中同样的方法名冲突。两个完全不同的类可以实现同一个方法。</li>
+</ul>
+<div>方法名是对象接口的一部分。对象收到的消息的名字就是调用的方法的名字。因为不同的对象可以有同名的方法，所以对象必须能理解消息的含义。同样的消息发给不同的对象，导致的操作并不相同。</div>
+<div>  多态的主要好处就是简化了编程接口。它容许在类和类之间重用一些习惯性的命名，而不用为每一个新加的函数命名一个新名字。这样，编程接口就是一些抽象的行为的集合，从而和实现接口的类区分开来。</div>
+<div>  Objective-C支持方法名的多态，但不支持参数和操作符的多态。</div>
+<div>2&gt; OC中如何实现多态</div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">     在Objective-C中是通过一个叫做selector的选取器实现的。在Objective-C中，selector有两个意思， 当用在给对象的源码消息时，用来指方法的名字。它也指那个在源码编译后代替方法名的唯一的标识符。 编译后的选择器的类型是SEL有同样名字的方法、也有同样的选择器。你可以使用选择器来调用一个对象的方法。</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">     选取器有以下特点：</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">     * 所有同名的方法拥有同样的选取器</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">     * 所有的选取器都是不一样的</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">     (1) SEL和@selector</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">          选择器的类型是 SEL。@selector指示符用来引用选择器，返回类型是SEL。</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">          例如：</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">         SEL responseSEL;      </span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">                responseSEL = @selector(loadDataForTableView:);     </span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">         可以通过字符串来得到选取器，例如：</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">               responseSEL = NSSelectorFromString(@"loadDataForTableView:");</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">         也可以通过反向转换，得到方法名，例如：</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">               NSString  *methodName = NSStringFromSelector(responseSEL);</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">     (2) 方法和选取器</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">         选取器确定的是方法名，而不是方法实现。这是多态性和动态绑定的基础，它使得向不同类对象发送相同的消息成为现实；否则，发送     消息和标准C中调用方法就没有区别，也就不可能支持多态性和动态绑定。</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">         另外，同一个类的同名类方法和实例方法拥有相同的选取器。</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">     (3) 方法返回值和参数类型</span></span></div>
+<div><span style="color: rgb(51, 51, 51);"><span style="font-family: Arial;">         消息机制通过选取器找到方法的返回值类型和参数类型，因此，动态绑定（例：向id定义的对象发送消息）需要同名方法的实现拥有相     同返回值类型和相同的参数类型；否则，运行时可能出现找不到对应方法的错误。</span></span></div>
+<div style="text-align: left;"><span style="font-family: Arial;"><span style="color: rgb(51, 51, 51);">         有一个例外，虽然同名类方法和实例方法拥有相同的选取器，但是它们可以有不同的参数类型和返回值类型。</span></span></div>
+<div>3&gt; 动态绑定</div>
+<div><br/></div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>二.类和对象</b></span></div>
+<div>1.category</div>
+<div>
+<div><b>1&gt; 分类 拓展 协议中哪些可以声明属性?</b></div>
+<div>都可以,但分类和协议创建的属性只相当于方法,但是内部没有对成员变量的操作(无法创建成员变量),拓展可以(私有成员变量)</div>
+<div>代理中声明属性,没有实际创建成员变量,相当于声明了属性名对应的访问方法,遵守协议的类需要实现对应的访问器方法,否则运行报错</div>
+</div>
+<div>分类中声明属性,警告提示需要手动实现访问器方法(Swift中叫计算型属性),而分类中不能创建成员变量,可以在手写访问器方法中使用runtime的 objc_setAssociatedObject方法关联对象间接创建属性(静态库添加属性)</div>
+<div>拓展里可以声明属性,直接可以使用</div>
+<div>
+<div><b>2&gt; 继承和类别的区别</b></div>
+<div>1&gt; 使用继承:</div>
+<div>1.1&gt; 添加新方法和父类方法一致,但父类方法仍需要使用</div>
+<div>1.2&gt; 添加新属性</div>
+<div>2&gt; 类别:</div>
+<div>2.1&gt; 针对系统提供的一些类,系统本身不提倡继承,因为这些类的内部实现对继承有所限制(NSString initWithFormat继承崩溃)</div>
+<div>2.2&gt; 类别可以将自己构建的类中的方法进行分组,对于大型的类,提高可维护性</div>
+<div><b>3&gt; 分类的作用</b></div>
+<div>将类的实现分散到多个不同文件或多个不同框架中。</div>
+</div>
+<div>创建对私有方法的前向引用。</div>
+<div>向对象添加非正式协议。</div>
+<div>(非正式协议:即NSObject的分类,声明方法可以不实现,OC2.0以前protocal没有@optional,主要使用分类添加可选协议方法</div>
+<div>oc中声明方法不实现,不调用则只警告不报错</div>
+<div>正式协议的优点:可继承,泛型约束</div>
+<div>如kvo的<code>observeValueForKeyPath属于nsobject的分类,且不需要调父类,说明可选实现该方法<span style="font-family: 'Helvetica Neue';">,没警告可能是编译器规则过滤</span></code>)</div>
+<div>
+<div><b>4&gt; 分类的局限性</b></div>
+<div>无法向类中添加新的实例变量，类别没有位置容纳实例变量。</div>
+</div>
+<div>名称冲突，即当类别中的方法与原始类方法名称冲突时，类别具有更高的优先级。类别方法将完全取代初始方法从而无法再使用初始方法。</div>
+<div>无法添加实例变量的局限可以使用字典对象解决。</div>
+<div>
+<div>2.extension</div>
+</div>
+<div>3.protocol</div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>三.Foundation</b></span></div>
+<div><b>1.字符串</b></div>
+<div>1&gt; 字符串比较  </div>
+<div>NSString *a = @“hello”;</div>
+<div>NSString *b = [NSString stringWithFormat:@hello”];</div>
+<div>if (a == b){</div>
+<div>     nslog(@“a==b”);  }</div>
+<div>if ([a isEqualToString: b]){</div>
+<div>     nslog(@“a isEqualToString b”);  }</div>
+<div><br/></div>
+<div>== 比较变量中保存的数值(地址)   速度快    内容同,可能地址不同(常量区,堆区)</div>
+<div>isEqualTo 比较字符串   非常耗时</div>
+<div><br/></div>
+<div>2&gt; 字符串截取</div>
+<div>截取字符串”20 | http://www.baidu.com”中,”|”字符前面和后面的数据,分别输出它们。</div>
+<div>NSString * str = @"20 | http://www.baidu.com";</div>
+<div>NSArray *array = [str componentsSeparatedByString:@"|"]; //这是分别输出的截取后的字符串</div>
+<div>for (int i = 0; i&lt;[array count]; ++i) {</div>
+<div>NSLog(@"%d=%@",i,[array objectAtIndex:i]);</div>
+<div>}</div>
+<div><br/></div>
+<div>3&gt; 格式</div>
+<div><font face="Menlo">NSString *str1 = [NSString stringWithFormat:@"a"b”];    //报错，a”后加b非法</font><br/></div>
+<div><font face="Menlo">NSString *str2 = [NSString stringWithFormat:@“a""b”];   //显示  ab<br/></font></div>
+<div><font face="Menlo">NSString *str3 = [NSString stringWithFormat:@“a\"b”];   //显示  a”b  反斜杠转义</font><span style="font-family: Menlo;"><br/></span></div>
+<div><br/></div>
+<div><br/></div>
+<div><b>2.NSArray和NSDictionary</b></div>
+<div>
+<div><b>1&gt; iOS遍历数组/字典的方法</b></div>
+<div>数组:  for循环  for in    enumerateObjectsUsingBlock(正序)    enumerateObjectsWithOptions:usingBlock:(多一个遍历选项,不保证顺序)</div>
+<div>字典:</div>
+<div>1. for(NSString *object in [testDic allValues])</div>
+<div>2. for(id akey in [testDic allKeys]){</div>
+<div>[sum appendString:[testDic objectForKey:akey]];  }</div>
+<div>3. [testDic enumerateKeysAndObjectsUsingBlock:^(idkey,idobj,BOOL*stop) {</div>
+<div>        [sum appendString:obj];  } ];</div>
+<div>速度:  对于数组, 增强for最快,普通for和block速度差不多,增强最快是因为增强for语法会对容器里的元素的内存地址建立缓冲,遍历的时候直接从缓冲中取元素地址而不是通过调用方法来获取,所以效率高.这也是使用增强for时不能在循环体中修改容器元素的原因之一(可以在循环体中添加标记,在循环体外修改元素)</div>
+</div>
+<div>对于字典,allValues最快,allKey和block差不多,原因是allKey需要做objcetForKey的方法</div>
+<div><b>3.NSValue NSNumber </b></div>
+<div>1&gt; 归档视图尺寸，坐标</div>
+<div><br/></div>
+<div><b>4.其他</b></div>
+<div>nil Nil null NSNull 的区别</div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>四.关键字</b></span></div>
+<div><b>1.@property</b></div>
+<div>
+<div><b>1&gt;readwrite，readonly，assign，retain，copy，nonatomic属性的作用</b></div>
+<div>@property是一个属性访问声明，扩号内支持以下几个属性：</div>
+<div>1.1&gt; getter setter</div>
+<div>getter=getterName，setter=setterName，设置setter与getter的方法名</div>
+<div>1.2&gt; weak assign strong copy</div>
+<div>assign  用于非指针变量。用于基础数据类型 （例如NSInteger）和C数据类型（int, float, double, char, 等),另外还有id,其setter方法直接赋值，不进行任何retain操作</div>
+<div>weak    用于指针变量,比assign多了一个功能,当对象消失后自动把指针变成nil,由于消息发送给空对象表示无操作,这样有效的避免了崩溃(野指针),为了解决原类型与循环引用问题</div>
+<div>strong  用于指针变量,setter方法对参数进行release旧值再retain新值</div>
+<div>copy    用于指针变量,setter方法进行copy操作，与retain处理流程一样，先旧值release，再copy出新的对象，retainCount为1。这是为了减少对上下文的依赖而引入的机制。copy是在你不希望a和b共享一块内存时会使用到。a和b各自有自己的内存。</div>
+<div>1.3&gt; readwrite,readonly，设置可供访问级别</div>
+</div>
+<div>1.4&gt; nonatomic，非原子性访问，不加同步，多线程并发访问会提高性能。注意，如果不加此属性，则默认是两个访问方法都为原子型事务访问。所以约定俗成只在主线程更新UI,防止多线程设置UI属性,出现资源抢夺现象</div>
+<div><b>2&gt; 如何避免循环引用 </b></div>
+<div>两个对象相互强引用，都无法release，解决办法为一个使用strong，一个使用assign（weak）</div>
+<div><b>3&gt; delegate的属性为什么使用assign/weak</b></div>
+<div>避免出现循环引用，场景如UITableViewController强引用视图UITableView,而该视图的代理又是控制器，为避免循环引用，让delegate为弱引用</div>
+<div><br/></div>
+<div>
+<div><b>2.copy</b></div>
+<div><b>1&gt; copy的使用场景</b></div>
+<div>当多个指针指向同一个对象时,为避免一个指针对对象的改动对其他指针的使用产生影响,使用copy来创建对象的副本</div>
+<div>如页面间传值使用copy,A向B控制器传属性(属性为自定义对象),为避免因A的属性变化对B的属性产生影响</div>
+<div>再如多人开发或封装库,在不明确传入值为可变还是不可变的情况下,使用copy更安全</div>
+<div><b>2&gt; 什么是深拷贝浅拷贝</b></div>
+<div>对于非容器类对象,不可变对象进行copy操作为浅拷贝,引用计数器加1,其他三种为深拷贝</div>
+</div>
+<div>对于容器类对象,基本和非容器类对象一致,但注意其深拷贝是对象本身是对象复制,其中元素仍为指针复制,系统将initWithArray方法归为了元素深拷贝,但其实如果元素为不可变元素,仍为指针复制,使用归解档可以实现真正的深拷贝,元素也是对象拷贝NSArray* trueDeepCopyArray = [NSKeyedUnarchiver unarchiveObjectWithData:</div>
+<div>[NSKeyedArchiver archivedDataWithRootObject: array]];</div>
+<div>
+<div><b>3&gt; 字符串什么时候使用copy,strong</b></div>
+<div>属性引用的对象由两种情况,可变和不可变字符串</div>
+<div>引用对象不可变情况下,copy和strong一样,copy为浅拷贝</div>
+<div>引用对象可变情况下,如果希望属性跟随引用对象变化,使用strong,希望不跟随变化使用copy</div>
+<div><b>4&gt; 字符串所在内存区域</b></div>
+<div>@“abc” 常量区   stringwithformat 堆区</div>
+<div><b>5&gt; mutablecopy和copy    @property(copy) NSMutableArray *arr;这样写有什么问题</b></div>
+<div>mutablecopy返回可变对象,copy返回不可变对象</div>
+<div><b>6&gt; 如何让自定义类可以使用copy修饰符</b></div>
+</div>
+<div>实现&lt;NSCopying&gt;协议,重写copyWithZone方法</div>
+<div><br/></div>
+<div><b>3.全局&amp;静态变量</b></div>
+<div>1.全局变量和静态变量的区别</div>
+<div>1&gt; 修饰符 </div>
+<div>     全局变量在声明源文件之外使用,需要extern引用一下;</div>
+<div>     静态变量使用static来修饰</div>
+<div>2&gt; 存储地址</div>
+<div>     两者都是存储在静态存储区,非堆栈上,它们与局部变量的存储分开</div>
+<div>3&gt; 生命周期</div>
+<div>     两者都是在程序编译或加载时由系统自动分配的,程序结束时消亡</div>
+<div>4&gt; 外部可访问性                                </div>
+<div>     全局变量在整个程序的任何地方均可访问,而静态变量相当于面向对象中的私有变量,他的可访问性只限定于声明它的那个源文件,即作用于仅局限于本文件中</div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>五.runtime/消息转发机制</b></span></div>
+<div><b>1.runtime   <a href="http://www.cocoachina.com/ios/20150715/12540.html">http://www.cocoachina.com/ios/20150715/12540.html</a></b></div>
+<div><b>1&gt; 什么是runtime</b></div>
+<div>
+<div>runtime是一套比较底层的纯C语言API, 属于1个C语言库, 包含了很多底层的C语言API。</div>
+<div>在我们平时编写的OC代码中, 程序运行过程时, 其实最终都是转成了runtime的C语言代码, runtime算是OC的幕后工作者,objc_msgSend</div>
+<div><b>2&gt; runtime干什么用,使用场景</b></div>
+<div>runtime是属于OC的底层, 可以进行一些非常底层的操作(用OC是无法现实的, 不好实现)</div>
+<div>在程序运行过程中, 动态创建一个类(比如KVO的底层实现)  objc_allocateClassPair，class_addIvar，objc_registerClassPair</div>
+<div>在程序运行过程中, 动态地为某个类添加属性\方法, 修改属性值\方法(修改封装的框架)  objc_setAssociatedObject   object_setIvar</div>
+</div>
+<div>遍历一个类的所有成员变量(属性)\所有方法(字典转模型,归解档)  class_copyIvarList class_copyPropertyList  class_copyMethodList</div>
+<div><b>2.消息机制</b></div>
+<div><b>1&gt; 消息转发的原理</b></div>
+<div>
+<div>当向一个对象发送消息时，objc_msgSend方法根据对象的isa指针找到对象的类，然后在类的调度表（dispatch table）中查找selector。如果无法找到selector，objc_msgSend通过指向父类的指针找到父类，并在父类的调度表（dispatch table）中查找selector，以此类推直到NSObject类。一旦查找到selector，objc_msgSend方法根据调度表的内存地址调用该实现。 通过这种方式，message与方法的真正实现在执行阶段才绑定。</div>
+<div>    为了保证消息发送与执行的效率，系统会将全部selector和使用过的方法的内存地址缓存起来。每个类都有一个独立的缓存，缓存包含有当前类自己的 selector以及继承自父类的selector。查找调度表（dispatch table）前，消息发送系统首先检查receiver对象的缓存。</div>
+<div> 缓存命中的情况下，消息发送（messaging）比直接调用方法（function call）只慢一点点点点。</div>
+<div><b>2&gt; SEL isa super cmd 是什么</b></div>
+<div>sel: 一种类型,表示方法名称,类似字符串(可互转)</div>
+<div>isa:在方法底层对应的objc_msgSend调用时,会根据isa找到对象所在的类对象,类对象中包含了调度表(dispatch table),该表将类的sel和方法的实际内存地址关联起来</div>
+<div>super_class:每一个类中还包含了一个super_class指针,用来指向父类对象</div>
+<div>_cmd在Objective-C的方法中表示当前方法的selector，正如同self表示当前方法调用的对象实例</div>
+<div>IMP定义为 id (*IMP) (id, SEL, …)。这样说来， IMP是一个指向函数的指针，这个被指向的函数包括id(“self”指针)，调用的SEL（方法名），再加上一些其他参数.说白了IMP就是实现方法</div>
+<div><b>3&gt; 动态绑定</b></div>
+<div>—在运行时确定要调用的方法</div>
+<div>动态绑定将调用方法的确定也推迟到运行时。在编译时，方法的 调用并不和代码绑定在一起，只有在消实发送出来之后，才确定被调用的代码。通过动态类型和动态绑定技术，您的代码每次执行都可以得到不同的结果。运行时因 子负责确定消息的接收者和被调用的方法。运行时的消息分发机制为动态绑定提供支持。当您向一个动态类型确定了的对象发送消息时，运行环境系统会通过接收者 的isa指针定位对象的类，并以此为起点确定被调用的方法，方法和消息是动态绑定的。而且，您不必在Objective-C 代码中做任何工作，就可以自动获取动态绑定的好处。您在每次发送消息时，特别是当消息的接收者是动态类型已经确定的对象时，动态绑定就会例行而透明地发生。</div>
+</div>
+<div><br/></div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>六.内存管理</b></span></div>
+<div><b>1.内存区域</b></div>
+<div>
+<div>1&gt;堆和栈的区别</div>
+<div>管理方式：对于栈来讲，是由编译器自动管理，无需我们手工控制；对于堆来说，释放工作由程序员控制，容易产生memory leak。</div>
+</div>
+<div>申请大小：</div>
+<div>栈是向低地址扩展的数据结构，是一块连续的内存的区域,栈顶的地址和栈的最大容量是系统预先规定好的，能从栈获得的空间较小。</div>
+<div>堆是向高地址扩展的数据结构，是不连续的内存区域,因为系统是用链表来存储的空闲内存地址的,自然是不连续的,而链表的遍历方向是由低地址向高地址。堆的大小受限于计算机系统中有效的虚拟内存,因此堆获得的空间比较灵活,也比较大。</div>
+<div>
+<div>碎片问题：</div>
+<div>对于堆来讲，频繁的new/delete势必会造成内存空间的不连续，从而造成大量的碎片，使程序效率降低。对于栈来讲，则不会存在这个问题，因为栈是先进后出的队列，他们是如此的一一对应，以至于永远都不可能有一个内存块从栈中间弹出</div>
+<div>分配方式：</div>
+<div>堆都是动态分配的，没有静态分配的堆。栈有2种分配方式：静态分配和动态分配。静态分配是编译器完成的，比如局部变量的分配。动态分配由alloca函数进行分配，但是栈的动态分配和堆是不同的，他的动态分配是由编译器进行释放，无需我们手工实现。</div>
+<div>分配效率：</div>
+</div>
+<div>栈是机器系统提供的数据结构，计算机会在底层对栈提供支持：分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，这就决定了栈的效率比较高。堆则是C/C++函数库提供的，它的机制是很复杂的。</div>
+<div>2&gt; iOS内存区域</div>
+<div>2.1&gt; 栈区</div>
+<div>由编译器自动分配释放,存放函数的参数值,局部变量的值等.其操作方式类似于数据结构中的栈.</div>
+<div>2.2&gt; 堆区</div>
+<div>一般由程序员分配释放,若程序员不释放,程序结束时由系统回收</div>
+<div>2.3&gt; 全局区(静态区)</div>
+<div>全局变量和静态变量的存储是放在一块的,初始化的全局变量和静态变量在一块区域,未初始化的全局变量和未初始化的静态变量相邻的另一块区域.</div>
+<div>全局区分为未初始化全局区: .bss段 和初始化全局区: data段.</div>
+<div>2.4&gt; 常量区</div>
+<div>常量字符串就是放在常量区</div>
+<div>2.5&gt; 代码区</div>
+<div>存放函数体的二进制代码</div>
+<div><br/></div>
+<div><br/></div>
+<div><b>2. 字符串的内存管理</b></div>
+<div>创建字符串的内存空间  堆  常量区</div>
+<div><b>3. 你是如何优化内存管理</b></div>
+<div>
+<div>1&gt; 使用ARC</div>
+<div>2&gt; 延迟加载   懒加载    </div>
+<div>3&gt; 重用   在正确的地方使用reuseIndentifier  </div>
+<div>4&gt; 缓存    NSCache 保存计算数据</div>
+<div>5&gt; 处理内存警告      移除对缓存，图片 object 和其他一些可以重创建的 objects 的强引用</div>
+<div> 5.1&gt; app delegate 中使用 `applicationDidReceiveMemoryWarning:` 的方法</div>
+<div> 5.2&gt; 自定义 UIViewController 的子类 (subclass) 中覆盖 `didReceiveMemoryWarning`</div>
+<div> 5.3&gt; 在自定义类中注册并接收 UIApplicationDidReceiveMemoryWarningNotification 的通知 </div>
+<div>6&gt; 重用大开销对象  NSDateFormatter 和 NSCalendar    懒加载/单例  _formatter.dateFormat = @"EEE MMM dd HH:mm:ss Z yyyy”; 设置和创建速度一样慢</div>
+<div>7&gt; 自动释放池  手动添加自动释放池</div>
+<div>8&gt; 是否缓存图片 imageNamed  imageWithContentOfFile</div>
+<div>9&gt; 混编</div>
+</div>
+<div>10&gt; 循环引用  delegate block nstimer</div>
+<div>11&gt;  移除 kvo  nsnotificationcenter   并未强引用,只记录内存地址,野指针报错  UIViewController自动移除  一般在dealloc中</div>
+<div>13&gt; performselector 延迟操作   [NSObject cancelPreviousPerformRequestsWithTarget:self]</div>
+<div><br/></div>
+<div><b>4. 循环引用</b></div>
+<div>
+<div>delegate属性的内存策略 </div>
+</div>
+<div>block循环引用   实际场景</div>
+<div><b>5. autorelease的使用</b></div>
+<div>1&gt; 工厂方法为什么不释放对象</div>
+<div>很多类方法为了在代码块结束时引用的对象不会因无强引用而被释放内存采用自动释放的方式,当其最近的自动释放池释放时该对象才会释放.</div>
+<div>2&gt; ARC下autorelease的使用场景</div>
+<div>ARC中手动添加autoreleasepool可用于提前释放使用自动释放策略的对象,防止大量自动释放的对象堆积造成内存峰值过高.</div>
+<div>3&gt; 自动释放池如何工作</div>
+<div align="left">自动释放池时栈结构,每个线程的runloop运行时都会自动创建自动释放池,程序员可以代码手动创建自动释放池,自动释放的对象会被添加到最近的(栈顶)自动释放池中,系统自动创建的自动释放池在每个运行循环结束时销毁释放池并给池中所有对象发release消息,手动创建释放池在所在代码块结束时销毁释放池并发消息统一release<span style="font-size: 21px; color: rgb(1, 128, 0);"><br/></span></div>
+<div><br/></div>
+<div><br/></div>
+<div><b>     </b></div>
+<div>
+<div>避免内存峰值</div>
+<div>SDWebimage中加载gif图片  大循环</div>
+<div>栈结构 栈顶</div>
+</div>
+<div>统一发release消息</div>
+<div><b>5&gt; ARC和MRC的混用</b></div>
+<div><span style="font-family: Verdana;">5.1&gt; MRC&gt;ARC</span></div>
+<div><span style="font-size:14px; font-family:Verdana">把MRC的代码转换成ARC的代码，删除内存管理操作（手动）</span></div>
+<div><span style="font-size:14px; font-family:Verdana">xcode提供了自动将MRC转换成ARC的功能，操作菜单栏edit -&gt; Refacotor（重构） -&gt; Convert to Objective-C ARC</span></div>
+<div><span style="font-family: Verdana;">5.2&gt; ARC&gt;MRC</span></div>
+<div><span style="font-size:14px; font-family:Verdana">在ARC项目中继续使用MRC编译的类，在编译选项中标识MRC文件即可"-fno-objc-arc"</span></div>
+<div><span style="font-size:14px; font-family:Verdana">在MRC项目中继续使用ARC编译的类在编译选项中标识MRC文件即可"-fobjc-arc</span><font face="Verdana"><span style="font-size: 14px;">”</span></font></div>
+<div><span style="font-size:14px; font-family:Verdana"><b>6&gt; NSTimer的内存管理</b></span></div>
+<div><font face="Verdana"><span style="font-size: 14px;">以下代码有什么问题？</span></font></div>
+<div>
+<pre>
+<span style="color: #0000ff;">@interface</span> SvCheatYourself () {
+    NSTimer *_timer;
+}
+
+<span style="color: #0000ff;">@end</span>
+
+<span style="color: #0000ff;">@implementation</span> SvCheatYourself
+
+- (<span style="color: #0000ff;">id</span>)init {
+    self = [super init];
+    <span style="color: #0000ff;">if</span> (self) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:<span style="color: #800080;">1</span> target:self selector:@selector(testTimer:) userInfo:nil repeats:YES];
+    }
+    <span style="color: #0000ff;">return</span> self;
+}
+
+- (<span style="color: #0000ff;">void</span>)dealloc {
+    [_timer invalidate];
+}
+
+- (<span style="color: #0000ff;">void</span>)testTimer:(NSTimer*)timer{
+    NSLog(<span style="color: #800000;">@"</span><span style="color: #800000;">haha!</span><span style="color: #800000;">"</span>);
+}
+</pre></div>
+<div><span style="color: rgb(0, 0, 255);">@end</span></div>
+<div>
+<pre>
+<span style="font-size: 15px;">1）timer都会对它的target进行retain，对于重复性的timer，除非手动关闭，否则对象不会释放，</span><span style="font-size: 15px;">场景：导航控制器关联的控制器无法销毁<br/></span><span style="font-size: 15px;">2）NSTimer要加到异步线程中，防止线程繁忙导致定时器失准</span>
+</pre></div>
+<div><span style="font-size: 15px;">3）timer必须加入到runloop中才会有效，主线程runloop默认开启，异步线程手动启动</span></div>
+<div><span style="font-size: 15px;">4）注意runloop模式</span></div>
+<div><br/></div>
+<div>7&gt; <b>ARC</b><b>的实现原理</b></div>
+<div>在程序预编译阶段,将 ARC 的代码转换为非 ARC 的 代码,自动加入 release、autorelease、retain</div>
+<div><br/></div>
+<div><b>3.跨平台</b></div>
+<div>
+<div><b>3&gt; OC和C框架对象引用</b></div>
+</div>
+<div>oc和c 桥接 三个桥接关键字都是干么的 __bridge  不更改归属权  __bridge_transfer 所有权给OC   __bridge_retain 解除OC的所有权</div>
+<div><br/></div>
+<div>ios5/6/7/8 内存方面的区别</div>
+<div><br/></div>
+<div>ios5.自动引用计数 (ARC)</div>
+<div>ios6.UICollectionView ( 内存重用机制，图片展示瀑布流实现 )  在didReceiveMemoryWarning中处理内存（6之前在ViewDidUnload中） <a href="http://blog.csdn.net/likendsl/article/details/8199350">http://blog.csdn.net/likendsl/article/details/8199350</a></div>
+<div>ios7.iOS7以后强制使用ARC</div>
+<div>ios8</div>
+<div><br/></div>
+<div><b>4.MRC</b></div>
+<div><br/></div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>七.数据传递</b></span></div>
+<div><b>1.block</b></div>
+<div>
+<div><b>1&gt; block属性为什么用copy?</b></div>
+<div>栈-&gt;堆</div>
+</div>
+<div><b>2&gt; block使用注意什么?</b></div>
+<div>循环引用 </div>
+<div>__block 修饰局部变量,这个变量在 block 内外属于同一个地址 上的变量,可以被 block 内部的代码修改</div>
+<div>
+<div><b>3&gt; block的主要使用场景 ?</b></div>
+<div>动画</div>
+<div>数组字典排序遍历</div>
+<div>回调状态</div>
+<div>错误控制</div>
+</div>
+<div>多线程GCD</div>
+<div><span style="color: rgb(255, 38, 0);">4&gt;block原理</span></div>
+<div>block属性是指向结构体的指针，</div>
+<div><br/></div>
+<div><b>2.Delegate</b></div>
+<div><b>4&gt; 什么时候用delegate，什么时候用Notification</b></div>
+<div>
+<div>delegate针对one-to-one关系，并且reciever可以返回值给sender，notification 可以针对one-to-one/many/none,reciever无法返回值给sender.所以,delegate用于sender希望接受到 reciever的某个功能反馈值，notification用于通知多个object某个事件。</div>
+<div>5&gt; delegate和block</div>
+</div>
+<div>block使代码更紧凑,便于阅读,delegate可以设置必选和可选的方法实现,相比block</div>
+<div>block可以访存局部变量. 不需要像以前的回调一样，把在操作后所有需要用到的数据封装成特定的数据结构, 你完全可以直接访问局部变量.</div>
+<div><br/></div>
+<div><b>3.KVC和KVO</b></div>
+<div>
+<div><b>1&gt; 如何调用私有变量</b>     <b>如何修改系统的只读属性</b>     <b>KVC的查找顺序</b></div>
+<div>KVC在某种程度上提供了访问器的替代方案。不过访问器方法是一个很好的东西，以至于只要是有可能，KVC也尽量再访问器方法的帮助下工作。为了设置或者返回对象属性，KVC按顺序使用如下技术：</div>
+<div>①检查是否存在-&lt;key&gt;、-is&lt;key&gt;（只针对布尔值有效）或者-get&lt;key&gt;的访问器方法，如果有可能，就是用这些方法返回值；</div>
+<div>检查是否存在名为-set&lt;key&gt;:的方法，并使用它做设置值。对于 -get&lt;key&gt;和 -set&lt;key&gt;:方法，将大写Key字符串的第一个字母，并与Cocoa的方法命名保持一致；</div>
+<div>②如果上述方法不可用，则检查名为-_&lt;key&gt;、-_is&lt;key&gt;（只针对布尔值有效）、-_get&lt;key&gt;和-_set&lt;key&gt;:方法；</div>
+<div>③如果没有找到访问器方法，可以尝试直接访问实例变量。实例变量可以是名为：&lt;key&gt;或_&lt;key&gt;;</div>
+<div>④如果仍为找到，则调用valueForUndefinedKey:和setValue:forUndefinedKey:方法。这些方法的默认实现都是抛出异常，我们可以根据需要重写它们。</div>
+<div><b>2&gt; 什么是键-值,键路径是什么</b></div>
+<div>模型的性质是通过一个简单的键（通常是个字符串）来指定的。视图和控制器通过键来查找相应的属性值。在一个给定的实体中，同一个属性的所有值具有相同的数据类型。键-值编码技术用于进行这样的查找—它是一种间接访问对象属性的机制。</div>
+<div>键路径是一个由用点作分隔符的键组成的字符串，用于指定一个连接在一起的对象性质序列。第一个键的性质是由先前的性质决定的，接下来每个键的值也是相对于其前面的性质。键路径使您可以以独立于模型实现的方式指定相关对象的性质。通过键路径，您可以指定对象图中的一</div>
+<div>个任意深度的路径，使其指向相关对象的特定属性。</div>
+</div>
+<div><br/></div>
+<div><b>3&gt; 什么是KVC</b></div>
+<div><b>3&gt; 什么是KVO</b></div>
+<div><br/></div>
+<div>
+<div><b>4&gt; kvo的实现机制</b></div>
+<div>当某个类的对象第一次被观察时，系统就会在运行时动态地创建该类的一个派生类，在这个派生类中重写原类中被观察属性的setter方法,派生类在被重写的setter方法实现真正的通知机制(Person-&gt;NSKVONotifying_Person).</div>
+</div>
+<div>派生类重写了 class 方法以“欺骗”外部调用者它就是起初的那个类。然后系统将这个对象的isa指针指向这个新诞生的派生类，因此这个对象就成为该派生类的对象了，因而在该对象上对setter的调用就会调用重写的setter，从而激活键值通知机制。此外，派生类还重写了dealloc方法来释放资源。</div>
+<div><b>5&gt; KVO计算属性   设置依赖键</b></div>
+<div>监听的某个属性可能会依赖于其它多个属性的变化(类似于swift，可以称之为计算属性)，不管所依赖的哪个属性发生了变化，都会导致计算属性的变化,此时该属性如果不能通过set方法来监听(如get中进行计算</div>
+<div>
+<pre>
+<code>- (NSString *)accountForBank {
+
+    return [NSString stringWithFormat:@“%@ for %@", self.accountName, </code><code>self.bankCodeEn</code><code>];
+}</code>
+</pre></div>
+<div>),则可以设置依赖键,两种方法:</div>
+<div>
+<pre>
+<code>1&gt;
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+
+    NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+
+    if ([key isEqualToString:@"accountForBank"]) {
+
+        keyPaths = [keyPaths setByAddingObjectsFromArray:@[@"</code><code>accountName</code><code>", @"bankCodeEn"]];
+    }
+
+    return keyPaths;
+}</code>
+</pre></div>
+<div>2&gt;</div>
+<div>
+<pre>
+<code>+ (NSSet *)keyPathsForValuesAffectingAccountForBank {
+
+    return [NSSet setWithObjects:@"accountBalance", @"bankCodeEn", nil];
+}</code>
+</pre></div>
+<div><b>6&gt; KVO集合属性   </b></div>
+<div>可对可变集合的元素改变进行监听(如添加、删除和替换元素),使用集合监听对象</div>
+<div><br/></div>
+<div>使用KVO</div>
+<div><span style="color: rgb(255, 38, 0);">重写class</span></div>
+<div><br/></div>
+<div>
+<div><b>5&gt; kvo使用场景</b></div>
+<div>①实现上下拉刷新控件 contentoffset</div>
+<div><font color="#FF3423">②webview混合排版 contentsize</font></div>
+</div>
+<div>③监听模型属性实时更新UI</div>
+<div><br/></div>
+<div><b>4.栈结构&amp;队列</b></div>
+<div>栈结构先进后出,iOS中有navigationcontroller的子控制器,autoreleasepool</div>
+<div>队列先进先出,</div>
+<div><br/></div>
+<div><b><span style="font-size: 18px;">八.其他</span></b></div>
+<div><b>1.int和NSInteger的区别 </b></div>
+<div>NSInteger表示当前cpu下整型所占最大字节,不同CPU的long型所占字节不同,32位int4 long4,64位int4,long8</div>
+<div><b>2.import和include</b></div>
+<div>import可以避免重复包含</div>
+<div><b>3.@class  </b> </div>
+<div>避免循环引用头文件</div>
+<div><br/></div>
+<div><span style="font-size: 24px;"><b>UI</b></span></div>
+<div><span style="font-size: 18px;"><b>一.控件</b></span></div>
+<div><b>1.属性</b></div>
+<div><b>1&gt; frame和bounds的区别</b></div>
+<div align="left" style="text-align:left; text-indent:-24.0pt;mso-char-indent-count:0;mso-list:l0 level1 lfo1;">
+<div>        frame:可表示尺寸和位置,与父视图坐标系的关系,位置以自己的左上角为原点,可用于形变和位移</div>
+</div>
+<div>bounds:可表示尺寸和位置,与自身视图坐标系的关系,大多数情况(滚动视图的子视图等除外)以自己的中心点为原点,可用于形变</div>
+<div>center:只表示位置,表示自己中心的坐标,可用于位移</div>
+<div><b>2&gt; trasform</b></div>
+<div>修改位移\形变\旋转,transform不同于board\center\frame,前者中记录的是形变的数据,不发生形变其值是空的,所以我们需要新建结构体,用CGAffineTransform(仿射变换)函数给对象结构体属性赋值,而后者是控件的固有属性,内存数据是始终存在的,当我们用他们做移动等操作时,是改变其值,所以是结构体赋值三步曲,不用CG的函数</div>
+<div>使用情景区别: transform一般用于有来有回的变化,而frame是有去无回</div>
+<div>2.UIScrollView</div>
+<div>1&gt; contentsize、contentoffset、contentinset的区别</div>
+<div>内容视图的尺寸 </div>
+<div>内容视图当前位置相对滚动视图frame的偏移量</div>
+<div>内容视图相对滚动视图frame的展示原点</div>
+<div><br/></div>
+<div><b>3.UITableview</b></div>
+<div>
+<div><b>1&gt; 自定义高度</b></div>
+<div>1.1&gt;新建一个继承自UITableViewCell的类</div>
+<div>1.2&gt;重写initWithStyle:reuseIdentifier:方法</div>
+<div>1.3&gt;添加所有需要显示的子控件(不需要设置子控件的数据和frame,  子控件要添加到contentView中)</div>
+<div>1.4&gt;进行子控件一次性的属性设置(有些属性只需要设置一次, 比如字体\固定的图片)</div>
+<div>1.5&gt;提供2个模型</div>
+<div>数据模型: 存放文字数据\图片数据</div>
+<div>frame模型: 存放数据模型\所有子控件的frame\cell的高度</div>
+<div>1.6&gt;cell拥有一个frame模型(不要直接拥有数据模型)</div>
+<div>1.7&gt;重写frame模型属性的setter方法: 在这个方法中设置子控件的显示数据和frame</div>
+</div>
+<div><b>2&gt; 自定义高度原理</b></div>
+<div>
+<div align="left" style="text-indent: 0cm;">A <span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">手动计算</span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l1 level1 lfo1;"><span lang="EN-US" xml:lang="EN-US">1&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';"> </span></span> <span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">由于</span><span lang="EN-US" xml:lang="EN-US">heightForRow</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">比</span><span lang="EN-US" xml:lang="EN-US">cellForRow</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">方法先调用，创建</span><span lang="EN-US" xml:lang="EN-US">frame</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">模型包含微博模型，重写微博模型赋值</span><span lang="EN-US" xml:lang="EN-US">set</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">方法，提前计算</span><span lang="EN-US" xml:lang="EN-US">cell</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">子控件的</span><span lang="EN-US" xml:lang="EN-US">frame</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">并保存，</span><span lang="EN-US" xml:lang="EN-US">heightForRow</span><span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">方法中取出</span><span lang="EN-US" xml:lang="EN-US">frame</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">模型中保存的高度，实现自定义高度</span><span lang="EN-US" xml:lang="EN-US">cell</span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l1 level1 lfo1;"><span lang="EN-US" xml:lang="EN-US">2&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';"> </span></span> <span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">设置最大尺寸、文本属性，根据文本内容计算正文内容展示尺寸</span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l1 level1 lfo1;"><span lang="EN-US" xml:lang="EN-US">3&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';"> </span></span> <span lang="EN-US" xml:lang="EN-US">cellForRow</span><span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">中创建自定义</span><span lang="EN-US" xml:lang="EN-US">cell</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">包含</span><span lang="EN-US" xml:lang="EN-US">frame</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">属性，重写</span><span lang="EN-US" xml:lang="EN-US">frame</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">属性</span><span lang="EN-US" xml:lang="EN-US">set</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">方法创建</span><span lang="EN-US" xml:lang="EN-US">cell</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">子控件并赋值</span><span lang="EN-US" xml:lang="EN-US">frame</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">模型保存的子控件尺寸</span><span style="text-indent: 0cm;"> </span></div>
+<div align="left" style="text-indent: 0cm;"><span lang="EN-US" xml:lang="EN-US">B.</span> <span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">自动计算</span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l0 level1 lfo2;"><span lang="EN-US" xml:lang="EN-US">1&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';"> </span></span> <span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">首先设置行高使用</span><span lang="EN-US" xml:lang="EN-US">autolayout</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">自动计算并预估高度</span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l0 level1 lfo2;"><span lang="EN-US" xml:lang="EN-US">2&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';"> </span></span> <span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">在</span><span lang="EN-US" xml:lang="EN-US">stroboard</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">中对</span><span lang="EN-US" xml:lang="EN-US">cell</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">内容进行自动布局，注意设置图片距离底部约束，</span><span lang="EN-US" xml:lang="EN-US">cellForRow</span><span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">中创建</span><span lang="EN-US" xml:lang="EN-US">storyboard</span><span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">中对应标记的自定义</span><span lang="EN-US" xml:lang="EN-US">cell</span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l0 level1 lfo2;"><span lang="EN-US" xml:lang="EN-US">3&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';"> </span></span> <span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">由于正文内容的不确定性，设置</span><span lang="EN-US" xml:lang="EN-US">label</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">多行，拖线图片高度约束，根据图片有无，设置代码设置高度约束</span></div>
+</div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div><b>4.UICollectionView</b></div>
+<div>1&gt; 如何实现瀑布流,流水布局</div>
+<div><span style="font-family: 'Microsoft YaHei';">1.1&gt; 使用UICollectionView</span></div>
+<div><span style="font-family: 'Microsoft YaHei';">1.2&gt; 使用自定义的</span><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px;">FlowLayout</span></div>
+<div>1.3&gt; 需要在<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px;">layoutAttributesForElementsInRect中设置自定义的布局(item的frame)</span></div>
+<div>1.4&gt; 在 <span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px;">prepareLayout<span style="font-family: Menlo;">中计算布局</span></span></div>
+<div>1.5&gt; 遍历数据内容,根据索引取出对应的attributes(使用<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px;">layoutAttributesForCellWithIndexPath</span>),根据九宫格算法设置布局</div>
+<div>1.6&gt; 细节1: 实时布局,重写<span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px;">shouldInvalidateLayoutForBoundsChange<span style="font-family: Menlo;">(bounds改变重新布局,</span>scrollview<span style="font-family: Menlo;">的contentoffset&gt;bounds)</span></span></div>
+<div>1.7&gt; 细节2: 计算设置itemsize(保证内容显示完整,uicollectionview的content size是根据itemize计算的),根据列最大高度/对应列数量求出,最大高度累加得到</div>
+<div>1.8&gt; 细节3: 追加item到最短列,避免底部参差不齐.</div>
+<div><br/></div>
+<div>2&gt; 和UITableView的使用区别</div>
+<div>1）必须使用下面的方法进行Cell类的注册：</div>
+<ol>
+<li>- (void)registerClass:forCellWithReuseIdentifier:</li>
+<li>- (void)registerClass:forSupplementaryViewOfKind:withReuseIdentifier:</li>
+<li>- (void)registerNib:forCellWithReuseIdentifier:</li>
+</ol>
+<div>2）collectionView与tableView最大的不同点，collectionView必须要使用自己的layout（UICollectionView<a target="_blank">Layout</a>）</div>
+<div>如：</div>
+<ol>
+<li>    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];<br/></li>
+<li>    flowLayout.itemSize = CGSizeMake(52, 52);               // cell大小<br/></li>
+<li>    flowLayout.minimumInteritemSpacing = 1;                 // cell间距<br/></li>
+<li>    flowLayout.minimumLineSpacing = 1;                      // cell行距<br/></li>
+<li>    flowLayout.sectionInset = (UIEdgeInsets){81,1,1,1};     // cell边距</li>
+</ol>
+<div>创建collectionView需要带Layout的初始化方法：</div>
+<ol>
+<li>- (id)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout;</li>
+</ol>
+<div><br/></div>
+<div><b>5.UIImage</b></div>
+<div>1&gt; 有哪几种加载方式</div>
+<div>1.1&gt; 二进制    imageWithData</div>
+<div>1.2&gt; Bundle    imageWithName  </div>
+<div>1.3&gt; 本地路径   imageWithContentOfFile</div>
+<div>1.4&gt; </div>
+<div><br/></div>
+<div><b>6.webview</b></div>
+<div><font color="#FF3D3B">1&gt;解决webview的内存占用和泄露</font></div>
+<div><br/></div>
+<div><b>7.描述九宫格算法</b></div>
+<div>
+<div style="text-indent:-19.0pt; mso-char-indent-count:0;mso-list:l0 level1 lfo1;"><span lang="EN-US" xml:lang="EN-US">1&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';">  </span></span> 1&gt; <span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">根据格子宽</span><span lang="EN-US" xml:lang="EN-US">appW</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">高</span><span lang="EN-US" xml:lang="EN-US">appH</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">和每行格数</span><span lang="EN-US" xml:lang="EN-US">totalCol</span><span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">计算格子间隙</span><span lang="EN-US" xml:lang="EN-US">marginX</span></div>
+<div align="left"><span lang="EN-US" style="font-size:10.0pt;font-family:&quot;Menlo Regular&quot;;color:#5C2699; mso-font-kerning:0pt" xml:lang="EN-US">CGFloat</span> <span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">marginX = (</span><span lang="EN-US" style="font-size:10.0pt;font-family:&quot;Menlo Regular&quot;;color:#AA0D91; mso-font-kerning:0pt" xml:lang="EN-US">self</span><span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">.</span><span lang="EN-US" style="font-size:10.0pt;font-family:&quot;Menlo Regular&quot;;color:#5C2699; mso-font-kerning:0pt" xml:lang="EN-US">view</span><span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">.</span><span lang="EN-US" style="font-size:10.0pt;font-family:&quot;Menlo Regular&quot;;color:#5C2699; mso-font-kerning:0pt" xml:lang="EN-US">frame</span><span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">.</span><span lang="EN-US" style="font-size:10.0pt;font-family:&quot;Menlo Regular&quot;;color:#5C2699; mso-font-kerning:0pt" xml:lang="EN-US">size</span><span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">.</span><span lang="EN-US" style="font-size:10.0pt;font-family:&quot;Menlo Regular&quot;;color:#5C2699; mso-font-kerning:0pt" xml:lang="EN-US">width</span> <span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">- totalCol * appW)/(totalCol +</span> <span lang="EN-US" style="font-size:10.0pt;font-family: &quot;Menlo Regular&quot;;color:#1C00CF;mso-font-kerning:0pt" xml:lang="EN-US">1</span><span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">);</span></div>
+<div style="text-indent:-19.0pt; mso-char-indent-count:0;mso-list:l0 level1 lfo1;"><span lang="EN-US" xml:lang="EN-US">2&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';">  </span></span> 2&gt; <span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">根据序号</span><span lang="EN-US" xml:lang="EN-US">i</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">和每行格数</span><span lang="EN-US" xml:lang="EN-US">totalCol</span><span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">计算行号列号</span></div>
+<div align="left"><span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">    </span><span lang="EN-US" style="font-size:10.0pt; font-family:&quot;Menlo Regular&quot;;color:#AA0D91;mso-font-kerning:0pt" xml:lang="EN-US">int</span> <span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">row = i / totalCol;</span></div>
+<div><span lang="EN-US" style="font-size:10.0pt;font-family:&quot;Menlo Regular&quot;; color:#AA0D91;mso-font-kerning:0pt" xml:lang="EN-US">       int</span> <span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">col = i % totalCol;</span></div>
+<div style="text-indent:-19.0pt; mso-char-indent-count:0;mso-list:l0 level1 lfo1;"><span lang="EN-US" xml:lang="EN-US">3&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';">  </span></span> 3&gt; <span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">根据格子间隙、格子宽高和行号列号计算</span><span lang="EN-US" xml:lang="EN-US">x,y</span></div>
+<div align="left" style="text-indent: 0cm;"><span lang="EN-US" style="font-size:10.0pt;font-family:&quot;Menlo Regular&quot;;color:#5C2699;mso-font-kerning: 0pt" xml:lang="EN-US">CGFloat</span> <span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">appX = marginX + col * (appW + marginX);</span></div>
+<div style="text-indent:0cm;mso-char-indent-count: 0;"><span lang="EN-US" style="font-size:10.0pt;font-family:&quot;Menlo Regular&quot;; color:#5C2699;mso-font-kerning:0pt" xml:lang="EN-US">CGFloat</span> <span lang="EN-US" style="font-size: 10pt; font-family: 'Menlo Regular';" xml:lang="EN-US">appY = row * (appH + marginY);</span></div>
+</div>
+<div><br/></div>
+<div><b>8. 实现图片轮播图</b></div>
+<div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l0 level1 lfo1;"><span lang="EN-US" xml:lang="EN-US">1&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';"> </span></span> 1&gt; <span lang="EN-US" xml:lang="EN-US">UIScrollView</span><span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">设置</span><span lang="EN-US" xml:lang="EN-US">contentSize</span><span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">，添加图片并设置</span><span lang="EN-US" xml:lang="EN-US">frame</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font: minor-fareast;mso-hansi-font-family:Cambria;mso-hansi-theme-font:minor-latin">，设置分页</span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l0 level1 lfo1;"><span lang="EN-US" xml:lang="EN-US">2&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';"> </span></span> 2&gt; <span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">添加分页控制器，在</span><span lang="EN-US" xml:lang="EN-US">UIScrollView</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">滚动代理方法中根据</span><span lang="EN-US" xml:lang="EN-US">contentOffset</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-ascii-theme-font:minor-latin; mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-font-family: Cambria;mso-hansi-theme-font:minor-latin">计算当前页数并设置</span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l0 level1 lfo1;"><span lang="EN-US" xml:lang="EN-US">      3&gt;</span> <span style="font-family: 宋体;">设置定时器，主动改变</span><span lang="EN-US" xml:lang="EN-US">contentOffset,</span><span style="font-family: 宋体;">设置定时器的模式进行并发操作(终极方案定时器放在异步线程)</span></div>
+</div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>二.生命周期</b></span></div>
+<div>1&gt; 应用的生命周期</div>
+<div>
+<div>各个程序运行状态时代理的回调：</div>
+<div>- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions  告诉代理进程启动但还没进入状态保存</div>
+<div>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions   告诉代理启动基本完成程序准备开始运行</div>
+<div>- (void)applicationWillResignActive:(UIApplication *)application   当应用程序将要入非活动状态执行，在此期间，应用程序不接收消息或事件，比如来电话了</div>
+<div>- (void)applicationDidBecomeActive:(UIApplication *)application    当应用程序入活动状态执行，这个刚好跟上面那个方法相反</div>
+<div>- (void)applicationDidEnterBackground:(UIApplication *)application   当程序被推送到后台的时候调用。所以要设置后台继续运行，则在这个函数里面设置即可</div>
+<div>- (void)applicationWillEnterForeground:(UIApplication *)application   当程序从后台将要重新回到前台时候调用，这个刚好跟上面的那个方法相反。</div>
+<div>- (void)applicationWillTerminate:(UIApplication *)application   当程序将要退出是被调用，通常是用来保存数据和一些退出前的清理工作。</div>
+<div><img src="%E9%9D%A2%E8%AF%95%E7%9F%A5%E8%AF%86%E7%82%B9.resources/eadb8f93f6334093cd459389306827ab.png" height="631" width="532"/></div>
+<div><b>2&gt; 视图的生命周期</b></div>
+<div>loadView - 默认调用super方法,根据控制器创建方式加载视图,重写后将根据重写方法创建视图</div>
+<div>viewDidLoad－视图加载完成</div>
+<div>viewWillAppear－UIViewController对象的视图即将加入窗口时调用；</div>
+<div>viewDidApper－UIViewController对象的视图已经加入到窗口时调用；</div>
+<div>viewWillDisappear－UIViewController对象的视图即将消失、被覆盖或是隐藏时调用；</div>
+<div>viewDidDisappear－UIViewController对象的视图已经消失、被覆盖或是隐藏时调用；</div>
+<div>viewVillUnload－当内存过低时，需要释放一些不需要使用的视图时，即将释放时调用；</div>
+<div>viewDidUnload－当内存过低，释放一些不需要的视图时调用。</div>
+<div><b>3&gt;  load initialize方法的区别</b></div>
+<table style="-evernote-table:true;border-collapse:collapse;table-layout:fixed;width:100%;">
+<tr>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.36745138178096%;">
+<div><br/></div>
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.26509723643807%;">
+<div>+(void)load</div>
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.26509723643807%;">
+<div>+(void)initialize</div>
+</td>
+</tr>
+<tr>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.33%;">
+<div>执行时机</div>
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.33%;">
+<div>在程序运行后立即执行</div>
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.33%;">
+<div>在类的方法第一次被调时执行</div>
+</td>
+</tr>
+<tr>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.33%;">
+<div>若自身未定义，是否沿用父类的方法？</div>
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.33%;">
+<div>否</div>
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.33%;">
+<div>是</div>
+</td>
+</tr>
+<tr>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.33%;">
+<div>类别中的定义</div>
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.33%;">
+<div>全都执行，但后于类中的方法</div>
+</td>
+<td style="border-style:solid;border-width:1px;border-color:rgb(211,211,211);padding:10px;margin:0px;width:33.33%;">
+<div>覆盖类中的方法，只执行一个</div>
+</td>
+</tr>
+</table>
+<div><b>4&gt; 创建控制器、视图的方式</b></div>
+<div>4.1&gt; 创建控制器的方式</div>
+<div>1）通过代码的方式加载viewController</div>
+<div>UIViewController *controller = [[UIViewController alloc] init];</div>
+<div>2）通过stroyboard来加载viewController</div>
+<div>2.1) 加载storyboard中箭头指向的viewController</div>
+<div>UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil]; //加载箭头指向的viewController</div>
+<div>CZViewController *controller = [storyboard instantiateInitialViewController];</div>
+<div>2.2) 加载storyboard中特定标示的viewController(storyboard可以有多个controller)</div>
+<div>UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];</div>
+<div>CZViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"two"];</div>
+<div>3）通过xib加载viewController</div>
+<div>3.1) 传统方法</div>
+<div>3.1.1）创建Xib,并指定xib的files owner为自定义控制器类(为了能连线关联管理IB的内容)</div>
+<div>3.1.2）xib中要有内容，且xib中描述的控制器类的view属性要与xib的view控件完成关联（关联方法两种,一种是control+files owner拖线到xib中搭建的指定view控件,另一种是指定xib中的view拖线到@interface）</div>
+<div>3.1.3）从xib加载viewController</div>
+<div>CZViewController *controller = [[CZViewController alloc] initWithNibName:@"CZOneView" bundle:nil];</div>
+<div>3.2）bundle中取出xib内容</div>
+</div>
+<div>CZViewController *vc = [[NSBundle mainBundle] loadNibNamed:@"Two" owner:nil options:nil].lastObject;</div>
+<div>
+<div>4.2&gt; 创建视图的方式</div>
+<div>
+<div>1.用系统的loadView方法创建控制器的视图</div>
+<div>2.如果指定加载某个storyboard文件做控制器的视图，就会加载storyboard里面的描述去创建view</div>
+<div>3.如果指定读取某个xib文件做控制器的视图，就根据指定的xib文件去加载创建</div>
+<div>4.如果有xib文件名和控制器的类名前缀（也就是去掉controller）的名字一样的   xib文件 就会用这个xib文件来创建控件器的视图 例：控件器的名为 MJViewController  xib文件名为 MJView.xib   如果xib文件名后有一个字不一样就不会去根据它去创建如：MJView8.xib</div>
+<div>5.找和控制器同名的xib文件去创建</div>
+</div>
+</div>
+<div>6.如果以上都没有就创建一个空的控制器的视图;</div>
+<div><br/></div>
+<div>5&gt; UIWindow</div>
+<div>是一种特殊的UIView,通常在一个程序中只会有一个UIWindow,但可以手 动创建多个UIWindow,同时加到程序里面。UIWindow在程序中主要起到三个作用:</div>
+<div>1、作为容器,包含app所要显示的所有视图</div>
+<div>2、传递触摸消息到程序中view和其他对象</div>
+<div>3、与UIViewController协同工作,方便完成设备方向旋转的支持</div>
+<div><br/></div>
+<div><b><span style="font-size: 18px;">三.多控制器管理</span></b></div>
+<div>1.</div>
+<div><br/></div>
+<div><b><span style="font-size: 18px;">四.核心绘图</span></b></div>
+<div>
+<div><b>6&gt; View和layer的区别</b></div>
+<div>图层不会直接渲染到屏幕上，UIView是iOS系统中界面元素的基础，所有的界面元素都是继承自它。它本身完全是由CoreAnimation来实现的。它真正的绘图部分，是由一个CALayer类来管理。UIView本身更像是一个CALayer的管理器。一个UIView上可以有n个CALayer，每个layer显示一种东西，增强UIView的展现能力。</div>
+<div>6.1&gt;都可以显示屏幕效果</div>
+<div>6.2&gt; 如果需要用户交互就要用UIVIew,其可接收触摸事件(继承UIResponder),而CALayer不能接收触摸事件</div>
+</div>
+<div>6.3&gt; 如果没有用户交互可选用CALayer,因为其所在库较小,占用的资源较少</div>
+<div>
+<div><b>7&gt; new和alloc init的区别</b></div>
+<div>采用new的方式只能采用默认的init方法完成初始化，采用alloc的方式可以用其他定制的初始化方法。</div>
+</div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>五.动画</b></span></div>
+<div><font color="#FF3114">1&gt; ios界面切换 </font></div>
+<div><br/></div>
+<div>2&gt; <span lang="EN-US" xml:lang="EN-US" style="font-family: Cambria;">iOS</span><span style="font-family: 宋体;">中各种动画的类型</span><span lang="EN-US" xml:lang="EN-US" style="font-family: Cambria;">&amp;</span><span style="font-family: 宋体;">特点</span><span lang="EN-US" xml:lang="EN-US" style="font-family: Cambria;">&amp;</span><span style="font-family: 宋体;">使用场景</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">CAPropertyAnimation</span></div>
+<div align="left"><span style="font-family: 宋体;">是</span><span lang="EN-US" xml:lang="EN-US">CAAnimation</span><span style="font-family: 宋体;">的子类，也是个抽象类，要想创建动画对象，应该使用它的两个子类：</span><span lang="EN-US" xml:lang="EN-US">CABasicAnimation</span><span style="font-family: 宋体;">和</span><span lang="EN-US" xml:lang="EN-US">CAKeyframeAnimation</span></div>
+<div align="left"><span style="font-family: 宋体;">属性解析：</span></div>
+<div align="left"><span lang="EN-US" xml:lang="EN-US">keyPath</span><span style="font-family: 宋体;">：通过指定</span><span lang="EN-US" xml:lang="EN-US">CALayer</span><span style="font-family: 宋体;">的一个属性名称为</span><span lang="EN-US" xml:lang="EN-US">keyPath(NSString</span><span style="font-family: 宋体;">类型</span><span lang="EN-US" xml:lang="EN-US">)</span><span style="font-family: 宋体;">，并且对</span><span lang="EN-US" xml:lang="EN-US">CALayer</span><span style="font-family: 宋体;">的这个属性的值进行修改，达到相应的动画效果。比如，指定</span><span lang="EN-US" xml:lang="EN-US">@”position”</span><span style="font-family: 宋体;">为</span><span lang="EN-US" xml:lang="EN-US">keyPath</span><span style="font-family: 宋体;">，就修改</span><span lang="EN-US" xml:lang="EN-US">CALayer</span><span style="font-family: 宋体;">的</span><span lang="EN-US" xml:lang="EN-US">position</span><span style="font-family: 宋体;">属性的值，以达到平移的动画效果</span></div>
+<div><span lang="EN-US" xml:lang="EN-US"> </span></div>
+<div><span lang="EN-US" xml:lang="EN-US">CABasicAnimation</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">CAPropertyAnimation</span><span style="font-family: 宋体;">的子类</span></div>
+<div><span style="font-family: 宋体;">属性解析</span><span lang="EN-US" xml:lang="EN-US">:</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">fromValue</span><span style="font-family: 宋体;">：</span><span lang="EN-US" xml:lang="EN-US">keyPath</span><span style="font-family: 宋体;">相应属性的初始值</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">toValue</span><span style="font-family: 宋体;">：</span><span lang="EN-US" xml:lang="EN-US">keyPath</span><span style="font-family: 宋体;">相应属性的结束值</span></div>
+<div><span style="font-family: 宋体;">随着动画的进行，在长度为</span><span lang="EN-US" xml:lang="EN-US">duration</span><span style="font-family: 宋体;">的持续时间内，</span><span lang="EN-US" xml:lang="EN-US">keyPath</span><span style="font-family: 宋体;">相应属性的值从</span><span lang="EN-US" xml:lang="EN-US">fromValue</span><span style="font-family: 宋体;">渐渐地变为</span><span lang="EN-US" xml:lang="EN-US">toValue</span></div>
+<div><span style="font-family: 宋体;">如果</span><span lang="EN-US" xml:lang="EN-US">fillMode=kCAFillModeForwards</span><span style="font-family: 宋体;">和</span><span lang="EN-US" xml:lang="EN-US">removedOnComletion=NO</span><span style="font-family: 宋体;">，那么在动画执行完毕后，图层会保持显示动画执行后的状态。但在实质上，图层的属性值还是动画执行前的初始值，并没有真正被改变。比如，</span><span lang="EN-US" xml:lang="EN-US">CALayer</span><span style="font-family: 宋体;">的</span><span lang="EN-US" xml:lang="EN-US">position</span><span style="font-family: 宋体;">初始值为</span><span lang="EN-US" xml:lang="EN-US">(0,0)</span><span style="font-family: 宋体;">，</span><span lang="EN-US" xml:lang="EN-US">CABasicAnimation</span><span style="font-family: 宋体;">的</span><span lang="EN-US" xml:lang="EN-US">fromValue</span><span style="font-family: 宋体;">为</span><span lang="EN-US" xml:lang="EN-US">(10,10)</span><span style="font-family: 宋体;">，</span><span lang="EN-US" xml:lang="EN-US">toValue</span><span style="font-family: 宋体;">为</span><span lang="EN-US" xml:lang="EN-US">(100,100)</span><span style="font-family: 宋体;">，虽然动画执行完毕后图层保持在</span><span lang="EN-US" xml:lang="EN-US">(100,100)</span><span style="font-family: 宋体;">这个位置，实质上图层的</span><span lang="EN-US" xml:lang="EN-US">position</span><span style="font-family: 宋体;">还是为</span><span lang="EN-US" xml:lang="EN-US">(0,0)</span></div>
+<div><span lang="EN-US" xml:lang="EN-US"> </span></div>
+<div><span lang="EN-US" xml:lang="EN-US">CAKeyframeAnimation</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">CApropertyAnimation</span><span style="font-family: 宋体;">的子类，跟</span><span lang="EN-US" xml:lang="EN-US">CABasicAnimation</span><span style="font-family: 宋体;">的区别是：</span><span lang="EN-US" xml:lang="EN-US">CABasicAnimation</span><span style="font-family: 宋体;">只能从一个数值</span><span lang="EN-US" xml:lang="EN-US">(fromValue)</span><span style="font-family: 宋体;">变到另一个数值</span><span lang="EN-US" xml:lang="EN-US">(toValue)</span><span style="font-family: 宋体;">，而</span><span lang="EN-US" xml:lang="EN-US">CAKeyframeAnimation</span><span style="font-family: 宋体;">会使用一个</span><span lang="EN-US" xml:lang="EN-US">NSArray</span><span style="font-family: 宋体;">保存这些数值</span></div>
+<div><span style="font-family: 宋体;">属性解析：</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">values</span><span style="font-family: 宋体;">：就是上述的</span><span lang="EN-US" xml:lang="EN-US">NSArray</span><span style="font-family: 宋体;">对象。里面的元素称为</span><span lang="EN-US" xml:lang="EN-US">”</span><span style="font-family: 宋体;">关键帧</span><span lang="EN-US" xml:lang="EN-US">”(keyframe)</span><span style="font-family: 宋体;">。动画对象会在指定的时间</span><span lang="EN-US" xml:lang="EN-US">(duration)</span><span style="font-family: 宋体;">内，依次显示</span><span lang="EN-US" xml:lang="EN-US">values</span><span style="font-family: 宋体;">数组中的每一个关键帧</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">path</span><span style="font-family: 宋体;">：可以设置一个</span><span lang="EN-US" xml:lang="EN-US">CGPathRef\CGMutablePathRef,</span><span style="font-family: 宋体;">让层跟着路径移动。</span><span lang="EN-US" xml:lang="EN-US">path</span><span style="font-family: 宋体;">只对</span><span lang="EN-US" xml:lang="EN-US">CALayer</span><span style="font-family: 宋体;">的</span><span lang="EN-US" xml:lang="EN-US">anchorPoint</span><span style="font-family: 宋体;">和</span><span lang="EN-US" xml:lang="EN-US">position</span><span style="font-family: 宋体;">起作用。如果你设置了</span><span lang="EN-US" xml:lang="EN-US">path</span><span style="font-family: 宋体;">，那么</span><span lang="EN-US" xml:lang="EN-US">values</span><span style="font-family: 宋体;">将被忽略</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">keyTimes</span><span style="font-family: 宋体;">：可以为对应的关键帧指定对应的时间点</span><span lang="EN-US" xml:lang="EN-US">,</span><span style="font-family: 宋体;">其取值范围为</span><span lang="EN-US" xml:lang="EN-US">0</span><span style="font-family: 宋体;">到</span><span lang="EN-US" xml:lang="EN-US">1.0,keyTimes</span><span style="font-family: 宋体;">中的每一个时间值都对应</span><span lang="EN-US" xml:lang="EN-US">values</span><span style="font-family: 宋体;">中的每一帧</span><span lang="EN-US" xml:lang="EN-US">.</span><span style="font-family: 宋体;">当</span><span lang="EN-US" xml:lang="EN-US">keyTimes</span><span style="font-family: 宋体;">没有设置的时候</span><span lang="EN-US" xml:lang="EN-US">,</span><span style="font-family: 宋体;">各个关键帧的时间是平分的</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">CABasicAnimation</span><span style="font-family: 宋体;">可看做是最多只有</span><span lang="EN-US" xml:lang="EN-US">2</span><span style="font-family: 宋体;">个关键帧的</span><span lang="EN-US" xml:lang="EN-US">CAKeyframeAnimation</span></div>
+<div><span lang="EN-US" xml:lang="EN-US"> </span></div>
+<div><span lang="EN-US" xml:lang="EN-US">CAAnimationGroup</span></div>
+<div align="left"><span lang="EN-US" xml:lang="EN-US">CAAnimation</span><span style="font-family: 宋体;">的子类，可以保存一组动画对象，将</span><span lang="EN-US" xml:lang="EN-US">CAAnimationGroup</span><span style="font-family: 宋体;">对象加入层后，组中所有动画对象可以同时并发运行</span></div>
+<div align="left"><span style="font-family: 宋体;">属性解析：</span></div>
+<div align="left"><span lang="EN-US" xml:lang="EN-US">animations</span><span style="font-family: 宋体;">：用来保存一组动画对象的</span><span lang="EN-US" xml:lang="EN-US">NSArray</span></div>
+<div align="left"><span style="font-family: 宋体;">默认情况下，一组动画对象是同时运行的，也可以通过设置动画对象的</span><span lang="EN-US" xml:lang="EN-US">beginTime</span><span style="font-family: 宋体;">属性来更改动画的开始时间</span></div>
+<div><span lang="EN-US" xml:lang="EN-US"> </span></div>
+<div><span lang="EN-US" xml:lang="EN-US">CATransition</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">CAAnimation</span><span style="font-family: 宋体;">的子类，用于做转场动画，能够为层提供移出屏幕和移入屏幕的动画效果。</span><span lang="EN-US" xml:lang="EN-US">iOS</span><span style="font-family: 宋体;">比</span><span lang="EN-US" xml:lang="EN-US">Mac OS X</span><span style="font-family: 宋体;">的转场动画效果少一点</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">UINavigationController</span><span style="font-family: 宋体;">就是通过</span><span lang="EN-US" xml:lang="EN-US">CATransition</span><span style="font-family: 宋体;">实现了将控制器的视图推入屏幕的动画效果</span></div>
+<div><span style="font-family: 宋体;">属性解析</span><span lang="EN-US" xml:lang="EN-US">:</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">type</span><span style="font-family: 宋体;">：动画过渡类型</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">subtype</span><span style="font-family: 宋体;">：动画过渡方向</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">startProgress</span><span style="font-family: 宋体;">：动画起点</span><span lang="EN-US" xml:lang="EN-US">(</span><span style="font-family: 宋体;">在整体动画的百分比</span><span lang="EN-US" xml:lang="EN-US">)</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">endProgress</span><span style="font-family: 宋体;">：动画终点</span><span lang="EN-US" xml:lang="EN-US">(</span><span style="font-family: 宋体;">在整体动画的百分比</span><span lang="EN-US" xml:lang="EN-US">)</span></div>
+<div><span lang="EN-US" xml:lang="EN-US"> </span></div>
+<div><span lang="EN-US" xml:lang="EN-US">UIView</span><span style="font-family: 宋体;">动画</span></div>
+<div><span lang="EN-US" xml:lang="EN-US">UIKit</span><span style="font-family: 宋体;">直接将动画集成到</span><span lang="EN-US" xml:lang="EN-US">UIView</span><span style="font-family: 宋体;">类中，当内部的一些属性发生改变时，</span><span lang="EN-US" xml:lang="EN-US">UIView</span><span style="font-family: 宋体;">将为这些改变提供动画支持</span></div>
+<div><span style="font-family: 宋体;">执行动画所需要的工作由</span><span lang="EN-US" xml:lang="EN-US">UIView</span><span style="font-family: 宋体;">类自动完成，但仍要在希望执行动画时通知视图，为此需要将改变属性的代码放在</span><span lang="EN-US" xml:lang="EN-US">[UIView beginAnimations:nil context:nil]</span><span style="font-family: 宋体;">和</span><span lang="EN-US" xml:lang="EN-US">[UIView commitAnimations]</span><span style="font-family: 宋体;">之间</span></div>
+<div><span lang="EN-US" xml:lang="EN-US"> </span></div>
+<div><span lang="EN-US" xml:lang="EN-US">Block</span><span style="font-family: 宋体;">动画</span></div>
+<div><span lang="EN-US" xml:lang="EN-US"> </span></div>
+<div><span style="font-family: 宋体;">帧动画</span></div>
+<div><br/></div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>六.事件处理</b></span></div>
+<div>
+<div><b>1&gt; 描述响应者链条</b></div>
+<div>当触摸事件发生时,压力转为电信号,iOS系统将产生UIEvent对象,记录事件产生的时间和类型,然后系统将事件加入到一个由UIApplication管理的事件队列中。</div>
+<div>UIApplication会从事件队列中取出最前面的事件，并将事件分发下去以便处理，通常，先发送事件给应用程序的主窗口（keyWindow）</div>
+<div>主窗口会在视图层次结构中找到一个最合适的视图来处理触摸事件(从父到子,从后到前)，这也是整个事件处理过程的第一步</div>
+</div>
+<div>找到合适的视图控件后，就会调用视图控件的touches方法来作具体的事件处理</div>
+<div>
+<div><b>4.Runloop</b></div>
+<div>1&gt; 每个线程上都有一个runloop,主线程默认开启,辅助线程需要手动开启,主要用于</div>
+</div>
+<ol>
+<li>使用端口或自定义输入源来和其他线程通信</li>
+<li>使用线程的定时器</li>
+<li>Cocoa中使用任何performSelector…的方法</li>
+<li>使线程周期性工作</li>
+</ol>
+<div><font color="#FF311D">2&gt; runloop的工作流程</font></div>
+<div><br/></div>
+<div><b><span style="font-size: 18px;">七.屏幕适配</span></b></div>
+<div><br/></div>
+<div><span style="font-size: 24px;"><b>多线程</b></span></div>
+<div><b><span style="font-size: 18px;"><b>一.资源抢夺</b></span></b></div>
+<div>
+<div><b>2&gt; 资源抢夺解决方案</b></div>
+<div>@sychronized{ }</div>
+</div>
+<div>dispatch_barrier_async</div>
+<div>NSLock NSCondition</div>
+<div>dispatch_semaphore_wait</div>
+<div><br/></div>
+<div><b><span style="font-size: 18px;"><b>二.iOS多线程技术</b></span></b></div>
+<div>
+<div><b>3&gt; 对比iOS中的多线程技术</b></div>
+<div>3.1&gt; pthread</div>
+<div>pthread跨平台,使用难度大,需要手动管理线程生命周期</div>
+<div>pthread_create创建线程,传参线程标记,线程属性,初始函数,函数参数</div>
+<div>3.2&gt; NSThread</div>
+<div>NSThread需要手动管理线程生命周期和</div>
+<div>3.3&gt; <span style="color: rgb(255, 38, 0);">GCD</span></div>
+<div><br/></div>
+<div>3.4&gt; NSOperation</div>
+<div><br/></div>
+<div>GCD是纯C语言的API，NSOperationQueue是基于GCD的OC版本封装</div>
+<div>3.2&gt; GCD仅仅支持FIFO队列，只可以设置队列的优先级,而NSOperationQueue中的每一个任务都可以被重新设置优先级(setQueuePriority:)，从而实现不同操作的执行顺序调整</div>
+<div>3.3&gt; GCD不支持异步操作之间的依赖关系设置。如果某个操作的依赖另一个操作的数据，使用NSOperationQueue能够设置依赖按照正确的顺序执行操作(addDependency:)。GCD则没有内建的依赖关系支持(只能通过Barrior和同步任务手动实现)。</div>
+<div>3.4&gt; NSOperationQueue方便停止队列中的任务(cancelAllOperations, suspended),GCD不方便停止队列中的任务.</div>
+<div>3.5&gt; NSOperationQueue支持KVO，可以监测operation是否正在执行（isExecuted）、是否结束（isFinished），是否取消（isCanceld）</div>
+<div>3.6&gt; GCD的执行速度比NSOperationQueue快</div>
+<div>3.7&gt; NSOperationQueue可设置最大并发数量(节电),GCD具有dispatch_once(只执行一次,单例)和dispatch_after(延迟执行)功能</div>
+<div>3.8&gt; NSObject分类(perform)和NSThread遇到对象分配需要手动内存管理,手动管理线程生命周期</div>
+<div>3.9&gt; NSThread查看线程</div>
+<div>3.10&gt; NSObject分类线程通信</div>
+</div>
+<div><br/></div>
+<div>
+<div><b>4&gt; 原子属性</b></div>
+<div>原子属性采用的是"多读单写"机制的多线程策略</div>
+<div>"多读单写"缩小了锁范围,比互斥锁的性能好</div>
+</div>
+<div>规定只在主线程更新UI,就是因为如果在多线程中更新,就需要给UI对象加锁,防止资源抢占写入错误,但是这样会降低UI交互的性能,所以ios设计让所有UI对象都是非线程安全的(不加锁),并规定只在主线程中更新UI,规避多线程抢占资源问题</div>
+<div><br/></div>
+<div><b><span style="font-size: 18px;"><b>三.其他</b></span></b></div>
+<div>
+<div><b>1&gt; 多线程优缺点</b></div>
+<div>优点:</div>
+<div>使应用程序的响应速度更快,用户界面在进行其他工作的同时仍始终保持活动状态;</div>
+<div>优化任务执行,适当提高资源利用率(cpu, 内存);</div>
+<div>缺点:</div>
+<div>线程占用内存空间,管理线程需要额外的CPU开销,开启大量线程,降低程序性能;</div>
+</div>
+<div>增加程序复杂度,如线程间通信,多线程的资源共享等;</div>
+<div><b>2&gt; 在多线程中使用通知需要注意什么问题?</b></div>
+<div><b><br/></b></div>
+<div><b>3&gt; iOS中的延迟操作</b></div>
+<div>
+<div align="left" style="text-indent: 0cm;"><span lang="EN-US" xml:lang="EN-US">1&gt; [self performSelector:@selector(clearCache) withObject:nil afterDelay:duration];</span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l0 level1 lfo1;"><span lang="EN-US" xml:lang="EN-US">1&gt;<span style="font-size: 7pt; font-family: 'Times New Roman';"> </span></span>  2&gt; <span lang="EN-US" xml:lang="EN-US">dispatch_after(dispatch_time(DISPATCH_TIME_NOW,(int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{..});</span></div>
+</div>
+<div><b><br/></b></div>
+<div><br/></div>
+<div><span style="font-size: 24px;"><b>网络</b></span></div>
+<div><b><span style="font-size: 18px;"><b>一.网络基础</b></span></b></div>
+<div>
+<div><b>1.数据解析</b></div>
+<div><b>1&gt; XML解析方式</b></div>
+<div>SAX 方式解析</div>
+<div>－只读</div>
+<div>－速度快</div>
+<div>－从上向下</div>
+<div>－通过5个代理方法解析，每个代理方中都需要写一些代码！</div>
+<div>－如果要实现SAX解析，思路最重要！</div>
+<div>－适合比价大的XML的解析</div>
+<div>DOM解析的特点</div>
+<div>－一次性将XML全部加载到内存，以树形结构</div>
+<div>－好处，可以动态的修改，添加，删除节点</div>
+<div>－内存消耗非常大！尤其横向节点越深！</div>
+<div>－iOS默认不支持 DOM 解析！</div>
+<div>－在 MAC 端，或者服务器端开发，都基本上使用 DOM 解析</div>
+<div>－在 iOS 端如果需要使用 DOM 方式解析，可以使用第三方框GData/KissXML(XMPP)</div>
+<div>－适合比较小的 XML 文件</div>
+</div>
+<div>－在 MAC 中，苹果提供了一个 NSXML 的类，能够做 DOM 解析，在 iOS 不能使用！</div>
+<div><b>2&gt;  json&amp;xml的区别</b></div>
+<div>1)解码难度: json的解码难度基本为零,xml需要考虑子节点和父节点</div>
+<div>2)数据体积&amp;传输速度: json相对于xml来讲,数据体积小,json的速度远远快于xml</div>
+<div>3)数据交互: json与JavaScript的交互更加方面,更容易解析处理,更好的数据交互</div>
+<div>4)数据描述: xml对数据描述性比较好</div>
+<div><br/></div>
+<div>
+<div><b>2.网络协议</b></div>
+<div><b>1&gt;TCP如何防止乱序和丢包</b></div>
+<div>    TCP数据包的头格式中有两个概念,Sequence Number是数据包的序号，用来解决网络包乱序（reordering）问题。Acknowledgement Number就是ACK——用于确认收到，用来解决不丢包的问题。</div>
+<div>    位码即tcp标志位，有6种标示：SYN(synchronous建立联机)        ACK(acknowledgement 确认) PSH(push传送) FIN(finish结束) RST(reset重置) URG(urgent紧急)Sequence number(顺序号码) Acknowledge number(确认号码).</div>
+<div>   SeqNum的增加是和传输的字节数相关的,TCP传输数据时,A主机第一次传输1440个字节,seq=1,那么第二次时seq = 1441,B拼接数据就是根据seq进行拼接的,seq数字不断累加避免了乱序.B主机收到第一次数据包以后会返回ack = 1441.</div>
+<div>    A主机收到B的ack = 1441时,就知道第一个数据包B已收到. 如果B没有收到第一次的数据包,那么B再收到A的数据包时,他就会发ack = 1回去,A收到B的回复,发现B没有收到第一次数据包,就会重发第一次数据包,这样就可以防止丢包.</div>
+<div><br/></div>
+<div><b>2&gt;描述一下三次握手</b></div>
+<div><img src="%E9%9D%A2%E8%AF%95%E7%9F%A5%E8%AF%86%E7%82%B9.resources/2f4e679c0108af55982d1d833801ab42.png" height="665" width="476"/></div>
+<div>   第一次握手：建立连接时，客户端发送syn包(syn=j)到服务器，并进入SYN_SEND状态，等待服务器确认；</div>
+<div>   第二次握手：服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；</div>
+<div>   第三次握手：客户端收到服务器的SYN＋ACK包，向服务器发送确认包ACK(ack=k+1)，此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手。完成三次握手，客户端与服务器开始传送数据.</div>
+<div><br/></div>
+<div><b>3&gt; TCP与UDP的区别：</b></div>
+<div>3.1&gt;基于连接与无连接；</div>
+<div>3.2&gt;对系统资源的要求（TCP较多，UDP少）；</div>
+<div>3.3&gt;UDP程序结构较简单；</div>
+<div>3.4&gt;流模式与数据报模式 ；</div>
+<div>3.5&gt;TCP保证数据正确性，UDP可能丢包，TCP保证数据顺序，UDP不保证。</div>
+<div><br/></div>
+<div><b>4&gt;http和scoket通信的区别</b></div>
+<div>http是客户端用http协议进行请求，发送请求时候需要封装http请求头，并绑定请求的数据，服务器一般有web服务器配合（当然也非绝对）。 http请求方式为客户端主动发起请求，服务器才能给响应，一次请求完毕后则断开连接，以节省资源。服务器不能主动给客户端响应（除非采取http长连接技术）。iPhone主要使用类是NSUrlConnection。</div>
+</div>
+<div>scoket是客户端跟服务器直接使用socket“套接字”进行连接，并没有规定连接后断开，所以客户端和服务器可以保持连接通道，双方都可以主动发送数据。一般在游戏开发或股票开发这种要求即时性很强并且保持发送数据量比较大的场合使用。主要使用类是CFSocketRef。</div>
+<div><br/></div>
+<div><b>5&gt; HTTP请求常用的几种方式</b></div>
+<div>GET ：获取指定资源</div>
+<div>POST ：2M  向指定资源提交数据进行处理请求，在RESTful 风格用于新增资源</div>
+<div>HEAD ：获取指定资源头部信息</div>
+<div>PUT :替换指定资源（不支持浏览器操作）</div>
+<div>DELETE: 删除指定资源</div>
+<div><br/></div>
+<div><br/></div>
+<div>
+<div><b>3.网络传输</b></div>
+<div>1&gt;DNS是如何工作的</div>
+</div>
+<div>DNS是domain name server的简称,每个网络的计算机都有ip,但是不好记,所以用域名替代(如www.baidu.com),在 Internet 上真实在辨识机器的还是 IP，所以当使用者输入Domain Name 后，浏览器必须要先去一台有 Domain Name 和IP 对应资料的主机去查询这台电脑的 IP，而这台被查询的主机，我们称它为 Domain Name Server，简称DNS，例如：当你输入www.pchome.com.tw时，浏览器会将www.pchome.com.tw这个名字传送到离他最近的 DNS Server 去做辨识，如果查到，则会传回这台主机的 IP，进而跟它索取资料，但如果没查到，就会发生类似 DNS NOT FOUND 的情形，所以一旦DNS Server当机，就像是路标完全被毁坏，没有人知道该把资料送到那里</div>
+<div><br/></div>
+<div>2&gt; POST请求常见的数据格式</div>
+<div> <span><img src="%E9%9D%A2%E8%AF%95%E7%9F%A5%E8%AF%86%E7%82%B9.resources/QQ20151027-2.png" height="192" width="354"/></span></div>
+<div><span><br/></span></div>
+<div><span><br/></span></div>
+<div><br/></div>
+<div><b><span style="font-size: 18px;"><b>二.网络安全/加密</b></span></b></div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div><b><span style="font-size: 18px;"><b><span style="font-size: 18px;"><b>三.数据存储</b></span></b></span></b></div>
+<div><b>1.数据存储技术</b></div>
+<div><b>1&gt; 数据存储的几种方式 </b></div>
+<div>
+<div>XML属性列表（plist）归档
+<div>Preference(偏好设置)</div>
+<div>NSKeyedArchiver归档(NSCoding)</div>
+<div>SQLite3</div>
+<div>Core Data</div>
+</div>
+<div>2&gt; 各自特点</div>
+<div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">Plist</span><span style="font-family: 宋体;">：</span></font></div>
+<div><font color="#310403"><span style="font-family: 宋体;">属性列表是一种</span><span lang="EN-US" xml:lang="EN-US">XML</span><span style="font-family: 宋体;">格式的文件，拓展名为</span><span lang="EN-US" xml:lang="EN-US">plist</span></font></div>
+<div><font color="#310403"><span style="font-family: 宋体;">如果对象是</span><span lang="EN-US" xml:lang="EN-US">NSString</span><span style="font-family: 宋体;">、</span><span lang="EN-US" xml:lang="EN-US">NSDictionary</span><span style="font-family: 宋体;">、</span><span lang="EN-US" xml:lang="EN-US">NSArray</span><span style="font-family: 宋体;">、</span><span lang="EN-US" xml:lang="EN-US">NSData</span><span style="font-family: 宋体;">、</span><span lang="EN-US" xml:lang="EN-US">NSNumber</span><span style="font-family: 宋体;">等类型，就可以使用</span><span lang="EN-US" xml:lang="EN-US">writeToFile:atomically:</span><span style="font-family: 宋体;">方法直接将对象写到属性列表文件中</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">  </span> <span style="font-family: 宋体;">将一个</span><span lang="EN-US" xml:lang="EN-US">NSDictionary</span><span style="font-family: 宋体;">对象归档到一个</span><span lang="EN-US" xml:lang="EN-US">plist</span><span style="font-family: 宋体;">属性列表中</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">将数据封装成字典</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">NSMutableDictionary *dict = [NSMutableDictionary dictionary];</font></span></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">[dict setObject:@"</span><span style="font-family: 宋体;">母鸡</span><span lang="EN-US" xml:lang="EN-US">" forKey:@"name"];</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">将字典持久化到</span><span lang="EN-US" xml:lang="EN-US">Documents/stu.plist</span><span style="font-family: 宋体;">文件中</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">[dict writeToFile:path atomically:YES];</font></span></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403"> </font></span></div>
+<div><span style="font-family: 宋体;"><font color="#310403">面试考点：</font></span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l1 level1 lfo1;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">1.<span style="font-family: 'Times New Roman';">   </span></span> <span lang="EN-US" xml:lang="EN-US">plist</span><span style="font-family: 宋体;">的根节点</span> <span style="font-family: 宋体;">只能是</span><span lang="EN-US" xml:lang="EN-US">NSDictionary</span><span style="font-family: 宋体;">和</span><span lang="EN-US" xml:lang="EN-US">NSArray</span><span style="font-family: 宋体;">，所以存储内容必须转为对象类型</span></font></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l1 level1 lfo1;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">2.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">使用场景</span><span lang="EN-US" xml:lang="EN-US"> </span> <span style="font-family: 宋体;">功能动态更新</span> <span style="font-family: 宋体;">应用级别数据更新</span><span lang="EN-US" xml:lang="EN-US">  XML</span><span style="font-family: 宋体;">的替代品</span></font></div>
+<div style="text-indent:0cm;mso-char-indent-count: 0;"><span lang="EN-US" xml:lang="EN-US"><font color="#310403"> </font></span></div>
+<div><span style="font-family: 宋体;"><font color="#310403">偏好设置：</font></span></div>
+<div><font color="#310403"><span style="font-family: 宋体;">每个应用都有个</span><span lang="EN-US" xml:lang="EN-US">NSUserDefaults</span><span style="font-family: 宋体;">实例，通过它来存取偏好设置</span></font></div>
+<div><span style="font-family: 宋体;"><font color="#310403">比如，保存用户名、字体大小、是否自动登录</font></span></div>
+<div align="left"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">NSUserDefaults</span> <span lang="EN-US" xml:lang="EN-US">*defaults = [NSUserDefaults standardUserDefaults];</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">[defaults setObject:@"itcast" forKey:@"username"];</font></span></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">[defaults setFloat:18.0f forKey:@"text_size"];</font></span></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">[defaults setBool:YES forKey:@"auto_login"];</font></span></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403"> </font></span></div>
+<div><span style="font-family: 宋体;"><font color="#310403">面试考点：</font></span></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l3 level1 lfo2;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">1.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">使用场景</span> <span style="font-family: 宋体;">保存应用信息</span></font></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l3 level1 lfo2;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">2.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">特点</span><span lang="EN-US" xml:lang="EN-US"> </span> <span style="font-family: 宋体;">不会自动删除，</span><span lang="EN-US" xml:lang="EN-US">itune</span><span style="font-family: 宋体;">同步，不适合存大数据</span></font></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l3 level1 lfo2;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">3.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">使用单例模式、</span></font></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l3 level1 lfo2;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">4.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">直接存取结构体，基本数据类型，无需转换</span></font></div>
+<div style="text-indent:-18.0pt; mso-char-indent-count:0;mso-list:l3 level1 lfo2;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">5.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">即时操作注意同步</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403"> </font></span></div>
+<div><span style="font-family: 宋体;"><font color="#310403">归档：</font></span></div>
+<div><font color="#310403"><span style="font-family: 宋体;">如果对象是</span><span lang="EN-US" xml:lang="EN-US">NSString</span><span style="font-family: 宋体;">、</span><span lang="EN-US" xml:lang="EN-US">NSDictionary</span><span style="font-family: 宋体;">、</span><span lang="EN-US" xml:lang="EN-US">NSArray</span><span style="font-family: 宋体;">、</span><span lang="EN-US" xml:lang="EN-US">NSData</span><span style="font-family: 宋体;">、</span><span lang="EN-US" xml:lang="EN-US">NSNumber</span><span style="font-family: 宋体;">等类型，可以直接用</span><span lang="EN-US" xml:lang="EN-US">NSKeyedArchiver</span><span style="font-family: 宋体;">进行归档和恢复</span></font></div>
+<div><font color="#310403"><span style="font-family: 宋体;">不是所有的对象都可以直接用这种方法进行归档，只有遵守了</span><span lang="EN-US" xml:lang="EN-US">NSCoding</span><span style="font-family: 宋体;">协议的对象才可以</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">NSCoding</span><span style="font-family: 宋体;">协议有</span><span lang="EN-US" xml:lang="EN-US">2</span><span style="font-family: 宋体;">个方法：</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">encodeWithCoder</span><span lang="EN-US" xml:lang="EN-US">:</span></font></div>
+<div><font color="#310403"><span style="font-family: 宋体;">每次归档对象时，都会调用这个方法。一般在这个方法里面指定如何归档对象中的每个实例变量，可以使用</span><span lang="EN-US" xml:lang="EN-US">encodeObject:forKey:</span><span style="font-family: 宋体;">方法归档实例变量</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">initWithCoder</span><span lang="EN-US" xml:lang="EN-US">:</span></font></div>
+<div><font color="#310403"><span style="font-family: 宋体;">每次从文件中恢复</span><span lang="EN-US" xml:lang="EN-US">(</span><span style="font-family: 宋体;">解码</span><span lang="EN-US" xml:lang="EN-US">)</span><span style="font-family: 宋体;">对象时，都会调用这个方法。一般在这个方法里面指定如何解码文件中的数据为对象的实例变量，可以使用</span><span lang="EN-US" xml:lang="EN-US">decodeObject:forKey</span><span style="font-family: 宋体;">方法解码实例变量</span></font></div>
+<div><font color="#310403"><span style="font-family: 宋体;">归档一个</span><span lang="EN-US" xml:lang="EN-US">NSArray</span><span style="font-family: 宋体;">对象到</span><span lang="EN-US" xml:lang="EN-US">Documents/array.archive</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">NSArray *array = [NSArray arrayWithObjects:@”a”,@”b”,nil];</font></span></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">[NSKeyedArchiver archiveRootObject:array toFile:path];</font></span></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403"> </font></span></div>
+<div align="left" style="text-indent: -3.8pt;"><font color="#310403"><span style="font-family: 宋体;">  使用</span><span lang="EN-US" xml:lang="EN-US">archiveRootObject:toFile:</span><span style="font-family: 宋体;">方法可以将一个对象直接写入到一个文件中，但有时候可能想将多个对象写入到同一个文件中，那么就要使用</span><span lang="EN-US" xml:lang="EN-US">NSData</span><span style="font-family: 宋体;">来进行归档对象</span></font></div>
+<div align="left" style="text-indent: -3.8pt;"><font color="#310403"><span lang="EN-US" style="font-family: Wingdings;" xml:lang="EN-US"><span style="font-family: 'Times New Roman';"> </span></span> <span style="font-family: 宋体;">归档（编码）</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">新建一块可变数据区</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">NSMutableData</span> <span lang="EN-US" xml:lang="EN-US">*data = [NSMutableData data];</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">将数据区连接到一个</span><span lang="EN-US" xml:lang="EN-US">NSKeyedArchiver</span><span style="font-family: 宋体;">对象</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">NSKeyedArchiver</span> <span lang="EN-US" xml:lang="EN-US">*archiver = [[[NSKeyedArchiver alloc] initForWritingWithMutableData:data] autorelease];</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">开始存档对象，存档的数据都会存储到</span><span lang="EN-US" xml:lang="EN-US">NSMutableData</span><span style="font-family: 宋体;">中</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">[archiver encodeObject:person1 forKey:@"person1"];</font></span></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">[archiver encodeObject:person2 forKey:@"person2"];</font></span></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">存档完毕</span><span lang="EN-US" xml:lang="EN-US">(</span><span style="font-family: 宋体;">一定要调用这个方法</span><span lang="EN-US" xml:lang="EN-US">)</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">[archiver finishEncoding];</font></span></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">将存档的数据写入文件</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">[data writeToFile:path atomically:YES];</font></span></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403"> </font></span></div>
+<div style="text-indent:-18.0pt;mso-list:l4 level1 lfo4; tab-stops:list 36.0pt;"><font color="#310403"><span lang="EN-US" style="font-family: Wingdings;" xml:lang="EN-US">l<span style="font-family: 'Times New Roman';"> </span></span>   <span style="font-family: 宋体;">恢复（解码）</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">从文件中读取数据</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">NSData *data = [NSData dataWithContentsOfFile:path];</font></span></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">根据数据，解析成一个</span><span lang="EN-US" xml:lang="EN-US">NSKeyedUnarchiver</span><span style="font-family: 宋体;">对象</span></font></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">NSKeyedUnarchiver</span> <span lang="EN-US" xml:lang="EN-US">*unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">Person *person1 = [unarchiver decodeObjectForKey:@"person1"];</font></span></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">Person *person2 = [unarchiver decodeObjectForKey:@"person2"];</font></span></div>
+<div><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">恢复完毕</span></font></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403">[unarchiver finishDecoding];</font></span></div>
+<div><span lang="EN-US" xml:lang="EN-US"><font color="#310403"> </font></span></div>
+<div><span style="font-family: 宋体;"><font color="#310403">利用归档实现深复制</font></span></div>
+<div align="left" style="text-indent: 0cm;"><span lang="EN-US" xml:lang="EN-US"><font color="#310403">NSData *data = [NSKeyedArchiver archivedDataWithRootObject:person1];</font></span></div>
+<div align="left" style="text-indent: 0cm;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">//</span> <span style="font-family: 宋体;">解析</span><span lang="EN-US" xml:lang="EN-US">data</span><span style="font-family: 宋体;">，生成一个新的</span><span lang="EN-US" xml:lang="EN-US">Person</span><span style="font-family: 宋体;">对象</span></font></div>
+<div align="left" style="text-indent: 0cm;"><span lang="EN-US" xml:lang="EN-US"><font color="#310403">Student *person2 = [NSKeyedUnarchiver unarchiveObjectWithData:data];</font></span></div>
+<div align="left" style="text-indent: 28pt;"><span lang="EN-US" xml:lang="EN-US"><font color="#310403"> </font></span></div>
+<div align="left" style="text-indent: -17.9pt;"><span style="font-family: 宋体;"><font color="#310403">       面试考点：</font></span></div>
+<div align="left" style="text-indent: -18pt;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">1.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">特点：</span> <span style="font-family: 宋体;">存入</span><span lang="EN-US" xml:lang="EN-US">Document</span><span style="font-family: 宋体;">，</span><span lang="EN-US" xml:lang="EN-US">itune</span><span style="font-family: 宋体;">同步，不会自动删除，可存放大型用户数据</span></font></div>
+<div align="left" style="text-indent: -18pt;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">2.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">使用场景：</span> <span style="font-family: 宋体;">用户产生的数据，如游戏，操作记录等等</span></font></div>
+<div align="left" style="text-indent: -18pt;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">3.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">可保存自定义对象，需要遵守</span><span lang="EN-US" xml:lang="EN-US">NSCoding</span><span style="font-family: 宋体;">协议，实现对应的</span><span lang="EN-US" xml:lang="EN-US">encodeWithCoder  initWithCoder</span> <span style="font-family: 宋体;">方法</span></font></div>
+<div align="left" style="text-indent: -18pt;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">4.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">和</span><span lang="EN-US" xml:lang="EN-US">NSData</span><span style="font-family: 宋体;">的配合</span></font></div>
+<div align="left" style="text-indent: 0cm;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">4.1&gt;</span> <span style="font-family: 宋体;">多对象单目录存储</span></font></div>
+<div align="left" style="text-indent: 0cm;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">4.2&gt;</span> <span style="font-family: 宋体;">字典</span><span lang="EN-US" xml:lang="EN-US">/</span><span style="font-family: 宋体;">数组内容的深拷贝</span></font></div>
+<div align="left" style="text-indent: -18pt;"><font color="#310403"><span lang="EN-US" xml:lang="EN-US">5.<span style="font-family: 'Times New Roman';">   </span></span> <span style="font-family: 宋体;">不能直接存基本类型和结构体，需要转成对象</span><span lang="EN-US" xml:lang="EN-US">  NSValue NSNumber</span></font></div>
+</div>
+<div><br/></div>
+<div><b>2&gt; 沙盒目录结构</b></div>
+<div>2.1&gt; Library Caches Preferences</div>
+<div>2.2&gt; Documents</div>
+<div>2.3&gt; tmp</div>
+</div>
+<div><b>3&gt;  如何读取沙盒中plist的内容</b></div>
+<div>
+<div align="left" style="text-indent: -18pt;">1&gt;   3.1&gt; 读取沙盒并拼接plist的文件路径   </div>
+<div align="left" style="text-indent: -18pt;">       NSString *path = [[NSBundle mainBundle] pathForResource:@"app.plist" ofType:nil];</div>
+<div> 3.2&gt; 根据plist根节点类型读取plist文件</div>
+<div>NSArray *apps = [NSArray arrayWithContentsOfFile:path];</div>
+</div>
+<div><br/></div>
+<div><b>2.数据库技术（SQLite&amp;CoreData）</b></div>
+<div><span style="color: rgb(255, 38, 0);">1&gt; SQLite和CoreData的区别</span></div>
+<div>1.1&gt; CoreData可以在一个对象更新时,其关联的对象也会随着更新,相当于你更新一张表时,其关联的其他表的也回随着更新</div>
+<div>1.2&gt; CoreData提供更简单的性能管理机制,可以限制查询记录的总数,这个类会自动更新其缓存</div>
+<div>1.3&gt; 多表查询方面,CoreData没有SQL直观,没有类似外连接,左连接等操作.</div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>四.Html5/oc&amp;js互调</b></span></div>
+<div>oc&gt;js：[self.webView stringByEvaluatingJavaScriptFromString:“window.location.href = xxx”];</div>
+<div>js&gt;oc： 利用hmtl中js的重定向技术，&lt;Script&gt; window.location.href = www.baidu.com//method:dosomething &lt;/Script&gt; </div>
+<div>使用方法截取重定向</div>
+<div>(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType</div>
+<div><br/></div>
+<div><span style="font-size: 18px;"><b>五.iOS网络框架</b></span></div>
+<div>
+<div>1&gt; NSURLConnection和NSURLSession的区别</div>
+<div>1.1&gt; 异步请求不需要NSOperation包装</div>
+<div>1.2&gt; 支持后台运行的网络任务(后台上传下载)</div>
+</div>
+<div>1.3&gt; 根据每个Session做配置(http header，Cache,Cookie,protocal,Credential)，不再在整个App层面共享配置</div>
+<div>1.4&gt; 支持网络操作的取消和断点续传(继承系统类，重新main方法)</div>
+<div>1.5&gt; 改进了授权机制的处理</div>
+<div><br/></div>
+<div><b>项目</b></div>
+<div>1.实用技术</div>
+<div>2.知名第三方框架</div>
+<div>3.开发技巧</div>
+<div>1&gt; description方法</div>
+<div><br/></div>
+<div>Swift</div>
+<div>
+<div><b>1&gt; Swift和OC的区别</b></div>
+<div>1.1&gt; Swift没有地址/指针的概念</div>
+<div>1.2&gt; 泛型</div>
+</div>
+<div>1.3&gt; 类型严谨 对比oc的动态绑定</div>
+<div><br/></div>
+<div>
+<div><b>6.设计模式</b></div>
+<div><b>1&gt; 常用的设计模式</b></div>
+<div>  代理  观察者  工厂  单例   策略</div>
+<div>2&gt; 代理属性的内存策略是什么,为什么?</div>
+<div>3&gt; 观察者模式的使用场景</div>
+<div>4&gt; 工厂模式(类方法)为什么没有释放对象? autorelease工作原理? arc下还需要手动使用autorelease吗?为什么?什么场景?</div>
+<div>5&gt; 手写单例</div>
+</div>
+<div>6&gt; 策略  cell多种响应效果   代理方法</div>
+<div><br/></div>
+<div>
+<div align="left" style="text-align:left; mso-pagination:widow-orphan;background:white"><span style="font-family:宋体; mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">（一）代理模式</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">应用场景：当一个类的某些功能需要由别的类来实现，但是又不确定具体会是哪个类实现。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">优势：解耦合</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">敏捷原则：开放</span><span lang="EN-US" xml:lang="EN-US">-</span><span style="font-family:宋体; mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">封闭原则</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">实例：</span><span lang="EN-US" xml:lang="EN-US">tableview</span><span style="font-family: 宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">的</span> <span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">数据源</span><span lang="EN-US" xml:lang="EN-US">delegate</span><span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-hansi-font-family:Cambria">，通过和</span><span lang="EN-US" xml:lang="EN-US">protocol</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">的配合，完成委托诉求。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">列表</span><span lang="EN-US" xml:lang="EN-US">row</span><span style="font-family:宋体; mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">个数</span><span lang="EN-US" xml:lang="EN-US">delegate<br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">自定义的</span><span lang="EN-US" xml:lang="EN-US">delegate</span><span lang="EN-US" style="font-family:Arial;mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family: Arial;color:#666666;mso-font-kerning:0pt" xml:lang="EN-US"><br/>
+ </span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">（二）观察者模式</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">应用场景：一般为</span><span lang="EN-US" xml:lang="EN-US">model</span><span style="font-family: 宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">层对</span><span lang="EN-US" xml:lang="EN-US">controller</span><span style="font-family:宋体;mso-ascii-font-family: Cambria;mso-hansi-font-family:Cambria">和</span><span lang="EN-US" xml:lang="EN-US">view</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">进行的通知方式，不关心谁去接收，只负责发布信息。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">优势：解耦合</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">敏捷原则：接口隔离原则，开放</span><span lang="EN-US" xml:lang="EN-US">-</span><span style="font-family: 宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">封闭原则</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">实例：</span><span lang="EN-US" xml:lang="EN-US">Notification</span><span style="font-family: 宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">通知中心，注册通知中心，任何位置可以发送消息，注册观察者的对象可以接收。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+kvo</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">，键值对改变通知的观察者，平时基本没用过。</span></div>
+<div align="left" style="text-align:left; mso-pagination:widow-orphan;background:white"><span lang="EN-US" xml:lang="EN-US"> </span></div>
+</div>
+<div align="left" style="text-align:left; mso-pagination:widow-orphan;background:white"><span style="font-family:宋体; mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">（三）</span><span lang="EN-US" xml:lang="EN-US">MVC</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-hansi-font-family:Cambria">模式</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">应用场景：是一中非常古老的设计模式，通过数据模型，控制器逻辑，视图展示将应用程序进行逻辑划分。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">优势：使系统，层次清晰，职责分明，易于维护</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">敏捷原则：对扩展开放</span><span lang="EN-US" xml:lang="EN-US">-</span><span style="font-family: 宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">对修改封闭</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">实例：</span><span lang="EN-US" xml:lang="EN-US">model-</span><span style="font-family:宋体; mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">即数据模型，</span><span lang="EN-US" xml:lang="EN-US">view-</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-hansi-font-family:Cambria">视图展示，</span><span lang="EN-US" xml:lang="EN-US">controller</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">进行</span><span lang="EN-US" xml:lang="EN-US">UI</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-hansi-font-family:Cambria">展现和数据交互的逻辑控制。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+<br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">（四）单例模式</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">应用场景：确保程序运行期某个类，只有一份实例，用于进行资源共享控制。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">优势：使用简单，延时求值，易于跨模块</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">敏捷原则：单一职责原则</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">实例：</span><span lang="EN-US" xml:lang="EN-US">[UIApplication sharedApplication]</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">注意事项：确保使用者只能通过</span> <span lang="EN-US" xml:lang="EN-US">getInstance</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">方法才能获得，单例类的唯一实例。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+java</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-hansi-font-family:Cambria">，</span><span lang="EN-US" xml:lang="EN-US">C++</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">中使其没有公有构造函数，私有化并覆盖其构造函数。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+object c</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-hansi-font-family:Cambria">中，重写</span><span lang="EN-US" xml:lang="EN-US">allocWithZone</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">方法，保证即使用户用</span> <span lang="EN-US" xml:lang="EN-US">alloc</span><span style="font-family:宋体;mso-ascii-font-family:Cambria; mso-hansi-font-family:Cambria">方法直接创建单例类的实例，返回的也只是此单例类的唯一静态变量。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+<br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">（五）策略模式</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">应用场景：定义算法族，封装起来，使他们之间可以相互替换。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">优势：使算法的变化独立于使用算法的用户</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">敏捷原则：接口隔离原则；多用组合，少用继承；针对接口编程，而非实现。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">实例：排序算法，</span><span lang="EN-US" xml:lang="EN-US">NSArray</span><span style="font-family: 宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">的</span><span lang="EN-US" xml:lang="EN-US">sortedArrayUsingSelector</span><span style="font-family:宋体; mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">；经典的鸭子会叫，会飞案例。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">注意事项：</span><span lang="EN-US" xml:lang="EN-US">1</span><span style="font-family:宋体; mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">，剥离类中易于变化的行为，通过组合的方式嵌入抽象基类</span><span lang="EN-US" xml:lang="EN-US"><br/>
+2</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">，变化的行为抽象基类为，所有可变变化的父类</span><span lang="EN-US" xml:lang="EN-US"><br/>
+3</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">，用户类的最终实例，通过注入行为实例的方式，设定易变行为</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">防止了继承行为方式，导致无关行为污染子类。完成了策略封装和可替换性。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+<br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">（六）工厂模式</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">应用场景：工厂方式创建类的实例，多与</span><span lang="EN-US" xml:lang="EN-US">proxy</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">模式配合，创建可替换代理类。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">优势：易于替换，面向抽象编程，</span><span lang="EN-US" xml:lang="EN-US">application</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">只与抽象工厂和易变类的共性抽象类发生调用关系。</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">敏捷原则：</span><span lang="EN-US" xml:lang="EN-US">DIP</span><span style="font-family:宋体; mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">依赖倒置原则</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">实例：项目部署环境中依赖多个不同类型的数据库时，需要使用工厂配合</span><span lang="EN-US" xml:lang="EN-US">proxy</span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">完成易用性替换</span><span lang="EN-US" xml:lang="EN-US"><br/>
+ </span><span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">注意事项：项目初期，软件结构和需求都没有稳定下来时，不建议使用此模式，因为其劣势也很明显，</span></div>
+<div style="text-align: left;"> <span style="font-family:宋体;mso-ascii-font-family:Cambria;mso-hansi-font-family: Cambria">增</span><span lang="EN-US" xml:lang="EN-US"> </span><span style="font-family:宋体; mso-ascii-font-family:Cambria;mso-hansi-font-family:Cambria">加了代码的复杂度，增加了调用层次，增加了内存负担。所以要注意防止模式的滥用。</span></div>
+<div><br/></div>
+<div>2&gt; MVVM和rectivecocoa</div>
+<div><br/></div>
+<div><br/></div>
+<div>
+<div><b>六.框架</b></div>
+<div><b>1.SDWebimage</b></div>
+</div>
+<div>1&gt; SDWebimage的缓存机制</div>
+<ol>
+<li>UIImageView+WebCache: setImageWithURL:placeholderImage:options: 先显示 placeholderImage ，同时由SDWebImageManager 根据 URL 来在本地查找图片。</li>
+<li>SDWebImageManager: downloadWithURL:delegate:options:userInfo: SDWebImageManager是将UIImageView+WebCache同SDImageCache链接起来的类， SDImageCache： queryDiskCacheForKey:delegate:userInfo:用来从缓存根据CacheKey查找图片是否已经在缓存中</li>
+<li>如果内存中已经有图片缓存， SDWebImageManager会回调SDImageCacheDelegate : imageCache:didFindImage:forKey:userInfo:</li>
+<li>而 UIImageView+WebCache 则回调SDWebImageManagerDelegate:  webImageManager:didFinishWithImage:来显示图片。</li>
+<li>如果内存中没有图片缓存，那么生成 NSInvocationOperation 添加到队列，从硬盘查找图片是否已被下载缓存。</li>
+<li>根据 URLKey 在硬盘缓存目录下尝试读取图片文件。这一步是在 NSOperation 进行的操作，所以回主线程进行结果回调 <br/>
+notifyDelegate:<br/></li>
+<li>如果上一操作从硬盘读取到了图片，将图片添加到内存缓存中（如果空闲内存过小，会先清空内存缓存）。SDImageCacheDelegate 回调 imageCache:didFindImage:forKey:userInfo:进而回调展示图片。</li>
+<li>如果从硬盘缓存目录读取不到图片，说明所有缓存都不存在该图片，需要下载图片，回调 <br/>
+imageCache:didNotFindImageForKey:userInfo:<br/></li>
+<li>共享或重新生成一个下载器 SDWebImageDownloader 开始下载图片。</li>
+<li>图片下载由 NSURLConnection 来做，实现相关 delegate 来判断图片下载中、下载完成和下载失败。</li>
+<li>connection:didReceiveData: 中利用 ImageIO 做了按图片下载进度加载效果。</li>
+<li>connectionDidFinishLoading: 数据下载完成后交给 SDWebImageDecoder 做图片解码处理。</li>
+<li>图片解码处理在一个 NSOperationQueue 完成，不会拖慢主线程 UI。如果有需要对下载的图片进行二次处理，最好也在这里完成，效率会好很多。</li>
+<li>在主线程 notifyDelegateOnMainThreadWithInfo: 宣告解码完成，imageDecoder:didFinishDecodingImage:userInfo: 回调给 SDWebImageDownloader。</li>
+<li>imageDownloader:didFinishWithImage: 回调给 SDWebImageManager 告知图片下载完成。</li>
+<li>通知所有的 downloadDelegates 下载完成，回调给需要的地方展示图片。</li>
+<li>将图片保存到 SDImageCache 中，内存缓存和硬盘缓存同时保存。</li>
+<li>写文件到硬盘在单独 NSInvocationOperation 中完成，避免拖慢主线程。</li>
+<li> 如果是在iOS上运行，SDImageCache 在初始化的时候会注册notification 到 UIApplicationDidReceiveMemoryWarningNotification 以及  UIApplicationWillTerminateNotification,在内存警告的时候清理内存图片缓存，应用结束的时候清理过期图片。</li>
+<li>SDWebImagePrefetcher 可以预先下载图片，方便后续使用。</li>
+</ol>
+<div>
+<div><br/></div>
+<div>位运算</div>
+<div>NSCache</div>
+<div>特点: a&gt; 线程安全的 b&gt; 当内存不足的时候,自动释放 c&gt; 缓存数量和缓存成本</div>
+<div>区别NSMutableDictionary</div>
+<div>1&gt; 不能也不应该遍历  2&gt; NSCache对key强引用,NSMutableDictionary对key进行copy</div>
+<div><br/></div>
+</div>
+<div><b>2.AFN</b></div>
+<div>1&gt;实现原理</div>
+<div>AFN的直接操作对象AFHTTPClient不同于ASI，是一个实现了NSCoding和NSCopying协议的NSObject子类。 AFHTTPClient是一个封装了一系列操作方法的“工具类”，处理请求的操作类是一系列单独的，基于NSOperation封装 的，AFURLConnectionOperation的子类。AFN的示例代码中通过一个静态方法，使用dispatch_once()的方式创建 AFHTTPClient的共享实例，这也是官方建议的使用方法。在创建AFHTTPClient的初始化方法中，创建了OperationQueue并 设置一系列参数默认值。在getPath:parameters:success:failure方法中创建NSURLRequest，以 NSURLRequest对象实例作为参数，创建一个NSOperation，并加入在初始化发方中创建的NSOperationQueue。以上操作都 是在主线程中完成的。在NSOperation的start方法中，以此前创建的NSURLRequest对象为参数创建NSURLConnection 并开启连结。</div>
+<div><br/></div>
+<div>2&gt; 传递指针 如何使一个方法返回多个返回值</div>
+<div>传参指针变量的地址,方法内部通过*运算符使用该地址可以修改该地址保存的内容(引用对象的地址),当外部再次使用该指针变量取出引用对象时,引用对象已经在方法内部发生了改变,指针变量指向其他数据,相当于方法的返回值(经方法处理后生成的外部可使用的结果数据).</div>
+<div><br/></div>
+<div>
+<div><b>七.项目</b></div>
+</div>
+<div><b>1.编译链接</b></div>
+<div>1&gt; id和instancetype的区别 </div>
+<div>instancetype只能做返回值,编译时判断真实类型,不符合发警告</div>
+<div>特殊情况: 关联类型返回方法,如类方法alloc或new开头,实例方法中,以autorelease,init,retain,或self开头</div>
+<div><br/></div>
+<div>
+<div><b>2.静态库</b></div>
+<div>
+<div>如何给静态库添加属性   分类+runtime</div>
+<div>如何调用私有方法  performselector  category(前向引用)</div>
+</div>
+</div>
+<div><b><br/></b></div>
+<div>
+<div><b>3.混编</b></div>
+<div>arc mrc混编</div>
+<div>c c++混编</div>
+</div>
+<div><b><br/></b></div>
+<div>
+<div><b><span style="color: rgb(255, 38, 0);">4.加密</span><br/></b></div>
+<div><br/></div>
+<div><b>5.iOS更新</b></div>
+<div>ios6 7 8的区别</div>
+<div><br/></div>
+</div>
+<div><b>5.日期处理</b></div>
+<div>字符串操作  append  format  substring  rangeofstring    nsrange   <a href="http://www.cnblogs.com/neworiginou/archive/2012/11/14/2770038.html">http://www.cnblogs.com/neworiginou/archive/2012/11/14/2770038.html</a></div>
+<div><br/></div>
+<div><b>6.性能优化</b></div>
+<div>1&gt; 如何进行性能优化</div>
+<div>1.1&gt; 内存优化的点   重用  懒加载</div>
+<div>1.2&gt; 渲染优化  尽量使用不透明的图   把 views 设置为透明</div>
+<div>1.3&gt; 在ImageView设置前,尽量先调整好图片大小   尤其放在uiscrolliview中自动缩放耗能</div>
+<div>1.4&gt; 避免使用过大的xib     和分镜的区别  一次性加载</div>
+<div>1.5&gt; 不要阻塞主线程     除渲染,触摸响应等    尽量异步处理  如存储,网络       异步线程通知    </div>
+<div>1.6&gt; 缓存    网络响应,图片,计算结果(行高)    网络响应NSUrlconnection默认缓存request,设置策略  非网络请求 使用nscache nsdictionary</div>
+<div>1.7&gt; 避免反复处理数据   在服务器端和客户端使用相同的数据结构</div>
+<div>
+<div>1.8&gt; 选择正确的数据格式  json  速度快 解析方便   xml  sax方式逐行解析 解析大文件不占用内存和损失性能</div>
+<div>1.9&gt; 优化tableview  重用cell 缓存行高 cell子视图尽量少且不透明  </div>
+</div>
+<div>1.10&gt; 选择正确的数据存储选项  plist nscoding NSUserDefaults sqlite coredata</div>
+<div><br/></div>
+<div><b>八.算法</b></div>
+<div>1.交换数值的几种方法   中间变量    加减法    异或</div>
+<div><span style="color: rgb(255, 38, 0);">2.oc/c实现常用排序</span></div>
+<div>3.</div>
+<div><br/></div>
+<div><br/></div>
+<div>
+<div>二叉树</div>
+</div>
+<div>链表</div>
+<div>写一个单链表,要求可以插入数据和删除单个数据</div>
+<div><br/></div>
+<div>递归</div>
+</body></html>

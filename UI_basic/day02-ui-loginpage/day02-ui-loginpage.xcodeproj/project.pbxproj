@@ -1,0 +1,431 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		18521B3C1BA2F30200CC8421 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18521B3B1BA2F30200CC8421 /* main.m */; };
+		18521B3F1BA2F30200CC8421 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18521B3E1BA2F30200CC8421 /* AppDelegate.m */; };
+		18521B421BA2F30200CC8421 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18521B411BA2F30200CC8421 /* ViewController.m */; };
+		18521B451BA2F30200CC8421 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18521B431BA2F30200CC8421 /* Main.storyboard */; };
+		18521B471BA2F30200CC8421 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18521B461BA2F30200CC8421 /* Images.xcassets */; };
+		18521B4A1BA2F30200CC8421 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18521B481BA2F30200CC8421 /* LaunchScreen.xib */; };
+		18521B561BA2F30300CC8421 /* day02_ui_loginpageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18521B551BA2F30300CC8421 /* day02_ui_loginpageTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		18521B501BA2F30300CC8421 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18521B2E1BA2F30200CC8421 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18521B351BA2F30200CC8421;
+			remoteInfo = "day02-ui-loginpage";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		18521B361BA2F30200CC8421 /* day02-ui-loginpage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "day02-ui-loginpage.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18521B3A1BA2F30200CC8421 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18521B3B1BA2F30200CC8421 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		18521B3D1BA2F30200CC8421 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		18521B3E1BA2F30200CC8421 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		18521B401BA2F30200CC8421 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		18521B411BA2F30200CC8421 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		18521B441BA2F30200CC8421 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		18521B461BA2F30200CC8421 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		18521B491BA2F30200CC8421 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		18521B4F1BA2F30300CC8421 /* day02-ui-loginpageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "day02-ui-loginpageTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18521B541BA2F30300CC8421 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18521B551BA2F30300CC8421 /* day02_ui_loginpageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day02_ui_loginpageTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18521B331BA2F30200CC8421 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18521B4C1BA2F30300CC8421 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18521B2D1BA2F30200CC8421 = {
+			isa = PBXGroup;
+			children = (
+				18521B381BA2F30200CC8421 /* day02-ui-loginpage */,
+				18521B521BA2F30300CC8421 /* day02-ui-loginpageTests */,
+				18521B371BA2F30200CC8421 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		18521B371BA2F30200CC8421 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18521B361BA2F30200CC8421 /* day02-ui-loginpage.app */,
+				18521B4F1BA2F30300CC8421 /* day02-ui-loginpageTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		18521B381BA2F30200CC8421 /* day02-ui-loginpage */ = {
+			isa = PBXGroup;
+			children = (
+				18521B3D1BA2F30200CC8421 /* AppDelegate.h */,
+				18521B3E1BA2F30200CC8421 /* AppDelegate.m */,
+				18521B401BA2F30200CC8421 /* ViewController.h */,
+				18521B411BA2F30200CC8421 /* ViewController.m */,
+				18521B431BA2F30200CC8421 /* Main.storyboard */,
+				18521B461BA2F30200CC8421 /* Images.xcassets */,
+				18521B481BA2F30200CC8421 /* LaunchScreen.xib */,
+				18521B391BA2F30200CC8421 /* Supporting Files */,
+			);
+			path = "day02-ui-loginpage";
+			sourceTree = "<group>";
+		};
+		18521B391BA2F30200CC8421 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				18521B3A1BA2F30200CC8421 /* Info.plist */,
+				18521B3B1BA2F30200CC8421 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		18521B521BA2F30300CC8421 /* day02-ui-loginpageTests */ = {
+			isa = PBXGroup;
+			children = (
+				18521B551BA2F30300CC8421 /* day02_ui_loginpageTests.m */,
+				18521B531BA2F30300CC8421 /* Supporting Files */,
+			);
+			path = "day02-ui-loginpageTests";
+			sourceTree = "<group>";
+		};
+		18521B531BA2F30300CC8421 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				18521B541BA2F30300CC8421 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		18521B351BA2F30200CC8421 /* day02-ui-loginpage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18521B591BA2F30300CC8421 /* Build configuration list for PBXNativeTarget "day02-ui-loginpage" */;
+			buildPhases = (
+				18521B321BA2F30200CC8421 /* Sources */,
+				18521B331BA2F30200CC8421 /* Frameworks */,
+				18521B341BA2F30200CC8421 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "day02-ui-loginpage";
+			productName = "day02-ui-loginpage";
+			productReference = 18521B361BA2F30200CC8421 /* day02-ui-loginpage.app */;
+			productType = "com.apple.product-type.application";
+		};
+		18521B4E1BA2F30300CC8421 /* day02-ui-loginpageTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18521B5C1BA2F30300CC8421 /* Build configuration list for PBXNativeTarget "day02-ui-loginpageTests" */;
+			buildPhases = (
+				18521B4B1BA2F30300CC8421 /* Sources */,
+				18521B4C1BA2F30300CC8421 /* Frameworks */,
+				18521B4D1BA2F30300CC8421 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				18521B511BA2F30300CC8421 /* PBXTargetDependency */,
+			);
+			name = "day02-ui-loginpageTests";
+			productName = "day02-ui-loginpageTests";
+			productReference = 18521B4F1BA2F30300CC8421 /* day02-ui-loginpageTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18521B2E1BA2F30200CC8421 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = itheima;
+				TargetAttributes = {
+					18521B351BA2F30200CC8421 = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					18521B4E1BA2F30300CC8421 = {
+						CreatedOnToolsVersion = 6.3;
+						TestTargetID = 18521B351BA2F30200CC8421;
+					};
+				};
+			};
+			buildConfigurationList = 18521B311BA2F30200CC8421 /* Build configuration list for PBXProject "day02-ui-loginpage" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 18521B2D1BA2F30200CC8421;
+			productRefGroup = 18521B371BA2F30200CC8421 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				18521B351BA2F30200CC8421 /* day02-ui-loginpage */,
+				18521B4E1BA2F30300CC8421 /* day02-ui-loginpageTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		18521B341BA2F30200CC8421 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18521B451BA2F30200CC8421 /* Main.storyboard in Resources */,
+				18521B4A1BA2F30200CC8421 /* LaunchScreen.xib in Resources */,
+				18521B471BA2F30200CC8421 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18521B4D1BA2F30300CC8421 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		18521B321BA2F30200CC8421 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18521B421BA2F30200CC8421 /* ViewController.m in Sources */,
+				18521B3F1BA2F30200CC8421 /* AppDelegate.m in Sources */,
+				18521B3C1BA2F30200CC8421 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18521B4B1BA2F30300CC8421 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18521B561BA2F30300CC8421 /* day02_ui_loginpageTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		18521B511BA2F30300CC8421 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18521B351BA2F30200CC8421 /* day02-ui-loginpage */;
+			targetProxy = 18521B501BA2F30300CC8421 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		18521B431BA2F30200CC8421 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18521B441BA2F30200CC8421 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		18521B481BA2F30200CC8421 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18521B491BA2F30200CC8421 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		18521B571BA2F30300CC8421 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		18521B581BA2F30300CC8421 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		18521B5A1BA2F30300CC8421 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "day02-ui-loginpage/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		18521B5B1BA2F30300CC8421 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "day02-ui-loginpage/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		18521B5D1BA2F30300CC8421 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "day02-ui-loginpageTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/day02-ui-loginpage.app/day02-ui-loginpage";
+			};
+			name = Debug;
+		};
+		18521B5E1BA2F30300CC8421 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "day02-ui-loginpageTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/day02-ui-loginpage.app/day02-ui-loginpage";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		18521B311BA2F30200CC8421 /* Build configuration list for PBXProject "day02-ui-loginpage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18521B571BA2F30300CC8421 /* Debug */,
+				18521B581BA2F30300CC8421 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18521B591BA2F30300CC8421 /* Build configuration list for PBXNativeTarget "day02-ui-loginpage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18521B5A1BA2F30300CC8421 /* Debug */,
+				18521B5B1BA2F30300CC8421 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		18521B5C1BA2F30300CC8421 /* Build configuration list for PBXNativeTarget "day02-ui-loginpageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18521B5D1BA2F30300CC8421 /* Debug */,
+				18521B5E1BA2F30300CC8421 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 18521B2E1BA2F30200CC8421 /* Project object */;
+}

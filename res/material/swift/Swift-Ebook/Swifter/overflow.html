@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>溢出 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_95">溢出</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E6%BA%A2%E5%87%BA" class="calibre1">溢出</h1>
+<p class="calibre9">对于 Mac 开发，我们早已步入了 64 位时代，而对 iOS 来说，64 位的乐章才刚刚开始。在今后一段时间内，我们都需要面临同时为 32 位和 64 位的设备进行开发的局面。由于这个条件所导致的最直接的一个结果就是数字类型的区别。</p>
+<p class="calibre9">最简单的例子，在 Swift 中我们一般简单地使用 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 来表示整数，在 iPhone 5 和以下的设备中，这个类型其实等同于 <code class="calibre13 pcalibre6 pcalibre5">Int32</code>，而在 64 位设备中表示的是 <code class="calibre13 pcalibre6 pcalibre5">Int64</code> (这点和 Objective-C 中的 <code class="calibre13 pcalibre6 pcalibre5">NSInteger</code> 表现是完全一样的，事实上，在 Swift 中 <code class="calibre13 pcalibre6 pcalibre5">NSInteger</code> 只是一个 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 的 <a href="typealias.html" class="pcalibre pcalibre2 pcalibre1 calibre4">typealias</a>。这就意味着，我们在开发的时候必须考虑同样的代码在不同平台上的表现差异，比如下面的这段计算在 32 位设备上和 64 位设备上的表现就完全不同：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-keyword">var</span> a: <span class="hljs-func">Int</span> = <span class="hljs-params">1</span>
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {
+        a = a * <span class="hljs-params">100000</span>
+        a = a * <span class="hljs-params">100000</span>
+        a = a * <span class="hljs-params">100000</span>
+        <span class="hljs-params">print</span>(a)
+    }
+}
+
+<span class="hljs-func">MyClass</span>().method()
+
+<span class="hljs-title">// 64 位环境 (iPhone 5s 及以上)</span>
+<span class="hljs-title">// 1,000,000,000,000,000</span>
+
+<span class="hljs-title">// 32 位环境 (iPhone 5c 及以下)</span>
+<span class="hljs-title">// 崩溃</span>
+</code></pre>
+<p class="calibre9">因为 32 位的 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 的最大值为 2,147,483,647，这个方法的计算已经超过了 <code class="calibre13 pcalibre6 pcalibre5">Int32</code> 的最大值。和其他一些编程语言的处理不同的是，Swift 在溢出的时候选择了让程序直接崩溃而不是截掉超出的部分，这也是一种安全性的表现。</p>
+<p class="calibre9">另外，编译器其实已经足够智能，可以帮助我们在编译的时候就发现某些必然的错误。比如：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-keyword">var</span> <span class="hljs-params">max</span> = <span class="hljs-func">Int</span>.<span class="hljs-params">max</span>
+    <span class="hljs-params">max</span> = <span class="hljs-params">max</span> + <span class="hljs-params">1</span>
+}
+</code></pre>
+<p class="calibre9">这种常量运算在编译时就进行了，发现计算溢出后编译无法通过。</p>
+<p class="calibre9">在存在溢出可能性的地方，第一选择当然是使用更大空间的类型来表示，比如将原来的 <code class="calibre13 pcalibre6 pcalibre5">Int32</code> 显式地声明为 <code class="calibre13 pcalibre6 pcalibre5">Int64</code>。如果 64 位整数还无法满足需求的话，我们也可以考虑使用两个 <code class="calibre13 pcalibre6 pcalibre5">Int64</code> 来软件实现 <code class="calibre13 pcalibre6 pcalibre5">Int128</code> (据我所知现在还没有面向消费领域的 128 位的电子设备) 的行为。</p>
+<p class="calibre9">最后，如果我们想要其他编程语言那样的对溢出处理温柔一些，不是让程序崩溃，而是简单地从高位截断的话，可以使用溢出处理的运算符，在 Swift 中，我们可以使用以下这五个带有 <code class="calibre13 pcalibre6 pcalibre5">&amp;</code> 的操作符，这样 Swift 就会忽略掉溢出的错误：</p>
+<ul class="calibre19">
+<li class="calibre3">溢出加法 (<code class="calibre13 pcalibre6 pcalibre5">&amp;+</code>)</li>
+<li class="calibre3">溢出减法 (<code class="calibre13 pcalibre6 pcalibre5">&amp;-</code>)</li>
+<li class="calibre3">溢出乘法 (<code class="calibre13 pcalibre6 pcalibre5">&amp;*</code>)</li>
+<li class="calibre3">溢出除法 (<code class="calibre13 pcalibre6 pcalibre5">&amp;/</code>)</li>
+<li class="calibre3">溢出求模 (<code class="calibre13 pcalibre6 pcalibre5">&amp;+</code>)</li>
+</ul>
+<p class="calibre9">这样处理的结果：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> <span class="hljs-params">max</span> = <span class="hljs-func">Int</span>.<span class="hljs-params">max</span>
+<span class="hljs-params">max</span> = <span class="hljs-params">max</span> &amp;+ <span class="hljs-params">1</span>
+
+<span class="hljs-title">// 64 位系统下</span>
+<span class="hljs-title">// max = -9,223,372,036,854,775,808</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

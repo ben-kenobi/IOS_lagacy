@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>default 参数 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_25">default 参数</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="default-%E5%8F%82%E6%95%B0" class="calibre1">default 参数</h1>
+<p class="calibre9">Swift 的方法是支持默认参数的，也就是说在声明方法时，可以给某个参数指定一个默认使用的值。在调用该方法时要是传入了这个参数，则使用传入的值，如果缺少这个输入参数，那么直接使用设定的默认值进行调用。可以说这是 Objective-C 社区盼了好多年的一个特性了，Objective-C 由于语法的特点几乎无法在不大幅改动的情况下很好地实现默认参数。</p>
+<p class="calibre9">和其他很多语言的默认参数相比较，Swift 中的默认参数限制更少，并没有所谓 "默认参数之后不能再出现无默认值的参数"这样的规则，举个例子，下面两种方法的声明在 Swift 里都是合法可用的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">sayHello1</span><span class="hljs-params">(str1: String = <span class="hljs-string">"Hello"</span>, str2: String, str3: String)</span></span> {
+    <span class="hljs-params">print</span>(str1 + str2 + str3)
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">sayHello2</span><span class="hljs-params">(str1: String, str2: String, str3: String = <span class="hljs-string">"World"</span>)</span></span> {
+    <span class="hljs-params">print</span>(str1 + str2 + str3)
+}
+</code></pre>
+<p class="calibre9">其他不少语言只能使用后面一种写法，将默认参数作为方法的最后一个参数。</p>
+<p class="calibre9">在调用的时候，我们如果想要使用默认值的话，只要不传入相应的值就可以了。下面这样的调用将得到同样的结果：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">sayHello1(str2: <span class="hljs-string">" "</span>, str3: <span class="hljs-string">"World"</span>)
+sayHello2(<span class="hljs-string">"Hello"</span>, str2: <span class="hljs-string">" "</span>)
+
+<span class="hljs-title">//输出都是 Hello World</span>
+</code></pre>
+<p class="calibre9">这两个调用都省略了带有默认值的参数，<code class="calibre13 pcalibre6 pcalibre5">sayHello1</code> 中 <code class="calibre13 pcalibre6 pcalibre5">str1</code> 是默认的 "Hello"，而 <code class="calibre13 pcalibre6 pcalibre5">sayHello2</code> 中的 <code class="calibre13 pcalibre6 pcalibre5">str3</code> 是默认的 "World"。</p>
+<p class="calibre9">另外如果喜欢 Cmd + 单击点来点去到处看的朋友可能会注意到 <code class="calibre13 pcalibre6 pcalibre5">NSLocalizedString</code> 这个常用方法的签名现在是：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">NSLocalizedString</span><span class="hljs-params">(key: String,
+                 tableName: String? = <span class="hljs-keyword">default</span>,
+                    bundle: NSBundle = <span class="hljs-keyword">default</span>,
+                     value: String = <span class="hljs-keyword">default</span>,
+                   comment: String)</span></span> -&gt; <span class="hljs-func">String</span>
+</code></pre>
+<p class="calibre9">默认参数写的是 <code class="calibre13 pcalibre6 pcalibre5">default</code>，这是含有默认参数的方法所生成的 Swift 的调用接口。当我们指定一个编译时就能确定的常量来作为默认参数的取值时，这个取值是隐藏在方法实现内部，而不应该暴露给其他部分。与 <code class="calibre13 pcalibre6 pcalibre5">NSLocalizedString</code> 很相似的还有 Swift 中的各类断言：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">assert</span><span class="hljs-params">(@autoclosure condition: <span class="hljs-params">()</span></span></span> -&gt; <span class="hljs-func">Bool</span>,
+            @autoclosure <span class="hljs-params">_</span> message: () -&gt; <span class="hljs-func">String</span> = <span class="hljs-keyword">default</span>,
+                              file: <span class="hljs-func">StaticString</span> = <span class="hljs-keyword">default</span>,
+                              line: <span class="hljs-func">UWord</span> = <span class="hljs-keyword">default</span>)
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

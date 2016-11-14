@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>footer</key>
+		<string>1e21e21e21</string>
+		<key>mems</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>werwrawre</string>
+				<key>acclz</key>
+				<string>UISwitch</string>
+				<key>acimg</key>
+				<string>aaa</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>header</key>
+		<string>13123213</string>
+		<key>mems</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>from</string>
+				<key>isRed</key>
+				<true/>
+				<key>subtitle</key>
+				<string>00:00</string>
+				<key>cellstyle</key>
+				<string>UITableViewCellStyleValue1</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>mems</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>to</string>
+				<key>isRed</key>
+				<true/>
+				<key>subtitle</key>
+				<string>00:00</string>
+				<key>cellstyle</key>
+				<string>UITableViewCellStyleValue1</string>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

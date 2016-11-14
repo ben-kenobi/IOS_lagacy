@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>tuple | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_7">tuple</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%A4%9A%E5%85%83%E7%BB%84-tuple" class="calibre1">多元组 (Tuple)</h1>
+<p class="calibre9">多元组是我们的新朋友，多尝试使用这个新特性吧，会让生活轻松不少～</p>
+<p class="calibre9">比如交换输入，普通程序员亘古以来可能都是这么写的</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">swapMe</span><span class="hljs-func">&lt;T&gt;</span><span class="hljs-params">(<span class="hljs-keyword">inout</span> a: T, <span class="hljs-keyword">inout</span> b: T)</span></span> {
+    <span class="hljs-keyword">let</span> temp = a
+    a = b
+    b = temp
+}
+</code></pre>
+<p class="calibre9">但是要是使用多元组的话，我们可以不使用额外空间就完成交换，一下子就达到了文艺程序员的写法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">swapMe</span><span class="hljs-func">&lt;T&gt;</span><span class="hljs-params">(<span class="hljs-keyword">inout</span> a: T, <span class="hljs-keyword">inout</span> b: T)</span></span> {
+    (a,b) = (b,a)
+}
+</code></pre>
+<p class="calibre9">在 Objective-C 中有不少需要传递指针的地方，以前的错误处理 <code class="calibre13 pcalibre6 pcalibre5">NSError</code> 是个很好的例子。但是在 Swift 2.0 中传入指针的 <code class="calibre13 pcalibre6 pcalibre5">NSError</code> 已经被新加入的异常机制取代的，所以我们在这里举另一个例子来说明多元组的应用。在 Objective-C 中 <code class="calibre13 pcalibre6 pcalibre5">CGRect</code> 有一个辅助方法叫做 <code class="calibre13 pcalibre6 pcalibre5">CGRectDivide</code>，它用来将一个 <code class="calibre13 pcalibre6 pcalibre5">CGRect</code> 在一定位置切分成两个区域。具体定义和用法如下：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">/*
+CGRectDivide(CGRect rect, CGRect *slice, CGRect *remainder, 
+                             CGFloat amount, CGRectEdge edge)
+*/</span>
+<span class="hljs-params">CGRect</span> rect = <span class="hljs-params">CGRectMake</span>(<span class="hljs-params">0</span>, <span class="hljs-params">0</span>, <span class="hljs-params">100</span>, <span class="hljs-params">100</span>);
+<span class="hljs-params">CGRect</span> small;
+<span class="hljs-params">CGRect</span> large;
+<span class="hljs-params">CGRectDivide</span>(rect, &amp;small, &amp;large, <span class="hljs-params">20</span>, <span class="hljs-params">CGRectMinXEdge</span>);
+</code></pre>
+<p class="calibre9">上面的代码将 {0,0,100,100} 的 <code class="calibre13 pcalibre6 pcalibre5">rect</code> 分割为两部分，分别是 {0,0,20,100} 的 <code class="calibre13 pcalibre6 pcalibre5">small</code> 和 {20,0,80,100} 的 <code class="calibre13 pcalibre6 pcalibre5">large</code>。由于 C 系语言的单一返回，我们不得不通过传入指针的方式让方法来填充需要的部分，可以说使用起来既不直观，又很麻烦。</p>
+<p class="calibre9">而现在在 Swift 中，这个方法摇身一变，使用了多元组的方式来同时返回被分割的部分和剩余部分：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">CGRect</span> </span>{
+    <span class="hljs-title">//...</span>
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">divide</span><span class="hljs-params">(atDistance: CGFloat, fromEdge: CGRectEdge)</span></span> 
+                    -&gt; (slice: <span class="hljs-func">CGRect</span>, remainder: <span class="hljs-func">CGRect</span>)
+    <span class="hljs-title">//...</span>
+}
+</code></pre>
+<p class="calibre9">然后使用的时候，对比之前的做法，现在就非常简单并且易于理解了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> rect = <span class="hljs-func">CGRectMake</span>(<span class="hljs-params">0</span>, <span class="hljs-params">0</span>, <span class="hljs-params">100</span>, <span class="hljs-params">100</span>)
+<span class="hljs-keyword">let</span> (small, large) = rect.divide(<span class="hljs-params">20</span>, fromEdge: .<span class="hljs-func">MinXEdge</span>)
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

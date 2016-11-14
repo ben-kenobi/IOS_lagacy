@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>lazy 修饰符和 lazy 方法 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_34">lazy 修饰符和 lazy 方法</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="lazy-%E4%BF%AE%E9%A5%B0%E7%AC%A6%E5%92%8C-lazy-%E6%96%B9%E6%B3%95" class="calibre1">lazy 修饰符和 lazy 方法</h1>
+<p class="calibre9">延时加载或者说延时初始化是很常用的优化方法，在构建和生成新的对象的时候，内存分配会在运行时耗费不少时间，如果有一些对象的属性和内容非常复杂的话，这个时间更是不可忽略。另外，有些情况下我们并不会立即用到一个对象的所有属性，而默认情况下初始化时，那些在特定环境下不被使用的存储属性，也一样要被初始化和赋值，也是一种浪费。</p>
+<p class="calibre9">在其他语言 (包括 Objective-C) 中延时加载的情况是很常见的。我们在第一次访问某个属性时，判断这个属性背后的存储是否已经存在，如果存在则直接返回，如果不存在则说明是首次访问，那么就进行初始化并存储后再返回。这样我们可以把这个属性的初始化时刻推迟，与包含它的对象的初始化时刻分开，以达到提升性能的目的。以 Objective-C 举个例子 (虽然这里既没有费时操作，也不会因为使用延时加载而造成什么性能影响，但是作为一个最简单的例子，可以很好地说明问题)：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// ClassA.h</span>
+<span class="hljs-keyword">@property</span> (<span class="hljs-keyword">nonatomic</span>, <span class="hljs-keyword">copy</span>) <span class="hljs-params">NSString</span> *testString;
+
+<span class="hljs-title">// ClassA.m</span>
+- (<span class="hljs-params">NSString</span> *)testString {
+     <span class="hljs-keyword">if</span> (!_testString) {
+         _testString = <span class="hljs-string">@"Hello"</span>;
+        <span class="hljs-params">NSLog</span>(<span class="hljs-string">@"只在首次访问输出"</span>);
+     }
+     <span class="hljs-keyword">return</span> _testString;
+}
+</code></pre>
+<p class="calibre9">在初始化 <code class="calibre13 pcalibre6 pcalibre5">ClassA</code> 对象后，<code class="calibre13 pcalibre6 pcalibre5">_testString</code> 是 <code class="calibre13 pcalibre6 pcalibre5">nil</code>。只有当首次访问 <code class="calibre13 pcalibre6 pcalibre5">testString</code> 属性时 getter 方法会被调用，并检查如果还没有初始化的话，就进行赋值。为了方便确认，我们还在赋值时打印了一句 log。我们之后再多次访问这个属性的话，因为 <code class="calibre13 pcalibre6 pcalibre5">_testString</code> 已经有值，因此将直接返回。</p>
+<p class="calibre9">在 Swift 中我们使用在变量属性前加 <code class="calibre13 pcalibre6 pcalibre5">lazy</code> 关键字的方式来简单地指定延时加载。比如上面的的代码我们在 Swift 中重写的话，会是这样：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassA</span> </span>{
+    lazy <span class="hljs-keyword">var</span> str: <span class="hljs-func">String</span> = {
+        <span class="hljs-keyword">let</span> str = <span class="hljs-string">"Hello"</span>
+        <span class="hljs-params">print</span>(<span class="hljs-string">"只在首次访问输出"</span>)
+        <span class="hljs-keyword">return</span> str
+    }()
+}
+</code></pre>
+<p class="calibre9">我们在使用 <code class="calibre13 pcalibre6 pcalibre5">lazy</code> 作为属性修饰符时，只能声明属性是变量。另外我们需要显式地指定属性类型，并使用一个可以对这个属性进行赋值的语句来在首次访问属性时运行。如果我们多次访问这个实例的 <code class="calibre13 pcalibre6 pcalibre5">str</code> 属性的话，可以看到只有一次输出。</p>
+<p class="calibre9">为了简化，我们如果不需要做什么额外工作的话，也可以对这个 <code class="calibre13 pcalibre6 pcalibre5">lazy</code> 的属性直接写赋值语句：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">lazy <span class="hljs-keyword">var</span> str: <span class="hljs-func">String</span> = <span class="hljs-string">"Hello"</span>
+</code></pre>
+<p class="calibre9">相比起在 Objective-C 中的实现方法，现在的 lazy 使用起来要方便得多。</p>
+<p class="calibre9">另外一个不太引起注意的是，在 Swift 的标准库中，我们还有一组 <code class="calibre13 pcalibre6 pcalibre5">lazy</code> 方法，它们的定义是这样的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">lazy</span><span class="hljs-func">&lt;S : SequenceType&gt;</span><span class="hljs-params">(s: S)</span></span> -&gt; <span class="hljs-func">LazySequence</span>&lt;<span class="hljs-func">S</span>&gt;
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">lazy</span><span class="hljs-func">&lt;S : CollectionType where S.Index : RandomAccessIndexType&gt;</span><span class="hljs-params">(s: S)</span></span>
+                -&gt; <span class="hljs-func">LazyRandomAccessCollection</span>&lt;<span class="hljs-func">S</span>&gt;
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">lazy</span><span class="hljs-func">&lt;S : CollectionType where S.Index : BidirectionalIndexType&gt;</span><span class="hljs-params">(s: S)</span></span>
+                -&gt; <span class="hljs-func">LazyBidirectionalCollection</span>&lt;<span class="hljs-func">S</span>&gt;
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">lazy</span><span class="hljs-func">&lt;S : CollectionType where S.Index : ForwardIndexType&gt;</span><span class="hljs-params">(s: S)</span></span>
+                -&gt; <span class="hljs-func">LazyForwardCollection</span>&lt;<span class="hljs-func">S</span>&gt;
+</code></pre>
+<p class="calibre9">这些方法可以配合像 <code class="calibre13 pcalibre6 pcalibre5">map</code> 或是 <code class="calibre13 pcalibre6 pcalibre5">filter</code> 这类接受闭包并进行运行的方法一起，让整个行为变成延时进行的。在某些情况下这么做也对性能会有不小的帮助。例如，直接使用 <code class="calibre13 pcalibre6 pcalibre5">map</code> 时：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> data = <span class="hljs-params">1</span>...<span class="hljs-params">3</span>
+<span class="hljs-keyword">let</span> result = data.<span class="hljs-params">map</span> {
+    (i: <span class="hljs-func">Int</span>) -&gt; <span class="hljs-func">Int</span> <span class="hljs-keyword">in</span>
+    <span class="hljs-params">print</span>(<span class="hljs-string">"正在处理 <span class="hljs-func">\(i)</span>"</span>)
+    <span class="hljs-keyword">return</span> i * <span class="hljs-params">2</span>
+}
+
+<span class="hljs-params">print</span>(<span class="hljs-string">"准备访问结果"</span>)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> result {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"操作后结果为 <span class="hljs-func">\(i)</span>"</span>)
+}
+
+<span class="hljs-params">print</span>(<span class="hljs-string">"操作完毕"</span>)
+</code></pre>
+<p class="calibre9">这么做的输出为：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">// 正在处理 1
+// 正在处理 2
+// 正在处理 3
+// 准备访问结果
+// 操作后结果为 2
+// 操作后结果为 4
+// 操作后结果为 6
+// 操作完毕
+</code></pre><p class="calibre9">而如果我们先进行一次 <code class="calibre13 pcalibre6 pcalibre5">lazy</code> 操作的话，我们就能得到延时运行版本的容器：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> data = <span class="hljs-params">1</span>...<span class="hljs-params">3</span>
+<span class="hljs-keyword">let</span> result = data.lazy.<span class="hljs-params">map</span> {
+    (i: <span class="hljs-func">Int</span>) -&gt; <span class="hljs-func">Int</span> <span class="hljs-keyword">in</span>
+    <span class="hljs-params">print</span>(<span class="hljs-string">"正在处理 <span class="hljs-func">\(i)</span>"</span>)
+    <span class="hljs-keyword">return</span> i * <span class="hljs-params">2</span>
+}
+
+<span class="hljs-params">print</span>(<span class="hljs-string">"准备访问结果"</span>)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> result {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"操作后结果为 <span class="hljs-func">\(i)</span>"</span>)
+}
+
+<span class="hljs-params">print</span>(<span class="hljs-string">"操作完毕"</span>)
+</code></pre>
+<p class="calibre9">此时的运行结果：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">// 准备访问结果
+// 正在处理 1
+// 操作后结果为 2
+// 正在处理 2
+// 操作后结果为 4
+// 正在处理 3
+// 操作后结果为 6
+// 操作完毕
+</code></pre><p class="calibre9">对于那些不需要完全运行，可能提前退出的情况，使用 <code class="calibre13 pcalibre6 pcalibre5">lazy</code> 来进行性能优化效果会非常有效。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>String 还是 NSString | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_54">String 还是 NSString</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="string-%E8%BF%98%E6%98%AF-nsstring" class="calibre1">String 还是 NSString</h1>
+<p class="calibre9">既然像 <code class="calibre13 pcalibre6 pcalibre5">String</code> 这样的 Swift 的类型和 Foundation 的对应的类是可以无缝转换的，那么我们在使用和选择的时候，有没有什么需要特别注意的呢？</p>
+<p class="calibre9">简单来说，没有特别需要注意的，但是尽可能的话还是使用原生的 <code class="calibre13 pcalibre6 pcalibre5">String</code> 类型。</p>
+<p class="calibre9">原因有三。</p>
+<p class="calibre9">首先虽然 <code class="calibre13 pcalibre6 pcalibre5">String</code> 和 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 有着良好的互相转换的特性，但是现在 Cocoa 所有的 API 都接受和返回 <code class="calibre13 pcalibre6 pcalibre5">String</code> 类型。我们没有必要也不必给自己凭空添加麻烦去把框架中返回的字符串做一遍转换，既然 Cocoa 鼓励使用 <code class="calibre13 pcalibre6 pcalibre5">String</code>，并且为我们提供了足够的操作 <code class="calibre13 pcalibre6 pcalibre5">String</code> 的方法，那为什么不直接使用呢？</p>
+<p class="calibre9">其次，因为在 Swift 中 <code class="calibre13 pcalibre6 pcalibre5">String</code> 是 struct，相比起 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 类来说，更切合字符串的 "不变" 这一特性。通过配合常量赋值 (let) ，这种不变性在多线程编程时就非常重要了，它从原理上将程序员从内存访问和操作顺序的担忧中解放出来。另外，在不触及 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 特有操作和动态特性的时候，使用 <code class="calibre13 pcalibre6 pcalibre5">String</code> 的方法，在性能上也会有所提升。</p>
+<p class="calibre9">最后，因为 <code class="calibre13 pcalibre6 pcalibre5">String</code> 里的 <code class="calibre13 pcalibre6 pcalibre5">String.CharacterView</code> 实现了像 <code class="calibre13 pcalibre6 pcalibre5">CollectionType</code> 这样的接口，因此有些 Swift 的语法特性只有 <code class="calibre13 pcalibre6 pcalibre5">String</code> 才能使用，而 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 是没有的。一个典型就是 <code class="calibre13 pcalibre6 pcalibre5">for...in</code> 的枚举，我们可以写：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> levels = <span class="hljs-string">"ABCDE"</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> levels.characters {
+    <span class="hljs-params">print</span>(i)
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// ABCDE</span>
+</code></pre>
+<p class="calibre9">而如果转换为 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 的话，是无法使用 <code class="calibre13 pcalibre6 pcalibre5">characters</code> 并且进行枚举的。</p>
+<p class="calibre9">不过也有例外的情况。有一些 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 的方法在 <code class="calibre13 pcalibre6 pcalibre5">String</code> 中并没有实现，一个很有用的就是在 iOS 8 中新加的 <code class="calibre13 pcalibre6 pcalibre5">containsString</code>。我们想使用这个 API 来简单地确定某个字符串包括一个子字符串时，只能先将其转为 <code class="calibre13 pcalibre6 pcalibre5">NSString</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">if</span> (levels <span class="hljs-keyword">as</span> <span class="hljs-func">NSString</span>).containsString(<span class="hljs-string">"BC"</span>) {
+    <span class="hljs-params">println</span>(<span class="hljs-string">"包含字符串"</span>)
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// 包含字符串</span>
+</code></pre>
+<blockquote class="calibre6">
+<p class="calibre7">Swift 的 <code class="calibre13 pcalibre6 pcalibre5">String</code> 没有 <code class="calibre13 pcalibre6 pcalibre5">containsString</code> 是一件很奇怪的事情，理论上应该不存在实现的难度，希望只是 Apple 一时忘了这个新加的 API 吧。当然你也可以自行用扩展的方式在自己的代码库为 <code class="calibre13 pcalibre6 pcalibre5">String</code> 添加这个方法。当然，还有一些其他的像 <code class="calibre13 pcalibre6 pcalibre5">length</code> 和 <code class="calibre13 pcalibre6 pcalibre5">characterAtIndex:</code> 这样的 API 也没有 <code class="calibre13 pcalibre6 pcalibre5">String</code> 的版本，这主要是因为 <code class="calibre13 pcalibre6 pcalibre5">String</code> 和 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 在处理编码上的差异导致的。</p>
+</blockquote>
+<p class="calibre9">使用 <code class="calibre13 pcalibre6 pcalibre5">String</code> 唯一一个比较麻烦的地方在于它和 <code class="calibre13 pcalibre6 pcalibre5">Range</code> 的配合。在 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 中，我们在匹配字符串的时候通常使用 <code class="calibre13 pcalibre6 pcalibre5">NSRange</code> 来表征结果或者作为输入。而在使用 <code class="calibre13 pcalibre6 pcalibre5">String</code> 的对应的 API 时，<code class="calibre13 pcalibre6 pcalibre5">NSRange</code> 也会被映射成它在 Swift 中且对应 <code class="calibre13 pcalibre6 pcalibre5">String</code> 的特殊版本：<code class="calibre13 pcalibre6 pcalibre5">Range&lt;String.Index&gt;</code>。这有时候会让人非常讨厌：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> levels = <span class="hljs-string">"ABCDE"</span>
+
+<span class="hljs-keyword">let</span> nsRange = <span class="hljs-func">NSMakeRange</span>(<span class="hljs-params">1</span>, <span class="hljs-params">4</span>)
+<span class="hljs-title">// 编译错误</span>
+<span class="hljs-title">// Cannot invoke `stringByReplacingCharactersInRange` </span>
+<span class="hljs-title">// with an argument list of type '(NSRange, withString: String)'</span>
+levels.stringByReplacingCharactersInRange(nsRange, withString: <span class="hljs-string">"AAAA"</span>)
+
+<span class="hljs-keyword">let</span> indexPositionOne = levels.startIndex.successor()
+<span class="hljs-keyword">let</span> swiftRange = indexPositionOne ..&lt; indexPositionOne.advancedBy(<span class="hljs-params">4</span>)
+levels.stringByReplacingCharactersInRange(swiftRange, withString: <span class="hljs-string">"AAAA"</span>)
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// AAAAA</span>
+</code></pre>
+<p class="calibre9">一般来说，我们可能更愿意和基于 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 的 <code class="calibre13 pcalibre6 pcalibre5">NSRange</code> 一起工作，而不喜欢使用麻烦的 <code class="calibre13 pcalibre6 pcalibre5">Range&lt;String.Index&gt;</code>。这种情况下，将 <code class="calibre13 pcalibre6 pcalibre5">String</code> 转为 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 也许是个不错的选择：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> nsRange = <span class="hljs-func">NSMakeRange</span>(<span class="hljs-params">1</span>, <span class="hljs-params">4</span>)
+(levels <span class="hljs-keyword">as</span> <span class="hljs-func">NSString</span>).stringByReplacingCharactersInRange(
+    nsRange, withString: <span class="hljs-string">"AAAA"</span>)
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

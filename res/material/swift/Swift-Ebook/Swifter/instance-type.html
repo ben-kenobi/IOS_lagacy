@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>获取对象类型 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_59">获取对象类型</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E8%8E%B7%E5%8F%96%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B" class="calibre1">获取对象类型</h1>
+<p class="calibre9">我们一再强调，如果遵循规则的话，Swift 会是一门相当安全的语言：不会存在类型的疑惑，绝大多数的内容应该能在编译期间就唯一确定。但是不论是 Objective-C 里很多开发者早已习惯的灵活性，还是在程序世界里总是千变万化的需求，都不可能保证一尘不变。我们有时候也需要引入一定的动态特性。而其中最为基本但却是最为有用的技巧是获取任意一个实例类型。</p>
+<p class="calibre9">在 Objective-C 中我们可以轻而易举地做到这件事，使用 <code class="calibre13 pcalibre6 pcalibre5">-class</code> 方法就可以拿到对象的类，我们甚至可以用 <code class="calibre13 pcalibre6 pcalibre5">NSStringFromClass</code> 将它转换为一个能够打印出来的字符串：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">NSDate</span> *date = [<span class="hljs-params">NSDate</span> date];
+<span class="hljs-params">NSLog</span>(<span class="hljs-string">@"%@"</span>,<span class="hljs-params">NSStringFromClass</span>([date class]));
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// __NSDate</span>
+</code></pre>
+<p class="calibre9">在 Swift 中，我们会发现不管是纯 Swift 的 class 还是 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的子类，都没有像原来那样的 <code class="calibre13 pcalibre6 pcalibre5">class()</code> 方法来获取类型了。对于 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的子类，因为其实类的信息的存储方式并没有发生什么大的变化，因此我们可以求助于 Objective-C 的运行时，来获取类并按照原来的方式转换：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> date = <span class="hljs-func">NSDate</span>()
+<span class="hljs-keyword">let</span> name: <span class="hljs-func">AnyClass</span>! = object_getClass(date)
+<span class="hljs-params">println</span>(name)
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// __NSDate</span>
+</code></pre>
+<p class="calibre9">其中 <code class="calibre13 pcalibre6 pcalibre5">object_getClass</code> 是一个定义在 ObjectiveC 的 runtime 中的方法，它可以接受任意的 <code class="calibre13 pcalibre6 pcalibre5">AnyObject!</code> 并返回它的类型 <code class="calibre13 pcalibre6 pcalibre5">AnyClass!</code> (注意这里的叹号，它表明我们甚至可以输入 nil，并期待其返回一个 nil)。在 Swift 中其实为了获取一个 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 或其子类的对象的实际类型，对这个调用其实有一个好看一些的写法，那就是 <code class="calibre13 pcalibre6 pcalibre5">dynamicType</code>。上面的代码用一种 "更 Swift" 一些的语言转换一下，会是这个样子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> date = <span class="hljs-func">NSDate</span>()
+<span class="hljs-keyword">let</span> name = date.<span class="hljs-keyword">dynamicType</span>
+<span class="hljs-params">print</span>(name)
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// __NSDate</span>
+</code></pre>
+<p class="calibre9">很好，似乎我们的问题能解决了。但是仔细想想，我们上面用的都是 Objective-C 的动态特性，要是换成一个 Swift 内建类型的话，会怎么样呢？比如原生的 <code class="calibre13 pcalibre6 pcalibre5">String</code>，</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> string = <span class="hljs-string">"Hello"</span>
+<span class="hljs-keyword">let</span> name = string.<span class="hljs-keyword">dynamicType</span>
+<span class="hljs-params">print</span>(name)
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// String</span>
+</code></pre>
+<p class="calibre9">可以看到对于 Swift 的原生类型，这种方式也是可行的。(值得指出的是，其实这里的真正的类型名字还带有 module 前缀，也就是 <code class="calibre13 pcalibre6 pcalibre5">Swift.String</code>。直接 print 只是调用了 <code class="calibre13 pcalibre6 pcalibre5">CustomStringConvertible</code> 中的相关方法而已，你可以使用 <code class="calibre13 pcalibre6 pcalibre5">debugPrint</code> 来进行确认。关于更多地关于 <code class="calibre13 pcalibre6 pcalibre5">print</code> 和 <code class="calibre13 pcalibre6 pcalibre5">debugPrint</code> 的细节，可以参考 <a href="print.html" class="pcalibre pcalibre2 pcalibre1 calibre4">print 和 debugPrint</a> 一节的内容。)</p>
+<blockquote class="calibre6">
+<p class="calibre7">在 Swift 1.2 之前，直接对 Swift 内建的非 AnyObject 类型使用 <code class="calibre13 pcalibre6 pcalibre5">.dynamicType</code> 可能会导致编译错误或者无法得到正确结果。但是随着 Swift 不断完善和改进，现在我们已经可以统一地使用 <code class="calibre13 pcalibre6 pcalibre5">.dynamicType</code> 来获取一个对象的类型了。</p>
+</blockquote>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

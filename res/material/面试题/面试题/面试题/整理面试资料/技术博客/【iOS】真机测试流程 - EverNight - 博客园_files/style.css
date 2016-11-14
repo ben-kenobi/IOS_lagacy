@@ -1,0 +1,522 @@
+#EntryTag {
+	color: gray; font-size: 9pt; margin-top: 20px;
+}
+.topicListFooter {
+	text-align: right; margin-top: 10px; margin-right: 10px;
+}
+#divRefreshComments {
+	text-align: right; font-size: 9pt; margin-right: 10px; margin-bottom: 5px;
+}
+* {
+	margin: 0px; padding: 0px;
+}
+html {
+	height: 100%;
+}
+body {
+	background: url("/Skins/coffee/images/bg_body.gif") left top; color: rgb(0, 0, 0); line-height: 1.5; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 9pt; min-height: 101%;
+}
+fieldset {
+	border: 0px currentColor;
+}
+img {
+	border: 0px currentColor;
+}
+ul {
+	-ms-word-break: break-all;
+}
+li {
+	list-style: none;
+}
+h1 {
+	
+}
+h2 {
+	
+}
+h3 {
+	
+}
+h4 {
+	
+}
+h5 {
+	
+}
+h6 {
+	
+}
+a:link {
+	color: rgb(7, 93, 179); text-decoration: none;
+}
+a:visited {
+	color: rgb(7, 93, 179); text-decoration: none;
+}
+a:hover {
+	color: rgb(7, 93, 179); text-decoration: underline;
+}
+a:active {
+	color: rgb(7, 93, 179); text-decoration: none;
+}
+.clear {
+	clear: both;
+}
+#home {
+	margin: 0px auto; width: 100%; min-width: 930px;
+}
+#header {
+	background: url("/Skins/coffee/images/header.gif") no-repeat right top; height: 178px;
+}
+#blogTitle {
+	background: url("/Skins/coffee/images/bg_title.gif") no-repeat 170px 40px; height: 178px; clear: both;
+}
+#blogTitle h1 {
+	line-height: 1.5; padding-top: 25px; font-family: "黑体","ms song","宋体","Arial","verdana","Helvetica", "sans-serif"; font-size: 28px; font-weight: bold; margin-left: 2em;
+}
+#blogTitle a {
+	color: rgb(147, 90, 50);
+}
+#blogTitle h2 {
+	color: rgb(147, 90, 50); line-height: 1.5; margin-left: 4.5em;
+}
+#blogLogo {
+	float: right;
+}
+#main {
+	margin: auto; width: 97%; text-align: left; min-width: 950px;
+}
+#mainContent .forFlow {
+	background: url("/Skins/coffee/images/bg_left.gif") repeat-x left top rgb(254, 254, 242); margin: 0px 250px 0px 0px; padding-top: 35px; padding-bottom: 15px;
+}
+#mainContent {
+	background: none; margin: 0px -250px 0px 0px; border: 0px solid green; width: 100%; text-align: left; float: left; -ms-overflow-x: hidden;
+}
+#navigator {
+	background: url("/Skins/coffee/images/line.gif") repeat-x left bottom rgb(254, 254, 242); margin: auto auto 20px; width: 95%; height: 40px; clear: both;
+}
+#navList {
+	float: left; min-height: 30px;
+}
+#navList li {
+	float: left;
+}
+#navList a {
+	height: 22px; text-align: center; padding-top: 8px; margin-right: 12px; float: left;
+}
+#navList a {
+	color: rgb(51, 51, 51);
+}
+#navList a:hover {
+	color: rgb(147, 90, 50);
+}
+.blogStats {
+	text-align: right; color: rgb(51, 51, 51); margin-top: 8px; float: right;
+}
+.day {
+	background: url("/Skins/coffee/images/line.gif") repeat-x left bottom rgb(254, 254, 242); margin: auto auto 20px; width: 95%; padding-bottom: 25px; font-size: 14px; min-height: 10px; _height: 10px;
+}
+.dayTitle {
+	margin: 3px auto 5px 1px; width: 100%; text-align: left; color: rgb(102, 102, 102); line-height: 1.5; clear: both; font-size: 14px; font-weight: bold;
+}
+.dayTitle a:link {
+	color: rgb(147, 90, 50);
+}
+.dayTitle a:hover {
+	color: rgb(147, 90, 50);
+}
+.dayTitle a:active {
+	color: rgb(147, 90, 50);
+}
+.dayTitle a:visited {
+	color: rgb(147, 90, 50);
+}
+.postTitle {
+	width: 100%; line-height: 1.5; clear: both; font-size: 14px; font-weight: bold; float: right;
+}
+.postTitle a:link {
+	color: rgb(51, 51, 51);
+}
+.postTitle a:visited {
+	color: rgb(51, 51, 51);
+}
+.postTitle a:active {
+	color: rgb(51, 51, 51);
+}
+.postTitle a:hover {
+	color: rgb(170, 122, 83); text-decoration: underline;
+}
+.postCon {
+	padding: 10px 0px; width: 100%; line-height: 1.5; clear: both; font-size: 13px; float: right;
+}
+.postDesc {
+	width: 100%; text-align: right; color: rgb(102, 102, 102); padding-right: 5px; clear: both; font-size: 12px; margin-top: 5px; float: right;
+}
+.postDesc a:link {
+	color: rgb(170, 122, 83);
+}
+.postDesc a:visited {
+	color: rgb(170, 122, 83);
+}
+.postDesc a:active {
+	color: rgb(170, 122, 83);
+}
+.postDesc a:hover {
+	text-decoration: underline;
+}
+.postSeparator {
+	margin: 0px auto 15px; width: 100%; height: 1px; clear: both; float: right;
+}
+#sideBar {
+	padding: 0px 0px 0px 5px; width: 230px; overflow: hidden; float: right; -ms-word-break: break-all; -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis;
+}
+.newsItem .catListTitle {
+	display: none;
+}
+.newsItem {
+	padding: 15px 0px 5px; margin-bottom: 8px;
+}
+#calendar {
+	width: 229px;
+}
+#calendar .Cal {
+	width: 100%; line-height: 2em;
+}
+.Cal {
+	border: 0px solid black; color: rgb(129, 109, 101);
+}
+#calendar table a:link {
+	color: rgb(116, 88, 75); font-weight: bold;
+}
+#calendar table a:visited {
+	color: rgb(116, 88, 75); font-weight: bold;
+}
+#calendar table a:active {
+	color: rgb(116, 88, 75); font-weight: bold;
+}
+#calendar table a:hover {
+	color: white; text-decoration: none; background-color: rgb(170, 122, 83);
+}
+#calendar td {
+	font-size: 12px;
+}
+#calendar th {
+	font-size: 12px;
+}
+.CalTodayDay {
+	background: url("/Skins/coffee/images/bg_cal_today.gif") no-repeat 52% 3px; color: white;
+}
+.CalWeekendDay {
+	background: rgb(243, 230, 207);
+}
+#calendar .CalNextPrev a:link {
+	font-weight: bold; background-color: transparent;
+}
+#calendar .CalNextPrev a:visited {
+	font-weight: bold; background-color: transparent;
+}
+#calendar .CalNextPrev a:active {
+	font-weight: bold; background-color: transparent;
+}
+#calendar .CalNextPrev a:hover {
+	color: white; font-weight: bold; background-color: rgb(170, 122, 83);
+}
+.CalDayHeader {
+	background: url("/Skins/coffee/images/bg_cal_day.gif") no-repeat 50% 0px; color: white; padding-bottom: 5px;
+}
+.CalTitle {
+	background: none; width: 100%; height: 30px; text-align: center; color: rgb(170, 122, 83); font-weight: bold;
+}
+.catListTitle {
+	background: url("/Skins/coffee/images/title_cata.gif") no-repeat 0px 50%; padding: 8px 0px 0px 32px; text-align: left; color: rgb(170, 122, 83); line-height: 1.2em; font-family: "黑体","ms song","宋体","Arial","verdana","Helvetica", "sans-serif"; font-size: 25px; font-weight: bold; margin-top: 15px; margin-bottom: 10px;
+}
+.catListComment {
+	line-height: 1.5;
+}
+.divRecentComment {
+	color: rgb(102, 102, 102); margin-bottom: 1em;
+}
+#sideBarMain ul {
+	line-height: 1.5;
+}
+#topics {
+	margin: auto; padding: 0px 0px 10px; width: 95%; overflow: hidden; -ms-word-break: break-all; -ms-text-overflow: ellipsis; min-height: 200px; -o-text-overflow: ellipsis;
+}
+#topics a:link {
+	color: rgb(7, 93, 179);
+}
+#topics a:visited {
+	color: rgb(7, 93, 179);
+}
+#topics a:hover {
+	color: rgb(170, 122, 83); text-decoration: underline;
+}
+#topics a:active {
+	color: rgb(7, 93, 179);
+}
+#topics .postTitle {
+	line-height: 1.5; padding-left: 5px; font-size: 14px; font-weight: bold; float: left;
+}
+.postBody {
+	padding: 5px 2px 5px 5px; color: rgb(0, 0, 0); line-height: 1.5; font-size: 13px;
+}
+.postBody p {
+	color: rgb(0, 0, 0); line-height: 1.5; font-size: 13px;
+}
+.postBody span {
+	line-height: 1.5;
+}
+#EntryTag {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a {
+	margin-left: 5px;
+}
+#EntryTag a:link {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a:visited {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a:active {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a:hover {
+	color: rgb(255, 102, 0);
+}
+#topics .postDesc {
+	width: 100%; text-align: right; color: rgb(102, 102, 102); padding-right: 5px; margin-top: 5px; float: right;
+}
+.feedback_area_title {
+	margin: 20px auto 10px; width: 90%; padding-left: 8px; font-weight: bold; border-bottom-color: rgb(102, 102, 102); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.louzhu {
+	background: url("images/icoLouZhu.gif") no-repeat right top; padding-right: 16px;
+}
+.feedbackListSubtitle {
+	margin: auto auto 5px; width: 90%; color: rgb(102, 102, 102);
+}
+.feedbackListSubtitle a:link {
+	color: rgb(102, 102, 102); font-weight: normal;
+}
+.feedbackListSubtitle a:visited {
+	color: rgb(102, 102, 102); font-weight: normal;
+}
+.feedbackListSubtitle a:active {
+	color: rgb(102, 102, 102); font-weight: normal;
+}
+.feedbackListSubtitle a:hover {
+	color: rgb(255, 102, 0); text-decoration: none;
+}
+.feedbackManage {
+	width: 160px; text-align: right; float: right;
+}
+.feedbackCon {
+	background: url("images/comment.gif") no-repeat 5px 0px; margin: auto auto 1em; padding: 25px 18px 10px 40px; width: 85%; line-height: 1.5; border-bottom-color: rgb(237, 217, 184); border-bottom-width: 1px; border-bottom-style: solid; min-height: 35px; _height: 35px;
+}
+#divRefreshComments {
+	margin: auto; width: 90%; text-align: right;
+}
+.commentform {
+	margin: auto auto 10px; width: 90%;
+}
+.commentform table td input {
+	margin: 2px auto;
+}
+.contact {
+	margin-left: 5px;
+}
+.contact table td input {
+	margin: 2px auto;
+}
+.commenttb {
+	width: 320px;
+}
+#HistoryToday {
+	font-weight: bold;
+}
+#HistoryToday li {
+	line-height: 1.5; font-weight: normal;
+}
+#MyArticlesInter {
+	font-weight: bold;
+}
+#MyArticlesInter li {
+	line-height: 1.5; font-weight: normal;
+}
+.entrylist {
+	margin: auto; width: 95%;
+}
+.entrylistTitle {
+	text-align: left; padding-right: 10px; padding-bottom: 3px; font-size: 16px; font-weight: bold;
+}
+.PostListTitle {
+	text-align: left; padding-right: 10px; padding-bottom: 3px; font-size: 16px; font-weight: bold;
+}
+.thumbTitle {
+	text-align: left; padding-right: 10px; padding-bottom: 3px; font-size: 16px; font-weight: bold;
+}
+.entrylistDescription {
+	text-align: left; color: rgb(102, 102, 102); padding-top: 5px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px;
+}
+.entrylistItem {
+	width: 100%; padding-bottom: 5px; margin-bottom: 30px; min-height: 20px; _height: 20px;
+}
+.entrylistPosttitle {
+	width: 100%; line-height: 1.5; padding-left: 5px; font-size: 14px; font-weight: bold; border-bottom-color: rgb(237, 217, 184); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.entrylistPosttitle a:hover {
+	text-decoration: none;
+}
+.entrylistPostSummary {
+	line-height: 1.5; padding-left: 5px; font-size: 14px; margin-top: 5px; margin-bottom: 5px;
+}
+.entrylistItemPostDesc {
+	text-align: right; color: rgb(102, 102, 102);
+}
+.entrylistItemPostDesc a:link {
+	color: rgb(102, 102, 102);
+}
+.entrylistItemPostDesc a:visited {
+	color: rgb(102, 102, 102);
+}
+.entrylistItemPostDesc a:active {
+	color: rgb(102, 102, 102);
+}
+.entrylistItemPostDesc a:hover {
+	color: rgb(255, 102, 0);
+}
+.entrylist .postSeparator {
+	margin: 0px; padding: 0px; border: currentColor; width: 100%; height: 0px; line-height: 0; clear: both; font-size: 0px;
+}
+.pager {
+	text-align: right; margin-right: 10px;
+}
+.PostList {
+	padding-top: 10px; padding-right: 5px; padding-left: 5px; clear: both; margin-bottom: 5px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid; _height: 1.5;
+}
+.postTitl2 {
+	float: left;
+}
+.postDesc2 {
+	color: rgb(102, 102, 102); float: right;
+}
+.postText2 {
+	color: rgb(102, 102, 102); clear: both;
+}
+#profile {
+	margin: auto; width: 95%;
+}
+.pfl_feedback_area_title {
+	text-align: right; line-height: 1.5; font-weight: bold; margin-bottom: 10px; border-bottom-color: rgb(102, 102, 102); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.pfl_feedbackItem {
+	margin-bottom: 20px; border-bottom-color: black; border-bottom-width: 1px; border-bottom-style: solid;
+}
+.pfl_feedbacksubtitle {
+	width: 100%; border-bottom-color: rgb(102, 102, 102); border-bottom-width: 1px; border-bottom-style: dotted;
+}
+.pfl_feedbackname {
+	float: left;
+}
+.pfl_feedbackManage {
+	float: right;
+}
+.pfl_feedbackCon {
+	color: black; padding-top: 5px; padding-bottom: 5px;
+}
+.pfl_feedbackAnswer {
+	color: rgb(255, 68, 0);
+}
+.tdSentMessage {
+	text-align: right;
+}
+.errorMessage {
+	width: 300px; float: left;
+}
+.divPhoto {
+	padding: 2px; border: 1px solid rgb(204, 204, 204); margin-right: 10px; margin-left: 10px;
+}
+.thumbDescription {
+	text-align: right; color: rgb(102, 102, 102); padding-top: 5px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px;
+}
+#footer {
+	background: url("images/bg_left.gif") repeat-x left top rgb(254, 254, 242); height: 30px; text-align: center; padding-top: 30px; margin-top: 10px; min-height: 15px;
+}
+.personInfo {
+	margin-bottom: 20px;
+}
+.pages {
+	text-align: right;
+}
+.postBody {
+	line-height: 1.5; margin-top: 5px;
+}
+.postBody p {
+	line-height: 1.5;
+}
+.postCon p {
+	line-height: 1.5;
+}
+.postBody h2 {
+	margin: 15px auto 2px; font-size: 150%; font-weight: bold;
+}
+.postBody h3 {
+	margin: 15px auto 2px; font-size: 120%; font-weight: bold;
+}
+.postBody h4 {
+	margin: 15px auto 2px; color: rgb(51, 51, 51); font-size: 110%; font-weight: bold;
+}
+.postBody h5 {
+	margin: 15px auto 2px; color: rgb(51, 51, 51); font-size: 100%; font-weight: bold;
+}
+.postBody a:link {
+	text-decoration: underline;
+}
+.postBody a:visited {
+	text-decoration: underline;
+}
+.postBody a:active {
+	text-decoration: underline;
+}
+.postCon a:link {
+	text-decoration: underline;
+}
+.postCon a:visited {
+	text-decoration: underline;
+}
+.postCon a:active {
+	text-decoration: underline;
+}
+.postBody ul {
+	margin-left: 2em;
+}
+.postCon ul {
+	margin-left: 2em;
+}
+.postBody li {
+	margin-bottom: 1em; list-style-type: disc;
+}
+.postCon li {
+	margin-bottom: 1em; list-style-type: disc;
+}
+.postBody blockquote {
+	background: url("images/comment.gif") no-repeat 25px 0px; padding: 10px 60px 5px; color: rgb(51, 51, 51); line-height: 1.6em; min-height: 35px; _height: 35px;
+}
+#mainContent .gallery {
+	text-align: center;
+}
+.comment_pager {
+	margin: auto auto 5px; width: 90%;
+}
+#taglist table {
+	margin-top: 10px;
+}
+#taglist td {
+	padding: 5px;
+}
+#taglist td span {
+	color: rgb(85, 85, 85);
+}
+.blog_comment_body {
+	overflow: hidden;
+}

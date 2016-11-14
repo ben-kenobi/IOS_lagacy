@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>编译标记 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_47">编译标记</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E7%BC%96%E8%AF%91%E6%A0%87%E8%AE%B0" class="calibre1">编译标记</h1>
+<p class="calibre9">在 Objective-C 中，我们经常在代码中插入 <code class="calibre13 pcalibre6 pcalibre5">#param</code> 符号来标记代码的区间，这样在 Xcode 的导航栏中我们就可以看到组织分块后的方法列表。这在单个文件方法较多的时候进行快速定位非常有用。</p>
+<p class="calibre9">在 Swift 中也有类似的方式，我们可以在代码合适的地方添加 <code class="calibre13 pcalibre6 pcalibre5">// MARK:</code> 这样的标记 (注意大写)，并在后面接上名称，Xcode 将在代码中寻找这样的注释，然后以粗体标签的形式将名称显示在导航栏中。比如：</p>
+<p class="calibre9"><img src="mark.jpg" alt="" class="calibre11"/></p>
+<p class="calibre9">另外我们还可以在冒号的后面加一个横杠 <code class="calibre13 pcalibre6 pcalibre5">-</code>，这样在导航中会在这个位置再多显示一条横线，隔开各个部分，会显得更加清晰。</p>
+<p class="calibre9">除了 <code class="calibre13 pcalibre6 pcalibre5">// MARK:</code> 以外，Xcode 还支持另外几种标记，它们分别是 <code class="calibre13 pcalibre6 pcalibre5">// TODO:</code> 和 <code class="calibre13 pcalibre6 pcalibre5">// FIXME:</code>。和 <code class="calibre13 pcalibre6 pcalibre5">MARK</code> 不同的是，另外两个标记在导航栏中不仅会显示后面跟着的名字或者说明，而且它们本身也会被显示出来，用来提示还未完成的工作或者需要修正的地方。这样在阅读源代码时首先看一看导航栏中的标记，就可以对当前文件有个大致的了解了。</p>
+<p class="calibre9">以前在 Objective-C 中还有一个很常用的编译标记，那就是 <code class="calibre13 pcalibre6 pcalibre5">#warning</code>，一个 <code class="calibre13 pcalibre6 pcalibre5">#warning</code> 标记可以在 Xcode 的代码编辑器中显示为明显的黄色警告条，非常适合用来提示代码的维护者和使用者需要对某些东西加以关注。这个特性当前的 Swift 版本里还没有对应的方案。希望 Apple 能在接下来的版本中会加入一些类似的标记，像这个样子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">// WARNING: Add your API key here
+</code></pre><p class="calibre9">很遗憾，暂时没有可以在编译时像 <code class="calibre13 pcalibre6 pcalibre5">#warning</code> 那样生成警告的方法了。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

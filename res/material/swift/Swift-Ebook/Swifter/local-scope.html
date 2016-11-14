@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>局部 scope | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_62">局部 scope</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%B1%80%E9%83%A8-scope" class="calibre1">局部 scope</h1>
+<p class="calibre9">C 系语言中在方法内部我们是可以任意添加成对的大括号 <code class="calibre13 pcalibre6 pcalibre5">{}</code> 来限定代码的作用范围的。这么做一般来说有两个好处，首先是超过作用域后里面的临时变量就将失效，这不仅可以使方法内的命名更加容易，也使得那些不被需要的引用的回收提前进行了，可以稍微提高一些代码的效率；另外，在合适的位置插入括号也利于方法的梳理，对于那些不太方便提取为一个单独方法，但是又应该和当前方法内的其他部分进行一些区分的代码，使用大括号可以将这样的结构进行一个相对自然的划分。</p>
+<p class="calibre9">举一个不失一般性的例子，虽然我个人不太喜欢使用代码手写 UI，但钟情于这么做的人还是不在少数。如果我们要在 Objective-C 中用代码构建 UI 的话，我们一般会选择在 <code class="calibre13 pcalibre6 pcalibre5">-loadView</code> 里写一些类似这样的代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">-(<span class="hljs-keyword">void</span>)loadView {
+    <span class="hljs-params">UIView</span> *view = [[<span class="hljs-params">UIView</span> alloc] initWithFrame:<span class="hljs-params">CGRectMake</span>(<span class="hljs-params">0</span>, <span class="hljs-params">0</span>, <span class="hljs-params">320</span>, <span class="hljs-params">480</span>)];
+
+    <span class="hljs-params">UILabel</span> *titleLabel = [[<span class="hljs-params">UILabel</span> alloc]
+            initWithFrame:<span class="hljs-params">CGRectMake</span>(<span class="hljs-params">150</span>, <span class="hljs-params">30</span>, <span class="hljs-params">20</span>, <span class="hljs-params">40</span>)];
+    titleLabel<span class="hljs-variable">.textColor</span> = [<span class="hljs-params">UIColor</span> redColor];
+    titleLabel<span class="hljs-variable">.text</span> = <span class="hljs-string">@"Title"</span>;
+    [view addSubview:titleLabel];
+
+    <span class="hljs-params">UILabel</span> *textLabel = [[<span class="hljs-params">UILabel</span> alloc]
+            initWithFrame:<span class="hljs-params">CGRectMake</span>(<span class="hljs-params">150</span>, <span class="hljs-params">80</span>, <span class="hljs-params">20</span>, <span class="hljs-params">40</span>)];
+    textLabel<span class="hljs-variable">.textColor</span> = [<span class="hljs-params">UIColor</span> redColor];
+    textLabel<span class="hljs-variable">.text</span> = <span class="hljs-string">@"Text"</span>;
+    [view addSubview:textLabel];
+
+    <span class="hljs-keyword">self</span><span class="hljs-variable">.view</span> = view;
+}
+</code></pre>
+<p class="calibre9"> 在这里只添加了两个 view，就已经够让人心烦的了。真实的界面当然会比这个复杂很多，想想看如果有十来个 view 的话，这段代码会变成什么样子吧。我们需要考虑对各个子 view 的命名，以确保它们的意义明确。如果我们在上面的代码中把某个配置 <code class="calibre13 pcalibre6 pcalibre5">textLabel</code> 的代码写错成了 <code class="calibre13 pcalibre6 pcalibre5">titleLabel</code> 的话，编译器也不会给我们任何警告。这种 bug 是非常难以发现的，因此在类似这种一大堆代码但是又不太可能进行重用的时候，我更推荐使用局部 scope 将它们分隔开来。比如上面的代码建议加上括号重写为以下形式，这样至少编译器会提醒我们一些低级错误，我们也可能更专注于每个代码块：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">-(<span class="hljs-keyword">void</span>)loadView {
+    <span class="hljs-params">UIView</span> *view = [[<span class="hljs-params">UIView</span> alloc] initWithFrame:<span class="hljs-params">CGRectMake</span>(<span class="hljs-params">0</span>, <span class="hljs-params">0</span>, <span class="hljs-params">320</span>, <span class="hljs-params">480</span>)];
+
+    {
+        <span class="hljs-params">UILabel</span> *titleLabel = [[<span class="hljs-params">UILabel</span> alloc]
+                initWithFrame:<span class="hljs-params">CGRectMake</span>(<span class="hljs-params">150</span>, <span class="hljs-params">30</span>, <span class="hljs-params">20</span>, <span class="hljs-params">40</span>)];
+        titleLabel<span class="hljs-variable">.textColor</span> = [<span class="hljs-params">UIColor</span> redColor];
+        titleLabel<span class="hljs-variable">.text</span> = <span class="hljs-string">@"Title"</span>;
+        [view addSubview:titleLabel];
+    }
+
+    {
+        <span class="hljs-params">UILabel</span> *textLabel = [[<span class="hljs-params">UILabel</span> alloc]
+                initWithFrame:<span class="hljs-params">CGRectMake</span>(<span class="hljs-params">150</span>, <span class="hljs-params">80</span>, <span class="hljs-params">20</span>, <span class="hljs-params">40</span>)];
+        textLabel<span class="hljs-variable">.textColor</span> = [<span class="hljs-params">UIColor</span> redColor];
+        textLabel<span class="hljs-variable">.text</span> = <span class="hljs-string">@"Text"</span>;
+        [view addSubview:textLabel];
+    }
+
+    <span class="hljs-keyword">self</span><span class="hljs-variable">.view</span> = view;
+}
+</code></pre>
+<p class="calibre9">在 Swift 中，直接使用大括号的写法是不支持的，因为这和闭包的定义产生了冲突。如果我们想类似地使用局部 scope 来分隔代码的话，一个不错的选择是定义一个接受 <code class="calibre13 pcalibre6 pcalibre5">()-&gt;()</code> 作为函数的全局方法，然后执行它：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">local</span><span class="hljs-params">(closure: <span class="hljs-params">()</span></span></span>-&gt;()) {
+    closure()
+}
+</code></pre>
+<p class="calibre9">在使用时，可以利用尾随闭包的特性模拟局部 scope：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">override</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">loadView</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-keyword">let</span> view = <span class="hljs-func">UIView</span>(frame: <span class="hljs-func">CGRectMake</span>(<span class="hljs-params">0</span>, <span class="hljs-params">0</span>, <span class="hljs-params">320</span>, <span class="hljs-params">480</span>))
+
+    local {
+        <span class="hljs-keyword">let</span> titleLabel = <span class="hljs-func">UILabel</span>(frame: <span class="hljs-func">CGRectMake</span>(<span class="hljs-params">150</span>, <span class="hljs-params">30</span>, <span class="hljs-params">20</span>, <span class="hljs-params">40</span>))
+        titleLabel.textColor = <span class="hljs-func">UIColor</span>.redColor()
+        titleLabel.text = <span class="hljs-string">"Title"</span>
+        view.addSubview(titleLabel)
+    }
+
+    local {
+        <span class="hljs-keyword">let</span> textLabel = <span class="hljs-func">UILabel</span>(frame: <span class="hljs-func">CGRectMake</span>(<span class="hljs-params">150</span>, <span class="hljs-params">80</span>, <span class="hljs-params">20</span>, <span class="hljs-params">40</span>))
+        textLabel.textColor = <span class="hljs-func">UIColor</span>.redColor()
+        textLabel.text = <span class="hljs-string">"Text"</span>
+        view.addSubview(textLabel)
+    }
+
+    <span class="hljs-keyword">self</span>.view = view
+}
+</code></pre>
+<p class="calibre9">不过在 Swift 2.0 中，为了处理异常，Apple 加入了 <code class="calibre13 pcalibre6 pcalibre5">do</code> 这个关键字来作为捕获异常的作用域。这一功能恰好为我们提供了一个完美的局部作用域，现在我们可以简单地使用 <code class="calibre13 pcalibre6 pcalibre5">do</code> 来分隔代码了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">do</span> {
+    <span class="hljs-keyword">let</span> textLabel = <span class="hljs-func">UILabel</span>(frame: <span class="hljs-func">CGRectMake</span>(<span class="hljs-params">150</span>, <span class="hljs-params">80</span>, <span class="hljs-params">20</span>, <span class="hljs-params">40</span>))
+    <span class="hljs-title">//...</span>
+}
+</code></pre>
+<p class="calibre9">在 Objective-C 中还有一个很棒的技巧是使用 GNU C 的<a href="https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html#Statement-Exprs" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">声明扩展</a>来在限制局部作用域的时候同时进行赋值，运用得当的话，可以使代码更加紧凑和整洁。比如上面的 <code class="calibre13 pcalibre6 pcalibre5">titleLabel</code> 如果我们需要保留一个引用的话，在 Objective-C 中可以写为：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">self</span><span class="hljs-variable">.titleLabel</span> = ({
+    <span class="hljs-params">UILabel</span> *label = [[<span class="hljs-params">UILabel</span> alloc]
+            initWithFrame:<span class="hljs-params">CGRectMake</span>(<span class="hljs-params">150</span>, <span class="hljs-params">30</span>, <span class="hljs-params">20</span>, <span class="hljs-params">40</span>)];
+    label<span class="hljs-variable">.textColor</span> = [<span class="hljs-params">UIColor</span> redColor];
+    label<span class="hljs-variable">.text</span> = <span class="hljs-string">@"Title"</span>;
+    [view addSubview:label];
+    label;
+});
+</code></pre>
+<p class="calibre9">Swift 里当然没有 GNU C 的扩展，但是使用匿名的闭包的话，写出类似的代码也不是难事：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">titleLabel = {
+    <span class="hljs-keyword">let</span> label = <span class="hljs-func">UILabel</span>(frame: <span class="hljs-func">CGRectMake</span>(<span class="hljs-params">150</span>, <span class="hljs-params">30</span>, <span class="hljs-params">20</span>, <span class="hljs-params">40</span>))
+    label.textColor = <span class="hljs-func">UIColor</span>.redColor()
+    label.text = <span class="hljs-string">"Title"</span>
+    <span class="hljs-keyword">self</span>.view.addSubview(label)
+    <span class="hljs-keyword">return</span> label
+}()
+</code></pre>
+<p class="calibre9">这也是一种隔离代码的很好的方式。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

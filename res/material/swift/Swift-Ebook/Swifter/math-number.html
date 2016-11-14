@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>数学和数字 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_89">数学和数字</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E6%95%B0%E5%AD%A6%E5%92%8C%E6%95%B0%E5%AD%97" class="calibre1">数学和数字</h1>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">Darwin</code> 里的 <code class="calibre13 pcalibre6 pcalibre5">math.h</code> 定义了很多和数学相关的内容，它在 Swift 中也被进行了 module 映射，因此在 Swift 中我们是可以直接使用的。有了这个保证，我们就不需要担心在进行数学计算的时候会和标准有什么差距。比如，我们可以轻易地使用圆周率来计算周长，也可以使用各种三角函数来完成需要的屏幕位置计算等等：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">circlePerimeter</span><span class="hljs-params">(radius: Double)</span></span> -&gt; <span class="hljs-func">Double</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-params">2</span> * <span class="hljs-func">M_PI</span> * radius
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">yPosition</span><span class="hljs-params">(dy: Double, angle: Double)</span></span> -&gt; <span class="hljs-func">Double</span> {
+   <span class="hljs-keyword">return</span> dy * tan(angle)
+}
+</code></pre>
+<p class="calibre9">Swift 除了导入了 <code class="calibre13 pcalibre6 pcalibre5">math.h</code> 的内容以外，也在标准库中对极限情况的数字做了一些约定，比如我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">Int.max</code> 和 <code class="calibre13 pcalibre6 pcalibre5">Int.min</code> 来取得对应平台的 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 的最大和最小值。另外在 <code class="calibre13 pcalibre6 pcalibre5">Double</code> 中，我们还有两个很特殊的值，<code class="calibre13 pcalibre6 pcalibre5">infinity</code> 和 <code class="calibre13 pcalibre6 pcalibre5">NaN</code>。</p>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">infinity</code> 代表无穷，它是类似 <code class="calibre13 pcalibre6 pcalibre5">1.0 / 0.0</code> 这样的数学表达式的结果，代表<strong class="calibre10">数学意义上</strong>的无限大。在这里我们强调了数学意义，是因为受限于计算机系统，其实是没有真正意义的无穷大的，毕竟这是我们讨论的平台。一个 64 位的系统中，Swift 的 <code class="calibre13 pcalibre6 pcalibre5">Double</code> 能代表的最大的数字大约是 <code class="calibre13 pcalibre6 pcalibre5">1.797693134862315e+308</code>，而超过这个数字的 <code class="calibre13 pcalibre6 pcalibre5">Double</code> 虽然在数学意义上并不是无穷大，但是也会在判断的时候被认为是无穷：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">1.797693134862315e</span>+<span class="hljs-params">308</span> &lt; <span class="hljs-func">Double</span>.infinity  <span class="hljs-title">// true</span>
+<span class="hljs-params">1.797693134862316e</span>+<span class="hljs-params">308</span> &lt; <span class="hljs-func">Double</span>.infinity  <span class="hljs-title">// false</span>
+</code></pre>
+<p class="calibre9">当然一般来说和无穷大比较大小是没有意义的，虽然在绝大多数情况下我们不会在这个上面栽跟头，但是谁又知道会不会真的遇到这样的情况呢？</p>
+<p class="calibre9">另一个有趣的东西是 <code class="calibre13 pcalibre6 pcalibre5">NaN</code>，它是 “Not a Number” 的简写，可以用来表示某些未被定义的或者出现了错误的运算，比如下面的操作都会产生 <code class="calibre13 pcalibre6 pcalibre5">NaN</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> a = <span class="hljs-params">0.0</span> / <span class="hljs-params">0.0</span>
+<span class="hljs-keyword">let</span> b = sqrt(-<span class="hljs-params">1.0</span>)
+<span class="hljs-keyword">let</span> <span class="hljs-params">c</span> = <span class="hljs-params">0.0</span> * <span class="hljs-func">Double</span>.infinity
+</code></pre>
+<p class="calibre9">与 <code class="calibre13 pcalibre6 pcalibre5">NaN</code> 再进行的运算结果也都将是 <code class="calibre13 pcalibre6 pcalibre5">NaN</code>。Swift 的 <code class="calibre13 pcalibre6 pcalibre5">Double</code> 中也为我们提供了直接获取一个 <code class="calibre13 pcalibre6 pcalibre5">NaN</code> 的方法，我们可以通过使用 <code class="calibre13 pcalibre6 pcalibre5">Double.NaN</code> 来直接获取一个 <code class="calibre13 pcalibre6 pcalibre5">NaN</code>。在某些边界条件下，我们可能会希望判断一个数值是不是 <code class="calibre13 pcalibre6 pcalibre5">NaN</code>。和其他数字 (包括无穷大) 相比，<code class="calibre13 pcalibre6 pcalibre5">NaN</code> 在这点上非常特殊。你不能将 <code class="calibre13 pcalibre6 pcalibre5">NaN</code> 用来做相等判断或者大小比较，因为它本身就不是数字，因此这类比较就没有意义了。比如对于一个理论上的恒等式 <code class="calibre13 pcalibre6 pcalibre5">num == num</code>，在 <code class="calibre13 pcalibre6 pcalibre5">NaN</code> 的情况下就有所不同：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> num = <span class="hljs-func">Double</span>.<span class="hljs-func">NaN</span>
+<span class="hljs-keyword">if</span> num == num {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"Num is <span class="hljs-func">\(num)</span>"</span>)
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"NaN"</span>)
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// NaN</span>
+</code></pre>
+<p class="calibre9">用判定自身是否与自己相等的方式就可以判定一个量是不是 <code class="calibre13 pcalibre6 pcalibre5">NaN</code> 了。当然，一个更加容易读懂和简洁的方式使用 <code class="calibre13 pcalibre6 pcalibre5">Double</code> 的 <code class="calibre13 pcalibre6 pcalibre5">isNaN</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">Darwin</code> 中的 <code class="calibre13 pcalibre6 pcalibre5">isnan</code> 来判断：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> num = <span class="hljs-func">Double</span>.<span class="hljs-func">NaN</span>
+<span class="hljs-keyword">if</span> num.isNaN {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"NaN"</span>)
+}
+
+<span class="hljs-keyword">if</span> isnan(num) {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"NaN"</span>)
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// NaN</span>
+<span class="hljs-title">// NaN</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

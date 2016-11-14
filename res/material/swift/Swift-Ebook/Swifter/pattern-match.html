@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>模式匹配 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_27">模式匹配</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D" class="calibre1">模式匹配</h1>
+<p class="calibre9">在之前的<a href="regex.html" class="pcalibre pcalibre2 pcalibre1 calibre4">正则表达式</a>中，我们实现了 <code class="calibre13 pcalibre6 pcalibre5">=~</code> 操作符来完成简单的正则匹配。虽然在 Swift 中没有内置的正则表达式支持，但是一个和正则匹配有些相似的特性其实是内置于 Swift 中的，那就是<a href="http://en.wikipedia.org/wiki/Pattern_matching" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">模式匹配</a>。</p>
+<p class="calibre9">当然，从概念上来说正则匹配只是模式匹配的一个子集，但是在 Swift 里现在的模式匹配还很初级，也很简单，只能支持最简单的相等匹配和范围匹配。在 Swift 中，使用 <code class="calibre13 pcalibre6 pcalibre5">~=</code> 来表示模式匹配的操作符。如果我们看看 API 的话，可以看到这个操作符有下面几种版本：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> ~=<span class="hljs-func">&lt;T : Equatable&gt;</span><span class="hljs-params">(a: T, b: T)</span></span> -&gt; <span class="hljs-func">Bool</span>
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> ~=<span class="hljs-func">&lt;T&gt;</span><span class="hljs-params">(lhs: _OptionalNilComparisonType, rhs: T?)</span></span> -&gt; <span class="hljs-func">Bool</span>
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> ~=<span class="hljs-func">&lt;I : IntervalType&gt;</span><span class="hljs-params">(pattern: I, value: I.Bound)</span></span> -&gt; <span class="hljs-func">Bool</span>
+</code></pre>
+<p class="calibre9">从上至下在操作符左右两边分别接收可以判等的类型，可以与 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 比较的类型，以及一个范围输入和某个特定值，返回值很明了，都是是否匹配成功的 <code class="calibre13 pcalibre6 pcalibre5">Bool</code> 值。你是否有想起些什么呢..没错，就是 Swift 中非常强大的 switch，我们来看看 switch 的几种常见用法吧：</p>
+<ol class="calibre2">
+<li class="calibre3"><p class="calibre9">可以判等的类型的判断</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"> <span class="hljs-keyword">let</span> password = <span class="hljs-string">"akfuv(3"</span>
+ <span class="hljs-keyword">switch</span> password {
+     <span class="hljs-keyword">case</span> <span class="hljs-string">"akfuv(3"</span>: <span class="hljs-params">print</span>(<span class="hljs-string">"密码通过"</span>)
+     <span class="hljs-keyword">default</span>:        <span class="hljs-params">print</span>(<span class="hljs-string">"验证失败"</span>)
+ }
+</code></pre>
+</li>
+<li class="calibre3"><p class="calibre9">对 Optional 的判断</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"> <span class="hljs-keyword">let</span> num: <span class="hljs-func">Int</span>? = <span class="hljs-params">nil</span>
+ <span class="hljs-keyword">switch</span> num {
+     <span class="hljs-keyword">case</span> <span class="hljs-params">nil</span>: <span class="hljs-params">print</span>(<span class="hljs-string">"没值"</span>)
+     <span class="hljs-keyword">default</span>:  <span class="hljs-params">print</span>(<span class="hljs-string">"<span class="hljs-func">\(num!)</span>"</span>)
+ }
+</code></pre>
+</li>
+<li class="calibre3"><p class="calibre9">对范围的判断</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"> <span class="hljs-keyword">let</span> x = <span class="hljs-params">0.5</span>
+ <span class="hljs-keyword">switch</span> x {
+     <span class="hljs-keyword">case</span> -<span class="hljs-params">1.0</span>...<span class="hljs-params">1.0</span>: <span class="hljs-params">print</span>(<span class="hljs-string">"区间内"</span>)
+     <span class="hljs-keyword">default</span>: <span class="hljs-params">print</span>(<span class="hljs-string">"区间外"</span>)
+ }
+</code></pre>
+</li>
+</ol>
+<p class="calibre9">这并不是巧合。没错，Swift 的 <code class="calibre13 pcalibre6 pcalibre5">switch</code> 就是使用了 <code class="calibre13 pcalibre6 pcalibre5">~=</code> 操作符进行模式匹配，<code class="calibre13 pcalibre6 pcalibre5">case</code> 指定的模式作为左参数输入，而等待匹配的被 <code class="calibre13 pcalibre6 pcalibre5">switch</code> 的元素作为操作符的右侧参数。只不过这个调用是由 Swift 隐式地完成的。于是我们可以发挥想象的地方就很多了，比如在 <code class="calibre13 pcalibre6 pcalibre5">switch</code> 中做 <code class="calibre13 pcalibre6 pcalibre5">case</code> 判断的时候，我们完全可以使用我们自定义的模式匹配方法来进行判断，有时候这会让代码变得非常简洁，具有条例。我们只需要按照需求重载 <code class="calibre13 pcalibre6 pcalibre5">~=</code> 操作符就行了，接下来我们通过一个使用正则表达式做匹配的例子加以说明。</p>
+<p class="calibre9">首先我们要做的是重载 <code class="calibre13 pcalibre6 pcalibre5">~=</code> 操作符，让它接受一个 <code class="calibre13 pcalibre6 pcalibre5">NSRegularExpression</code> 作为模式，去匹配输入的 <code class="calibre13 pcalibre6 pcalibre5">String</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> ~=<span class="hljs-params">(pattern: NSRegularExpression, input: String)</span></span> -&gt; <span class="hljs-func">Bool</span> {
+    <span class="hljs-keyword">return</span> pattern.numberOfMatchesInString(input,
+        options: [],
+        range: <span class="hljs-func">NSRange</span>(location: <span class="hljs-params">0</span>, length: input.characters.<span class="hljs-params">count</span>)) &gt; <span class="hljs-params">0</span>
+}
+</code></pre>
+<p class="calibre9">然后为了简便起见，我们再添加一个将字符串转换为 <code class="calibre13 pcalibre6 pcalibre5">NSRegularExpression</code> 的操作符 (当然也可以使用 <a href="literal-convertible.html" class="pcalibre pcalibre2 pcalibre1 calibre4"><code class="calibre13 pcalibre6 pcalibre5">StringLiteralConvertible</code></a>，但是它不是这个 tip 的主题，在此就先不使用它了)：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">prefix</span> <span class="hljs-keyword">operator</span> ~/ {}
+
+<span class="hljs-keyword">prefix</span> <span class="hljs-func"><span class="hljs-keyword">func</span> ~/<span class="hljs-params">(pattern: String)</span></span> -&gt; <span class="hljs-func">NSRegularExpression</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-func">NSRegularExpression</span>(pattern: pattern, options: <span class="hljs-params">nil</span>, error: <span class="hljs-params">nil</span>)
+}
+</code></pre>
+<p class="calibre9">现在，我们在 <code class="calibre13 pcalibre6 pcalibre5">case</code> 语句里使用正则表达式的话，就可以去匹配被 <code class="calibre13 pcalibre6 pcalibre5">switch</code> 的字符串了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> contact = (<span class="hljs-string">"http://onevcat.com"</span>, <span class="hljs-string">"onev@onevcat.com"</span>)
+
+<span class="hljs-keyword">let</span> mailRegex: <span class="hljs-func">NSRegularExpression</span>
+<span class="hljs-keyword">let</span> siteRegex: <span class="hljs-func">NSRegularExpression</span>
+
+mailRegex = 
+    try ~/<span class="hljs-string">"^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$"</span>
+siteRegex = 
+    try ~/<span class="hljs-string">"^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$"</span>
+
+<span class="hljs-keyword">switch</span> contact {
+    <span class="hljs-keyword">case</span> (siteRegex, mailRegex): <span class="hljs-params">print</span>(<span class="hljs-string">"同时拥有有效的网站和邮箱"</span>)
+    <span class="hljs-keyword">case</span> (<span class="hljs-params">_</span>, mailRegex): <span class="hljs-params">print</span>(<span class="hljs-string">"只拥有有效的邮箱"</span>)
+    <span class="hljs-keyword">case</span> (siteRegex, <span class="hljs-params">_</span>): <span class="hljs-params">print</span>(<span class="hljs-string">"只拥有有效的网站"</span>)
+    <span class="hljs-keyword">default</span>: <span class="hljs-params">print</span>(<span class="hljs-string">"嘛都没有"</span>)
+}
+
+<span class="hljs-title">// 输出</span>
+<span class="hljs-title">// 同时拥有网站和邮箱</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

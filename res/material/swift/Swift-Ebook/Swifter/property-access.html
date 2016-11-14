@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>属性访问控制 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_97">属性访问控制</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6" class="calibre1">属性访问控制</h1>
+<p class="calibre9">Swift 中由低至高提供了 <code class="calibre13 pcalibre6 pcalibre5">private</code>，<code class="calibre13 pcalibre6 pcalibre5">internal</code> 和 <code class="calibre13 pcalibre6 pcalibre5">public</code> 三种访问控制的权限。默认的 <code class="calibre13 pcalibre6 pcalibre5">internal</code> 在绝大部分时候是适用的，另外由于它是 Swift 中的默认的控制级，因此它也是最为方便的。</p>
+<p class="calibre9">但是对于一个严格的项目来说，精确的最小化访问控制级别对于代码的维护来说还是相当重要的。对于方法来说比较直接，我们想让同一 module (或者说是 target) 中的其他代码访问的话，保持默认的 <code class="calibre13 pcalibre6 pcalibre5">internal</code> 就可以了。如果我们在为其他开发者开发库的话，可能会希望用一些 <code class="calibre13 pcalibre6 pcalibre5">public</code>，因为在 target 外只能调用到 <code class="calibre13 pcalibre6 pcalibre5">public</code> 的代码。而那些只希望在本文件内访问的方法，我们应该用 <code class="calibre13 pcalibre6 pcalibre5">private</code> 加以限制，以防止暴露给项目的其他部分。要特别说明的一点是，Swift 中的 <code class="calibre13 pcalibre6 pcalibre5">private</code> 和其他大部分语言不太一样，它的限制范围是按文件，而不是按照类型来的。就是说，即使是两个毫不相关的类型，只要被写在同一个文件中，那么这个文件里的 <code class="calibre13 pcalibre6 pcalibre5">private</code> 就可以被相互访问到。</p>
+<p class="calibre9">以上是方法和类型的访问控制的情况。而对于属性来说，访问控制还多了一层需要注意的地方。在类型中的属性默认情况下：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-keyword">var</span> name: <span class="hljs-func">String</span>?
+}
+</code></pre>
+<p class="calibre9">因为没有任何的修饰，所以我们可以在同一 module 中随意地读取或者设置这个变量。从类型外部读取一个实例成员变量是很普通的需求，而对其进行设定的话就需要小心一些了。当然实际我们在构建一个类时是会有需要设置的情况的，一般来说会是在这个类型外的地方，对这个类型对象的某些特性进行配置。</p>
+<p class="calibre9">对于那些我们只希望在当前文件中使用的属性来说，当然我们可以在声明前面加上 <code class="calibre13 pcalibre6 pcalibre5">private</code> 使其变为私有：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    private <span class="hljs-keyword">var</span> name: <span class="hljs-func">String</span>?
+}
+</code></pre>
+<p class="calibre9">但是在开发中所面临的更多的情况是我们希望在类型之外也能够读取到这个类型，同时为了保证类型的封装和安全，只能在类型内部对其进行改变和设置。这时，我们可以通过下面的写法将读取和设置的控制权限分开：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    private(<span class="hljs-keyword">set</span>) <span class="hljs-keyword">var</span> name: <span class="hljs-func">String</span>?
+}
+</code></pre>
+<p class="calibre9">因为 <code class="calibre13 pcalibre6 pcalibre5">set</code> 被限制为了 <code class="calibre13 pcalibre6 pcalibre5">private</code>，我们就可以保证 <code class="calibre13 pcalibre6 pcalibre5">name</code> 只会在当前文件被更改。这为之后更改或者调试代码提供了很好的范围控制，可以让我们确定只需要在当前文件中来寻找问题。</p>
+<p class="calibre9">这种写法没有对读取做限制，相当于使用了默认的 <code class="calibre13 pcalibre6 pcalibre5">internal</code> 权限。如果我们希望在别的 module 中也能访问这个属性，同时又保持只在当前文件可以设置的话，我们需要将 <code class="calibre13 pcalibre6 pcalibre5">get</code> 的访问权限提高为 <code class="calibre13 pcalibre6 pcalibre5">public</code>。属性的访问控制可以通过两次的访问权限指定来实现，具体来说，将刚才的声明变为：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">public <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    public private(<span class="hljs-keyword">set</span>) <span class="hljs-keyword">var</span> name: <span class="hljs-func">String</span>?
+}
+</code></pre>
+<p class="calibre9">这时我们就可以在 module 之外也访问到 <code class="calibre13 pcalibre6 pcalibre5">MyClass</code> 的 <code class="calibre13 pcalibre6 pcalibre5">name</code> 了。</p>
+<blockquote class="calibre6">
+<p class="calibre7">我们在 <code class="calibre13 pcalibre6 pcalibre5">MyClass</code> 前面也添加的 <code class="calibre13 pcalibre6 pcalibre5">public</code>，这是编译器所要求的。因为如果只为 <code class="calibre13 pcalibre6 pcalibre5">name</code> 的 <code class="calibre13 pcalibre6 pcalibre5">get</code> 添加 <code class="calibre13 pcalibre6 pcalibre5">public</code> 而不管 <code class="calibre13 pcalibre6 pcalibre5">MyClass</code> 的话，module 外就连 <code class="calibre13 pcalibre6 pcalibre5">MyClass</code> 都访问不到了，属性的访问控制级别也就没有任何意义了。</p>
+</blockquote>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

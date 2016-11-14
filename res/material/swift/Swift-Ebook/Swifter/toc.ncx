@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="cn">
+  <head>
+    <meta content="1f8a5b82-2971-4ea6-83c7-c31cae7086e3" name="dtb:uid"/>
+    <meta content="3" name="dtb:depth"/>
+    <meta content="calibre (2.35.0)" name="dtb:generator"/>
+    <meta content="0" name="dtb:totalPageCount"/>
+    <meta content="0" name="dtb:maxPageNumber"/>
+  </head>
+  <docTitle>
+    <text>Swifter - 100 个 Swift 必备 Tips (第二版)</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="ub4c7776a-89a6-4423-bd13-17e646365731" playOrder="1">
+      <navLabel>
+        <text>介绍</text>
+      </navLabel>
+      <content src="index.html"/>
+    </navPoint>
+    <navPoint id="ue6eeb1d1-17b1-410c-b4e8-a8815a537dc2" playOrder="2">
+      <navLabel>
+        <text>Swift 新元素</text>
+      </navLabel>
+      <content src="new-in-swift.html"/>
+      <navPoint id="u255b48b9-997e-4656-abc8-cd6835c532a6" playOrder="3">
+        <navLabel>
+          <text>柯里化 (Currying)</text>
+        </navLabel>
+        <content src="currying.html"/>
+      </navPoint>
+      <navPoint id="u91606b58-fe54-446f-9497-2fcab15221d9" playOrder="4">
+        <navLabel>
+          <text>Struct Mutable 的方法</text>
+        </navLabel>
+        <content src="struct-mutating.html"/>
+      </navPoint>
+      <navPoint id="ufbac6937-1f8c-4732-82ed-15e0a7465f29" playOrder="5">
+        <navLabel>
+          <text>将 protocol 的方法声明为 mutating</text>
+        </navLabel>
+        <content src="protocol-mutating.html"/>
+      </navPoint>
+      <navPoint id="u8b746bd8-c040-4830-970e-b23370973328" playOrder="6">
+        <navLabel>
+          <text>Sequence</text>
+        </navLabel>
+        <content src="sequence.html"/>
+      </navPoint>
+      <navPoint id="ue8be1d02-4618-4a4b-a455-cbde8a45218a" playOrder="7">
+        <navLabel>
+          <text>tuple</text>
+        </navLabel>
+        <content src="tuple.html"/>
+      </navPoint>
+      <navPoint id="u0d17e918-137d-4781-981b-aaf598542ac0" playOrder="8">
+        <navLabel>
+          <text>@autoclosure 和 ??</text>
+        </navLabel>
+        <content src="autoclosure.html"/>
+      </navPoint>
+      <navPoint id="u67d5ab2a-fb47-46cf-809d-fd0caa064763" playOrder="9">
+        <navLabel>
+          <text>Optional Chaining</text>
+        </navLabel>
+        <content src="optional-chaining.html"/>
+      </navPoint>
+      <navPoint id="uaf107fb2-0b83-46f7-97fc-317ca586f9e1" playOrder="10">
+        <navLabel>
+          <text>操作符</text>
+        </navLabel>
+        <content src="operator.html"/>
+      </navPoint>
+      <navPoint id="u51a1a9f5-4fbb-4935-b472-5958e7b67348" playOrder="11">
+        <navLabel>
+          <text>func 的参数修饰</text>
+        </navLabel>
+        <content src="func-params.html"/>
+      </navPoint>
+      <navPoint id="ua81456d4-b389-4e5a-afb0-3c205e6b01b0" playOrder="12">
+        <navLabel>
+          <text>字面量转换</text>
+        </navLabel>
+        <content src="literal-convertible.html"/>
+      </navPoint>
+      <navPoint id="ub8fd9d7c-f1c5-418e-a22b-2d6e6479e2ee" playOrder="13">
+        <navLabel>
+          <text>下标</text>
+        </navLabel>
+        <content src="subscript.html"/>
+      </navPoint>
+      <navPoint id="ueca9f5cf-087f-499e-ab18-aa7c67198d26" playOrder="14">
+        <navLabel>
+          <text>方法嵌套</text>
+        </navLabel>
+        <content src="nested-func.html"/>
+      </navPoint>
+      <navPoint id="u2fa6dc00-6f30-46e7-8c51-f36bf9750119" playOrder="15">
+        <navLabel>
+          <text>命名空间</text>
+        </navLabel>
+        <content src="namespace.html"/>
+      </navPoint>
+      <navPoint id="ucf7d913b-051e-4f54-ac8d-4de706be9321" playOrder="16">
+        <navLabel>
+          <text>Any 和 AnyObject</text>
+        </navLabel>
+        <content src="any-anyObject.html"/>
+      </navPoint>
+      <navPoint id="u547aebc0-107f-49dc-94cb-8a3a2ead6c3f" playOrder="17">
+        <navLabel>
+          <text>typealias 和泛型接口</text>
+        </navLabel>
+        <content src="typealias.html"/>
+      </navPoint>
+      <navPoint id="u82795dd2-63f3-43c9-8caf-65126a78179c" playOrder="18">
+        <navLabel>
+          <text>可变参数函数</text>
+        </navLabel>
+        <content src="variadic.html"/>
+      </navPoint>
+      <navPoint id="u97d7cd6e-48bc-470b-8f0f-9093c66658b4" playOrder="19">
+        <navLabel>
+          <text>初始化方法顺序</text>
+        </navLabel>
+        <content src="init.html"/>
+      </navPoint>
+      <navPoint id="uec30a557-ba6f-4e95-8eb4-eefec80b2426" playOrder="20">
+        <navLabel>
+          <text>Designated，Convenience 和 Required</text>
+        </navLabel>
+        <content src="designated-convenience.html"/>
+      </navPoint>
+      <navPoint id="ub86ecc32-ecba-4c80-8391-903fa799cca6" playOrder="21">
+        <navLabel>
+          <text>初始化返回 nil</text>
+        </navLabel>
+        <content src="init-nil.html"/>
+      </navPoint>
+      <navPoint id="u33fbff03-84a5-42bc-bf38-4d23675ac8b8" playOrder="22">
+        <navLabel>
+          <text>protocol 组合</text>
+        </navLabel>
+        <content src="protocol-composition.html"/>
+      </navPoint>
+      <navPoint id="u6557c430-73ca-4f6d-a74d-2f109db1349e" playOrder="23">
+        <navLabel>
+          <text>static 和 class</text>
+        </navLabel>
+        <content src="static-class.html"/>
+      </navPoint>
+      <navPoint id="u24382022-d790-4395-bff6-a0bb1e09d5d3" playOrder="24">
+        <navLabel>
+          <text>多类型和容器</text>
+        </navLabel>
+        <content src="multitype-collection.html"/>
+      </navPoint>
+      <navPoint id="ub2a9475c-ca95-40f4-a933-0f3b3743cb3e" playOrder="25">
+        <navLabel>
+          <text>default 参数</text>
+        </navLabel>
+        <content src="default-param.html"/>
+      </navPoint>
+      <navPoint id="u1fdadd97-b8aa-4061-8d61-3876bd58d5fa" playOrder="26">
+        <navLabel>
+          <text>正则表达式</text>
+        </navLabel>
+        <content src="regex.html"/>
+      </navPoint>
+      <navPoint id="u13ca7f98-2408-4b38-93da-8c3f778c3d32" playOrder="27">
+        <navLabel>
+          <text>模式匹配</text>
+        </navLabel>
+        <content src="pattern-match.html"/>
+      </navPoint>
+      <navPoint id="ud5108849-0c14-4118-a6a1-2868e2eaf32c" playOrder="28">
+        <navLabel>
+          <text>... 和 ..&lt;</text>
+        </navLabel>
+        <content src="range.html"/>
+      </navPoint>
+      <navPoint id="u721c245a-13e0-493e-9408-78480cc66fe5" playOrder="29">
+        <navLabel>
+          <text>AnyClass，元类型和 .self</text>
+        </navLabel>
+        <content src="self-anyclass.html"/>
+      </navPoint>
+      <navPoint id="u118e5150-ebc7-4513-b090-ff32db6dacd0" playOrder="30">
+        <navLabel>
+          <text>接口和类方法中的 Self</text>
+        </navLabel>
+        <content src="use-self.html"/>
+      </navPoint>
+      <navPoint id="u5ae06777-e735-4c33-a9e9-882279fa90b7" playOrder="31">
+        <navLabel>
+          <text>动态类型和多方法</text>
+        </navLabel>
+        <content src="multi-method.html"/>
+      </navPoint>
+      <navPoint id="u1fe1a894-7e9d-44b7-95ab-82ddf8fad0f2" playOrder="32">
+        <navLabel>
+          <text>属性观察</text>
+        </navLabel>
+        <content src="property-observer.html"/>
+      </navPoint>
+      <navPoint id="u1364f363-67ae-44d9-86fb-c669ec40708c" playOrder="33">
+        <navLabel>
+          <text>final</text>
+        </navLabel>
+        <content src="final.html"/>
+      </navPoint>
+      <navPoint id="u05f939aa-3973-4c0b-8fb9-ac5ecf81b2dc" playOrder="34">
+        <navLabel>
+          <text>lazy 修饰符和 lazy 方法</text>
+        </navLabel>
+        <content src="lazy.html"/>
+      </navPoint>
+      <navPoint id="u22891ad2-a343-48b2-9487-b888ab422613" playOrder="35">
+        <navLabel>
+          <text>Reflection 和 Mirror</text>
+        </navLabel>
+        <content src="reflect.html"/>
+      </navPoint>
+      <navPoint id="uba517715-45a4-4006-baf2-b3caf9ce47f8" playOrder="36">
+        <navLabel>
+          <text>隐式解包 Optional</text>
+        </navLabel>
+        <content src="implicitly-optional.html"/>
+      </navPoint>
+      <navPoint id="ufb3aac34-85ef-47f9-bdd9-c9d32f86d765" playOrder="37">
+        <navLabel>
+          <text>多重 Optional</text>
+        </navLabel>
+        <content src="multiple-optional.html"/>
+      </navPoint>
+      <navPoint id="u8c2ed763-09ac-44a0-918e-6fc502498084" playOrder="38">
+        <navLabel>
+          <text>Optional Map</text>
+        </navLabel>
+        <content src="optional-map.html"/>
+      </navPoint>
+      <navPoint id="u19e83f4e-0fe4-43c6-8446-4328af7c7738" playOrder="39">
+        <navLabel>
+          <text>Protocol Extension</text>
+        </navLabel>
+        <content src="protocol-extension.html"/>
+      </navPoint>
+      <navPoint id="ud0770510-952b-4c38-a7ed-b96bb05a66ff" playOrder="40">
+        <navLabel>
+          <text>where 和模式匹配</text>
+        </navLabel>
+        <content src="where.html"/>
+      </navPoint>
+      <navPoint id="ud446619a-d9ad-4209-aa91-96e5d1ba7e7d" playOrder="41">
+        <navLabel>
+          <text>indirect 和嵌套 enum</text>
+        </navLabel>
+        <content src="indirect-nested-enum.html"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="u41da6055-1eb8-44ef-ab34-993857383241" playOrder="42">
+      <navLabel>
+        <text>从 Objective-C/C 到 Swift</text>
+      </navLabel>
+      <content src="from-objc-to-swift.html"/>
+      <navPoint id="u0d972c7a-56d0-46f0-857e-11e2b6867e28" playOrder="43">
+        <navLabel>
+          <text>Selector</text>
+        </navLabel>
+        <content src="selector.html"/>
+      </navPoint>
+      <navPoint id="u7ac06a16-b546-46f1-836b-23a649614c2c" playOrder="44">
+        <navLabel>
+          <text>实例方法的动态调用</text>
+        </navLabel>
+        <content src="func-dispatch.html"/>
+      </navPoint>
+      <navPoint id="u4b8776e2-9e4e-4cbc-83d5-1c399ecff2c1" playOrder="45">
+        <navLabel>
+          <text>单例</text>
+        </navLabel>
+        <content src="singleton.html"/>
+      </navPoint>
+      <navPoint id="ua4735221-db8e-47bf-aa01-3176da1b51b7" playOrder="46">
+        <navLabel>
+          <text>条件编译</text>
+        </navLabel>
+        <content src="condition-compile.html"/>
+      </navPoint>
+      <navPoint id="u49637980-0bc5-4190-bb89-51728843cdf9" playOrder="47">
+        <navLabel>
+          <text>编译标记</text>
+        </navLabel>
+        <content src="param-mark.html"/>
+      </navPoint>
+      <navPoint id="u55dce2f2-b289-4e3e-b141-f4e013b9ef3e" playOrder="48">
+        <navLabel>
+          <text>@UIApplicationMain</text>
+        </navLabel>
+        <content src="uiapplicationmain.html"/>
+      </navPoint>
+      <navPoint id="ue75d47e1-66f8-4c3d-b06d-d6403758a1a3" playOrder="49">
+        <navLabel>
+          <text>@objc 和 dynamic</text>
+        </navLabel>
+        <content src="objc-dynamic.html"/>
+      </navPoint>
+      <navPoint id="u002cfffd-5c2c-43a0-9e93-320794015acc" playOrder="50">
+        <navLabel>
+          <text>可选接口和接口扩展</text>
+        </navLabel>
+        <content src="objc-protocol.html"/>
+      </navPoint>
+      <navPoint id="ubdafa668-6f60-4c4e-b8c0-42a3d321df5d" playOrder="51">
+        <navLabel>
+          <text>内存管理，weak 和 unowned</text>
+        </navLabel>
+        <content src="memory-retain-cycle.html"/>
+      </navPoint>
+      <navPoint id="u7df76e63-4276-4e7a-8ca1-645d4e0633b6" playOrder="52">
+        <navLabel>
+          <text>@autoreleasepool</text>
+        </navLabel>
+        <content src="autoreleasepool.html"/>
+      </navPoint>
+      <navPoint id="u80194d6a-a28d-47a8-ac94-77056994b981" playOrder="53">
+        <navLabel>
+          <text>值类型和引用类型</text>
+        </navLabel>
+        <content src="value-reference.html"/>
+      </navPoint>
+      <navPoint id="u3e2b7ab5-a025-4f58-b9f2-5f4aeb8be34e" playOrder="54">
+        <navLabel>
+          <text>String 还是 NSString</text>
+        </navLabel>
+        <content src="string-nsstring.html"/>
+      </navPoint>
+      <navPoint id="u02f613ce-b0d9-4a94-8e53-9251c84b0dae" playOrder="55">
+        <navLabel>
+          <text>UnsafePointer</text>
+        </navLabel>
+        <content src="unsafe.html"/>
+      </navPoint>
+      <navPoint id="u82bba135-7127-429a-8546-764b3d5be98d" playOrder="56">
+        <navLabel>
+          <text>C 指针内存管理</text>
+        </navLabel>
+        <content src="pointer-memory.html"/>
+      </navPoint>
+      <navPoint id="u1adbc670-bec9-4e99-a46c-d0c8ff1c4148" playOrder="57">
+        <navLabel>
+          <text>COpaquePointer 和 C convention</text>
+        </navLabel>
+        <content src="opaque-function-pointer.html"/>
+      </navPoint>
+      <navPoint id="udf2b615d-306d-42b8-a1e8-cfbee213550e" playOrder="58">
+        <navLabel>
+          <text>GCD 和延时调用</text>
+        </navLabel>
+        <content src="gcd-delay-call.html"/>
+      </navPoint>
+      <navPoint id="uf5521fc5-dd6d-4b55-be6b-b2c5e4aed84e" playOrder="59">
+        <navLabel>
+          <text>获取对象类型</text>
+        </navLabel>
+        <content src="instance-type.html"/>
+      </navPoint>
+      <navPoint id="uf72cd395-cc70-49fa-a2e1-bc14918e9638" playOrder="60">
+        <navLabel>
+          <text>自省</text>
+        </navLabel>
+        <content src="intropection.html"/>
+      </navPoint>
+      <navPoint id="ua652d832-5376-4b94-9c60-da418ef3ff07" playOrder="61">
+        <navLabel>
+          <text>KVO</text>
+        </navLabel>
+        <content src="kvo.html"/>
+      </navPoint>
+      <navPoint id="u47d1a3a6-effa-4075-8999-6d227af4e449" playOrder="62">
+        <navLabel>
+          <text>局部 scope</text>
+        </navLabel>
+        <content src="local-scope.html"/>
+      </navPoint>
+      <navPoint id="uae918cef-884d-4ba9-9515-bc33611a65da" playOrder="63">
+        <navLabel>
+          <text>判等</text>
+        </navLabel>
+        <content src="equal.html"/>
+      </navPoint>
+      <navPoint id="uaf07220c-08b4-4294-8878-3d51c1ed8597" playOrder="64">
+        <navLabel>
+          <text>哈希</text>
+        </navLabel>
+        <content src="hash.html"/>
+      </navPoint>
+      <navPoint id="uc3d8f3d5-d695-4de3-b381-d5f65443133a" playOrder="65">
+        <navLabel>
+          <text>类簇</text>
+        </navLabel>
+        <content src="class-cluster.html"/>
+      </navPoint>
+      <navPoint id="uea848ae5-648f-4641-8b47-03cb9fec60c7" playOrder="66">
+        <navLabel>
+          <text>Swizzle</text>
+        </navLabel>
+        <content src="swizzle.html"/>
+      </navPoint>
+      <navPoint id="ub6b69d10-7271-4bd4-b7ec-1cdb98d728ae" playOrder="67">
+        <navLabel>
+          <text>调用 C 动态库</text>
+        </navLabel>
+        <content src="dylib.html"/>
+      </navPoint>
+      <navPoint id="u0472da24-46c0-4e5a-ae53-ae9d91afe102" playOrder="68">
+        <navLabel>
+          <text>输出格式化</text>
+        </navLabel>
+        <content src="output-format.html"/>
+      </navPoint>
+      <navPoint id="uc3481de5-802e-457a-9218-c42ff2d72737" playOrder="69">
+        <navLabel>
+          <text>Options</text>
+        </navLabel>
+        <content src="options.html"/>
+      </navPoint>
+      <navPoint id="u417d844f-6bee-4f87-be08-c0fcebecd2f9" playOrder="70">
+        <navLabel>
+          <text>数组 enumerate</text>
+        </navLabel>
+        <content src="enumerate.html"/>
+      </navPoint>
+      <navPoint id="ub68cbcbd-fd8a-4156-96d4-bf080cd7e0e0" playOrder="71">
+        <navLabel>
+          <text>类型编码 @encode</text>
+        </navLabel>
+        <content src="type-encode.html"/>
+      </navPoint>
+      <navPoint id="u6578671f-9e29-488d-a8b6-f9cc0be776f8" playOrder="72">
+        <navLabel>
+          <text>C 代码调用和 @asmname</text>
+        </navLabel>
+        <content src="asmname.html"/>
+      </navPoint>
+      <navPoint id="u6b79e5a6-28c5-42ae-88f5-5aaac3dbc90b" playOrder="73">
+        <navLabel>
+          <text>sizeof 和 sizeofValue</text>
+        </navLabel>
+        <content src="sizeof-sizeofValue.html"/>
+      </navPoint>
+      <navPoint id="ud6ab3e2c-2d29-46d8-b975-39281b07a0d4" playOrder="74">
+        <navLabel>
+          <text>delegate</text>
+        </navLabel>
+        <content src="delegate.html"/>
+      </navPoint>
+      <navPoint id="u08e6b089-751c-40fe-bc6c-1ab328b7af65" playOrder="75">
+        <navLabel>
+          <text>Associated Object</text>
+        </navLabel>
+        <content src="associated-object.html"/>
+      </navPoint>
+      <navPoint id="u8b93513f-6157-4ffc-a86d-e450ae81137c" playOrder="76">
+        <navLabel>
+          <text>Lock</text>
+        </navLabel>
+        <content src="lock.html"/>
+      </navPoint>
+      <navPoint id="u8943b9a7-aafc-42e0-b0d2-6ff6ba5f0f0d" playOrder="77">
+        <navLabel>
+          <text>Toll-Free Bridging 和 Unmanaged</text>
+        </navLabel>
+        <content src="toll-free.html"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="ub1232f6c-d74d-4e25-92de-591d80a8659d" playOrder="78">
+      <navLabel>
+        <text>Swift 与开发环境及一些实践</text>
+      </navLabel>
+      <content src="practice-in-swift.html"/>
+      <navPoint id="u1c39eac5-4047-4402-a461-ae1d396d1881" playOrder="79">
+        <navLabel>
+          <text>Swift 命令行工具</text>
+        </navLabel>
+        <content src="swift-cli.html"/>
+      </navPoint>
+      <navPoint id="uefb35bb2-f9d8-4db1-aac6-2392ed4bf12e" playOrder="80">
+        <navLabel>
+          <text>随机数生成</text>
+        </navLabel>
+        <content src="random-number.html"/>
+      </navPoint>
+      <navPoint id="uaae7b9af-a1b0-4411-8d9a-46bcba87af72" playOrder="81">
+        <navLabel>
+          <text>print 和 debugPrint</text>
+        </navLabel>
+        <content src="print.html"/>
+      </navPoint>
+      <navPoint id="u63e3ad1f-e55c-45fe-8a1d-0fdfe26ef7e6" playOrder="82">
+        <navLabel>
+          <text>错误和异常处理</text>
+        </navLabel>
+        <content src="error-handle.html"/>
+      </navPoint>
+      <navPoint id="udf49be42-4fcd-43b2-b98d-ce67d84f5ccb" playOrder="83">
+        <navLabel>
+          <text>断言</text>
+        </navLabel>
+        <content src="assert.html"/>
+      </navPoint>
+      <navPoint id="u9e098be9-86c8-4f7a-b698-28f1246737e6" playOrder="84">
+        <navLabel>
+          <text>fatalError</text>
+        </navLabel>
+        <content src="fatalerror.html"/>
+      </navPoint>
+      <navPoint id="ueac04877-dd57-4316-baa5-2bcb5b3a5142" playOrder="85">
+        <navLabel>
+          <text>代码组织和 Framework</text>
+        </navLabel>
+        <content src="code-framework.html"/>
+      </navPoint>
+      <navPoint id="u8cec23fd-097e-42be-9806-41a0831ba6b5" playOrder="86">
+        <navLabel>
+          <text>Playground 延时运行</text>
+        </navLabel>
+        <content src="playground-delay.html"/>
+      </navPoint>
+      <navPoint id="uc6b0afcc-7f7f-4dd4-9fc2-acde793c8b81" playOrder="87">
+        <navLabel>
+          <text>Playground 可视化</text>
+        </navLabel>
+        <content src="playground-capture.html"/>
+      </navPoint>
+      <navPoint id="u6f56c922-0e2d-41b2-ba76-b71c6fca5e70" playOrder="88">
+        <navLabel>
+          <text>Playground 与项目协作</text>
+        </navLabel>
+        <content src="playground-project.html"/>
+      </navPoint>
+      <navPoint id="u84e095b7-c5f7-4d7f-8515-efeec7605055" playOrder="89">
+        <navLabel>
+          <text>数学和数字</text>
+        </navLabel>
+        <content src="math-number.html"/>
+      </navPoint>
+      <navPoint id="u30b92874-2d3c-4d05-866f-f48b5b08bc1e" playOrder="90">
+        <navLabel>
+          <text>JSON</text>
+        </navLabel>
+        <content src="json.html"/>
+      </navPoint>
+      <navPoint id="u7b0c41f2-4d22-4cc8-9d53-8065655bca06" playOrder="91">
+        <navLabel>
+          <text>NSNull</text>
+        </navLabel>
+        <content src="nsnull.html"/>
+      </navPoint>
+      <navPoint id="uc1bd5cb1-ad8f-41ec-949f-e9d995bf75cb" playOrder="92">
+        <navLabel>
+          <text>文档注释</text>
+        </navLabel>
+        <content src="documentation.html"/>
+      </navPoint>
+      <navPoint id="u19078511-eeb2-4af6-a7f2-e5b1c12b955e" playOrder="93">
+        <navLabel>
+          <text>性能考虑</text>
+        </navLabel>
+        <content src="performance.html"/>
+      </navPoint>
+      <navPoint id="ud159c365-71cd-477d-87b0-21c90cf993a9" playOrder="94">
+        <navLabel>
+          <text>Log 输出</text>
+        </navLabel>
+        <content src="log.html"/>
+      </navPoint>
+      <navPoint id="u27606809-a4c2-43a0-8c73-f993e71f8b90" playOrder="95">
+        <navLabel>
+          <text>溢出</text>
+        </navLabel>
+        <content src="overflow.html"/>
+      </navPoint>
+      <navPoint id="u8c3c6f84-bdde-445f-9f78-9b92077481f0" playOrder="96">
+        <navLabel>
+          <text>宏定义 define</text>
+        </navLabel>
+        <content src="define.html"/>
+      </navPoint>
+      <navPoint id="u684e5e34-7a35-4e23-a2bb-7b84ef111b63" playOrder="97">
+        <navLabel>
+          <text>属性访问控制</text>
+        </navLabel>
+        <content src="property-access.html"/>
+      </navPoint>
+      <navPoint id="ue4194c58-87a7-4519-b9e1-2346f0bbc20f" playOrder="98">
+        <navLabel>
+          <text>Swift 中的测试</text>
+        </navLabel>
+        <content src="swift-test.html"/>
+      </navPoint>
+      <navPoint id="u653be7fe-0bc2-49d0-bfaf-052f80510940" playOrder="99">
+        <navLabel>
+          <text>Core Data</text>
+        </navLabel>
+        <content src="core-data.html"/>
+      </navPoint>
+      <navPoint id="u9c91fa59-cdb5-4420-b903-ab6437af296f" playOrder="100">
+        <navLabel>
+          <text>闭包歧义</text>
+        </navLabel>
+        <content src="closure-ambiguous.html"/>
+      </navPoint>
+      <navPoint id="u375927f4-df93-4caa-8f8c-be82e708e946" playOrder="101">
+        <navLabel>
+          <text>泛型扩展</text>
+        </navLabel>
+        <content src="extension-generic.html"/>
+      </navPoint>
+      <navPoint id="ucd152d54-4844-4c57-96c5-5b371ac8019b" playOrder="102">
+        <navLabel>
+          <text>兼容性</text>
+        </navLabel>
+        <content src="compatibility.html"/>
+      </navPoint>
+      <navPoint id="u361b7c50-552a-4a0e-be22-b0da0dbb04f2" playOrder="103">
+        <navLabel>
+          <text>列举 enum 类型</text>
+        </navLabel>
+        <content src="enum-enumerate.html"/>
+      </navPoint>
+      <navPoint id="u3e38b476-dfee-4c19-9ca5-d5de0e3e8919" playOrder="104">
+        <navLabel>
+          <text>尾递归</text>
+        </navLabel>
+        <content src="tail-recursion.html"/>
+      </navPoint>
+    </navPoint>
+    <navPoint id="ucc24bf46-96d0-459f-9fd9-0f4494cd46aa" playOrder="105">
+      <navLabel>
+        <text>后记</text>
+      </navLabel>
+      <content src="backword.html"/>
+    </navPoint>
+    <navPoint id="u9abc2d04-abf3-440f-afa2-fdcdc2806388" playOrder="106">
+      <navLabel>
+        <text>版本更新</text>
+      </navLabel>
+      <content src="release-note.html"/>
+    </navPoint>
+  </navMap>
+</ncx>

@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>static 和 class | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_23">static 和 class</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="static-%E5%92%8C-class" class="calibre1">static 和 class</h1>
+<p class="calibre9">Swift 中表示 “类型范围作用域” 这一概念有两个不同的关键字，它们分别是 <code class="calibre13 pcalibre6 pcalibre5">static</code> 和 <code class="calibre13 pcalibre6 pcalibre5">class</code>。这两个关键字确实都表达了这个意思，但是在其他一些语言，包括 Objective-C 中，我们并不会特别地区分类变量/类方法和静态变量/静态函数。但是在 Swift 的早期版本中中，这两个关键字却是不能用混的。</p>
+<p class="calibre9">在非 <code class="calibre13 pcalibre6 pcalibre5">class</code> 的类型上下文中，我们统一使用 <code class="calibre13 pcalibre6 pcalibre5">static</code> 来描述类型作用域。这包括在 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 和 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 中表述类型方法和类型属性时。在这两个值类型中，我们可以在类型范围内声明并使用存储属性，计算属性和方法。<code class="calibre13 pcalibre6 pcalibre5">static</code> 适用的场景有这些：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span> </span>{
+    <span class="hljs-keyword">let</span> x: <span class="hljs-func">Double</span>
+    <span class="hljs-keyword">let</span> y: <span class="hljs-func">Double</span>
+
+    <span class="hljs-title">// 存储属性</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> zero = <span class="hljs-func">Point</span>(x: <span class="hljs-params">0</span>, y: <span class="hljs-params">0</span>)
+
+    <span class="hljs-title">// 计算属性</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> ones: [<span class="hljs-func">Point</span>] {
+        <span class="hljs-keyword">return</span> [<span class="hljs-func">Point</span>(x: <span class="hljs-params">1</span>, y: <span class="hljs-params">1</span>),
+                <span class="hljs-func">Point</span>(x: -<span class="hljs-params">1</span>, y: <span class="hljs-params">1</span>),
+                <span class="hljs-func">Point</span>(x: <span class="hljs-params">1</span>, y: -<span class="hljs-params">1</span>),
+                <span class="hljs-func">Point</span>(x: -<span class="hljs-params">1</span>, y: -<span class="hljs-params">1</span>)]
+    }
+
+    <span class="hljs-title">// 类型方法</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">add</span><span class="hljs-params">(p1: Point, p2: Point)</span></span> -&gt; <span class="hljs-func">Point</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-func">Point</span>(x: p1.x + p2.x, y: p1.y + p2.y)
+    }
+}
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">enum</code> 的情况与这个十分类似，就不再列举了。</p>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">class</code> 关键字相比起来就明白许多，是专门用在 class 类型的上下文中的，可以用来修饰类方法以及类的计算属性。但是有一个例外，<code class="calibre13 pcalibre6 pcalibre5">class</code> 中现在是不能出现 <code class="calibre13 pcalibre6 pcalibre5">class</code> 的存储属性的，我们如果写类似这样的代码的话：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">var</span> <span class="hljs-title">bar</span>: <span class="hljs-title">Bar</span>?
+}
+</span></code></pre>
+<p class="calibre9">编译时会得到一个错误：</p>
+<blockquote class="calibre6">
+<p class="calibre7">class variables not yet supported</p>
+</blockquote>
+<p class="calibre9">在 Swift 1.2 及之后，我们可以在 <code class="calibre13 pcalibre6 pcalibre5">class</code> 中使用 <code class="calibre13 pcalibre6 pcalibre5">static</code> 来声明一个类作用域的变量。也即：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> bar: <span class="hljs-func">Bar</span>?
+}
+</code></pre>
+<p class="calibre9">的写法是合法的。有了这个特性之后，像<a href="singleton.html" class="pcalibre pcalibre2 pcalibre1 calibre4">单例</a>的写法就可以回归到我们所习惯的方式了。</p>
+<p class="calibre9">有一个比较特殊的是 <code class="calibre13 pcalibre6 pcalibre5">protocol</code>。在 Swift 中 <code class="calibre13 pcalibre6 pcalibre5">class</code>，<code class="calibre13 pcalibre6 pcalibre5">struct</code> 和 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 都是可以实现某个 <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 的。那么如果我们想在 <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 里定义一个类型域上的方法或者计算属性的话，应该用哪个关键字呢？答案是使用 <code class="calibre13 pcalibre6 pcalibre5">static</code> 进行定义。在使用的时候，<code class="calibre13 pcalibre6 pcalibre5">struct</code> 或 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 中仍然使用 <code class="calibre13 pcalibre6 pcalibre5">static</code>，而在 <code class="calibre13 pcalibre6 pcalibre5">class</code> 里我们既可以使用 <code class="calibre13 pcalibre6 pcalibre5">class</code> 关键字，也可以用 <code class="calibre13 pcalibre6 pcalibre5">static</code>，它们的结果是相同的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">MyProtocol</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">MyStruct</span>: <span class="hljs-title">MyProtocol</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"MyStruct"</span>
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">MyEnum</span>: <span class="hljs-title">MyProtocol</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"MyEnum"</span>
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>: <span class="hljs-title">MyProtocol</span> </span>{
+    <span class="hljs-title">// 在 class 中可以使用 class</span>
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">foo</span>() -&gt; <span class="hljs-title">String</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"MyClass.foo()"</span>
+    }
+
+    <span class="hljs-title">// 也可以使用 static</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"MyClass.bar()"</span>
+    }
+}
+</code></pre>
+<blockquote class="calibre6">
+<p class="calibre7">在 Swift 1.2 之前 <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 中使用的是 <code class="calibre13 pcalibre6 pcalibre5">class</code> 作为关键字，但这确实是不合逻辑的。Swift 1.2 和 2.0 分两次对此进行了改进。现在只需要记住结论，在任何时候使用 <code class="calibre13 pcalibre6 pcalibre5">static</code> 应该都是没有问题的。</p>
+</blockquote>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

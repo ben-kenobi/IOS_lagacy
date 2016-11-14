@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+
+    <style>
+
+        img {
+            background-color: red;
+            width: 200px;
+            height: 200px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <img src="images/test.png"/>
+    <br/>
+    <button>更改图片</button>
+
+
+    <script>
+
+
+        var icon = document.getElementsByTagName("img")[0];
+
+        icon.onclick = function(){
+
+            console.log("图片被点击了");
+        }
+
+        icon.onmouseover = function(){
+
+            console.log("鼠标画如图片");
+        }
+
+        icon.onmousemove = function(){
+            console.log("鼠标滑动了");
+        }
+
+        icon.onmouseout = function(){
+            console.log("鼠标离开了图片")
+        }
+
+        function btnclick()
+        {
+            var icon = document.getElementsByTagName("img")[0];
+
+            if(icon.src.indexOf("test.png") == -1)
+            {
+                icon.src = "images/test.png";
+            }else
+            {
+                icon.src = "images/test2.png";
+            }
+
+            console.log(icon.src);
+
+//            console.log("hello world");
+//
+//            alert("hello world");
+//
+//            window.location.href = "http://v3.bootcss.com";
+        }
+
+        var btn = document.getElementsByTagName("button")[0];
+
+        btn.onclick = btnclick;
+
+
+    </script>
+</body>
+</html>

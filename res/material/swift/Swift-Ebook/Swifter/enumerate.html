@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>数组 enumerate | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_70">数组 enumerate</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E6%95%B0%E7%BB%84-enumerate" class="calibre1">数组 enumerate</h1>
+<p class="calibre9">使用 <code class="calibre13 pcalibre6 pcalibre5">NSArray</code> 时一个很常遇见的的需求是在枚举数组内元素的同时也想使用对应的下标索引，在 Objective-C 中最方便的方式是使用 <code class="calibre13 pcalibre6 pcalibre5">NSArray</code> 的 <code class="calibre13 pcalibre6 pcalibre5">enumerateObjectsUsingBlock:</code> 方法。因为通过这个方法可以显式地同时得到元素和下标索引，这会有最好的可读性，并且 block 也意味着可以方便地在不同的类之间传递和复用这些代码。</p>
+<p class="calibre9">比如我们想要对某个数组内的前三个数字进行累加 (请原谅我，因为这只是为这一节内容生造出来的例子，实际情况下我们就算有这样的需求可能也不太会这么处理)：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">NSArray</span> *arr = @[@<span class="hljs-params">1</span>, @<span class="hljs-params">2</span>, @<span class="hljs-params">3</span>, @<span class="hljs-params">4</span>, @<span class="hljs-params">5</span>];
+__block <span class="hljs-params">NSInteger</span> result = <span class="hljs-params">0</span>;
+[arr enumerateObjectsUsingBlock:^(<span class="hljs-params">NSNumber</span> *num, <span class="hljs-params">NSUInteger</span> idx, <span class="hljs-params">BOOL</span> *stop) {
+    result += [num integerValue];
+    <span class="hljs-keyword">if</span> (idx == <span class="hljs-params">2</span>) {
+        *stop = <span class="hljs-params">YES</span>;
+    }
+}];
+
+<span class="hljs-params">NSLog</span>(<span class="hljs-string">@"%ld"</span>, result);
+<span class="hljs-title">// 输出：6</span>
+</code></pre>
+<p class="calibre9">这里我们需要用到 <code class="calibre13 pcalibre6 pcalibre5">*stop</code> 这个停止标记的指针，并且直接设置它对应的值为 <code class="calibre13 pcalibre6 pcalibre5">YES</code> 来打断并跳出循环。而在 Swift 中，这个 API 的 <code class="calibre13 pcalibre6 pcalibre5">*stop</code> 被转换为了对应的 <code class="calibre13 pcalibre6 pcalibre5">UnsafeMutablePointer&lt;ObjCBool&gt;</code>。如果不明白 Swift 的指针的表示形式的话，一开始可能会被吓一跳，但是一旦当我们明白 <code class="calibre13 pcalibre6 pcalibre5">Unsafe</code> 开头的这些<a href="unsafe.html" class="pcalibre pcalibre2 pcalibre1 calibre4">指针类型的用法</a>之后，就会知道我们需要对应做的事情就是将这个指向 <code class="calibre13 pcalibre6 pcalibre5">ObjCBool</code> 的指针指向的内存的内容设置为 <code class="calibre13 pcalibre6 pcalibre5">true</code> 而已：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> arr: <span class="hljs-func">NSArray</span> = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>,<span class="hljs-params">4</span>,<span class="hljs-params">5</span>]
+<span class="hljs-keyword">var</span> result = <span class="hljs-params">0</span>
+arr.enumerateObjectsUsingBlock { (num, idx, stop) -&gt; <span class="hljs-func">Void</span> <span class="hljs-keyword">in</span>
+    result += num <span class="hljs-keyword">as</span>! <span class="hljs-func">Int</span>
+    <span class="hljs-keyword">if</span> idx == <span class="hljs-params">2</span> {
+        stop.memory = <span class="hljs-params">true</span>
+    }
+}
+<span class="hljs-params">print</span>(result)
+<span class="hljs-title">// 输出：6</span>
+</code></pre>
+<p class="calibre9">虽然说使用 <code class="calibre13 pcalibre6 pcalibre5">enumerateObjectsUsingBlock:</code> 非常方便，但是其实从性能上来说这个方法并不理想 (<a href="https://www.mikeash.com/pyblog/friday-qa-2010-04-09-comparison-of-objective-c-enumeration-techniques.html" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">这里</a>有一篇四年前的星期五问答阐述了这个问题，而且一直以来情况都没什么变化)。另外这个方法要求作用在 <code class="calibre13 pcalibre6 pcalibre5">NSArray</code> 上，这显然已经不符合 Swift 的编码方式了。在 Swift 中，我们在遇到这样的需求的时候，有一个效率，安全性和可读性都很好的替代，那就是快速枚举某个数组的 <code class="calibre13 pcalibre6 pcalibre5">EnumerateGenerator</code>，它的元素是同时包含了元素下标索引以及元素本身的多元组：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> result = <span class="hljs-params">0</span>
+<span class="hljs-keyword">for</span> (idx, num) <span class="hljs-keyword">in</span> [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>,<span class="hljs-params">4</span>,<span class="hljs-params">5</span>].<span class="hljs-params">enumerate</span>() {
+    result += num
+    <span class="hljs-keyword">if</span> idx == <span class="hljs-params">2</span> {
+        <span class="hljs-keyword">break</span>
+    }
+}
+<span class="hljs-params">print</span>(result)
+</code></pre>
+<p class="calibre9">基本上来说，是时候可以和 <code class="calibre13 pcalibre6 pcalibre5">enumerateObjectsUsingBlock:</code> 说再见了。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

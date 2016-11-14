@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>where 和模式匹配 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_40">where 和模式匹配</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="where-%E5%92%8C%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D" class="calibre1">where 和模式匹配</h1>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">where</code> 关键字在 Swift 中非常强大，但是往往容易被忽视。在这一节中，我们就来整理看看 <code class="calibre13 pcalibre6 pcalibre5">where</code> 有哪些使用场合吧。</p>
+<p class="calibre9">首先是 switch 语句中，我们可以使用 where 来限定某些条件 case：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> name = [<span class="hljs-string">"王小二"</span>,<span class="hljs-string">"张三"</span>,<span class="hljs-string">"李四"</span>,<span class="hljs-string">"王二小"</span>]
+
+name.forEach {
+    <span class="hljs-keyword">switch</span> $<span class="hljs-params">0</span> {
+    <span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> x <span class="hljs-keyword">where</span> x.hasPrefix(<span class="hljs-string">"王"</span>):
+        <span class="hljs-params">print</span>(<span class="hljs-string">"<span class="hljs-func">\(x)</span>是笔者本家"</span>)
+    <span class="hljs-keyword">default</span>:
+        <span class="hljs-params">print</span>(<span class="hljs-string">"你好，<span class="hljs-func">\($<span class="hljs-params">0</span>)</span>"</span>)
+    }
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// 王小二是笔者本家</span>
+<span class="hljs-title">// 你好，张三</span>
+<span class="hljs-title">// 你好，李四</span>
+<span class="hljs-title">// 王二小是笔者本家</span>
+</code></pre>
+<p class="calibre9">这可以说是<a href="pattern-match.html" class="pcalibre pcalibre2 pcalibre1 calibre4">模式匹配</a>的标准用法，对 case 条件进行限定可以让我们更灵活地使用 <code class="calibre13 pcalibre6 pcalibre5">switch</code> 语句。</p>
+<p class="calibre9">在 <code class="calibre13 pcalibre6 pcalibre5">if let</code> 或者是 <code class="calibre13 pcalibre6 pcalibre5">for</code> 中我们也可以使用 <code class="calibre13 pcalibre6 pcalibre5">where</code> 来做类似的条件限定：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> num: [<span class="hljs-func">Int</span>?] = [<span class="hljs-params">48</span>, <span class="hljs-params">99</span>, <span class="hljs-params">nil</span>]
+num.forEach {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> score = $<span class="hljs-params">0</span> <span class="hljs-keyword">where</span> score &gt; <span class="hljs-params">60</span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"及格啦 - <span class="hljs-func">\(score)</span>"</span>)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">":("</span>)
+    }
+}
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// :(</span>
+<span class="hljs-title">// 及格啦 - 99</span>
+<span class="hljs-title">// :(</span>
+
+<span class="hljs-keyword">for</span> score <span class="hljs-keyword">in</span> num <span class="hljs-keyword">where</span> score &gt; <span class="hljs-params">60</span> {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"及格啦 - <span class="hljs-func">\(score)</span>"</span>)
+}
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// 及格啦 - Optional(99)</span>
+</code></pre>
+<p class="calibre9">这两种使用的方式都可以用额外的 <code class="calibre13 pcalibre6 pcalibre5">if</code> 来替代，这里只不过是让我们的代码更加易读了。也有一些场合是只有使用 <code class="calibre13 pcalibre6 pcalibre5">where</code> 才能准确表达的，比如我们在泛型中想要对方法的类型进行限定的时候。比如在标准库里对 <code class="calibre13 pcalibre6 pcalibre5">RawRepresentable</code> 接口定义 <code class="calibre13 pcalibre6 pcalibre5">!=</code> 运算符定义时：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">/// Returns `true` iff `lhs.rawValue != rhs.rawValue`.</span>
+public <span class="hljs-func"><span class="hljs-keyword">func</span> !=<span class="hljs-func">&lt;T : RawRepresentable 
+                where T.RawValue : Equatable&gt;</span><span class="hljs-params">(lhs: T, rhs: T)</span></span> -&gt; <span class="hljs-func">Bool</span>
+</code></pre>
+<p class="calibre9">这里限定了 <code class="calibre13 pcalibre6 pcalibre5">T.RawValue</code> 必须要遵守 <code class="calibre13 pcalibre6 pcalibre5">Equatable</code> 接口，这样我们才能通过对比 <code class="calibre13 pcalibre6 pcalibre5">lhs</code> 和 <code class="calibre13 pcalibre6 pcalibre5">rhs</code> 的 <code class="calibre13 pcalibre6 pcalibre5">rawValue</code> 是否相等，进而判断这两个 <code class="calibre13 pcalibre6 pcalibre5">RawRepresentable</code> 值是否相等。如果没有 where 的保证的话，下面的代码就无法编译。同时，我们也限定了那些 <code class="calibre13 pcalibre6 pcalibre5">RawValue</code> 无法判等的 <code class="calibre13 pcalibre6 pcalibre5">RawRepresentable</code> 类型不能进行判等。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">/// Returns `true` iff `lhs.rawValue != rhs.rawValue`.</span>
+public <span class="hljs-func"><span class="hljs-keyword">func</span> !=<span class="hljs-func">&lt;T : RawRepresentable 
+                where T.RawValue : Equatable&gt;</span><span class="hljs-params">(lhs: T, rhs: T)</span></span> -&gt; <span class="hljs-func">Bool</span> {
+    <span class="hljs-keyword">return</span> lhs.rawValue != rhs.rawValue
+}
+</code></pre>
+<p class="calibre9">在 Swift 2.0 中，引入了 <a href="protocol-extension.html" class="pcalibre pcalibre2 pcalibre1 calibre4">protocol extension</a>。在有些时候，我们会希望一个接口扩展的默认实现只在某些特定的条件下适用，这时我们就可以用 <code class="calibre13 pcalibre6 pcalibre5">where</code> 关键字来进行限定。标准库中的接口扩展大量使用了这个技术来进行限定，比如 <code class="calibre13 pcalibre6 pcalibre5">SequenceType</code> 的 <code class="calibre13 pcalibre6 pcalibre5">sort</code> 方法就被定义在这样一个类型限制的接口扩展中：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">SequenceType</span> <span class="hljs-title">where</span> <span class="hljs-title">Self</span>.<span class="hljs-title">Generator</span>.<span class="hljs-title">Element</span> : <span class="hljs-title">Comparable</span> </span>{
+    public <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">sort</span><span class="hljs-params">()</span></span> -&gt; [<span class="hljs-func">Self</span>.<span class="hljs-func">Generator</span>.<span class="hljs-func">Element</span>]
+}
+</code></pre>
+<p class="calibre9">很自然，如果 <code class="calibre13 pcalibre6 pcalibre5">SequenceType</code> (比如一个 <code class="calibre13 pcalibre6 pcalibre5">Array</code>) 中的元素是不可比较的，那么 <code class="calibre13 pcalibre6 pcalibre5">sort</code> 方法自然也就不能适用了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> sortableArray: [<span class="hljs-func">Int</span>] = [<span class="hljs-params">3</span>,<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">4</span>,<span class="hljs-params">5</span>]
+<span class="hljs-keyword">let</span> unsortableArray: [<span class="hljs-func">AnyObject</span>?] = [<span class="hljs-string">"Hello"</span>, <span class="hljs-params">4</span>, <span class="hljs-params">nil</span>]
+
+sortableArray.<span class="hljs-params">sort</span>()
+<span class="hljs-title">// [1,2,3,4,5]</span>
+
+unsortableArray.<span class="hljs-params">sort</span>()
+<span class="hljs-title">// 无法编译</span>
+<span class="hljs-title">// note: expected an argument list of type </span>
+<span class="hljs-title">// '(@noescape (Self.Generator.Element, Self.Generator.Element) -&gt; Bool)'</span>
+<span class="hljs-title">// 这意味着 Swift 尝试使用带有闭包的 `sort` 方法，并期望你输入一种排序方式</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

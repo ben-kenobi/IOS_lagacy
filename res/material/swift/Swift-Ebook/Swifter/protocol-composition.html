@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>protocol 组合 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_22">protocol 组合</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="protocol-%E7%BB%84%E5%90%88" class="calibre1">protocol 组合</h1>
+<p class="calibre9">在 Swift 中我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">Any</code> 来表示任意类型 (如果你对此感到模糊或者陌生的话，可以先看看 Apple 的 Swift 官方教程或者本书的<a href="any-anyObject.html" class="pcalibre pcalibre2 pcalibre1 calibre4">这篇 tip</a>)，充满好奇心的同学可能已经发现，<code class="calibre13 pcalibre6 pcalibre5">Any</code> 这个类型的定义十分奇怪，它是一个 <code class="calibre13 pcalibre6 pcalibre5">protocol&lt;&gt;</code> 的同名类型。</p>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">protocol&lt;&gt;</code> 这样形式的写法在日常 Swift 使用中其实并不多见，这其实是 Swift 的接口组合的用法。标准的语法形式是下面这样的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span>&lt;<span class="hljs-title">ProtocolA</span>, <span class="hljs-title">ProtocolB</span>, <span class="hljs-title">ProtocolC</span>&gt;
+</span></code></pre>
+<p class="calibre9">尖括号内是具体接口的名称，这里表示将名称为 <code class="calibre13 pcalibre6 pcalibre5">ProtocolA</code>，<code class="calibre13 pcalibre6 pcalibre5">ProtocolB</code> 以及 <code class="calibre13 pcalibre6 pcalibre5">ProtocolC</code> 的接口组合在一起的一个新的匿名接口。实现这个匿名接口就意味着要同时实现这三个接口所定义的内容。所以说，这里的 protocol 组合的写法和下面的新声明的 <code class="calibre13 pcalibre6 pcalibre5">ProtocolD</code> 是相同的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">ProtocolD</span>: <span class="hljs-title">ProtocolA</span>, <span class="hljs-title">ProtocolB</span>, <span class="hljs-title">ProtocolC</span> </span>{
+
+}
+</code></pre>
+<p class="calibre9">那么，在 <code class="calibre13 pcalibre6 pcalibre5">Any</code> 定义的时候的里面什么都不写的 <code class="calibre13 pcalibre6 pcalibre5">protocol&lt;&gt;</code> 是什么意思呢？从语意上来说，这代表一个 "需要实现空接口的接口"，其实就是任意类型的意思了。</p>
+<p class="calibre9">除了可以方便地表达空接口这一概念以外，protocol 的组合相比于新创建一个接口的最大区别就在于其匿名性。有时候我们可以借助这个特性写出更清晰的代码。因为 Swift 的类型组织是比较松散的，你的类型可以由不同的 <code class="calibre13 pcalibre6 pcalibre5">extension</code> 来定义实现不同的接口，Swift 也并没有要求它们在同一个文件中。这样，当一个类型实现了很多接口时，在使用这个类型的时候我们很可能在不查询相关代码的情况下很难知道这个类型所实现的接口。</p>
+<p class="calibre9">举个理想化的例子，比如我们有下面的三个接口，分别代表了三种动物的叫的方式，而有一种谜之动物，同时实现了这三个接口：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">KittenLike</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">meow</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">DogLike</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">bark</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">TigerLike</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">aou</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MysteryAnimal</span>: <span class="hljs-title">KittenLike</span>, <span class="hljs-title">DogLike</span>, <span class="hljs-title">TigerLike</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">meow</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"meow"</span>
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">bark</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"bark"</span>
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">aou</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"aou"</span>
+    }
+}
+</code></pre>
+<p class="calibre9">现在我们想要检查某种动物作为宠物的时候的叫声的话，我们可能要重新定义一个叫做 <code class="calibre13 pcalibre6 pcalibre5">PetLike</code> 的接口，表明其实现 <code class="calibre13 pcalibre6 pcalibre5">KittenLike</code> 和 <code class="calibre13 pcalibre6 pcalibre5">DogLike</code>；如果稍后我们又想检查某种动物作为猫科动物的叫声的话，我们也许又要去定义一个叫做 <code class="calibre13 pcalibre6 pcalibre5">CatLike</code> 这样的实现 <code class="calibre13 pcalibre6 pcalibre5">KittenLike</code> 和 <code class="calibre13 pcalibre6 pcalibre5">TigerLike</code> 的接口。最后我们大概会写出这样的东西：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">PetLike</span>: <span class="hljs-title">KittenLike</span>, <span class="hljs-title">DogLike</span> </span>{
+
+}
+
+<span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">CatLike</span>: <span class="hljs-title">KittenLike</span>, <span class="hljs-title">TigerLike</span> </span>{
+
+}
+
+<span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">SoundChecker</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">checkPetTalking</span><span class="hljs-params">(pet: PetLike)</span></span> {
+        <span class="hljs-title">//...</span>
+    }
+
+    <span class="hljs-keyword">static</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">checkCatTalking</span><span class="hljs-params">(cat: CatLike)</span></span> {
+        <span class="hljs-title">//...</span>
+    }
+}
+</code></pre>
+<p class="calibre9">虽然没有引入定义任何新的内容，但是为了实现这个需求，我们还是添加了两个空 protocol，这可能会让人困惑，代码的使用者 (也包括一段时间后的你自己) 可能会去猜测 <code class="calibre13 pcalibre6 pcalibre5">PetLike</code> 和 <code class="calibre13 pcalibre6 pcalibre5">CatLike</code> 的作用 -- 其实它们除了标注以外并没有其他作用。借助 protocol 组合的特性，我们可以很好的解决这个问题。protocol 组合是可以使用 <a href="typealias.html" class="pcalibre pcalibre2 pcalibre1 calibre4">typealias</a> 来命名的，于是可以将上面的新定义 protocol 的部分换为：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">typealias</span> <span class="hljs-func">PetLike</span> = <span class="hljs-func"><span class="hljs-keyword">protocol</span>&lt;<span class="hljs-title">KittenLike</span>, <span class="hljs-title">DogLike</span>&gt;
+<span class="hljs-title">typealias</span> <span class="hljs-title">CatLike</span> = <span class="hljs-title">protocol</span>&lt;<span class="hljs-title">KittenLike</span>, <span class="hljs-title">TigerLike</span>&gt;
+</span></code></pre>
+<p class="calibre9">这样既保持了可读性，也没有多定义不必要的新类型。</p>
+<p class="calibre9">另外，其实如果这两个临时接口我们就只用一次的话，如果上下文里理解起来不会有困难，我们完全可以直接将它们匿名化，变成下面这样：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">SoundChecker</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">checkPetTalking</span><span class="hljs-params">(pet: <span class="hljs-keyword">protocol</span>&lt;KittenLike, DogLike&gt;)</span></span> {
+        <span class="hljs-title">//...</span>
+    }
+
+    <span class="hljs-keyword">static</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">checkCatTalking</span><span class="hljs-params">(cat: <span class="hljs-keyword">protocol</span>&lt;KittenLike, TigerLike&gt;)</span></span> {
+        <span class="hljs-title">//...</span>
+    }
+}
+</code></pre>
+<p class="calibre9">这样的好处是定义和使用的地方更加接近，这在代码复杂的时候读代码时可以少一些跳转，多一些专注。但是因为使用了匿名的接口组合，所以能表达的信息毕竟少了一些。如果要实际使用这种方法的话，还是需要多多斟酌。</p>
+<p class="calibre9">虽然这一节已经够长了，不过我还是想多提一句关于实现多个接口时接口内方法冲突的解决方法。因为在 Swift 的世界中没有人限制或者保证过不同接口的方法不能重名，所以这是有可能出现的情况。比如有 <code class="calibre13 pcalibre6 pcalibre5">A</code> 和 <code class="calibre13 pcalibre6 pcalibre5">B</code> 两个接口，定义如下：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">A</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">Int</span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">B</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span>
+}
+</code></pre>
+<p class="calibre9">两个接口中 <code class="calibre13 pcalibre6 pcalibre5">bar()</code> 只有返回值的类型不同。我们如果有一个类型 <code class="calibre13 pcalibre6 pcalibre5">Class</code> 同时实现了 A 和 B，我们要怎么才能避免和解决调用冲突呢？</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Class</span>: <span class="hljs-title">A</span>, <span class="hljs-title">B</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">Int</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-params">1</span>
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">String</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"Hi"</span>
+    }
+}
+</code></pre>
+<p class="calibre9">这样一来，对于 <code class="calibre13 pcalibre6 pcalibre5">bar()</code>，只要在调用前进行类型转换就可以了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> instance = <span class="hljs-func">Class</span>()
+<span class="hljs-keyword">let</span> num = (instance <span class="hljs-keyword">as</span> <span class="hljs-func">A</span>).bar()  <span class="hljs-title">// 1</span>
+<span class="hljs-keyword">let</span> str = (instance <span class="hljs-keyword">as</span> <span class="hljs-func">B</span>).bar()  <span class="hljs-title">// "Hi"</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

@@ -1,0 +1,1044 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0052)http://blog.csdn.net/kesalin/article/details/8798039 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=11.0000" 
+http-equiv="X-UA-Compatible">
+     <TITLE>[深入浅出Cocoa]iOS网络编程之Socket - 罗朝辉（飘飘白云）         - 博客频道 - 
+CSDN.NET</TITLE>     
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">     
+<META name="description" content="[深入浅出Cocoa]iOS网络编程之Socket罗朝辉 (http://blog.csdn.net/kesalin)CC 许可，转载请注明出处更多 Cocoa 开发文章，敬请访问《深入浅出Cocoa》 CSDN专栏：http://blog.csdn.net/column/details/cocoa.html一，iOS网络编程层次模型"> 
+    
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/jquery.js" type="text/javascript"></SCRIPT>
+     
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/ad.js" type="text/javascript"></SCRIPT>
+         <!--new top-->                <LINK href="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/index.css" 
+rel="stylesheet">         <!--new top-->     <LINK href="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/style.css" 
+rel="Stylesheet" type="text/css">     <LINK title="RSS" id="RSSLink" href="/kesalin/rss/list" 
+rel="alternate" type="application/rss+xml">     <LINK href="http://csdnimg.cn/public/favicon.ico" 
+rel="shortcut icon">     <LINK href="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/blue_green.css" 
+rel="stylesheet" type="text/css">  
+<META name="GENERATOR" content="MSHTML 11.00.9600.17207"></HEAD> 
+<BODY><!--new top-->     
+<SCRIPT id="toolbar-tpl-scriptId" src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/html.js" type="text/javascript" skin="black" prod="blog" fixed="true"></SCRIPT>
+      <!--new top-->     
+<DIV id="container">
+<DIV id="header">
+<DIV class="header">
+<DIV id="blog_title">
+<H2><A href="http://blog.csdn.net/kesalin">罗朝辉（飘飘白云）</A></H2>
+<H3>关注C++，iOS，Android，3D 以及嵌入式系统开发。加微博：http://weibo.com/kesalin/</H3>
+<DIV class="clear"></DIV></DIV>
+<DIV class="clear"></DIV></DIV></DIV>
+<DIV id="navigator">
+<DIV class="navigator_bg"></DIV>
+<DIV class="navigator">
+<UL>
+  <LI id="btnContents"><A 
+  href="http://blog.csdn.net/kesalin?viewmode=contents"><SPAN onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])"><IMG 
+  src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/ico_list.gif">目录视图</SPAN></A></LI> 
+                  
+  <LI id="btnView"><A href="http://blog.csdn.net/kesalin?viewmode=list"><SPAN 
+  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])"><IMG 
+  src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/ico_summary.gif">摘要视图</SPAN></A></LI> 
+                  
+  <LI id="btnRss"><A href="http://blog.csdn.net/kesalin/rss/list"><SPAN onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])"><IMG 
+  src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/ico_rss.gif">订阅</SPAN></A></LI> 
+              </UL></DIV></DIV>
+<SCRIPT type="text/javascript">
+    var username = "kesalin";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/kesalin";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";
+</SCRIPT>
+         
+<DIV id="body">
+<DIV id="main">
+<DIV class="main">
+<DIV class="notice tracking-ad" data-mod="popu_3"><A href="http://blog.csdn.net/blogdevteam/article/details/25387451" 
+target="_blank"><FONT color="blue">有奖征资源，博文分享有内涵 </FONT></A> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="http://bbs.csdn.net/topics/390824327" 
+target="_blank"><FONT color="red">社区问答：芈峮iOS测试指南 </FONT></A> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="http://www.csdn.net/article/2014-06-27/2820432" 
+target="_blank"><FONT color="blue">专访阿里陶辉 </FONT></A> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="http://vote.blog.csdn.net/contest/" 
+target="_blank"><FONT color="red">2014 CSDN博文大赛  </FONT></A> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A href="http://blog.csdn.net/blogdevteam/article/details/36176453" 
+target="_blank"><FONT color="blue">10月微软MVP申请 </FONT></A> </DIV><LINK href="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/comment1.css" 
+rel="stylesheet" type="text/css"> <LINK href="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/style1.css" 
+rel="stylesheet" type="text/css"> 
+<SCRIPT language="JavaScript" src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/jquery.cookie.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/main.js" type="text/javascript"></SCRIPT>
+ 
+<DIV class="details" id="article_details">
+<DIV class="article_title"><SPAN class="ico ico_type_Original"></SPAN>     
+<H1><SPAN class="link_title"><A href="http://blog.csdn.net/kesalin/article/details/8798039"> 
+       [深入浅出Cocoa]iOS网络编程之Socket         </A></SPAN>     </H1> </DIV>
+<DIV class="article_manage"><SPAN class="link_categories">分类：             <A 
+onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);" 
+href="http://blog.csdn.net/kesalin/article/category/770276">Cocoa 开发</A>         
+</SPAN>     <SPAN class="link_postdate">2013-04-13 20:51</SPAN>     <SPAN title="阅读次数" 
+class="link_view">6026人阅读</SPAN>     <SPAN title="评论次数" class="link_comments"><A 
+onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])" 
+href="http://blog.csdn.net/kesalin/article/details/8798039#comments">评论</A>(6)</SPAN> 
+    <SPAN class="link_collect"><A title="收藏" onclick="javascript:_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shoucang']);collectArticle('[深入浅出Cocoa]iOS网络编程之Socket','8798039');return false;" 
+href="javascript:void(0);">收藏</A></SPAN>     <SPAN class="link_report"><A title="举报" 
+onclick="javascript:_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_jubao']);report(8798039,2);return false;" 
+href="http://blog.csdn.net/kesalin/article/details/8798039#report">举报</A></SPAN> 
+    </DIV>
+<DIV class="tag2box"><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);" 
+href="http://www.csdn.net/tag/ios" target="_blank">ios</A><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);" 
+href="http://www.csdn.net/tag/network" target="_blank">network</A></DIV>
+<DIV class="article_content" id="article_content">
+<P style="text-align: center;"><SPAN 
+style="font-size: 14px;">[深入浅出Cocoa]iOS网络编程之Socket</SPAN><BR></P>
+<P></P>
+<DIV style="text-align: center; color: rgb(51, 51, 51); line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">罗朝辉 
+(<A style="color: rgb(51, 102, 153); text-decoration: none;" href="http://blog.csdn.net/kesalin" 
+target="_blank">http://blog.csdn.net/kesalin</A>)</DIV>
+<DIV style="text-align: center; color: rgb(51, 51, 51); line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+CC 许可，转载请注明出处</DIV>
+<DIV style="text-align: center; color: rgb(51, 51, 51); line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;"><BR></DIV>
+<DIV style="text-align: left; color: rgb(51, 51, 51); line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+更多 Cocoa 开发文章，敬请访问《深入浅出Cocoa》 CSDN专栏：<SPAN style="text-align: center; color: rgb(51, 51, 51); line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;"><A 
+href="http://blog.csdn.net/column/details/cocoa.html" 
+target="_blank">http://blog.csdn.net/column/details/cocoa.html</A></SPAN></DIV>
+<P></P><BR>
+<P></P>
+<H3 style="font-family: verdana,Arial,Helvetica,sans-serif;">一，iOS网络编程层次模型</H3>
+<P></P>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+在前文《<A href="http://www.cnblogs.com/kesalin/archive/2011/09/15/cocoa_bonjour.html" 
+target="_blank">深入浅出Cocoa之Bonjour网络编程</A>》中我介绍了如何在Mac系统下进行 Bonjour 编程，在那篇文章中也介绍过 
+Cocoa 中网络编程层次结构分为三层，虽然那篇演示的是 Mac 系统的例子，其实对iOS系统来说也是一样的。iOS网络编程层次结构也分为三层：</P>
+<UL style="line-height: 21px; padding-left: 40px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px; margin-left: 0px;">
+  <LI style="padding-left: 0px; margin-left: 0px;"><EM>Cocoa层：NSURL，Bonjour，Game 
+  Kit，WebKit</EM></LI>
+  <LI style="padding-left: 0px; margin-left: 0px;"><EM>Core Foundation层：<EM>基于 C 
+  的&nbsp;</EM>CFNetwork 和 CFNetServices</EM></LI>
+  <LI style="padding-left: 0px; margin-left: 0px;"><EM>OS层:基于 C 的 BSD 
+  socket</EM></LI></UL>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+Cocoa层是最上层的基于 Objective-C 的 API，比如 URL访问，NSStream，Bonjour，GameKit等，这是大多数情况下我们常用的 
+API。Cocoa 层是基于 Core Foundation 实现的。</P>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">Core 
+Foundation层：因为直接使用 socket 需要更多的编程工作，所以苹果对 OS 层的 socket 进行简单的封装以简化编程任务。该层提供了 
+CFNetwork 和 CFNetServices，其中 CFNetwork 又是基于 CFStream 和 CFSocket。</P>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">OS层：最底层的 
+BSD socket 提供了对网络编程最大程度的控制，但是编程工作也是最多的。因此，苹果建议我们使用 Core Foundation 及以上层的 API 
+进行编程。</P>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+本文将介绍如何在 iOS 系统下使用最底层的 socket 进行编程，这和在 window 系统下使用 C/C++ 进行 socket 
+编程并无多大区别。</P>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+本文源码：<A 
+href="https://github.com/kesalin/iOSSnippet/tree/master/KSNetworkDemo">https://github.com/kesalin/iOSSnippet/tree/master/KSNetworkDemo</A></P>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">运行效果如下：</P><IMG 
+alt="" src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/1365857293_3594.png"><BR>
+<P><BR></P>
+<P></P>
+<H3 style="font-family: verdana,Arial,Helvetica,sans-serif;">二，BSD socket API 
+简介</H3>
+<P></P>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">BSD 
+socket API 和 winsock API 接口大体差不多，下面将列出比较常用的 API：</P>
+<TABLE width="600" style="text-align: left;" border="1" cellspacing="1" 
+cellpadding="1">
+  <TBODY>
+  <TR>
+    <TD><SPAN style="text-align: center; font-family: Verdana,Arial,Helvetica,sans-serif;">API接口</SPAN></TD>
+    <TD><SPAN style="text-align: center; font-family: Verdana,Arial,Helvetica,sans-serif;">讲解</SPAN></TD></TR>
+  <TR>
+    <TD>
+<PRE style='margin: 5px 8px; padding: 5px; text-align: left; font-family: "Courier New"; background-color: rgb(255, 255, 255);'><SPAN>int <STRONG>socket</STRONG>(int addressFamily, int type,</SPAN></PRE>
+<PRE style='margin: 5px 8px; padding: 5px; text-align: left; font-family: "Courier New"; background-color: rgb(255, 255, 255);'>int protocol)</PRE>
+<PRE style='margin: 5px 8px; padding: 5px; text-align: left; font-family: "Courier New"; background-color: rgb(255, 255, 255);'></PRE>
+<PRE style='margin: 5px 8px; padding: 5px; text-align: left; font-family: "Courier New"; background-color: rgb(255, 255, 255);'>int <STRONG>close</STRONG>(int socketFileDescriptor)</PRE>
+<PRE style='margin: 5px 8px; padding: 5px; text-align: left; font-family: "Courier New"; background-color: rgb(255, 255, 255);'><SPAN>
+</SPAN></PRE></TD>
+    <TD>
+      <DIV style="text-align: left;"><SPAN style="font-family: Verdana,Arial,Helvetica,sans-serif;">socket</SPAN><SPAN 
+      style="font-family: Verdana,Arial,Helvetica,sans-serif;">&nbsp;创建并初始化 
+      socket，返回该 socket 的文件描述符，如果描述符为 -1 表示创建失败。</SPAN></DIV>
+      <DIV style="text-align: left;"><BR></DIV><SPAN style="font-family: Verdana,Arial,Helvetica,sans-serif;"></SPAN> 
+      <DIV style="text-align: left;">通常参数 addressFamily 是 IPv4(AF_INET) 或 
+      IPv6(AF_INET6)。type 表示 socket 的类型，通常是流stream(SOCK_STREAM) 
+      或数据报文datagram(SOCK_DGRAM)。protocol 参数通常设置为0，以便让系统自动为选择我们合适的协议，对于 stream 
+      socket 来说会是 TCP 协议(IPPROTO_TCP)，而对于 datagram来说会是 UDP 
+协议(IPPROTO_UDP)。</DIV>
+      <DIV style="text-align: left;"><BR></DIV><SPAN style="font-family: Verdana,Arial,Helvetica,sans-serif;"></SPAN> 
+      <DIV style="text-align: left;">close&nbsp;关闭 socket。</DIV></TD></TR>
+  <TR>
+    <TD>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New"; background-color: rgb(255, 255, 255);'>
+<DIV style="text-align: left;">int <STRONG>bind</STRONG>(int socketFileDescriptor,</DIV><SPAN>sockaddr *addressToBind,
+</SPAN>
+<DIV style="text-align: left;"></DIV>int addressStructLength)
+&nbsp;</PRE></TD>
+    <TD>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">将 socket 与特定主机地址与端口号绑定，成功绑定返回0，失败返回 
+-1。</SPAN></P>
+      <P style="margin: 14px auto; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"></P>
+      <DIV style="text-align: left;"><SPAN 
+      style="font-size: 12px;">成功绑定之后，根据协议(TCP/UDP)的不同，我们可以对 socket 
+      进行不同的操作：</SPAN></DIV><SPAN style="font-size: 12px;"></SPAN> 
+      <DIV style="text-align: left;">UDP：因为 UDP 是无连接的，绑定之后就可以利用 UDP socket 
+      传送数据了。</DIV><SPAN style="font-size: 12px;"></SPAN> 
+      <DIV style="text-align: left;">TCP：而 TCP 是需要建立端到端连接的，为了建立 TCP 连接服务器必须调用 
+      listen(int socketFileDescriptor, int backlogSize) 
+      来设置服务器的缓冲区队列以接收客户端的连接请求，backlogSize 表示客户端连接请求缓冲区队列的大小。当调用 listen 
+      设置之后，服务器等待客户端请求，然后调用下面的 accept 来接受客户端的连接请求。</DIV>
+      <P></P></TD></TR>
+  <TR>
+    <TD>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New"; background-color: rgb(255, 255, 255);'>
+<DIV style="text-align: left;">int <STRONG>accept</STRONG>(int socketFileDescriptor,</DIV><SPAN></SPAN>
+<DIV style="text-align: left;">sockaddr *clientAddress, int</DIV>
+<DIV style="text-align: left;">clientAddressStructLength)</DIV></PRE></TD>
+    <TD>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">接受客户端连接请求并将客户端的网络地址信息保存到 clientAddress 
+      中。</SPAN></P>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">当客户端连接请求被服务器接受之后，客户端和服务器之间的链路就建立好了，两者就可以通信了。</SPAN></P></TD></TR>
+  <TR>
+    <TD>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New"; background-color: rgb(255, 255, 255);'>
+<DIV style="text-align: left;">int <STRONG>connect</STRONG>(int socketFileDescriptor,</DIV><SPAN></SPAN>
+<DIV style="text-align: left;">sockaddr *serverAddress, int</DIV>
+<DIV style="text-align: left;">serverAddressLength)</DIV></PRE></TD>
+    <TD>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">客户端向特定网络地址的服务器发送连接请求，连接成功返回0，失败返回 -1。</SPAN></P>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">当服务器建立好之后，客户端通过调用该接口向服务器发起建立连接请求。对于 UDP 
+      来说，该接口是可选的，如果调用了该接口，表明设置了该 UDP socket 默认的网络地址。对&nbsp;TCP 
+      socket来说这就是传说中三次握手建立连接发生的地方。</SPAN></P>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">注意：该接口调用会阻塞当前线程，直到服务器返回。</SPAN></P></TD></TR>
+  <TR>
+    <TD>
+<PRE style='margin: 5px 8px; padding: 5px; text-align: left; font-family: "Courier New"; background-color: rgb(255, 255, 255);'><SPAN>hostent* <STRONG>gethostbyname</STRONG>(char *hostname)</SPAN></PRE></TD>
+    <TD style="text-align: left;"><SPAN style="font-family: Verdana,Arial,Helvetica,sans-serif;">使用 
+      DNS 查找特定主机名字对应的 IP 地址。如果找不到对应的 IP 地址则返回 NULL。</SPAN></TD></TR>
+  <TR>
+    <TD>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New"; background-color: rgb(255, 255, 255);'>
+<DIV style="text-align: left;">int <STRONG>send</STRONG>(int socketFileDescriptor, char</DIV><SPAN></SPAN>
+<DIV style="text-align: left;">*buffer, int bufferLength, int flags)</DIV></PRE></TD>
+    <TD>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">通过 socket 发送数据，发送成功返回成功发送的字节数，否则返回 -1。</SPAN></P>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">一旦连接建立好之后，就可以通过 send/receive 接口发送或接收数据了。注意调用 
+      connect 设置了默认网络地址的 UDP socket 也可以调用该接口来接收数据。</SPAN></P></TD></TR>
+  <TR>
+    <TD>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New"; background-color: rgb(255, 255, 255);'>
+<DIV style="text-align: left;">int <STRONG>receive</STRONG>(int socketFileDescriptor,</DIV>
+<DIV style="text-align: left;">char *buffer, int bufferLength, int flags)</DIV></PRE></TD>
+    <TD>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">从 socket 中读取数据，读取成功返回成功读取的字节数，否则返回 -1。</SPAN></P>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">一旦连接建立好之后，就可以通过 send/receive 接口发送或接收数据了。注意调用 
+      connect 设置了默认网络地址的 UDP socket 也可以调用该接口来发送数据。</SPAN></P></TD></TR>
+  <TR>
+    <TD>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New"; background-color: rgb(255, 255, 255);'>
+<DIV style="text-align: left;">int <STRONG>sendto</STRONG>(int socketFileDescriptor,</DIV><SPAN></SPAN>
+<DIV style="text-align: left;">char *buffer, int bufferLength, int</DIV>
+<DIV style="text-align: left;">flags, sockaddr *destinationAddress, int</DIV>
+<DIV style="text-align: left;">destinationAddressLength)</DIV></PRE></TD>
+    <TD>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">通过UDP socket 发送数据到特定的网络地址，发送成功返回成功发送的字节数，否则返回 
+      -1。</SPAN></P>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">由于 UDP 
+      可以向多个网络地址发送数据，所以可以指定特定网络地址，以向其发送数据。</SPAN></P></TD></TR>
+  <TR>
+    <TD>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New"; background-color: rgb(255, 255, 255);'>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New"; background-color: rgb(255, 255, 255);'>
+<DIV style="text-align: left;">int <STRONG>recvfrom</STRONG>(int socketFileDescriptor,</DIV><SPAN></SPAN>
+<DIV style="text-align: left;">char *buffer, int bufferLength, int</DIV>flags, sockaddr *fromAddress, int
+
+<DIV style="text-align: left;"></DIV>*fromAddressLength)</PRE></PRE></TD>
+    <TD>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">从UDP socket 
+      中读取数据，并保存发送者的网络地址信息，读取成功返回成功读取的字节数，否则返回 -1&nbsp;。</SPAN></P>
+      <P style="margin: 14px auto; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 10px;"><SPAN 
+      style="font-size: 12px;">由于 UDP 
+      可以接收来自多个网络地址的数据，所以需要提供额外的参数，以保存该数据的发送者身份。</SPAN></P>
+      <DIV style="text-align: left;"><BR></DIV></TD></TR></TBODY></TABLE>
+<DIV style="text-align: left;"><BR></DIV>
+<P style="text-align: left;"><BR></P>
+<P style="text-align: left;"></P>
+<H3 style="font-family: verdana,Arial,Helvetica,sans-serif;">三，服务器工作流程</H3>
+<P></P>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+有了上面的 socket API 讲解，下面来总结一下服务器的工作流程。</P>
+<OL style="line-height: 21px; padding-left: 50px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px; margin-left: 0px;">
+  <LI style="padding-left: 0px; margin-left: 0px;">服务器调用 socket(...) 
+  创建socket；</LI>
+  <LI style="padding-left: 0px; margin-left: 0px;">服务器调用 listen(...) 设置缓冲区；</LI>
+  <LI style="padding-left: 0px; margin-left: 0px;">服务器通过 
+  accept(...)接受客户端请求建立连接；</LI>
+  <LI style="padding-left: 0px; margin-left: 0px;">服务器与客户端建立连接之后，就可以通过 
+  send(...)/receive(...)向客户端发送或从客户端接收数据；</LI>
+  <LI style="padding-left: 0px; margin-left: 0px;">服务器调用 close 关闭 
+socket；</LI></OL>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+由于 iOS 设备通常是作为客户端，因此在本文中不会用代码来演示如何建立一个iOS服务器，但可以参考前文：《<A href="http://www.cnblogs.com/kesalin/archive/2011/09/15/cocoa_bonjour.html" 
+target="_blank">深入浅出Cocoa之Bonjour网络编程</A>》看看如何在 Mac 系统下建立桌面服务器。</P>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">&nbsp;</P>
+<H3 style="font-family: verdana,Arial,Helvetica,sans-serif;">四，客户端工作流程</H3>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+由于 iOS 设备通常是作为客户端，下文将演示如何编写客户端代码。先来总结一下客户端工作流程。</P>
+<OL style="line-height: 21px; padding-left: 50px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px; margin-left: 0px;">
+  <LI style="padding-left: 0px; margin-left: 0px;">客户端调用 
+  socket(...)&nbsp;创建socket；</LI>
+  <LI style="padding-left: 0px; margin-left: 0px;">客户端调用 connect(...) 
+  向服务器发起连接请求以建立连接；</LI>
+  <LI style="padding-left: 0px; margin-left: 0px;">客户端与服务器建立连接之后，就可以通过 
+  send(...)/receive(...)向客户端发送或从客户端接收数据；</LI>
+  <LI style="padding-left: 0px; margin-left: 0px;">客户端调用 close 关闭 
+socket；</LI></OL>
+<H3 style="font-family: verdana,Arial,Helvetica,sans-serif;">&nbsp;</H3>
+<H3 style="font-family: verdana,Arial,Helvetica,sans-serif;">五，客户端代码示例</H3>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+下面的代码就实现了上面客户端的工作流程：</P>
+<DIV class="cnblogs_code" style='margin: 5px 0px; padding: 5px; border: 1px solid rgb(204, 204, 204); border-image: none; width: 778.04px; overflow: auto; font-family: "Courier New"; -ms-word-break: break-all; background-color: rgb(245, 245, 245);'>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New";'>- (<SPAN style="color: rgb(0, 0, 255);">void</SPAN>)loadDataFromServerWithURL:(NSURL *<SPAN>)url
+{
+    NSString </SPAN>* host =<SPAN> [url host];
+    NSNumber </SPAN>* port =<SPAN> [url port];
+    
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> Create socket
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//
+</SPAN>    <SPAN style="color: rgb(0, 0, 255);">int</SPAN> socketFileDescriptor = <STRONG>socket</STRONG>(AF_INET, SOCK_STREAM, <SPAN style="color: rgb(128, 0, 128);">0</SPAN><SPAN>);
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (-<SPAN style="color: rgb(128, 0, 128);">1</SPAN> ==<SPAN> socketFileDescriptor) {
+        NSLog(</SPAN><SPAN style="color: rgb(128, 0, 0);">@"</SPAN><SPAN style="color: rgb(128, 0, 0);">Failed to create socket.</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN>);
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN>;
+    }
+    
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> Get IP address from host
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//
+</SPAN>    <SPAN style="color: rgb(0, 0, 255);">struct</SPAN> hostent * remoteHostEnt =<SPAN><STRONG> gethostbyname</STRONG>([host UTF8String]);
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (NULL ==<SPAN> remoteHostEnt) {
+        close(socketFileDescriptor);
+        
+        [self networkFailedWithErrorMessage:</SPAN><SPAN style="color: rgb(128, 0, 0);">@"</SPAN><SPAN style="color: rgb(128, 0, 0);">Unable to resolve the hostname of the warehouse server.</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN>];
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN>;
+    }
+    
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">struct</SPAN> in_addr * remoteInAddr = (<SPAN style="color: rgb(0, 0, 255);">struct</SPAN> in_addr *)remoteHostEnt-&gt;h_addr_list[<SPAN style="color: rgb(128, 0, 128);">0</SPAN><SPAN>];
+    
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> Set the socket parameters
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//
+</SPAN>    <SPAN style="color: rgb(0, 0, 255);">struct</SPAN><SPAN> sockaddr_in socketParameters;
+    socketParameters.sin_family </SPAN>=<SPAN> AF_INET;
+    socketParameters.sin_addr </SPAN>= *<SPAN>remoteInAddr;
+    socketParameters.sin_port </SPAN>=<SPAN> htons([port intValue]);
+    
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> Connect the socket
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//
+</SPAN>    <SPAN style="color: rgb(0, 0, 255);">int</SPAN> ret = <STRONG>connect</STRONG>(socketFileDescriptor, (<SPAN style="color: rgb(0, 0, 255);">struct</SPAN> sockaddr *) &amp;socketParameters, <SPAN style="color: rgb(0, 0, 255);">sizeof</SPAN><SPAN>(socketParameters));
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (-<SPAN style="color: rgb(128, 0, 128);">1</SPAN> ==<SPAN> ret) {
+        close(socketFileDescriptor);
+        
+        NSString </SPAN>* errorInfo = [NSString stringWithFormat:<SPAN style="color: rgb(128, 0, 0);">@"</SPAN><SPAN style="color: rgb(128, 0, 0);"> &gt;&gt; Failed to connect to %@:%@</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN>, host, port];
+        [self networkFailedWithErrorMessage:errorInfo];
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN>;
+    }
+    
+    NSLog(</SPAN><SPAN style="color: rgb(128, 0, 0);">@"</SPAN><SPAN style="color: rgb(128, 0, 0);"> &gt;&gt; Successfully connected to %@:%@</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN>, host, port);
+
+    NSMutableData </SPAN>* data =<SPAN> [[NSMutableData alloc] init];
+    BOOL waitingForData </SPAN>=<SPAN> YES;
+    
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> Continually receive data until we reach the end of the data
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//
+</SPAN>    <SPAN style="color: rgb(0, 0, 255);">int</SPAN> maxCount = <SPAN style="color: rgb(128, 0, 128);">5</SPAN>;   <SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> just for test.</SPAN>
+    <SPAN style="color: rgb(0, 0, 255);">int</SPAN> i = <SPAN style="color: rgb(128, 0, 128);">0</SPAN><SPAN>;
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">while</SPAN> (waitingForData &amp;&amp; i &lt;<SPAN> maxCount) {
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">const</SPAN> <SPAN style="color: rgb(0, 0, 255);">char</SPAN> * buffer[<SPAN style="color: rgb(128, 0, 128);">1024</SPAN><SPAN>];
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">int</SPAN> length = <SPAN style="color: rgb(0, 0, 255);">sizeof</SPAN><SPAN>(buffer);
+        
+        </SPAN><SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> Read a buffer's amount of data from the socket; the number of bytes read is returned
+        </SPAN><SPAN style="color: rgb(0, 128, 0);">//
+</SPAN>        <SPAN style="color: rgb(0, 0, 255);">int</SPAN> result = <STRONG>recv</STRONG>(socketFileDescriptor, &amp;buffer, length, <SPAN style="color: rgb(128, 0, 128);">0</SPAN><SPAN>);
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (result &gt; <SPAN style="color: rgb(128, 0, 128);">0</SPAN><SPAN>) {
+            [data appendBytes:buffer length:result];
+        }
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">else</SPAN><SPAN> {
+            </SPAN><SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> if we didn't get any data, stop the receive loop
+            </SPAN><SPAN style="color: rgb(0, 128, 0);">//
+</SPAN>            waitingForData =<SPAN> NO;
+        }
+        
+        </SPAN>++<SPAN>i;
+    }
+    
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> Close the socket
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//
+</SPAN><SPAN><STRONG>    close</STRONG>(socketFileDescriptor);
+    
+    [self networkSucceedWithData:data];
+}</SPAN></PRE></DIV>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;"><SPAN 
+style="line-height: 1.5;">前面说过，connect/recv/send 等接口都是阻塞式的，因此我们需要将这些操作放在非 UI 
+线程中进行。如下所示：</SPAN></P>
+<DIV class="cnblogs_code" style='margin: 5px 0px; padding: 5px; border: 1px solid rgb(204, 204, 204); border-image: none; width: 778.04px; overflow: auto; font-family: "Courier New"; -ms-word-break: break-all; background-color: rgb(245, 245, 245);'>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New";'>    NSThread * backgroundThread =<SPAN> [[NSThread alloc] initWithTarget:self
+                                                          selector:@selector(loadDataFromServerWithURL:)
+                                                            </SPAN><SPAN style="color: rgb(0, 0, 255);">object</SPAN><SPAN>:url];
+    [backgroundThread start];</SPAN></PRE></DIV>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">同样，在获取到数据或者网络异常导致任务失败，我们需要更新 
+UI，这也要回到 UI 线程中去做这个事情。如下所示：</P>
+<DIV class="cnblogs_code" style='margin: 5px 0px; padding: 5px; border: 1px solid rgb(204, 204, 204); border-image: none; width: 778.04px; overflow: auto; font-family: "Courier New"; -ms-word-break: break-all; background-color: rgb(245, 245, 245);'>
+<PRE style='margin: 5px 8px; padding: 5px; font-family: "Courier New";'>- (<SPAN style="color: rgb(0, 0, 255);">void</SPAN>)networkFailedWithErrorMessage:(NSString *<SPAN>)message
+{
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> Update UI
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//
+</SPAN>    [[NSOperationQueue mainQueue] addOperationWithBlock:^<SPAN>{
+        NSLog(</SPAN><SPAN style="color: rgb(128, 0, 0);">@"</SPAN><SPAN style="color: rgb(128, 0, 0);">%@</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN>, message);
+
+        self.receiveTextView.text </SPAN>=<SPAN> message;
+        self.connectButton.enabled </SPAN>=<SPAN> YES;
+        [self.networkActivityView stopAnimating];
+    }];
+}
+
+</SPAN>- (<SPAN style="color: rgb(0, 0, 255);">void</SPAN>)networkSucceedWithData:(NSData *<SPAN>)data
+{
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);"> Update UI
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">//
+</SPAN>    [[NSOperationQueue mainQueue] addOperationWithBlock:^<SPAN>{
+        NSString </SPAN>* resultsString =<SPAN> [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(</SPAN><SPAN style="color: rgb(128, 0, 0);">@"</SPAN><SPAN style="color: rgb(128, 0, 0);"> &gt;&gt; Received string: '%@'</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN>, resultsString);
+        
+        self.receiveTextView.text </SPAN>=<SPAN> resultsString;
+        self.connectButton.enabled </SPAN>=<SPAN> YES;
+        [self.networkActivityView stopAnimating];
+    }];
+}</SPAN></PRE></DIV>
+<P style="margin: 14px auto; line-height: 21px; font-family: verdana,Arial,Helvetica,sans-serif; font-size: 14px;">
+&nbsp; &nbsp;</P></DIV><!-- Baidu Button BEGIN --> 
+<DIV class="bdshare_t bds_tools get-codes-bdshare" id="bdshare" style="float: right;"><A 
+class="bds_qzone"></A> <A class="bds_tsina"></A> <A class="bds_tqq"></A> <A 
+class="bds_renren"></A> <A class="bds_t163"></A> <SPAN 
+class="bds_more">更多</SPAN> <A class="shareCount"></A> </DIV><!-- Baidu Button END --> <!--192.168.100.35--> 
+<UL class="article_next_prev">
+  <LI class="prev_article"><SPAN onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/kesalin/article/details/8762032';">上一篇</SPAN><A 
+  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])" 
+  href="http://blog.csdn.net/kesalin/article/details/8762032">[深入浅出Cocoa]iOS程序性能优化</A></LI>
+  <LI class="next_article"><SPAN onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/kesalin/article/details/8801156';">下一篇</SPAN><A 
+  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])" 
+  href="http://blog.csdn.net/kesalin/article/details/8801156">[深入浅出Cocoa]iOS网络编程之CFNetwork</A></LI></UL><!-- Baidu Button BEGIN --> 
+<SCRIPT id="bdshare_js" type="text/javascript" data="type=tools&amp;uid=1536434"></SCRIPT>
+ 
+<SCRIPT id="bdshell_js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</SCRIPT>
+ <!-- Baidu Button END -->         
+<DIV id="digg" articleid="8798039">
+<DL class="digg digg_disable" id="btnDigg">
+  <DT onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_ding'])">顶</DT>
+  <DD>2</DD></DL>
+<DL class="digg digg_disable" id="btnBury">
+  <DT onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_cai'])">踩</DT>
+  <DD>0</DD></DL></DIV></DIV>
+<DL class="blog-associat-tag">
+  <DT>主题推荐</DT>
+  <DD><A class="blog-tage-red" href="http://www.csdn.net/tag/网络编程" target="_blank">网络编程</A><A 
+  class="blog-tage-red" href="http://www.csdn.net/tag/ios" 
+  target="_blank">ios</A><A class="blog-tage-red" href="http://www.csdn.net/tag/cocoa" 
+  target="_blank">cocoa</A><A class="blog-tage-red" href="http://www.csdn.net/tag/工作流" 
+  target="_blank">工作流</A><A class="blog-tage-red" href="http://www.csdn.net/tag/objective-c" 
+  target="_blank">objective-c</A></DD></DL>
+<DL class="blog-ass-articl tracking-ad" id="res-relatived" data-mod="popu_36">
+  <DT><SPAN>猜你在找</SPAN></DT></DL>
+<SCRIPT type="text/javascript">
+    var searchtitletags = '[深入浅出Cocoa]iOS网络编程之Socket' + ',' + '网络编程,ios,cocoa,工作流,objective-c';
+    searchService({
+        index: 'blog',
+        query: searchtitletags,
+        from: 10,
+        size: 10,
+        appendTo: '#res-relatived',
+        url: 'recommend',
+        his: 2,
+        client: "blog_cf_enhance",
+        tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+    });
+
+ </SCRIPT>
+       
+<DIV id="ad_cen">
+<SCRIPT type="text/javascript">            BAIDU_CLB_SLOT_ID = "117306";</SCRIPT>
+         
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/o.js" type="text/javascript"></SCRIPT>
+     </DIV>
+<SCRIPT type="text/javascript">
+        //new Ad(4, 'ad_cen');
+    </SCRIPT>
+ 
+<DIV class="panel_head" id="comment_title">查看评论<A name="comments"></A></DIV>
+<DIV id="comment_list"></DIV>
+<DIV id="comment_bar"></DIV>
+<DIV id="comment_form"></DIV>
+<DIV class="announce">* 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<A name="reply"></A><A 
+name="quote"></A></DIV>
+<SCRIPT type="text/javascript">
+    var fileName = '8798039';
+    var commentscount = 6;
+    var islock = false
+</SCRIPT>
+ 
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/comment.js" type="text/javascript"></SCRIPT>
+     
+<DIV id="ad_bot"></DIV>
+<SCRIPT type="text/javascript">
+    new Ad(5, 'ad_bot');
+    </SCRIPT>
+ 
+<DIV id="report_dialog"></DIV>
+<DIV id="d-top" style="bottom: 60px;"><A title="快速回复" class="btn btn-top q-reply" 
+id="quick-reply" style="display: none;"><IMG alt="快速回复" src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/blog-icon-reply.png"> 
+        </A>        <A title="返回顶部" class="btn btn-top backtop" id="d-top-a" 
+style="display: none;" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])"><IMG 
+alt="TOP" src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/top.png"> 
+    </A> </DIV>
+<SCRIPT type="text/javascript">
+    $(function ()
+    {
+        if($("#comment_content").length>0)
+        {
+            $("#quick-reply").show();
+
+            $("#quick-reply").click(function(){
+                setEditorFocus();
+            });
+        }       
+     
+        var d_top = $('#d-top-a');
+        document.onscroll = function ()
+        {
+            var scrTop = (document.body.scrollTop || document.documentElement.scrollTop);
+            if (scrTop > 500)
+            {
+                d_top.show();
+            } else
+            {
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function ()
+        {
+            scrollTo(0, 0);
+            this.blur();
+            return false;
+        });
+    });
+  
+</SCRIPT>
+ 
+<STYLE type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</STYLE>
+ 
+<DIV class="tag_list">
+<H5><A href="http://www.csdn.net/tag/" target="_blank">核心技术类目</A></H5>
+<DIV class="classify"><A title="全部主题" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag" 
+target="_blank">全部主题</A> <A title="Java" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/Java" target="_blank">Java</A> <A title="VPN" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/vpn" target="_blank">VPN</A> 
+<A title="Android" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/android" 
+target="_blank">Android</A> <A title="iOS" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/ios" target="_blank">iOS</A> <A title="ERP" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/erp" target="_blank">ERP</A> 
+<A title="IE10" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/ie10" 
+target="_blank">IE10</A> <A title="Eclipse" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/eclipse" target="_blank">Eclipse</A> <A title="CRM" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/crm" target="_blank">CRM</A> 
+<A title="JavaScript" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/javascript" 
+target="_blank">JavaScript</A> <A title="Ubuntu" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/ubuntu" target="_blank">Ubuntu</A> <A title="NFC" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/nfc" target="_blank">NFC</A> 
+<A title="WAP" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/wap" 
+target="_blank">WAP</A> <A title="jQuery" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/jquery" target="_blank">jQuery</A> <A title="数据库" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/数据库" target="_blank">数据库</A> 
+<A title="BI" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/bi" 
+target="_blank">BI</A> <A title="HTML5" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/html5" 
+target="_blank">HTML5</A> <A title="Spring" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/spring" target="_blank">Spring</A> <A title="Apache" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/apache" target="_blank">Apache</A> 
+<A title="Hadoop" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/hadoop" 
+target="_blank">Hadoop</A> <A title=".NET" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/.net" target="_blank">.NET</A> <A title="API" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/api" target="_blank">API</A> 
+<A title="HTML" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/html" 
+target="_blank">HTML</A> <A title="SDK" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/sdk" 
+target="_blank">SDK</A> <A title="IIS" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/iis" 
+target="_blank">IIS</A> <A title="Fedora" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/fedora" target="_blank">Fedora</A> <A title="XML" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/xml" target="_blank">XML</A> 
+<A title="LBS" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/lbs" 
+target="_blank">LBS</A> <A title="Unity" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/unity" target="_blank">Unity</A> <A title="Splashtop" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/splashtop" 
+target="_blank">Splashtop</A> <A title="UML" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/uml" target="_blank">UML</A> <A title="components" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/components" 
+target="_blank">components</A> <A title="Windows Mobile" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/windowsmobile" target="_blank">Windows Mobile</A> 
+<A title="Rails" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/rails" 
+target="_blank">Rails</A> <A title="QEMU" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/qemu" target="_blank">QEMU</A> <A title="KDE" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/kde" target="_blank">KDE</A> 
+<A title="Cassandra" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/cassandra" 
+target="_blank">Cassandra</A> <A title="CloudStack" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/cloudstack" target="_blank">CloudStack</A> <A 
+title="FTC" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/ftc" 
+target="_blank">FTC</A> <A title="coremail" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/coremail" target="_blank">coremail</A> <A title="OPhone " 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/ophone" target="_blank">OPhone 
+</A> <A title="CouchBase" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/couchbase" 
+target="_blank">CouchBase</A> <A title="云计算" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/云计算" target="_blank">云计算</A> <A title="iOS6" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/iOS6" target="_blank">iOS6</A> 
+<A title="Rackspace " onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/rackspace" 
+target="_blank">Rackspace </A> <A title="Web App" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/webapp" target="_blank">Web App</A> <A title="SpringSide" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/springside" 
+target="_blank">SpringSide</A> <A title="Maemo" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/maemo" target="_blank">Maemo</A> <A title="Compuware" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/compuware" 
+target="_blank">Compuware</A> <A title="大数据" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/大数据" target="_blank">大数据</A> <A title="aptech" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/aptech" target="_blank">aptech</A> 
+<A title="Perl" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/perl" 
+target="_blank">Perl</A> <A title="Tornado" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/tornado" target="_blank">Tornado</A> <A title="Ruby" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/ruby" target="_blank">Ruby</A> 
+<A title="Hibernate" onclick="LogClickCount(this,336);" href="http://www.csdn.net/hibernate" 
+target="_blank">Hibernate</A> <A title="ThinkPHP" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/thinkphp" target="_blank">ThinkPHP</A> <A title="Spark" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/spark" target="_blank">Spark</A> 
+<A title="HBase" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/hbase" 
+target="_blank">HBase</A> <A title="Pure" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/pure" target="_blank">Pure</A> <A title="Solr" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/solr" target="_blank">Solr</A> 
+<A title="Angular" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/angular" 
+target="_blank">Angular</A> <A title="Cloud Foundry" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/cloudfoundry" target="_blank">Cloud Foundry</A> <A 
+title="Redis" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/redis" 
+target="_blank">Redis</A> <A title="Scala" onclick="LogClickCount(this,336);" 
+href="http://www.csdn.net/tag/scala" target="_blank">Scala</A> <A title="Django" 
+onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/django" target="_blank">Django</A> 
+<A title="Bootstrap" onclick="LogClickCount(this,336);" href="http://www.csdn.net/tag/bootstrap" 
+target="_blank">Bootstrap</A>     </DIV></DIV>
+<DIV class="clear"></DIV></DIV></DIV>
+<DIV id="side">
+<DIV class="side">
+<DIV class="panel" id="panel_Profile">
+<UL class="panel_head"><SPAN>个人资料</SPAN></UL>
+<UL class="panel_body profile">
+  <DIV id="blog_userface"><A href="http://my.csdn.net/kesalin" 
+  target="_blank"><IMG title="访问我的空间" style="max-width: 90%;" src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/1_kesalin.jpg"> 
+      </A>     <BR><SPAN><A class="user_name" href="http://my.csdn.net/kesalin" 
+  target="_blank">kesalin</A></SPAN></DIV>
+  <DIV class="interact"><A title="[加关注]" class="attent" id="span_add_follow" 
+  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_guanzhu'])" 
+  href="javascript:void(0);"></A> <A title="[发私信]" class="letter" onclick="loginto(1)" 
+  href="javascript:void(0);"></A> </DIV>
+  <DIV id="blog_medal">
+  <DIV title="CSDN认证专家" class="ico_expert"></DIV></DIV>
+  <UL id="blog_rank">
+    <LI>访问：<SPAN>636901次</SPAN></LI>
+    <LI>积分：<SPAN>8214分</SPAN></LI>
+    <LI>排名：<SPAN>第567名</SPAN></LI></UL>
+  <UL id="blog_statistics">
+    <LI>原创：<SPAN>177篇</SPAN></LI>
+    <LI>转载：<SPAN>46篇</SPAN></LI>
+    <LI>译文：<SPAN>10篇</SPAN></LI>
+    <LI>评论：<SPAN>363条</SPAN></LI></UL></UL></DIV>
+<DIV class="panel" id="panel_Category">
+<UL class="panel_head"><SPAN>博客专栏</SPAN></UL>
+<UL class="panel_body" id="sp_column">
+  <TABLE cellspacing="0" cellpadding="0">
+    <TBODY>
+    <TR>
+      <TD style="padding: 10px 10px 0px 0px;"><A href="http://blog.csdn.net/column/details/opengl-es2-ios.html" 
+        target="_blank"><IMG style="width: 75px; height: 75px;" src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/20130114150843041.jpg"></A> 
+            </TD>
+      <TD style="padding: 10px 0px; vertical-align: top;"><A href="http://blog.csdn.net/column/details/opengl-es2-ios.html" 
+        target="_blank">OpenGL ES 2.0 iOS教程</A>     
+        <P>文章：9篇</P><SPAN>阅读：50779</SPAN>     </TD></TR></TBODY></TABLE>
+  <TABLE cellspacing="0" cellpadding="0">
+    <TBODY>
+    <TR>
+      <TD style="padding: 10px 10px 0px 0px;"><A href="http://blog.csdn.net/column/details/cocoa.html" 
+        target="_blank"><IMG style="width: 75px; height: 75px;" src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/20121121231144860.jpg"></A> 
+            </TD>
+      <TD style="padding: 10px 0px; vertical-align: top;"><A href="http://blog.csdn.net/column/details/cocoa.html" 
+        target="_blank">深入浅出Cocoa</A>     
+        <P>文章：26篇</P><SPAN>阅读：174185</SPAN>     </TD></TR></TBODY></TABLE></UL></DIV>
+<DIV class="panel" id="panel_Search">
+<UL class="panel_head"><SPAN>文章搜索</SPAN></UL>
+<UL class="panel_body">
+  <FORM class="form_search" id="frmSearch" action="http://so.csdn.net/search" 
+  target="_blank"><SPAN><INPUT title="请输入关键字" class="blogsearch" id="inputSearch" type="text"></SPAN> 
+          <INPUT title="search in blog" id="btnSubmit" type="submit" value="搜索"> 
+          <INPUT name="q" id="inputQ" type="hidden">         
+<INPUT name="t" type="hidden" value="blog">         <A id="btnSearchBlog" 
+  target="_blank"></A>         </FORM></UL></DIV>
+<DIV class="panel" id="panel_Category">
+<UL class="panel_head"><SPAN>文章分类</SPAN></UL>
+<UL class="panel_body">
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/770276">Cocoa 
+  开发</A><SPAN>(62)</SPAN>             </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/360559">C/C++</A><SPAN>(21)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/1288827">OpenGL 
+  ES</A><SPAN>(9)</SPAN>             </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/165386">3D技术</A><SPAN>(22)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/165384">移动开发</A><SPAN>(42)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/791708">算法</A><SPAN>(8)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/958172">Mac 
+  技巧</A><SPAN>(5)</SPAN>             </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/242901">Windows</A><SPAN>(33)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/728944">Android</A><SPAN>(6)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/418882">游戏开发</A><SPAN>(6)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/241369">游戏人生</A><SPAN>(4)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/360545">Java</A><SPAN>(7)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/1277655">.NET</A><SPAN>(2)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/360548">开发环境</A><SPAN>(16)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/913622">医疗开发</A><SPAN>(3)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/486043">读书新知</A><SPAN>(5)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/360554">网络技术</A><SPAN>(8)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/360558">脚本语言</A><SPAN>(3)</SPAN> 
+              </LI>
+  <LI><A onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); " 
+  href="http://blog.csdn.net/kesalin/article/category/189909">软件工程</A><SPAN>(6)</SPAN> 
+              </LI></UL></DIV>
+<DIV class="panel" id="panel_Archive">
+<UL class="panel_head"><SPAN>文章存档</SPAN></UL>
+<UL class="panel_body">
+  <DIV id="archive_list"><!--归档统计--> 
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2014/07">2014年07月</A><SPAN>(3)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2014/06">2014年06月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2014/04">2014年04月</A><SPAN>(4)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2014/03">2014年03月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2013/08">2013年08月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2013/07">2013年07月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2013/06">2013年06月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2013/04">2013年04月</A><SPAN>(6)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2013/03">2013年03月</A><SPAN>(4)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2013/01">2013年01月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2012/12">2012年12月</A><SPAN>(5)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2012/11">2012年11月</A><SPAN>(9)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2012/10">2012年10月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2012/01">2012年01月</A><SPAN>(6)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2011/12">2011年12月</A><SPAN>(7)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2011/11">2011年11月</A><SPAN>(5)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2011/10">2011年10月</A><SPAN>(6)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2011/09">2011年09月</A><SPAN>(9)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2011/08">2011年08月</A><SPAN>(8)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2011/07">2011年07月</A><SPAN>(5)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2011/05">2011年05月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2011/04">2011年04月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2011/03">2011年03月</A><SPAN>(9)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2010/09">2010年09月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2010/03">2010年03月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2010/01">2010年01月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2009/09">2009年09月</A><SPAN>(4)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2009/08">2009年08月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2009/07">2009年07月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2009/06">2009年06月</A><SPAN>(4)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2009/05">2009年05月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2009/04">2009年04月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2009/03">2009年03月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2009/02">2009年02月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2009/01">2009年01月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2008/12">2008年12月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2008/11">2008年11月</A><SPAN>(7)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2008/08">2008年08月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2008/07">2008年07月</A><SPAN>(8)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2008/06">2008年06月</A><SPAN>(9)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2008/05">2008年05月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2008/04">2008年04月</A><SPAN>(3)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2008/03">2008年03月</A><SPAN>(8)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2008/02">2008年02月</A><SPAN>(4)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2008/01">2008年01月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2007/11">2007年11月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2007/10">2007年10月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2007/09">2007年09月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2007/07">2007年07月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2007/06">2007年06月</A><SPAN>(3)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2007/05">2007年05月</A><SPAN>(3)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2007/03">2007年03月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2006/10">2006年10月</A><SPAN>(4)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2006/09">2006年09月</A><SPAN>(5)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2006/08">2006年08月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2006/07">2006年07月</A><SPAN>(4)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2006/06">2006年06月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2006/04">2006年04月</A><SPAN>(1)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2006/03">2006年03月</A><SPAN>(5)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2006/02">2006年02月</A><SPAN>(2)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2006/01">2006年01月</A><SPAN>(6)</SPAN></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/month/2005/12">2005年12月</A><SPAN>(27)</SPAN></LI></DIV></UL></DIV>
+<DIV class="panel" id="newcomments">
+<UL class="panel_head"><SPAN>最新评论</SPAN></UL>
+<UL class="panel_body itemlist">
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/details/30532433#comments">[Swift] 
+  数组恒等 === 的 bug?!</A>     
+  <P style="margin: 0px;"><A class="user_name" href="http://blog.csdn.net/u013629554">u013629554</A>: 
+  兄弟，你的是xcode6 beta1吧？beta2没这个问题，编译器问题     </P></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/details/24265303#comments">在遍历中使用 
+  iterator/reverse_iterator 进行 Erase 的用法</A>     
+  <P style="margin: 0px;"><A class="user_name" href="http://blog.csdn.net/kesalin">kesalin</A>:
+   @oTianShiDeBaiGu:it = l.erase(it); 不是取得了下一个了么？贴上你的...     </P></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/details/24265303#comments">在遍历中使用 
+  iterator/reverse_iterator 进行 Erase 的用法</A>     
+  <P style="margin: 0px;"><A class="user_name" href="http://blog.csdn.net/oTianShiDeBaiGu">oTianShiDeBaiGu</A>:
+   list 正向遍历删除元素示例（vector 用法相同）：循环中删除时没有迭代到下一个元素，代码bu...     </P></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/details/7168967#comments">[OpenGL 
+  ES 03]3D变换：模型，视图，投影与Viewport</A>     
+  <P style="margin: 0px;"><A class="user_name" href="http://blog.csdn.net/u012740992">u012740992</A>: 
+  太好了     </P></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/details/8155245#comments">深入浅出 
+  Cocoa 系列</A>     
+  <P style="margin: 0px;"><A class="user_name" href="http://blog.csdn.net/kesalin">kesalin</A>:
+   @nf4213:已经更新了，可以下载。     </P></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/details/8155245#comments">深入浅出 
+  Cocoa 系列</A>     
+  <P style="margin: 0px;"><A class="user_name" href="http://blog.csdn.net/nf4213">nf4213</A>: 
+  好东西，可惜过期下不了     </P></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/details/7184387#comments">在Mac下安装Wordpress</A> 
+      
+  <P style="margin: 0px;"><A class="user_name" href="http://blog.csdn.net/u012715379">u012715379</A>: 
+  修改完“wp-config”后 "建立数据库连接时出错"？？？我也是这种情况 ，求解决方法~     </P></LI>
+  <LI><A 
+  href="http://blog.csdn.net/kesalin/article/details/8710458#comments">我的iOS作品</A> 
+      
+  <P style="margin: 0px;"><A class="user_name" href="http://blog.csdn.net/myfei2">myfei2</A>: 
+  支持，博主写的教程真的很好，有原理有示例，我觉得最出彩的跟其它人不同的是，贴上代码的讲解，解释每个方...     </P></LI>
+  <LI><A href="http://blog.csdn.net/kesalin/article/details/8166925#comments">在 
+  Asp.NET MVC 中使用 SignalR 实现推送功能</A>     
+  <P style="margin: 0px;"><A class="user_name" href="http://blog.csdn.net/fangxuan">fangxuan</A>: 
+  版本是在更新的，通过NuGet 命令安装的文件其名称、版本很可能会随着时间变化，如果纯粹照楼主的步骤...     </P></LI>
+  <LI><A href="http://blog.csdn.net/kesalin/article/details/8166925#comments">在 
+  Asp.NET MVC 中使用 SignalR 实现推送功能</A>     
+  <P style="margin: 0px;"><A class="user_name" href="http://blog.csdn.net/fangxuan">fangxuan</A>: 
+  版本是在更新的，通过NuGet 命令安装的文件其名称、版本很可能会随着时间变化，如果纯粹照楼主的步骤...     </P></LI></UL></DIV>
+<DIV class="panel" id="hotarticls">
+<UL class="panel_head"><SPAN>阅读排行    </SPAN> </UL>
+<UL class="panel_body itemlist">
+  <LI><A title="[Cocoa]深入浅出 Cocoa 之 Core Data（1）- 框架详解" href="http://blog.csdn.net/kesalin/article/details/6739319">[Cocoa]深入浅出 
+  Cocoa 之 Core Data（1）- 框架详解</A><SPAN>(32267)</SPAN> </LI>
+  <LI><A title="使用System.arraycopy()实现数组之间的复制" href="http://blog.csdn.net/kesalin/article/details/566354">使用System.arraycopy()实现数组之间的复制</A><SPAN>(25804)</SPAN> 
+  </LI>
+  <LI><A title="[Cocoa]深入浅出 Cocoa 之多线程 NSThread" href="http://blog.csdn.net/kesalin/article/details/6698146">[Cocoa]深入浅出 
+  Cocoa 之多线程 NSThread</A><SPAN>(16196)</SPAN> </LI>
+  <LI><A title="[OpenGL ES 01]OpenGL ES之初体验" href="http://blog.csdn.net/kesalin/article/details/8221393">[OpenGL 
+  ES 01]OpenGL ES之初体验</A><SPAN>(13809)</SPAN> </LI>
+  <LI><A title="说说ShellExecuteEx" href="http://blog.csdn.net/kesalin/article/details/4076061">说说ShellExecuteEx</A><SPAN>(13558)</SPAN> 
+  </LI>
+  <LI><A title="[Cocoa]XCode的一些调试技巧" href="http://blog.csdn.net/kesalin/article/details/7222153">[Cocoa]XCode的一些调试技巧</A><SPAN>(12142)</SPAN> 
+  </LI>
+  <LI><A title="[Cocoa]深入浅出 Cocoa 多线程编程之 block 与 dispatch quene" href="http://blog.csdn.net/kesalin/article/details/6721481">[Cocoa]深入浅出 
+  Cocoa 多线程编程之 block 与 dispatch quene</A><SPAN>(11766)</SPAN> </LI>
+  <LI><A title="在 Asp.NET MVC 中使用 SignalR 实现推送功能" href="http://blog.csdn.net/kesalin/article/details/8166925">在 
+  Asp.NET MVC 中使用 SignalR 实现推送功能</A><SPAN>(10477)</SPAN> </LI>
+  <LI><A title="[Cocoa]深入浅出 Cocoa 之 Core Data（2）- 手动编写代码" href="http://blog.csdn.net/kesalin/article/details/6746117">[Cocoa]深入浅出 
+  Cocoa 之 Core Data（2）- 手动编写代码</A><SPAN>(9383)</SPAN> </LI>
+  <LI><A title="[OpenGL ES 02]OpenGL ES渲染管线与着色器" href="http://blog.csdn.net/kesalin/article/details/8223649">[OpenGL 
+  ES 02]OpenGL ES渲染管线与着色器</A><SPAN>(8299)</SPAN> </LI></UL></DIV></DIV>
+<DIV class="clear"></DIV></DIV>
+<DIV class="clear"></DIV></DIV>
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/cnick.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/newblog.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/showblogmedal.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+    document.write('<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js?' + Math.floor(new Date() / 120000).toString(36) + '="></' + 'script>');
+</SCRIPT>
+     
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/login.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</SCRIPT>
+ 
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/counter.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/ad-blog.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/count.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a>"
+                    + "<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+    });
+</SCRIPT>
+     </DIV><!--new top-->         
+<SCRIPT id="csdn-toolbar-id" src="[深入浅出Cocoa]iOS网络编程之Socket%20-%20罗朝辉（飘飘白云）%20-%20博客频道%20-%20CSDN_NET_files/toolbar.js" type="text/javascript" subcount="5" count="5" wrapid="note1" btnid="header_notice_num"></SCRIPT>
+      <!--new top--> </BODY></HTML>

@@ -1,0 +1,14 @@
+//
+//  PrefixHeader.pch
+//  Lumberjack
+//
+//  Created by 刘凡 on 15/12/23.
+//  Copyright © 2015年 joyios. All rights reserved.
+//
+
+#ifdef __OBJC__
+
+#import <CocoaLumberjack/CocoaLumberjack.h>
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+
+#endif

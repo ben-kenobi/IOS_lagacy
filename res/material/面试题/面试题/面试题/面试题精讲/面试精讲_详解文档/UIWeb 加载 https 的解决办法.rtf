@@ -1,0 +1,116 @@
+{\rtf1\ansi\ansicpg936\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset134 STHeitiSC-Light;\f2\fnil\fcharset0 Menlo-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red65\green182\blue69;\red26\green26\blue209;\red217\green11\blue0;
+\red198\green124\blue72;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf0 \
+UIW
+\f1 eb
+\f0  
+\f1 \'bc\'d3\'d4\'d8
+\f0  
+\f1 https
+\f0  
+\f1 \'b5\'c4\'bd\'e2\'be\'f6\'b0\'ec\'b7\'a8
+\f0 \
+\
+\pard\tx674\pardeftab674\pardirnatural
+
+\f1\fs28 \cf0 \CocoaLigature0 \'be\'df\'cc\'e5\'b2\'ce\'bf\'bc
+\f2 DEMO:::::::TestHTTPSINWebView!!!\
+\pard\tx674\pardeftab674\pardirnatural
+
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f1 \cf0 \'b2\'ce\'bf\'bc\'d7\'ca\'c1\'cf\'a3\'ba
+\f0 \
+\
+http://www.cocoachina.com/bbs/simple/?t55317.html\
+http://blog.csdn.net/hufengvip/article/details/8552089\
+\
+
+\f1 \'b2\'e2\'ca\'d4
+\f0 URL\
+\pard\tx674\pardeftab674\pardirnatural
+
+\f2\fs28 \cf2 \CocoaLigature0 @"{\field{\*\fldinst{HYPERLINK "https://itunes.apple.com/cn/app/id661540006"}}{\fldrslt \cf3 https://itunes.apple.com/cn/app/id661540006}}"\cf1 \
+\cf2 @"{\field{\*\fldinst{HYPERLINK "https://github.com"}}{\fldrslt \cf3 https://github.com}}"
+\f0\fs24 \cf0 \CocoaLigature1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 \
+\
+
+\f1\fs36 \cf4 \'b8\'f8\'d3\'e8\'bf\'c9\'d0\'d0\'b5\'c4\'c1\'bd\'d6\'d6\'b7\'bd\'b0\'b8
+\f0\fs24 \cf0 \'93\'94\'93\'94\
+\
+1
+\f1 \'a1\'a2\'ca\'b9\'d3\'c3
+\f0 ASI\
+\pard\tx674\pardeftab674\pardirnatural
+
+\f2\fs28 \cf0 \CocoaLigature0 -(void) loadHttpsUseASIHTTP\{\
+    //@"{\field{\*\fldinst{HYPERLINK "https://itunes.apple.com/cn/app/id661540006"}}{\fldrslt https://itunes.apple.com/cn/app/id661540006}}"\
+    //@"{\field{\*\fldinst{HYPERLINK "https://github.com"}}{\fldrslt https://github.com}}"\
+    NSURL *url=[NSURL URLWithString:@"https://itunes.apple.com/cn/app/id661540006"];\
+    \
+    //******************   
+\f1 \'b5\'f7\'d3\'c3
+\f2  ASIHTTPRequest 
+\f1 \'b7\'c3\'ce\'ca
+\f2 HTTPS
+\f1 \'d5\'be\'b5\'e3
+\f2   ****************\
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];\
+    \
+    [request setValidatesSecureCertificate:NO];\
+    [request startSynchronous];\
+    \
+    NSError *error = [request error];\
+    if (!error) \{\
+        NSString *htmlstr = [request responseString];\
+        [_web loadHTMLString:htmlstr baseURL: nil];\
+    \}\
+    else \{\
+        NSLog(@"Error: %@", error );\
+    \}\
+\}\
+\
+\
+2
+\f1 \'a1\'a2\'ca\'b9\'d3\'c3
+\f2  URLC
+\f1 onnection
+\f2 \
+\
+\pard\tx674\pardeftab674\pardirnatural
+
+\f1 \cf0 \'d6\'f7\'d2\'aa\'ca\'b5\'cf\'d6
+\f2  
+\f1 \'c3\'e2\'c8\'cf\'d6\'a4\'b5\'c4\'d0\'ad\'d2\'e9\'b7\'bd\'b7\'a8\
+\pard\tx674\pardeftab674\pardirnatural
+
+\f2 \cf5 #pragma mark - NURLConnection delegate\
+\pard\tx674\pardeftab674\pardirnatural
+\cf0 \
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;\
+\{\
+  \
+\}\
+\
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse*)response;\
+\{\
+    \
+\}\
+\
+\
+\
+\
+\pard\tx674\pardeftab674\pardirnatural
+
+\f1 \cf0 \'be\'df\'cc\'e5\'b2\'ce\'bf\'bc
+\f2 DEMO:::::::TestHTTPSINWebView!!!\
+}

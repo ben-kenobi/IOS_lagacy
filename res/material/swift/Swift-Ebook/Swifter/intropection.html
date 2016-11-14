@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>自省 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_60">自省</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E8%87%AA%E7%9C%81" class="calibre1">自省</h1>
+<p class="calibre9">程序设计和人类哲学所面临的同一个很重大的课题就是解决 "我是谁" 这个问题。在哲学里，这个问题属于自我认知的范畴，而在程序设计时，这个问题涉及到自省 (Introspection)。</p>
+<p class="calibre9">向一个对象发出询问，以确定它是不是属于某个类，这种操作就称为自省。在 Objective-C 中因为 <code class="calibre13 pcalibre6 pcalibre5">id</code> 这样的可以指向任意对象的指针的存在 (其实严格来说 Objective-C 的指针的类型都是可以任意指向和转换的，它们只不过是帮助编译器理解你的代码而已)，我们经常需要向一个对象询问它是不是属于某个类。常用的方法有下面两类：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">[obj1 isKindOfClass:[ClassA class]];
+[obj2 isMemberOfClass:[ClassB class]];
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">-isKindOfClass:</code> 判断 <code class="calibre13 pcalibre6 pcalibre5">obj1</code> 是否是 <code class="calibre13 pcalibre6 pcalibre5">ClassA</code> <strong class="calibre10">或者其子类</strong>的实例对象；而 <code class="calibre13 pcalibre6 pcalibre5">isMemberOfClass:</code> 则对 <code class="calibre13 pcalibre6 pcalibre5">obj2</code> 做出判断，<strong class="calibre10">当且仅当</strong> <code class="calibre13 pcalibre6 pcalibre5">obj2</code> 的类型为 <code class="calibre13 pcalibre6 pcalibre5">ClassB</code> 时返回为真。</p>
+<p class="calibre9">这两个方法是 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的方法，所以我们在 Swift 中如果写的是 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的子类的话，直接使用这两个方法是没有任何问题的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassA</span>: <span class="hljs-title">NSObject</span> </span>{ }
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassB</span>: <span class="hljs-title">ClassA</span> </span>{ }
+
+<span class="hljs-keyword">let</span> obj1: <span class="hljs-func">NSObject</span> = <span class="hljs-func">ClassB</span>()
+<span class="hljs-keyword">let</span> obj2: <span class="hljs-func">NSObject</span> = <span class="hljs-func">ClassB</span>()
+
+obj1.isKindOfClass(<span class="hljs-func">ClassA</span>.<span class="hljs-keyword">self</span>)    <span class="hljs-title">// true</span>
+obj2.isMemberOfClass(<span class="hljs-func">ClassA</span>.<span class="hljs-keyword">self</span>)  <span class="hljs-title">// false</span>
+</code></pre>
+<p class="calibre9">关于 <code class="calibre13 pcalibre6 pcalibre5">.self</code> 的用法，我们在 <a href="self-anyclass.html" class="pcalibre pcalibre2 pcalibre1 calibre4">.self 和 AnyClass</a> 一节里已经有所提及，这里就不再重复了。</p>
+<p class="calibre9">在 Objective-C 中我们几乎所有的类都会是 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的子类，而在 Swift 的世界中，处于性能考虑，只要有可能，我们应该更倾向于选择那些非 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 子类的 Swift 原生类型。对于那些不是 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的类，我们应该怎么确定其类型呢？</p>
+<p class="calibre9">首先需要明确的一点是，我们为什么需要在运行时去确定类型。因为有泛型支持，Swift 对类型的推断和记录是完备的。因此在绝大多数情况下，我们使用的 Swift 类型都应该是在编译期间就确定的。如果在你写的代码中经常需要检查和确定 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 到底是什么类的话，几乎就意味着你的代码设计出了问题 (或者你正在写一些充满各种 "小技巧" 的代码)。虽然没有太多的意义，但是我们还是可以做这件事情：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassA</span> </span>{ }
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassB</span>: <span class="hljs-title">ClassA</span> </span>{ }
+
+<span class="hljs-keyword">let</span> obj1: <span class="hljs-func">AnyObject</span> = <span class="hljs-func">ClassB</span>()
+<span class="hljs-keyword">let</span> obj2: <span class="hljs-func">AnyObject</span> = <span class="hljs-func">ClassB</span>()
+
+obj1.isKindOfClass(<span class="hljs-func">ClassA</span>.<span class="hljs-keyword">self</span>)    <span class="hljs-title">// true</span>
+obj2.isMemberOfClass(<span class="hljs-func">ClassA</span>.<span class="hljs-keyword">self</span>)  <span class="hljs-title">// false</span>
+</code></pre>
+<p class="calibre9">在 Swift 中对于 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 使用最多的地方应该就是原来那些返回 <code class="calibre13 pcalibre6 pcalibre5">id</code> 的 Cocoa API 了。</p>
+<p class="calibre9">为了快速确定类型，Swift 提供了一个简洁的写法：对于一个不确定的类型，我们现在可以使用 <code class="calibre13 pcalibre6 pcalibre5">is</code> 来进行判断。<code class="calibre13 pcalibre6 pcalibre5">is</code> 在功能上相当于原来的 <code class="calibre13 pcalibre6 pcalibre5">isKindOfClass</code>，可以检查一个对象是否属于某类型或其子类型。<code class="calibre13 pcalibre6 pcalibre5">is</code> 和原来的区别主要在于亮点，首先它不仅可以用于 <code class="calibre13 pcalibre6 pcalibre5">class</code> 类型上，也可以对 Swift 的其他像是 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 或 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 类型进行判断。使用起来是这个样子的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassA</span> </span>{ }
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">ClassB</span>: <span class="hljs-title">ClassA</span> </span>{ }
+
+<span class="hljs-keyword">let</span> obj: <span class="hljs-func">AnyObject</span> = <span class="hljs-func">ClassB</span>()
+
+<span class="hljs-keyword">if</span> (obj <span class="hljs-keyword">is</span> <span class="hljs-func">ClassA</span>) {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"属于 ClassA"</span>)
+}
+
+<span class="hljs-keyword">if</span> (obj <span class="hljs-keyword">is</span> <span class="hljs-func">ClassB</span>) {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"属于 ClassB"</span>)
+}
+</code></pre>
+<p class="calibre9">另外，编译器将对这种检查进行必要性的判断：如果编译器能够唯一确定类型，那么 <code class="calibre13 pcalibre6 pcalibre5">is</code> 的判断就没有必要，编译器将会抛出一个警告，来提示你并没有转换的必要。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> string = <span class="hljs-string">"String"</span>
+<span class="hljs-keyword">if</span> string <span class="hljs-keyword">is</span> <span class="hljs-func">String</span> {
+    <span class="hljs-title">// Do something</span>
+}
+
+<span class="hljs-title">// 'is' test is always true</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

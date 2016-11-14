@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>内存管理，weak 和 unowned | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_51">内存管理，weak 和 unowned</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%EF%BC%8Cweak-%E5%92%8C-unowned" class="calibre1">内存管理，weak 和 unowned</h1>
+<p class="calibre9">不管在什么语言里，内存管理的内容都很重要，所以我打算花上比其他 tip 长一些的篇幅仔细地说说这块内容。</p>
+<p class="calibre9">Swift 是自动管理内存的，这也就是说，我们不再需要操心内存的申请和分配。当我们通过初始化创建一个对象时，Swift 会替我们管理和分配内存。而释放的原则遵循了自动引用计数 (ARC) 的规则：当一个对象没有引用的时候，其内存将会被自动回收。这套机制从很大程度上简化了我们的编码，我们只需要保证在合适的时候将引用置空 (比如超过作用域，或者手动设为 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 等)，就可以确保内存使用不出现问题。</p>
+<p class="calibre9">但是，所有的自动引用计数机制都有一个从理论上无法绕过的限制，那就是循环引用 (retain cycle) 的情况。</p>
+<h3 id="%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8" class="calibre8">什么是循环引用</h3>
+<p class="calibre9">虽然我觉得循环引用这样的概念介绍不太应该出现在这本书中，但是为了更清晰地解释 Swift 中的循环引用的一般情况，这里还是简单进行说明。假设我们有两个类 <code class="calibre13 pcalibre6 pcalibre5">A</code> 和 <code class="calibre13 pcalibre6 pcalibre5">B</code>， 它们之中分别有一个存储属性持有对方：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> </span>{
+    <span class="hljs-keyword">let</span> b: <span class="hljs-func">B</span>
+    <span class="hljs-keyword">init</span>() {
+        b = <span class="hljs-func">B</span>()
+        b.a = <span class="hljs-keyword">self</span>
+    }
+
+    <span class="hljs-keyword">deinit</span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"A deinit"</span>)
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span> </span>{
+    <span class="hljs-keyword">var</span> a: <span class="hljs-func">A</span>? = <span class="hljs-params">nil</span>
+    <span class="hljs-keyword">deinit</span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"B deinit"</span>)
+    }
+}
+</code></pre>
+<p class="calibre9">在 <code class="calibre13 pcalibre6 pcalibre5">A</code> 的初始化方法中，我们生成了一个 <code class="calibre13 pcalibre6 pcalibre5">B</code> 的实例并将其存储在属性中。然后我们又将 <code class="calibre13 pcalibre6 pcalibre5">A</code> 的实例赋值给了 <code class="calibre13 pcalibre6 pcalibre5">b.a</code>。这样 <code class="calibre13 pcalibre6 pcalibre5">a.b</code> 和 <code class="calibre13 pcalibre6 pcalibre5">b.a</code> 将在初始化的时候形成一个引用循环。现在当有第三方的调用初始化了 <code class="calibre13 pcalibre6 pcalibre5">A</code>，然后即使立即将其释放，<code class="calibre13 pcalibre6 pcalibre5">A</code> 和 <code class="calibre13 pcalibre6 pcalibre5">B</code> 两个类实例的 <code class="calibre13 pcalibre6 pcalibre5">deinit</code> 方法也不会被调用，说明它们并没有被释放。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> obj: <span class="hljs-func">A</span>? = <span class="hljs-func">A</span>()
+obj = <span class="hljs-params">nil</span>
+<span class="hljs-title">// 内存没有释放</span>
+</code></pre>
+<p class="calibre9">因为即使 <code class="calibre13 pcalibre6 pcalibre5">obj</code> 不再持有 <code class="calibre13 pcalibre6 pcalibre5">A</code> 的这个对象，b 中的 <code class="calibre13 pcalibre6 pcalibre5">b.a</code> 依然引用着这个对象，导致它无法释放。而进一步，a 中也持有着 b，导致 b 也无法释放。在将 <code class="calibre13 pcalibre6 pcalibre5">obj</code> 设为 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 之后，我们在代码里再也拿不到对于这个对象的引用了，所以除非是杀掉整个进程，我们已经<strong class="calibre10">永远</strong>也无法将它释放了。多么悲伤的故事啊..</p>
+<h3 id="%E5%9C%A8-swift-%E9%87%8C%E9%98%B2%E6%AD%A2%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8" class="calibre8">在 Swift 里防止循环引用</h3>
+<p class="calibre9">为了防止这种人神共愤的悲剧的发生，我们必须给编译器一点提示，表明我们不希望它们互相持有。一般来说我们习惯希望 "被动" 的一方不要去持有 "主动" 的一方。在这里 b.a 里对 A 的实例的持有是由 A 的方法设定的，我们在之后直接使用的也是 A 的实例，因此认为 b 是被动的一方。可以将上面的 <code class="calibre13 pcalibre6 pcalibre5">class B</code> 的声明改为：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span> </span>{
+    <span class="hljs-keyword">weak</span> <span class="hljs-keyword">var</span> a: <span class="hljs-func">A</span>? = <span class="hljs-params">nil</span>
+    <span class="hljs-keyword">deinit</span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"B deinit"</span>)
+    }
+}
+</code></pre>
+<p class="calibre9">在 <code class="calibre13 pcalibre6 pcalibre5">var a</code> 前面加上了 <code class="calibre13 pcalibre6 pcalibre5">weak</code>，向编译器说明我们不希望持有 a。这时，当 <code class="calibre13 pcalibre6 pcalibre5">obj</code> 指向 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 时，整个环境中就没有对 <code class="calibre13 pcalibre6 pcalibre5">A</code> 的这个实例的持有了，于是这个实例可以得到释放。接着，这个被释放的实例上对 b 的引用 <code class="calibre13 pcalibre6 pcalibre5">a.b</code> 也随着这次释放结束了作用域，所以 <code class="calibre13 pcalibre6 pcalibre5">b</code> 的引用也将归零，得到释放。添加 <code class="calibre13 pcalibre6 pcalibre5">weak</code> 后的输出：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">A deinit
+B deinit
+</code></pre><p class="calibre9">可能有心的朋友已经注意到，在 Swift 中除了 <code class="calibre13 pcalibre6 pcalibre5">weak</code> 以外，还有另一个冲着编译器叫喊着类似的 "不要引用我" 的标识符，那就是 <code class="calibre13 pcalibre6 pcalibre5">unowned</code>。它们的区别在哪里呢？如果您是一直写 Objective-C 过来的，那么从表面的行为上来说 <code class="calibre13 pcalibre6 pcalibre5">unowned</code> 更像以前的 <code class="calibre13 pcalibre6 pcalibre5">unsafe_unretained</code>，而 <code class="calibre13 pcalibre6 pcalibre5">weak</code> 就是以前的 <code class="calibre13 pcalibre6 pcalibre5">weak</code>。用通俗的话说，就是 <code class="calibre13 pcalibre6 pcalibre5">unowned</code> 设置以后即使它原来引用的内容已经被释放了，它仍然会保持对被已经释放了的对象的一个 "无效的" 引用，它不能是 Optional 值，也不会被指向 <code class="calibre13 pcalibre6 pcalibre5">nil</code>。如果你尝试调用这个引用的方法或者访问成员属性的话，程序就会崩溃。而 <code class="calibre13 pcalibre6 pcalibre5">weak</code> 则友好一些，在引用的内容被释放后，标记为 <code class="calibre13 pcalibre6 pcalibre5">weak</code> 的成员将会自动地变成 <code class="calibre13 pcalibre6 pcalibre5">nil</code> (因此被标记为 @<code class="calibre13 pcalibre6 pcalibre5">weak</code> 的变量一定需要是 Optional 值)。关于两者使用的选择，Apple 给我们的建议是如果能够确定在访问时不会已被释放的话，尽量使用 <code class="calibre13 pcalibre6 pcalibre5">unowned</code>，如果存在被释放的可能，那就选择用 <code class="calibre13 pcalibre6 pcalibre5">weak</code>。</p>
+<p class="calibre9">我们结合实际编码中的使用来看看选择吧。日常工作中一般使用弱引用的最常见的场景有两个：</p>
+<ol class="calibre2">
+<li class="calibre3">设置 <code class="calibre13 pcalibre6 pcalibre5">delegate</code> 时</li>
+<li class="calibre3">在 <code class="calibre13 pcalibre6 pcalibre5">self</code> 属性存储为闭包时，其中拥有对 <code class="calibre13 pcalibre6 pcalibre5">self</code> 引用时</li>
+</ol>
+<p class="calibre9">前者是 Cocoa 框架的常见设计模式，比如我们有一个负责网络请求的类，它实现了发送请求以及接收请求结果的任务，其中这个结果是通过实现请求类的 protocol 的方式来实现的，这种时候我们一般设置 <code class="calibre13 pcalibre6 pcalibre5">delegate</code> 为 <code class="calibre13 pcalibre6 pcalibre5">weak</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// RequestManager.swift</span>
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">RequestManager</span>: <span class="hljs-title">RequestHandler</span> </span>{
+
+    <span class="hljs-params">@objc</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">requestFinished</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"请求完成"</span>)
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">sendRequest</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-keyword">let</span> req = <span class="hljs-func">Request</span>()
+        req.delegate = <span class="hljs-keyword">self</span>
+
+        req.send()
+    }
+}
+
+<span class="hljs-title">// Request.swift</span>
+<span class="hljs-params">@objc</span> <span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">RequestHandler</span> </span>{
+    optional <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">requestFinished</span><span class="hljs-params">()</span></span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Request</span> </span>{
+    <span class="hljs-keyword">weak</span> <span class="hljs-keyword">var</span> delegate: <span class="hljs-func">RequestHandler</span>!;
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">send</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-title">// 发送请求</span>
+        <span class="hljs-title">// 一般来说会将 req 的引用传递给网络框架</span>
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">gotResponse</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-title">// 请求返回</span>
+        delegate?.requestFinished?()
+    }
+}
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">req</code> 中以 <code class="calibre13 pcalibre6 pcalibre5">weak</code> 的方式持有了 delegate，因为网络请求是一个异步过程，很可能会遇到用户不愿意等待而选择放弃的情况。这种情况下一般都会将 <code class="calibre13 pcalibre6 pcalibre5">RequestManager</code> 进行清理，所以我们其实是无法保证在拿到返回时作为 <code class="calibre13 pcalibre6 pcalibre5">delegate</code> 的 <code class="calibre13 pcalibre6 pcalibre5">RequestManager</code> 对象是一定存在的。因此我们使用了 <code class="calibre13 pcalibre6 pcalibre5">weak</code> 而非 <code class="calibre13 pcalibre6 pcalibre5">unowned</code>，并在调用前进行了判断。</p>
+<h3 id="%E9%97%AD%E5%8C%85%E5%92%8C%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8" class="calibre8">闭包和循环引用</h3>
+<p class="calibre9">另一种闭包的情况稍微复杂一些：我们首先要知道，闭包中对任何其他元素的引用都是会被闭包自动持有的。如果我们在闭包中写了 <code class="calibre13 pcalibre6 pcalibre5">self</code> 这样的东西的话，那我们其实也就在闭包内持有了当前的对象。这里就出现了一个在实际开发中比较隐蔽的陷阱：如果当前的实例直接或者间接地对这个闭包又有引用的话，就形成了一个 self -&gt; 闭包 -&gt; self 的循环引用。最简单的例子是，我们声明了一个闭包用来以特定的形式打印 <code class="calibre13 pcalibre6 pcalibre5">self</code> 中的一个字符串：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>{
+    <span class="hljs-keyword">let</span> name: <span class="hljs-func">String</span>
+    lazy <span class="hljs-keyword">var</span> printName: ()-&gt;() = {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"The name is <span class="hljs-func">\(<span class="hljs-keyword">self</span>.name)</span>"</span>)
+    }
+
+    <span class="hljs-keyword">init</span>(personName: <span class="hljs-func">String</span>) {
+        name = personName
+    }
+
+    <span class="hljs-keyword">deinit</span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Person deinit <span class="hljs-func">\(<span class="hljs-keyword">self</span>.name)</span>"</span>)
+    }
+}
+
+<span class="hljs-keyword">var</span> xiaoMing: <span class="hljs-func">Person</span>? = <span class="hljs-func">Person</span>(personName: <span class="hljs-string">"XiaoMing"</span>)
+xiaoMing!.printName()
+xiaoMing = <span class="hljs-params">nil</span>
+<span class="hljs-title">// 输出:</span>
+<span class="hljs-title">// The name is XiaoMing，没有被释放</span>
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">printName</code> 是 <code class="calibre13 pcalibre6 pcalibre5">self</code> 的属性，会被 <code class="calibre13 pcalibre6 pcalibre5">self</code> 持有，而它本身又在闭包内持有 <code class="calibre13 pcalibre6 pcalibre5">self</code>，这导致了 <code class="calibre13 pcalibre6 pcalibre5">xiaoMing</code> 的 <code class="calibre13 pcalibre6 pcalibre5">deinit</code> 在自身超过作用域后还是没有被调用，也就是没有被释放。为了解决这种闭包内的循环引用，我们需要在闭包开始的时候添加一个标注，来表示这个闭包内的某些要素应该以何种特定的方式来使用。可以将 <code class="calibre13 pcalibre6 pcalibre5">printName</code> 修改为这样：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">lazy <span class="hljs-keyword">var</span> printName: ()-&gt;() = {
+    [<span class="hljs-keyword">weak</span> <span class="hljs-keyword">self</span>] <span class="hljs-keyword">in</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> strongSelf = <span class="hljs-keyword">self</span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"The name is <span class="hljs-func">\(strongSelf.name)</span>"</span>)
+    }
+}
+</code></pre>
+<p class="calibre9">现在内存释放就正确了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// 输出:</span>
+<span class="hljs-title">// The name is XiaoMing</span>
+<span class="hljs-title">// Person deinit XiaoMing</span>
+</code></pre>
+<blockquote class="calibre6">
+<p class="calibre7">如果我们可以确定在整个过程中 <code class="calibre13 pcalibre6 pcalibre5">self</code> 不会被释放的话，我们可以将上面的 <code class="calibre13 pcalibre6 pcalibre5">weak</code> 改为 <code class="calibre13 pcalibre6 pcalibre5">unowned</code>，这样就不再需要 <code class="calibre13 pcalibre6 pcalibre5">strongSelf</code> 的判断。但是如果在过程中 <code class="calibre13 pcalibre6 pcalibre5">self</code> 被释放了而 <code class="calibre13 pcalibre6 pcalibre5">printName</code> 这个闭包没有被释放的话 (比如 生成 <code class="calibre13 pcalibre6 pcalibre5">Person</code> 后，某个外部变量持有了 <code class="calibre13 pcalibre6 pcalibre5">printName</code>，随后这个 <code class="calibre13 pcalibre6 pcalibre5">Persone</code> 对象被释放了，但是 <code class="calibre13 pcalibre6 pcalibre5">printName</code> 已然存在并可能被调用)，使用 <code class="calibre13 pcalibre6 pcalibre5">unowned</code> 将造成崩溃。在这里我们需要根据实际的需求来决定是使用 <code class="calibre13 pcalibre6 pcalibre5">weak</code> 还是 <code class="calibre13 pcalibre6 pcalibre5">unowned</code>。</p>
+</blockquote>
+<p class="calibre9">这种在闭包参数的位置进行标注的语法结构是将要标注的内容放在原来参数的前面，并使用中括号括起来。如果有多个需要标注的元素的话，在同一个中括号内用逗号隔开，举个例子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// 标注前</span>
+{ (number: <span class="hljs-func">Int</span>) -&gt; <span class="hljs-func">Bool</span> <span class="hljs-keyword">in</span>
+    <span class="hljs-title">//...</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-params">true</span>
+}
+
+<span class="hljs-title">// 标注后</span>
+{ [<span class="hljs-keyword">unowned</span> <span class="hljs-keyword">self</span>, <span class="hljs-keyword">weak</span> someObject] (number: <span class="hljs-func">Int</span>) -&gt; <span class="hljs-func">Bool</span> <span class="hljs-keyword">in</span>
+    <span class="hljs-title">//...</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-params">true</span>
+}
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

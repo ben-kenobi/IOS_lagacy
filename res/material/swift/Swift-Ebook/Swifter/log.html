@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Log 输出 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_94">Log 输出</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="log-%E8%BE%93%E5%87%BA" class="calibre1">Log 输出</h1>
+<p class="calibre9">Log 输出是程序开发中很重要的组成部分，虽然它并不是直接的业务代码，但是却可以忠实地反映我们的程序是如何工作的，以及记录程序运行的过程中发生了什么。</p>
+<p class="calibre9">在 Swift 中，最简单的输出方法就是使用 <code class="calibre13 pcalibre6 pcalibre5">print</code>，在我们关心的地方输出字符串和值。但是这并不够，试想一下当程序变得非常复杂的时候，我们可能会输出很多内容，而想在其中寻找到我们希望的输出其实并不容易。我们往往需要更好更精确的输出，这包括输出这个 log 的文件，调用的行号以及所处的方法名字等等。</p>
+<p class="calibre9">我们当然可以在 <code class="calibre13 pcalibre6 pcalibre5">print</code> 的时候将当前的文件名字和那些必要的信息作为参数同我们的消息一起进行打印：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// Test.swift</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-title">//...</span>
+    <span class="hljs-params">print</span>(<span class="hljs-string">"文件名:Test.swift, 方法名:method，这是一条输出"</span>)
+    <span class="hljs-title">//...</span>
+}
+</code></pre>
+<p class="calibre9">但是这显然非常麻烦，每次输入文件名和方法名不说，随着代码的改变，这些 Log 的位置也可能发生改变，这时我们可能还需要不断地去维护这些输出，代价实在太大。</p>
+<p class="calibre9">在 Swift 中，编译器为我们准备了几个很有用的编译符号，用来处理类似这样的需求，它们分别是：</p>
+<table class="calibre21">
+<thead class="calibre22">
+<tr class="calibre23">
+<th class="calibre24">符号</th>
+<th class="calibre24">类型</th>
+<th class="calibre24">描述</th>
+</tr>
+</thead>
+<tbody class="calibre25">
+<tr class="calibre23">
+<td class="calibre26"><strong class="calibre10">FILE</strong></td>
+<td class="calibre26">String</td>
+<td class="calibre26">包含这个符号的文件的路径</td>
+</tr>
+<tr class="calibre27">
+<td class="calibre26"><strong class="calibre10">LINE</strong></td>
+<td class="calibre26">Int</td>
+<td class="calibre26">符号出现处的行号</td>
+</tr>
+<tr class="calibre23">
+<td class="calibre26"><strong class="calibre10">COLUMN</strong></td>
+<td class="calibre26">Int</td>
+<td class="calibre26">符号出现处的列</td>
+</tr>
+<tr class="calibre27">
+<td class="calibre26"><strong class="calibre10">FUNCTION</strong></td>
+<td class="calibre26">String</td>
+<td class="calibre26">包含这个符号的方法名字</td>
+</tr>
+</tbody>
+</table>
+<p class="calibre9">因此，我们可以通过使用这些符号来写一个好一些的 Log 输出方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">printLog</span><span class="hljs-func">&lt;T&gt;</span><span class="hljs-params">(message: T,
+                    file: String = <span class="hljs-keyword">__FILE__</span>,
+                  method: String = <span class="hljs-keyword">__FUNCTION__</span>,
+                    line: Int = <span class="hljs-keyword">__LINE__</span>)</span></span>
+{
+    <span class="hljs-params">print</span>(<span class="hljs-string">"<span class="hljs-func">\((file <span class="hljs-keyword">as</span> NSString)</span>.lastPathComponent)[<span class="hljs-func">\(line)</span>], <span class="hljs-func">\(method)</span>: <span class="hljs-func">\(message)</span>"</span>)
+}
+</code></pre>
+<p class="calibre9">这样，在进行 log 的时候我们只需要使用这个方法就能完成文件名，行号以及方法名的输出了。最棒的是，我们不再需要对这样的输出进行维护，无论在哪里它都能正确地输出各个参数：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// Test.swift</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-title">//...</span>
+    printLog(<span class="hljs-string">"这是一条输出"</span>)
+    <span class="hljs-title">//...</span>
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// Test.swift[62], method(): 这是一条输出</span>
+</code></pre>
+<p class="calibre9">另外，对于 log 输出更多地其实是用在程序开发和调试的过程中的，过多的输出有可能对运行的性能造成影响。在 Release 版本中关闭掉向控制台的输出也是软件开发中一种常见的做法。如果我们在开发中就注意使用了统一的 log 输出的话，这就变得非常简单了。使用<a href="condition-compile.html" class="pcalibre pcalibre2 pcalibre1 calibre4">条件编译</a>的方法，我们可以添加条件，并设置合适的编译配置，使 <code class="calibre13 pcalibre6 pcalibre5">printLog</code> 的内容在 Release 时被去掉，从而成为一个空方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">printLog</span><span class="hljs-func">&lt;T&gt;</span><span class="hljs-params">(message: T,
+                    file: String = <span class="hljs-keyword">__FILE__</span>,
+                  method: String = <span class="hljs-keyword">__FUNCTION__</span>,
+                    line: Int = <span class="hljs-keyword">__LINE__</span>)</span></span>
+{
+    #<span class="hljs-keyword">if</span> <span class="hljs-func">DEBUG</span>
+    <span class="hljs-params">print</span>(<span class="hljs-string">"<span class="hljs-func">\((file <span class="hljs-keyword">as</span> NSString)</span>.lastPathComponent)[<span class="hljs-func">\(line)</span>], <span class="hljs-func">\(method)</span>: <span class="hljs-func">\(message)</span>"</span>)
+    #endif
+}
+</code></pre>
+<p class="calibre9">新版本的 LLVM 编译器在遇到这个空方法时，甚至会直接将这个方法整个去掉，完全不去调用它，从而实现零成本。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

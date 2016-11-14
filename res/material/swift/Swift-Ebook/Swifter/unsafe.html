@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>UnsafePointer | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_55">UnsafePointer</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="unsafepointer" class="calibre1">UnsafePointer</h1>
+<p class="calibre9">Swift 本身从设计上来说是一门非常安全的语言，在 Swift 的思想中，所有的引用或者变量的类型都是确定并且正确对应它们的实际类型的，你应当无法进行任意的类型转换，也不能直接通过指针做出一些出格的事情。这种安全性在日常的程序开发中对于避免不必要的 bug，以及迅速而且稳定地找出代码错误是非常有帮助的。但是凡事都有两面性，在高安全的同时，Swift 也相应地丧失了部分的灵活性。</p>
+<p class="calibre9">现阶段想要完全抛弃 C 的一套东西还是相当困难的，特别是在很多上古级别的 C API 框架还在使用 (或者被间接使用)。开发者，尤其是偏向较底层的框架的开发者不得不面临着与 C API 打交道的时候，还是无法绕开指针的概念，而指针在 Swift 中其实并不被鼓励，语言标准中也是完全没有与指针完全等同的概念的。为了与庞大的 C 系帝国进行合作，Swift 定义了一套对 C 语言指针的访问和转换方法，那就是 <code class="calibre13 pcalibre6 pcalibre5">UnsafePointer</code> 和它的一系列变体。对于使用 C API 时如果遇到接受内存地址作为参数，或者返回是内存地址的情况，在 Swift 里会将它们转为 <code class="calibre13 pcalibre6 pcalibre5">UnsafePointer&lt;Type&gt;</code> 的类型，比如说如果某个 API 在 C 中是这样的话：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">void method(const int *num) {
+    printf(<span class="hljs-string">"%d"</span>,*num);
+}
+</code></pre>
+<p class="calibre9">其对应的 Swift 方法应该是：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">method</span><span class="hljs-params">(num: UnsafePointer&lt;CInt&gt;)</span></span> {
+    <span class="hljs-params">print</span>(num.memory)
+}
+</code></pre>
+<p class="calibre9">我们这个 tip 所说的 <code class="calibre13 pcalibre6 pcalibre5">UnsafePointer</code>，就是 Swift 中专门针对指针的转换。对于其他的 C 中基础类型，在 Swift 中对应的类型都遵循统一的命名规则：在前面加上一个字母 <code class="calibre13 pcalibre6 pcalibre5">C</code> 并将原来的第一个字母大写：比如 <code class="calibre13 pcalibre6 pcalibre5">int</code>，<code class="calibre13 pcalibre6 pcalibre5">bool</code> 和 <code class="calibre13 pcalibre6 pcalibre5">char</code> 的对应类型分别是 <code class="calibre13 pcalibre6 pcalibre5">CInt</code>，<code class="calibre13 pcalibre6 pcalibre5">CBool</code> 和 <code class="calibre13 pcalibre6 pcalibre5">CChar</code>。在上面的 C 方法中，我们接受一个 <code class="calibre13 pcalibre6 pcalibre5">int</code> 的指针，转换到 Swift 里所对应的就是一个 <code class="calibre13 pcalibre6 pcalibre5">CInt</code> 的 <code class="calibre13 pcalibre6 pcalibre5">UnsafePointer</code> 类型。这里原来的 C API 中已经指明了输入的 <code class="calibre13 pcalibre6 pcalibre5">num</code> 指针的不可变的 (const)，因此在 Swift 中我们与之对应的是 <code class="calibre13 pcalibre6 pcalibre5">UnsafePointer</code> 这个不可变版本。如果只是一个普通的可变指针的话，我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">UnsafeMutablePointer</code> 来对应：</p>
+<table class="calibre21">
+<thead class="calibre22">
+<tr class="calibre23">
+<th class="calibre24">C API</th>
+<th class="calibre24">Swift API</th>
+</tr>
+</thead>
+<tbody class="calibre25">
+<tr class="calibre23">
+<td class="calibre26">const Type *</td>
+<td class="calibre26">UnsafePointer<type class="hljs-func"/></td>
+</tr>
+<tr class="calibre27">
+<td class="calibre26">Type *</td>
+<td class="calibre26">UnsafeMutablePointer<type class="hljs-func"/></td>
+</tr>
+</tbody>
+</table>
+<p class="calibre9">在 C 中，对某个指针进行取值使用的是 <code class="calibre13 pcalibre6 pcalibre5">*</code>，而在 Swift 中我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">memory</code> 属性来读取相应内存中存储的内容。通过传入指针地址进行方法调用的时候就都比较相似了，都是在前面加上 <code class="calibre13 pcalibre6 pcalibre5">&amp;</code> 符号，C 的版本和 Swift 的版本只在申明变量的时候有所区别：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// C</span>
+int a = <span class="hljs-params">123</span>;
+method(&amp;a);   <span class="hljs-title">// 输出 123</span>
+
+<span class="hljs-title">// Swift</span>
+<span class="hljs-keyword">var</span> a: <span class="hljs-func">CInt</span> = <span class="hljs-params">123</span>
+method(&amp;a)    <span class="hljs-title">// 输出 123</span>
+</code></pre>
+<p class="calibre9">遵守这些原则，使用 <code class="calibre13 pcalibre6 pcalibre5">UnsafePointer</code> 在 Swift 中进行 C API 的调用应该就不会有很大问题了。</p>
+<p class="calibre9">另外一个重要的课题是如何在指针的内容和实际的值之间进行转换。比如我们如果由于某种原因需要涉及到直接使用 <code class="calibre13 pcalibre6 pcalibre5">CFArray</code> 的方法来获取数组中元素的时候，我们会用到这个方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">CFArrayGetValueAtIndex</span><span class="hljs-params">(theArray: CFArray!, idx: CFIndex)</span></span>
+                                            -&gt; <span class="hljs-func">UnsafePointer</span>&lt;<span class="hljs-func">Void</span>&gt;
+</code></pre>
+<p class="calibre9">因为 <code class="calibre13 pcalibre6 pcalibre5">CFArray</code> 中是可以存放任意对象的，所以这里的返回是一个任意对象的指针，相当于 C 中的 <code class="calibre13 pcalibre6 pcalibre5">void *</code>。这显然不是我们想要的东西。Swift 中为我们提供了一个强制转换的方法 <code class="calibre13 pcalibre6 pcalibre5">unsafeBitCast</code>，通过下面的代码，我们可以看到应当如何使用类似这样的 API，将一个指针强制按位转成所需类型的对象：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> arr = <span class="hljs-func">NSArray</span>(object: <span class="hljs-string">"meow"</span>)
+<span class="hljs-keyword">let</span> str = unsafeBitCast(<span class="hljs-func">CFArrayGetValueAtIndex</span>(arr, <span class="hljs-params">0</span>), <span class="hljs-func">CFString</span>.<span class="hljs-keyword">self</span>)
+<span class="hljs-title">// str = "meow"</span>
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">unsafeBitCast</code> 会将第一个参数的内容按照第二个参数的类型进行转换，而不去关心实际是不是可行，这也正是 <code class="calibre13 pcalibre6 pcalibre5">UnsafePointer</code> 的不安全所在，因为我们不必遵守类型转换的检查，而拥有了在指针层面直接操作内存的机会。</p>
+<p class="calibre9">其实说了这么多，Apple 将直接的指针访问冠以 <code class="calibre13 pcalibre6 pcalibre5">Unsafe</code> 的前缀，就是提醒我们：这些东西不安全，亲们能不用就别用了吧 (作为 Apple，另一个重要的考虑是如果避免指针的话可以减少很多系统漏洞)！在日常开发中，我们确实不太需要经常和这些东西打交道 (除了传入 <code class="calibre13 pcalibre6 pcalibre5">NSError</code> 指针这个历史遗留问题以外，而且在 Swift 2.0 中也已经使用异常机制替代了 <code class="calibre13 pcalibre6 pcalibre5">NSError</code>)。总之，尽可能地在高抽象层级编写代码，会是高效和正确的有力保证。无数先辈已经用血淋淋的教训告诉我们，要避免去做这样的不安全的操作，除非你确实知道你在做的是什么。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

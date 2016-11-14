@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>类簇 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_65">类簇</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E7%B1%BB%E7%B0%87" class="calibre1">类簇</h1>
+<p class="calibre9">虽然可能不太被重视，但<a href="https://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/ClassClusters/ClassClusters.html" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">类簇 (class cluster)</a> 确实是 Cocoa 框架中广泛使用的设计模式之一。简单来说类簇就是使用一个统一的公共的类来订制单一的接口，然后在表面之下对应若干个私有类进行实现的方式。这么做最大的好处是避免的公开很多子类造成混乱，一个最典型的例子是 <code class="calibre13 pcalibre6 pcalibre5">NSNumber</code>：我们有一系列的不同的方法可以从整数，浮点数或者是布尔值来生成一个 <code class="calibre13 pcalibre6 pcalibre5">NSNumber</code> 对象，而实际上它们可能会是不同的私有子类对象：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">NSNumber</span> * num1 = [[<span class="hljs-params">NSNumber</span> alloc] initWithInt:<span class="hljs-params">1</span>];
+<span class="hljs-title">// __NSCFNumber</span>
+
+<span class="hljs-params">NSNumber</span> * num2 = [[<span class="hljs-params">NSNumber</span> alloc] initWithFloat:<span class="hljs-params">1.0</span>];
+<span class="hljs-title">// __NSCFNumber</span>
+
+<span class="hljs-params">NSNumber</span> * num3 = [[<span class="hljs-params">NSNumber</span> alloc] initWithBool:<span class="hljs-params">YES</span>];
+<span class="hljs-title">// __NSCFBoolean</span>
+</code></pre>
+<p class="calibre9">类簇在子类种类繁多，但是行为相对统一的时候对于简化接口非常有帮助。</p>
+<p class="calibre9">在 Objective-C 中，<code class="calibre13 pcalibre6 pcalibre5">init</code> 开头的初始化方法虽然打着初始化的名号，但是实际做的事情和其他方法并没有太多不同之处。类簇在 Objective-C 中实现起来也很自然，在所谓的“初始化方法”中将 <code class="calibre13 pcalibre6 pcalibre5">self</code> 进行替换，根据调用的方式或者输入的类型，返回合适的私有子类对象就可以了。</p>
+<p class="calibre9">但是 Swift 中的情况有所不同。因为 Swift 拥有真正的初始化方法，在初始化的时候我们只能得到当前类的实例，并且要完成所有的配置。也就是说对于一个公共类来说，是不可能在初始化方法中返回其子类的信息的。对于 Swift 中的类簇构建，一种有效的方法是使用工厂方法来进行。例如下面的代码通过 <code class="calibre13 pcalibre6 pcalibre5">Drinking</code> 的工厂方法将可乐和啤酒两个私有类进行了类簇化：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Drinking</span> </span>{
+    <span class="hljs-keyword">typealias</span> <span class="hljs-func">LiquidColor</span> = <span class="hljs-func">UIColor</span>
+    <span class="hljs-keyword">var</span> color: <span class="hljs-func">LiquidColor</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-func">LiquidColor</span>.clearColor()
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">drinking</span>(<span class="hljs-title">name</span>: <span class="hljs-title">String</span>) -&gt; <span class="hljs-title">Drinking</span> </span>{
+        <span class="hljs-keyword">var</span> drinking: <span class="hljs-func">Drinking</span>
+        <span class="hljs-keyword">switch</span> name {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">"Coke"</span>:
+            drinking = <span class="hljs-func">Coke</span>()
+        <span class="hljs-keyword">case</span> <span class="hljs-string">"Beer"</span>:
+            drinking = <span class="hljs-func">Beer</span>()
+        <span class="hljs-keyword">default</span>:
+            drinking = <span class="hljs-func">Drinking</span>()
+        }
+
+        <span class="hljs-keyword">return</span> drinking
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Coke</span>: <span class="hljs-title">Drinking</span> </span>{
+    <span class="hljs-keyword">override</span> <span class="hljs-keyword">var</span> color: <span class="hljs-func">LiquidColor</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-func">LiquidColor</span>.blackColor()
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Beer</span>: <span class="hljs-title">Drinking</span> </span>{
+    <span class="hljs-keyword">override</span> <span class="hljs-keyword">var</span> color: <span class="hljs-func">LiquidColor</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-func">LiquidColor</span>.yellowColor()
+    }
+}
+
+<span class="hljs-keyword">let</span> coke = <span class="hljs-func">Drinking</span>.drinking(<span class="hljs-string">"Coke"</span>)
+coke.color <span class="hljs-title">// Black</span>
+
+<span class="hljs-keyword">let</span> beer = <span class="hljs-func">Drinking</span>.drinking(<span class="hljs-string">"Beer"</span>)
+beer.color <span class="hljs-title">// Yellow</span>
+</code></pre>
+<p class="calibre9">通过<a href="instance-type.html" class="pcalibre pcalibre2 pcalibre1 calibre4">获取对象类型</a>中提到的方法，我们也可以确认 <code class="calibre13 pcalibre6 pcalibre5">coke</code> 和 <code class="calibre13 pcalibre6 pcalibre5">beer</code> 各自的动态类型分别是 <code class="calibre13 pcalibre6 pcalibre5">Coke</code> 和 <code class="calibre13 pcalibre6 pcalibre5">Beer</code>。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> cokeClass = <span class="hljs-func">NSStringFromClass</span>(coke.<span class="hljs-keyword">dynamicType</span>) <span class="hljs-title">//Coke</span>
+<span class="hljs-keyword">let</span> beerClass = <span class="hljs-func">NSStringFromClass</span>(beer.<span class="hljs-keyword">dynamicType</span>) <span class="hljs-title">//Beer</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

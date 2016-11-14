@@ -1,0 +1,11 @@
+_clustrmaps.layer('recent',{'points':[[39.9289,116.3883,"CN","Beijing"]],timestamp:'201407061047'});
+_clustrmaps.layer('recent',{'points':[[31.0456,121.3997,"CN","Shanghai"]],timestamp:'201407061032'});
+_clustrmaps.layer('recent',{'points':[[-37.9667,145.1667,"AU","Noble Park"]],timestamp:'201407060955'});
+_clustrmaps.layer('recent',{'points':[[30.2936,120.1614,"CN","Hangzhou"]],timestamp:'201407060948'});
+_clustrmaps.layer('recent',{'points':[[22.5333,114.1333,"CN","Shenzhen"]],timestamp:'201407060945'});
+_clustrmaps.layer('recent',{'points':[[23.1167,113.2500,"CN","Guangzhou"]],timestamp:'201407060935'});
+_clustrmaps.layer('recent',{'points':[[39.0728,114.8731,"CN","Shijiazhuang"]],timestamp:'201407060922'});
+_clustrmaps.layer('recent',{'points':[[38.0000,-97.0000,"US","United States"]],timestamp:'201407060846'});
+_clustrmaps.layer('recent',{'points':[[34.0167,113.8167,"CN","Xuchang"]],timestamp:'201407060844'});
+_clustrmaps.layer('recent',{'points':[[33.4484,-112.0740,"US","Arizona"]],timestamp:'201407060804'});
+_clustrmaps.layer('recent',{'points':[[28.1792,113.1136,"CN","Changshahsien"]],timestamp:'201407060752'});

@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>版本更新 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_106">版本更新</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0" class="calibre1">版本更新</h1>
+<h3 id="2-0-1-2015-%E5%B9%B4-8-%E6%9C%88-25-%E6%97%A5" class="calibre8">2.0.1 (2015 年 8 月 25 日)</h3>
+<p class="calibre9">根据 Xcode 7 beta 6 的改动对部分内容进行了更新。</p>
+<ul class="calibre19">
+<li class="calibre3"><a href="tuple.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《多元组》</a> 删掉了最后的说明，因为在 Swift 2.0 中已经不再适用。</li>
+<li class="calibre3"><a href="variadic.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《可变参数函数》</a> Xcode 7 beta 6 中可变参数可以在函数中的任意位置，而不一定要是最后一个参数位置了。另外增加了相应的示例代码。</li>
+<li class="calibre3"><a href="string-nsstring.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《String 还是 NSString》</a> 修正了一处代码错误，Xcode 7 beta 6 中 <code class="calibre13 pcalibre6 pcalibre5">advance</code> 方法已经被 <code class="calibre13 pcalibre6 pcalibre5">advancedBy</code> 替代了。</li>
+<li class="calibre3"><a href="range.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《... 和 ..&lt;》</a> 中 <code class="calibre13 pcalibre6 pcalibre5">print</code> 方法的签名发生了变化，更新了对应的示例代码。</li>
+<li class="calibre3"><a href="lazy.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《lazy 修饰符和 lazy 方法》</a> <code class="calibre13 pcalibre6 pcalibre5">lazy</code> 在 Xcode 7 beta 6 中已经是一个 protocol extension 方法而不再是全局方法了，因此调整了代码使其符合要求。</li>
+<li class="calibre3"><a href="closure-ambiguous.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《闭包歧义》</a> 中省略闭包参数类型的写法现在一律被推断为 <code class="calibre13 pcalibre6 pcalibre5">Any</code>，这应该是一个编译器的 bug。增加了相关说明，我之后会对此继续关注并再次进行更新。</li>
+<li class="calibre3"><a href="error-handle.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《错误和异常处理》</a> 添加了关于 <code class="calibre13 pcalibre6 pcalibre5">try!</code>，<code class="calibre13 pcalibre6 pcalibre5">try?</code> 和 <code class="calibre13 pcalibre6 pcalibre5">rethrows</code> 的讨论以及对应的示例代码。</li>
+<li class="calibre3">修正了一些章节的错别字。</li>
+</ul>
+<h3 id="2-0-0-2015-%E5%B9%B4-8-%E6%9C%88-24-%E6%97%A5" class="calibre8">2.0.0 (2015 年 8 月 24 日)</h3>
+<p class="calibre9">2.0.0 版本是本书的一个重大更新。根据 Swift 2.0 的内容重新修订了本书，包括对新内容的扩展和过时内容的删除。新版本中对原来的 tips 进行了归类整理，将全书大致分为三个部分，以方便读者阅读查阅。另外，为了阅读效果，对全书的排版和字体等进行了大幅调整。</p>
+<p class="calibre9">这一年来随着 Swift 的逐渐变化，书中有不少示例代码的用法已经和现在版本的 Swift 有所区别，因此在这次修订中对所有的代码都在 Swift 2.0 环境下进行了再次的验证和修改。现在本书的所有代码例子已经附在 Swifter.playground 文件中，一并提供给读者进行参考。</p>
+<h4 id="%E6%96%B0%E5%A2%9E%E6%9D%A1%E7%9B%AE" class="calibre17">新增条目</h4>
+<ul class="calibre19">
+<li class="calibre3"><a href="protocol-extension.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Protocol Extension》</a></li>
+<li class="calibre3"><a href="where.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《where 和模式匹配》</a></li>
+<li class="calibre3"><a href="error-handle.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《错误和异常处理》</a>：代替了原来的错误处理一节。因为 Swift 2 中引入了异常处理的机制，因此现在对于发生错误后如何获取错误信息以及从错误中恢复有了新的方式。原来的内容已经不再适合新版本，因此用新的一节来替代。</li>
+<li class="calibre3"><a href="indirect-nested-enum.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《indirect 和嵌套 enum》</a></li>
+<li class="calibre3"><a href="tail-recursion.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《尾递归》</a></li>
+</ul>
+<h4 id="%E4%BF%AE%E6%94%B9%E5%92%8C%E5%88%A0%E9%99%A4" class="calibre17">修改和删除</h4>
+<ul class="calibre19">
+<li class="calibre3">为了表意明确，有特别的理由的个例除外，将其他所有返回 <code class="calibre13 pcalibre6 pcalibre5">()</code> 的闭包的改写为了返回 <code class="calibre13 pcalibre6 pcalibre5">Void</code>。</li>
+<li class="calibre3"><a href="autoclosure.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《@autoclosure 和 ??》</a> 修正了一处笔误。</li>
+<li class="calibre3"><a href="operator.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《操作符》</a> 有几处 <code class="calibre13 pcalibre6 pcalibre5">Vector2</code> 应为 <code class="calibre13 pcalibre6 pcalibre5">Vector2D</code>，修正用词错误。</li>
+<li class="calibre3"><a href="typealias.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《typealias 和泛型接口》</a> 修正一处表述问题，使得句子读起来更通顺。</li>
+<li class="calibre3"><a href="sequence.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Sequence》</a> 中 Sequence 相关的全局方法现在已经被写为接口扩展，因此对说明也进行了相应地更改。</li>
+<li class="calibre3"><a href="tuple.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《多元组》</a> 中有关错误处理的代码已经被异常机制替代，因此选取了一个新的例子来说明如何使用多元组。</li>
+<li class="calibre3">《方法参数名称省略》 Swift 2 中已经统一了各 scope 中的方法名称中的参数规则，因此本节已经没有存在的必要，故删去。</li>
+<li class="calibre3"><a href="swift-cli.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Swift 命令行工具》</a> 编译器的命令行工具在输出文件时的参数发生了变化，对此进行修正。另外在运行命令时省去了已经不必要的 xcrun。</li>
+<li class="calibre3"><a href="subscript.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《下标》</a> <code class="calibre13 pcalibre6 pcalibre5">Array</code> 现在的泛型类型占位符变为了 <code class="calibre13 pcalibre6 pcalibre5">Element</code>，另外原来的 <code class="calibre13 pcalibre6 pcalibre5">Slice</code> 被 <code class="calibre13 pcalibre6 pcalibre5">ArraySlice</code> 取代了。更新了代码使其能在新版本下正常工作。</li>
+<li class="calibre3"><a href="init-nil.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《初始化返回 nil》</a> 因为 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 已经有了内建的从 <code class="calibre13 pcalibre6 pcalibre5">String</code> 进行初始化的方法，因此改变了本节的例程。现在使用一个中文到数字的转换初始化方法来进行说明。</li>
+<li class="calibre3"><a href="protocol-composition.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《protocol 组合》</a> 修正了示例代码中的错误。</li>
+<li class="calibre3"><a href="static-class.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《static 和 class》</a> Swift 2 中已经可以用 static 作为通用修饰，因此修改了一些过时的内容。</li>
+<li class="calibre3"><a href="objc-protocol.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《可选接口》</a> 中加入了关于使用接口扩展来实现接口方法可选的技巧。因为加入了其他内容，这一节也更名为《可选接口和接口扩展》。</li>
+<li class="calibre3"><a href="memory-retain-cycle.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《内存管理，weak 和 unowned》</a> 新版本中 Playground 也能正确地反应内存状况以及与 ARC 协同工作了，因此去除了必须在项目中运行的条件，另外修改了代码使它们能在 Playground 中正常工作。</li>
+<li class="calibre3"><a href="default-param.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《default 参数》</a> 中与参数 # 修饰符相关的内容已经过时，删除。<code class="calibre13 pcalibre6 pcalibre5">NSLocalizedString</code> 的补全现在也已经改进，所以不再需要说明。</li>
+<li class="calibre3"><a href="regex.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《正则表达式》</a> <code class="calibre13 pcalibre6 pcalibre5">NSRegularExpression</code> 的初始化方法现在有可能直接抛出异常，使用异常机制重写了本节的示例代码。</li>
+<li class="calibre3"><a href="pattern-match.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《模式匹配》</a> 同《正则表达式》，使用异常机制重写了示例代码。</li>
+<li class="calibre3"><a href="opaque-function-pointer.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《COpaquePointer 和 C convention》</a> <code class="calibre13 pcalibre6 pcalibre5">CFunctionPointer</code> 在 Swift 2.0 中被删除，现在 C 方法指针可以直接由 Swift 闭包进行无缝转换。重写了该部分内容，添加了关于 <code class="calibre13 pcalibre6 pcalibre5">@convention</code> 标注的说明。</li>
+<li class="calibre3">《Foundation 框架》在 Swift 2.0 中 <code class="calibre13 pcalibre6 pcalibre5">String</code> 和 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 的转换已经有了明确的界限，因此本节内容已经过时，故删去。</li>
+<li class="calibre3"><a href="gcd-delay-call.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《GCD 和延时调用》</a> 重新说明了 iOS 8 中对 block 的改进。另外由于 Swift 2 中重新引入了 <code class="calibre13 pcalibre6 pcalibre5">performSelector</code>，对相关内容进行了小幅调整。</li>
+<li class="calibre3"><a href="instance-type.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《获取对象类型》</a> Swift.Type 现在对于 <code class="calibre13 pcalibre6 pcalibre5">print</code> 和 <code class="calibre13 pcalibre6 pcalibre5">debugPrint</code> 中有了新的实现，进行了补充说明和代码修正。</li>
+<li class="calibre3">《类型转换》 因为 Objective-C 中对 collection 加入了泛型的支持，现在在 Swift 中使用 Cocoa API 时基本已经不太需要类型转换，故删去。</li>
+<li class="calibre3"><a href="local-scope.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《局部 scope》</a> 添加了关于 <code class="calibre13 pcalibre6 pcalibre5">do</code> 的说明。Swift 2.0 中加入了 <code class="calibre13 pcalibre6 pcalibre5">do</code> 关键字，可以作为局部作用域来使用。</li>
+<li class="calibre3"><a href="print.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《print 和 debugPrint》</a> 现在 <code class="calibre13 pcalibre6 pcalibre5">Printable</code> 和 <code class="calibre13 pcalibre6 pcalibre5">DebugPrintable</code> 接口的名称分别改为了 <code class="calibre13 pcalibre6 pcalibre5">CustomStringConvertible</code> 和 <code class="calibre13 pcalibre6 pcalibre5">CustomDebugStringConvertible</code>。</li>
+<li class="calibre3"><a href="playground-limit.md" class="pcalibre pcalibre2 pcalibre1 calibre4">《Playground 限制》</a> 随着 Apple 对 Playground 的改进和修复，原来的一些限制 (特别是内存管理上的限制) 现在已经不复存在。这一节已经没有太大意义，故删去。</li>
+<li class="calibre3"><a href="swizzle.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Swizzle》</a> <code class="calibre13 pcalibre6 pcalibre5">+load</code> 方法在 Swift 1.2 中已经不能直接被覆盖使用，另外使用 Swift 实现的 <code class="calibre13 pcalibre6 pcalibre5">+load</code> 方法在运行时也不再被调用，因此需要换为使用 <code class="calibre13 pcalibre6 pcalibre5">+initialize</code> 来实现方法的交换。改写了代码以使其正常工作，另外加入了关于交换方法选择的说明。</li>
+<li class="calibre3">《find》因为引入了 protocol extension，像类似 <code class="calibre13 pcalibre6 pcalibre5">find</code> 一类作用在 collection 上的全局方法都已经使用 protocol extension 实现了，因此本节移除。</li>
+<li class="calibre3"><a href="reflect.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Reflection 和 Mirror》</a> <code class="calibre13 pcalibre6 pcalibre5">reflect</code> 方法和 <code class="calibre13 pcalibre6 pcalibre5">MirrorType</code> 类型现在已经变为 Swift 标准库的私有类型，现在我们需要使用 <code class="calibre13 pcalibre6 pcalibre5">Mirror</code> 来获取和使用对象的反射。重写了本节的内容以符合 Swift 2.0 中的反射特性和使用方式。另外，为了避免误导，对反射的使用场合也进行了说明。</li>
+<li class="calibre3"><a href="documentation.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《文档注释》</a> Swift 2.0 中文档注释的格式发生了变化，因此对本节内容进行了修改已符合新版本的格式要求。</li>
+<li class="calibre3"><a href="options.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Options》</a> 原来的 <code class="calibre13 pcalibre6 pcalibre5">RawOptionSetType</code> 在 Swift 2.0 中已经被新的 <code class="calibre13 pcalibre6 pcalibre5">OptionSetType</code> 替代，现在 Options 有了更简洁的表示方法和运算逻辑。另外加入了 Options 集合运算的内容，以及更新了生成 Options 的代码片段。</li>
+<li class="calibre3"><a href="associated-object.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Associated Object》</a> 作为 Key 值的变量需要是 Optional 类型，因此对原来不正确的示例代码进行了修改。</li>
+<li class="calibre3"><a href="swift-test.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Swift 中的测试》</a> Swift 2 中导入了 <code class="calibre13 pcalibre6 pcalibre5">@testable</code>，可以让测试 target 访问到导入的 target 的 internal 代码，因此本节的一些讨论过时了。根据 Swift 2.0 的测试方式重写了本节内容。</li>
+<li class="calibre3">[其他]：修正了一些用词上的不妥和错别字。</li>
+</ul>
+<h3 id="1-2-1-2015-%E5%B9%B4-2-%E6%9C%88-25-%E6%97%A5" class="calibre8">1.2.1 (2015 年 2 月 25 日)</h3>
+<ul class="calibre19">
+<li class="calibre3"><a href="autoclosure.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《@autoclosure 和 ??》</a>，以及其他出现 <code class="calibre13 pcalibre6 pcalibre5">@autoclosure</code> 的章节中，将 <code class="calibre13 pcalibre6 pcalibre5">@autoclosure</code> 的位置进行了调整。现在 <code class="calibre13 pcalibre6 pcalibre5">@autoclosure</code> 作为参数名的修饰，而非参数类型的修饰。</li>
+<li class="calibre3"><a href="closure-ambiguous.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《闭包歧义》</a> Swift 1.2 中闭包歧义的使用将由编译器给出错误。在保留 Swift 1.1 及之前的讨论的前提下，补充说明了 Swift 1.2 版本以后的闭包歧义的处理和避免策略。</li>
+<li class="calibre3"><a href="instance-type.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《获取对象类型》</a>删除了过时内容和已经无效的黑科技，补充了 <code class="calibre13 pcalibre6 pcalibre5">dynamicType</code> 对内建 Swift 类型的用法说明。</li>
+<li class="calibre3"><a href="singleton.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《单例》</a> 现在可以直接使用类常量/变量，因此更新了推荐的单例写法。</li>
+<li class="calibre3"><a href="static-class.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《static 和 class》</a>中更新了类常/变量的用法。</li>
+<li class="calibre3"><a href="uiapplicationmain.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《@UIApplicationMain》</a>中 <code class="calibre13 pcalibre6 pcalibre5">C_ARGC</code> 和 <code class="calibre13 pcalibre6 pcalibre5">C_ARGV</code> 分别被 <code class="calibre13 pcalibre6 pcalibre5">Process.argc</code> 和 <code class="calibre13 pcalibre6 pcalibre5">Process.unsafeArgv</code> 替代。</li>
+<li class="calibre3"><a href="opaque-function-pointer.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《COpaquePointer 和 CFunctionPointer》</a>更新了一处 API 的参数名。</li>
+<li class="calibre3"><a href="type-casting.md" class="pcalibre pcalibre2 pcalibre1 calibre4">《类型转换》</a>使用意义明确的 Swift 1.2 版本的 <code class="calibre13 pcalibre6 pcalibre5">as!</code> 进行强制转换。</li>
+<li class="calibre3"><a href="math-number.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《数学和数字》</a>作为补充，添加了 <code class="calibre13 pcalibre6 pcalibre5">Darwin</code> 中判定 NAN 的方法 <code class="calibre13 pcalibre6 pcalibre5">isnan</code>。</li>
+<li class="calibre3"><a href="swift-cli.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Swift 命令行工具》</a>中新增了新版本中不需要 <code class="calibre13 pcalibre6 pcalibre5">xcrun</code> 的说明。</li>
+<li class="calibre3"><a href="func-naming.md" class="pcalibre pcalibre2 pcalibre1 calibre4">《方法参数名称省略》</a>中的一处 API 的 unwrap 更新。</li>
+<li class="calibre3"><a href="asmname.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《C 代码调用和 @asmname》</a> 修正了一个头文件引入的错误。</li>
+</ul>
+<h3 id="1-2-0-2015-%E5%B9%B4-2-%E6%9C%88-10-%E6%97%A5" class="calibre8">1.2.0 (2015 年 2 月 10 日)</h3>
+<ul class="calibre19">
+<li class="calibre3"><a href="static-class.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《static 和 class》</a>一节针对 Swift 1.2 进行了更新。Swift 1.2 中 protocol 中定义的“类方法”需要使用 static 而非 class。</li>
+<li class="calibre3"><a href="multitype-collection.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《多类型和容器》</a>中的错别字，“不知名”应该为“不指明”。</li>
+<li class="calibre3"><a href="memory-retain-cycle.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《内存管理，weak 和 unowned》</a> 中标注例子中标注错误，标注中的逗号应该是冒号。</li>
+<li class="calibre3"><a href="reflect.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Reflection 和 MirrorType》</a>一节代码中遗漏了一个引号。</li>
+<li class="calibre3"><a href="any-anyObject.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Any 和 AnyObject》</a> 修正了一处赋值时的代码警告。</li>
+</ul>
+<h3 id="1-1-2-2014-%E5%B9%B4-12-%E6%9C%88-2-%E6%97%A5" class="calibre8">1.1.2 (2014 年 12 月 2 日)</h3>
+<ul class="calibre19">
+<li class="calibre3"><a href="default-param.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《default 参数》</a>中的错别字，“常亮”应该为“常量”。</li>
+<li class="calibre3"><a href="selector.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Selector》</a>中示例代码 <code class="calibre13 pcalibre6 pcalibre5">func aMethod(external paramName: String) { ... }</code> 中 <code class="calibre13 pcalibre6 pcalibre5">String</code> 应为 <code class="calibre13 pcalibre6 pcalibre5">AnyObject!</code>，否则会导致程序崩溃（因为 Swift 的原生 <code class="calibre13 pcalibre6 pcalibre5">String</code> 并没有实现 <code class="calibre13 pcalibre6 pcalibre5">NSCopying</code>）。</li>
+<li class="calibre3"><a href="instance-type.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《获取对象类型》</a> 中由于 API 变更，使用 <code class="calibre13 pcalibre6 pcalibre5">objc_getClass</code> 和 objc runtime 获取对象类型的方法已经不再有效。新的 API 需要与 <code class="calibre13 pcalibre6 pcalibre5">UnsafePointer</code> 有关，已经超出章节内容，故将该部分内容删除。</li>
+<li class="calibre3"><a href="multitype-collection.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《多类型和容器》</a> 中由于 Swift 类型推断和字面量转换的改善，原来的陷阱基本都已经消除，因此本节进行了一些简化，去掉了过时的内容。</li>
+</ul>
+<h3 id="1-1-1-2014-%E5%B9%B4-11-%E6%9C%88-7-%E6%97%A5" class="calibre8">1.1.1 (2014 年 11 月 7 日)</h3>
+<ul class="calibre19">
+<li class="calibre3"><a href="closure-ambiguous.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《闭包歧义》</a>中的内容在 Swift 1.1 中已经发生了变化，因此重写了这一节。</li>
+<li class="calibre3">将代码示例中的 <code class="calibre13 pcalibre6 pcalibre5">toRaw()</code> 和 <code class="calibre13 pcalibre6 pcalibre5">fromRaw()</code> 按照 Swift 1.1 的语法改为了 <code class="calibre13 pcalibre6 pcalibre5">rawValue</code> 和对应的 <code class="calibre13 pcalibre6 pcalibre5">init</code> 方法。</li>
+</ul>
+<h3 id="1-1-0-2014-%E5%B9%B4-10-%E6%9C%88-21-%E6%97%A5" class="calibre8">1.1.0 (2014 年 10 月 21 日)</h3>
+<ul class="calibre19">
+<li class="calibre3"><a href="property-access.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《属性访问控制》</a>中“Swift 中的 swift 和其他大部分语言不太一样” 应为 “Swift 中的 private 和其他大部分语言不太一样”</li>
+<li class="calibre3"><a href="code-framework.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《代码组织和 Framework》</a>中 “开发中我们所使以的第三方框” 改为 “开发中我们所使用的第三方框”</li>
+<li class="calibre3"><a href="func-naming.md" class="pcalibre pcalibre2 pcalibre1 calibre4">《方法名称参数省略》</a>中 “使用自动覆盖的方式” 应为 “使用原子写入的方式”</li>
+<li class="calibre3"><a href="memory-retain-cycle.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《内存管理，weak 和 unowned》</a>中对 unowed 的表述不当，进行了修正</li>
+<li class="calibre3"><a href="literal-convertible.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《字面量转换》</a>的内容完全重写，更新为适应 Swift 1.1 版本。</li>
+<li class="calibre3"><a href="any-anyObject.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Any 和 AnyObject》</a>一节作出修正，Any 现在可以支持方法类型了。</li>
+<li class="calibre3"><a href="init-nil.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《初始化返回 nil》</a>一节作出修正，在本书 1.0.1 版本的基础上，进一步更改了部分内容的表述，使其更适应 Swift 1.1 中关于可失败的初始化方法的修改。</li>
+</ul>
+<h3 id="1-0-1-2014-%E5%B9%B4-9-%E6%9C%88-25-%E6%97%A5" class="calibre8">1.0.1 (2014 年 9 月 25 日)</h3>
+<ul class="calibre19">
+<li class="calibre3"><a href="multitype-collection.m" class="pcalibre pcalibre2 pcalibre1 calibre4">《多类型和容器》</a>中在 <code class="calibre13 pcalibre6 pcalibre5">let mixed: [Printable]</code> 处有个字面量转换的小陷阱，在是否导入 <code class="calibre13 pcalibre6 pcalibre5">Foundation</code> 时存在一个有趣的差别，对这部分进行了一定补充说明；</li>
+<li class="calibre3"><a href="protocol-mutating.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《将 protocol 的方法声明为 mutating》</a>中 <code class="calibre13 pcalibre6 pcalibre5">blueColor()!</code> -&gt; <code class="calibre13 pcalibre6 pcalibre5">blueColor()</code>。<code class="calibre13 pcalibre6 pcalibre5">blueColor()</code> 返回的已经是 <code class="calibre13 pcalibre6 pcalibre5">UIColor</code> 而不是 <code class="calibre13 pcalibre6 pcalibre5">UIColor?</code>；</li>
+<li class="calibre3"><a href="typealias.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《typealias 和泛型接口》</a>中有误字 “wei”，删除；</li>
+<li class="calibre3"><a href="optional-chaining.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Optional Chaining 文字错误》</a> 它们的等价的 -&gt; 它们是等价的；</li>
+<li class="calibre3"><a href="swift-cli.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《Swift 命令行工具》</a>中示例代码 xcrun swift MyClass.swift main.swift 应当为 xcrun swiftc MyClass.swift main.swift；</li>
+<li class="calibre3"><a href="memory-retain-cycle.html" class="pcalibre pcalibre2 pcalibre1 calibre4">《内存管理，weak和unowned》</a>笔误，“变量一定需要时 Optional 值” 中 “时” 应当为 “是”。</li>
+</ul>
+<h3 id="1-0-0-2014-%E5%B9%B4-9-%E6%9C%88-19-%E6%97%A5" class="calibre8">1.0.0 (2014 年 9 月 19 日)</h3>
+<p class="calibre9">《Swifter - 100 个 Swift 必备 tips》首发</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

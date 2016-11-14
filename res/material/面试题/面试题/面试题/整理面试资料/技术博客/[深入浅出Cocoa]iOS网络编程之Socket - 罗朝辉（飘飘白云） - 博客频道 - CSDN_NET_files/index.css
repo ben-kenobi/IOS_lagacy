@@ -1,0 +1,999 @@
+.csdn-toolbar {
+	background: rgb(255, 255, 255); padding: 0px; color: rgb(51, 51, 51); line-height: 1.5em; font-family: "Helvetica", "Tahoma, Arial", "sans-serif"; font-size: 0.75em; border-bottom-color: rgb(233, 233, 233); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.csdn-toolbar * {
+	box-sizing: content-box; -webkit-box-sizing: content-box; -moz-box-sizing: content-box;
+}
+.csdn-toolbar *::before {
+	box-sizing: content-box; -webkit-box-sizing: content-box; -moz-box-sizing: content-box;
+}
+.csdn-toolbar *::after {
+	box-sizing: content-box; -webkit-box-sizing: content-box; -moz-box-sizing: content-box;
+}
+.csdn-toolbar div {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar dl {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar dt {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar dd {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar ul {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar li {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar h1 {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar h2 {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar h3 {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar h4 {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar h5 {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar h6 {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar pre {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar code {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar form {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar fieldset {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar legend {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar input {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar textarea {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar p {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar blockquote {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar th {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar td {
+	margin: 0px; padding: 0px; text-align: left; line-height: 1.5em;
+}
+.csdn-toolbar table {
+	border-collapse: collapse; table-layout: fixed; border-spacing: 0;
+}
+.csdn-toolbar fieldset {
+	border: 0px currentColor; border-image: none;
+}
+.csdn-toolbar img {
+	border: 0px currentColor; border-image: none;
+}
+.csdn-toolbar address {
+	font-style: normal; font-weight: normal;
+}
+.csdn-toolbar caption {
+	font-style: normal; font-weight: normal;
+}
+.csdn-toolbar cite {
+	font-style: normal; font-weight: normal;
+}
+.csdn-toolbar code {
+	font-style: normal; font-weight: normal;
+}
+.csdn-toolbar dfn {
+	font-style: normal; font-weight: normal;
+}
+.csdn-toolbar em {
+	font-style: normal; font-weight: normal;
+}
+.csdn-toolbar strong {
+	font-style: normal; font-weight: normal;
+}
+.csdn-toolbar th {
+	font-style: normal; font-weight: normal;
+}
+.csdn-toolbar var {
+	font-style: normal; font-weight: normal;
+}
+.csdn-toolbar ul {
+	list-style: none;
+}
+.csdn-toolbar caption {
+	text-align: left;
+}
+.csdn-toolbar th {
+	text-align: left;
+}
+.csdn-toolbar .clearfix::before {
+	display: table; content: " ";
+}
+.csdn-toolbar .clearfix::after {
+	display: table; content: " ";
+}
+.csdn-toolbar .clearfix::after {
+	clear: both;
+}
+.csdn-toolbar .clearfix {
+	overflow: visible;
+}
+.csdn-toolbar .col-sm-2 {
+	float: left;
+}
+.csdn-toolbar h1 {
+	background: none; margin: 0px; text-align: left; color: rgb(51, 51, 51); line-height: 1.5em; font-family: "Helvetica", "Tahoma, Arial", "sans-serif"; font-weight: bold;
+}
+.csdn-toolbar h2 {
+	background: none; margin: 0px; text-align: left; color: rgb(51, 51, 51); line-height: 1.5em; font-family: "Helvetica", "Tahoma, Arial", "sans-serif"; font-weight: bold;
+}
+.csdn-toolbar h3 {
+	background: none; margin: 0px; text-align: left; color: rgb(51, 51, 51); line-height: 1.5em; font-family: "Helvetica", "Tahoma, Arial", "sans-serif"; font-weight: bold;
+}
+.csdn-toolbar h4 {
+	background: none; margin: 0px; text-align: left; color: rgb(51, 51, 51); line-height: 1.5em; font-family: "Helvetica", "Tahoma, Arial", "sans-serif"; font-weight: bold;
+}
+.csdn-toolbar h5 {
+	background: none; margin: 0px; text-align: left; color: rgb(51, 51, 51); line-height: 1.5em; font-family: "Helvetica", "Tahoma, Arial", "sans-serif"; font-weight: bold;
+}
+.csdn-toolbar h6 {
+	background: none; margin: 0px; text-align: left; color: rgb(51, 51, 51); line-height: 1.5em; font-family: "Helvetica", "Tahoma, Arial", "sans-serif"; font-weight: bold;
+}
+.csdn-toolbar h1 {
+	font-size: 3em;
+}
+.csdn-toolbar h2 {
+	font-size: 2.5em;
+}
+.csdn-toolbar h3 {
+	font-size: 2em;
+}
+.csdn-toolbar h4 {
+	font-size: 1.5em;
+}
+.csdn-toolbar h5 {
+	font-size: 1.16em;
+}
+.csdn-toolbar h6 {
+	font-size: 1em;
+}
+.csdn-toolbar textarea {
+	resize: none;
+}
+.csdn-toolbar a:link {
+	color: rgb(51, 51, 51); text-decoration: none;
+}
+.csdn-toolbar a:visited {
+	color: rgb(51, 51, 51); text-decoration: none;
+}
+.csdn-toolbar a:hover {
+	color: rgb(204, 0, 0); text-decoration: none;
+}
+.csdn-toolbar h1 a:link {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h1 a:visited {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h2 a:link {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h2 a:visited {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h3 a:link {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h3 a:visited {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h4 a:link {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h4 a:visited {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h5 a:link {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h5 a:visited {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h6 a:link {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h6 a:visited {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar h1 a:hover {
+	color: rgb(204, 0, 0);
+}
+.csdn-toolbar h2 a:hover {
+	color: rgb(204, 0, 0);
+}
+.csdn-toolbar h3 a:hover {
+	color: rgb(204, 0, 0);
+}
+.csdn-toolbar h4 a:hover {
+	color: rgb(204, 0, 0);
+}
+.csdn-toolbar h5 a:hover {
+	color: rgb(204, 0, 0);
+}
+.csdn-toolbar h6 a:hover {
+	color: rgb(204, 0, 0);
+}
+.csdn-toolbar a:focus {
+	
+}
+.csdn-toolbar a.f-blue:link {
+	color: rgb(41, 129, 169); text-decoration: none;
+}
+.csdn-toolbar a.f-blue:visited {
+	color: rgb(41, 129, 169); text-decoration: none;
+}
+.csdn-toolbar a.f-blue:visited {
+	color: rgb(2, 93, 135); text-decoration: none;
+}
+.csdn-toolbar a.f-undline:link {
+	text-decoration: underline;
+}
+.csdn-toolbar a.f-undline:visited {
+	text-decoration: underline;
+}
+.csdn-toolbar a.f-undline:visited {
+	text-decoration: underline;
+}
+.csdn-toolbar .col-sm-1 {
+	float: left;
+}
+.csdn-toolbar .col-sm-2 {
+	float: left;
+}
+.csdn-toolbar .col-sm-3 {
+	float: left;
+}
+.csdn-toolbar .col-sm-4 {
+	float: left;
+}
+.csdn-toolbar .col-sm-5 {
+	float: left;
+}
+.csdn-toolbar .col-sm-6 {
+	float: left;
+}
+.csdn-toolbar .col-sm-7 {
+	float: left;
+}
+.csdn-toolbar .col-sm-8 {
+	float: left;
+}
+.csdn-toolbar .col-sm-9 {
+	float: left;
+}
+.csdn-toolbar .col-sm-10 {
+	float: left;
+}
+.csdn-toolbar .col-sm-11 {
+	float: left;
+}
+.csdn-toolbar .form-horizontal .form-group::after {
+	clear: both;
+}
+.csdn-toolbar .form-horizontal .form-group::before {
+	display: table; content: " ";
+}
+.csdn-toolbar .form-horizontal .form-group::after {
+	display: table; content: " ";
+}
+.csdn-toolbar .col-sm-12 {
+	width: 100%;
+}
+.csdn-toolbar .col-sm-11 {
+	width: 91.66%;
+}
+.csdn-toolbar .col-sm-10 {
+	width: 86.33%;
+}
+.csdn-toolbar .col-sm-9 {
+	width: 75%;
+}
+.csdn-toolbar .col-sm-8 {
+	width: 66.66%;
+}
+.csdn-toolbar .col-sm-7 {
+	width: 58.33%;
+}
+.csdn-toolbar .col-sm-6 {
+	width: 50%;
+}
+.csdn-toolbar .col-sm-5 {
+	width: 41.66%;
+}
+.csdn-toolbar .col-sm-4 {
+	width: 33.33%;
+}
+.csdn-toolbar .col-sm-3 {
+	width: 25%;
+}
+.csdn-toolbar .col-sm-2 {
+	width: 16.66%;
+}
+.csdn-toolbar .col-sm-1 {
+	width: 8.33%;
+}
+.csdn-toolbar .pull-left {
+	float: left;
+}
+.csdn-toolbar .pull-right {
+	float: right;
+}
+.csdn-toolbar a {
+	color: rgb(153, 153, 153); font-size: 12px; font-weight: normal; text-decoration: none;
+}
+.csdn-toolbar a:hover {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar dl {
+	margin: 0px; font-size: 12px;
+}
+.csdn-toolbar ul {
+	margin: 0px; padding: 0px;
+}
+.csdn-toolbar li {
+	margin: 0px; padding: 0px;
+}
+.csdn-toolbar li {
+	background: none; border-width: 0px 1px; border-style: solid; border-color: rgb(238, 238, 238) rgb(255, 255, 255) rgb(238, 238, 238) rgb(238, 238, 238); list-style: none; border-image: none; width: 40px; height: 40px; float: left; position: relative;
+}
+.csdn-toolbar .hide {
+	display: none;
+}
+.csdn-toolbar .open .dropdown-menu {
+	border-radius: 0px; top: 23px; display: block; min-width: 70px;
+}
+.csdn-toolbar .open .dropdown-menu li {
+	border: 0px currentColor; border-image: none; width: 100%; height: auto; text-align: center; color: rgb(51, 51, 51); padding-right: 10px; float: left;
+}
+.csdn-toolbar input:focus {
+	border-color: rgb(153, 204, 255); box-shadow: none;
+}
+.csdn-toolbar textarea:focus {
+	border-color: rgb(153, 204, 255); box-shadow: none;
+}
+.csdn-toolbar .form-horizontal .form-group {
+	margin: 0px 0px 10px;
+}
+.csdn-toolbar .form-horizontal .form-group .ft {
+	width: 362px; padding-left: 12px; margin-left: 25px;
+}
+.csdn-toolbar .form-horizontal .control-label {
+	padding: 7px 10px 0px 0px; width: 38px; text-align: right; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;
+}
+.csdn-toolbar .form-control {
+	padding: 0px 7px; border-radius: 0px; border: 1px solid rgb(204, 204, 204); transition:border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; border-image: none; width: 100%; height: 28px; color: rgb(85, 85, 85); line-height: 1.4285; font-size: 14px; vertical-align: middle; display: block; box-shadow: none; background-image: none; background-color: rgb(255, 255, 255); -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+.csdn-toolbar textarea.form-control {
+	height: 70px; padding-top: 5px;
+}
+.csdn-toolbar .nobg {
+	background: none !important;
+}
+.csdn-toolbar .icon-hasnotes-sm {
+	background-image: url("../images/f_icon.png");
+}
+.csdn-toolbar .icon-enter-sm {
+	background-image: url("../images/f_icon.png");
+}
+.csdn-toolbar .write-icon {
+	background-image: url("../images/f_icon.png");
+}
+.csdn-toolbar .icon-enter-sm {
+	background-position: 0px -192px;
+}
+.csdn-toolbar .icon {
+	background-position: 1px 1px; margin: 10px auto 0px; width: 20px; height: 20px; font-size: 16px; position: relative; z-index: 1001; background-image: url("../images/f_icon.png"); background-repeat: no-repeat;
+}
+.csdn-toolbar .icon .wrap {
+	background: rgb(255, 255, 255); padding: 7px; border: 1px solid rgb(204, 204, 204); border-image: none; top: 30px; font-size: 12px; display: none; position: absolute; box-shadow: 0px 3px 2px rgba(0,0,0,0.15);
+}
+.csdn-toolbar .icon .curr-icon-wrap {
+	top: -4px; width: 41px; height: 3px; border-bottom-color: rgb(255, 255, 255); border-bottom-width: 1px; border-bottom-style: solid; position: absolute;
+}
+.csdn-toolbar .on {
+	border-width: 0px 1px; border-color: rgb(204, 204, 204); background-color: rgb(255, 255, 255);
+}
+.csdn-toolbar .on .wrap {
+	display: block;
+}
+.csdn-toolbar .container {
+	margin: 0px auto; width: 960px;
+}
+.csdn-toolbar .container::before {
+	display: table; content: " ";
+}
+.csdn-toolbar .container::after {
+	display: table; content: " ";
+}
+.csdn-toolbar .btn {
+	padding: 0px; border-radius: 0px; border: 1px solid transparent; border-image: none; width: 80px; height: 28px; text-align: center; color: rgb(255, 255, 255); line-height: 28px; font-size: 14px; font-weight: normal; margin-bottom: 0px; vertical-align: middle; display: inline-block; white-space: nowrap; cursor: pointer; box-sizing: border-box; -ms-user-select: none; background-image: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -webkit-user-select: none; -moz-user-select: none; -o-user-select: none; user-select: none;
+}
+.csdn-toolbar .btn:focus {
+	outline: rgb(51, 51, 51) dotted thin; outline-offset: -2px;
+}
+.csdn-toolbar .btn:hover {
+	color: rgb(51, 51, 51); text-decoration: none;
+}
+.csdn-toolbar .btn:focus {
+	color: rgb(51, 51, 51); text-decoration: none;
+}
+.csdn-toolbar .btn:active {
+	outline: 0px; box-shadow: inset 0px 3px 5px rgba(0,0,0,0.125); background-image: none; -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.csdn-toolbar .disabled.btn {
+	cursor: not-allowed; opacity: 0.65; pointer-events: none; box-shadow: none; -webkit-box-shadow: none;
+}
+.csdn-toolbar [disabled].btn {
+	cursor: not-allowed; opacity: 0.65; pointer-events: none; box-shadow: none; -webkit-box-shadow: none;
+}
+.csdn-toolbar fieldset[disabled] .btn {
+	cursor: not-allowed; opacity: 0.65; pointer-events: none; box-shadow: none; -webkit-box-shadow: none;
+}
+.csdn-toolbar .btn:hover {
+	color: rgb(255, 255, 255);
+}
+.csdn-toolbar .btn:focus {
+	color: rgb(255, 255, 255);
+}
+.csdn-toolbar .btn-default:hover {
+	border-color: rgb(173, 173, 173); color: rgb(238, 238, 238); background-color: rgb(235, 235, 235);
+}
+.csdn-toolbar .btn-default:focus {
+	border-color: rgb(173, 173, 173); color: rgb(238, 238, 238); background-color: rgb(235, 235, 235);
+}
+.csdn-toolbar .btn-default:active {
+	border-color: rgb(173, 173, 173); color: rgb(238, 238, 238); background-color: rgb(235, 235, 235);
+}
+.csdn-toolbar .active.btn-default {
+	border-color: rgb(173, 173, 173); color: rgb(238, 238, 238); background-color: rgb(235, 235, 235);
+}
+.csdn-toolbar .open .btn-default.dropdown-toggle {
+	border-color: rgb(173, 173, 173); color: rgb(238, 238, 238); background-color: rgb(235, 235, 235);
+}
+.csdn-toolbar .btn-default:hover {
+	background-color: rgb(102, 102, 102);
+}
+.csdn-toolbar .btn-default:focus {
+	background-color: rgb(102, 102, 102);
+}
+.csdn-toolbar .btn-default {
+	background-color: rgb(153, 153, 153);
+}
+.csdn-toolbar .btn-primary {
+	background-color: rgb(220, 60, 0);
+}
+.csdn-toolbar .btn-primary:hover {
+	background-color: rgb(180, 50, 0);
+}
+.csdn-toolbar .btn-primary:focus {
+	background-color: rgb(180, 50, 0);
+}
+.csdn-toolbar .loginlink {
+	background: none; padding: 10px 13px; border: 0px currentColor; border-image: none; height: 20px; display: none;
+}
+.csdn-toolbar .logo {
+	padding: 0px; width: auto; height: 40px; font-size: 12px;
+}
+.csdn-toolbar .logo .icon {
+	background-position: 0px 0px; margin: 0px; padding: 0px; width: 40px; height: 40px; line-height: 18px; float: left; display: block;
+}
+.csdn-toolbar .logo .img {
+	width: 120px; height: 40px; margin-left: 10px; float: left; background-image: url("../images/f_name.png");
+}
+.csdn-toolbar .none {
+	background-position: 0px 45px;
+}
+.csdn-toolbar .blog-icon {
+	background-position: 0px -52px;
+}
+.csdn-toolbar .down-icon {
+	background-position: 0px -102px;
+}
+.csdn-toolbar .bbs-icon {
+	background-position: 0px -152px;
+}
+.csdn-toolbar .space-icon {
+	background-position: 0px -202px;
+}
+.csdn-toolbar .code-icon {
+	background-position: 0px -252px;
+}
+.csdn-toolbar .share-icon {
+	background-position: 0px -305px;
+}
+.csdn-toolbar .tag-icon {
+	background-position: 0px -354px;
+}
+.csdn-toolbar .dashboard-icon {
+	background-position: 0px -403px;
+}
+.csdn-toolbar .news-icon {
+	background-position: 0px 16px;
+}
+.csdn-toolbar .tag-icon {
+	background-position: 0px -354px;
+}
+.csdn-toolbar .notify-icon {
+	background-position: 0px -456px;
+}
+.csdn-toolbar .ask-icon {
+	background-position: 0px -503px;
+}
+.csdn-toolbar .search .icon {
+	background-position: 0px -130px;
+}
+.csdn-toolbar .search .wrap {
+	padding: 10px; width: 400px;
+}
+.csdn-toolbar .search .wrap .border {
+	border: 1px solid rgb(204, 204, 204); border-image: none;
+}
+.csdn-toolbar .search .wrap input {
+	padding: 0px 5px; border: 0px currentColor; border-image: none; width: 356px; height: 26px; line-height: 22px;
+}
+.csdn-toolbar .search .wrap input:focus {
+	border: currentColor; border-image: none;
+}
+.csdn-toolbar .search .wrap .btn {
+	height: 26px;
+}
+.csdn-toolbar .search .wrap .icon-enter-sm {
+	width: 20px; height: 18px; right: 15px; margin-top: 4px; position: absolute;
+}
+.csdn-toolbar .on .on-search-icon {
+	background-position: -20px -130px;
+}
+.csdn-toolbar .on .on-search-icon .wrap {
+	right: -221px;
+}
+.csdn-toolbar .on .on-search-icon .curr-icon-wrap {
+	right: 209px;
+}
+.csdn-toolbar .unlogin .search {
+	border-width: 0px 1px;
+}
+.csdn-toolbar .unlogin .search .wrap {
+	right: -53px;
+}
+.csdn-toolbar .unlogin .search .curr-icon-wrap {
+	right: 41px;
+}
+.csdn-toolbar .favor .icon {
+	background-position: 0px -111px;
+}
+.csdn-toolbar .favor .favor-btns {
+	padding: 0px; text-align: right;
+}
+.csdn-toolbar .favor .favor-btns .btn {
+	margin-left: 4px;
+}
+.csdn-toolbar .favor .wrap {
+	padding: 20px;
+}
+.csdn-toolbar .favor .checkbox label {
+	display: block;
+}
+.csdn-toolbar .favor .share {
+	margin: 2px 5px 0px 0px; height: 14px; vertical-align: middle;
+}
+.csdn-toolbar .on .on-favor-icon {
+	background-position: -20px -111px;
+}
+.csdn-toolbar .on .on-favor-icon .wrap {
+	width: 400px; height: 230px; right: -179px;
+}
+.csdn-toolbar .on .on-favor-icon .curr-icon-wrap {
+	right: 167px;
+}
+.csdn-toolbar .on .on-favor-icon .last {
+	margin-right: 0px;
+}
+.csdn-toolbar .on .on-favor-icon .favor-form .alert {
+	display: none;
+}
+.csdn-toolbar .on .on-favor-icon .favor-form .error .alert {
+	margin: 5px 0px 0px 81px; width: 300px; display: block;
+}
+.csdn-toolbar .on .on-favor-icon .favor-failed {
+	text-align: center; margin-top: 60px;
+}
+.csdn-toolbar .on .on-favor-icon .favor-success {
+	text-align: center; margin-top: 60px;
+}
+.csdn-toolbar .on .on-favor-icon .favor-failed .msg {
+	line-height: 40px; font-size: 18px; vertical-align: top;
+}
+.csdn-toolbar .on .on-favor-icon .favor-success .msg {
+	line-height: 40px; font-size: 18px; vertical-align: top;
+}
+.csdn-toolbar .on .on-favor-icon .favor-failed .btns {
+	text-align: center; margin-top: 10px;
+}
+.csdn-toolbar .on .on-favor-icon .favor-success .btns {
+	text-align: center; margin-top: 10px;
+}
+.csdn-toolbar .on .on-favor-icon .favor-failed .btns a {
+	margin-left: 10px;
+}
+.csdn-toolbar .on .on-favor-icon .favor-success .btns a {
+	margin-left: 10px;
+}
+.csdn-toolbar .notify .on-notify-icon {
+	display: block !important;
+}
+.csdn-toolbar .notify .icon {
+	background-position: 0px -90px;
+}
+.csdn-toolbar .notify .icon-hasnotes-sm {
+	background-position: -23px -196px; left: 23px; top: 9px; width: 10px; height: 10px; position: absolute; z-index: 1002;
+}
+.csdn-toolbar .notify .number {
+	background: 0px 0px rgb(220, 60, 0); left: 24px; top: 9px; width: 12px; height: 13px; text-align: center; color: rgb(255, 255, 255); line-height: 14px; font-size: 12px; position: absolute; z-index: 1002;
+}
+.csdn-toolbar #header_notice_num {
+	background: none !important; display: none;
+}
+.csdn-toolbar .csdn_note {
+	display: block !important;
+}
+.csdn-toolbar .csdn_note .close1 {
+	display: none;
+}
+.csdn-toolbar .csdn_note .go_all {
+	background: none; float: right;
+}
+.csdn-toolbar .csdn_note .read_all {
+	background: none; float: right;
+}
+.csdn-toolbar .csdn_note .go_back {
+	line-height: 39px;
+}
+.csdn-toolbar .csdn_note .detail_con {
+	min-height: 312px !important;
+}
+.csdn-toolbar .csdn_note .notifications .count_down {
+	color: rgb(204, 204, 204);
+}
+.csdn-toolbar .csdn_note .notifications .list dt {
+	line-height: 27px;
+}
+.csdn-toolbar .csdn_note .notifications .menu_title a {
+	margin-right: 5px;
+}
+.csdn-toolbar .on .on-notify-icon {
+	background-position: -20px -90px;
+}
+.csdn-toolbar .on .on-notify-icon .wrap {
+	padding: 0px; left: auto !important; width: 450px !important; right: -137px !important;
+}
+.csdn-toolbar .on .on-notify-icon .curr-icon-wrap {
+	right: 125px;
+}
+.csdn-toolbar .on .on-notify-icon .csdn_note .box {
+	border: 0px currentColor; border-image: none; left: 0px; top: 0px; box-shadow: none;
+}
+.csdn-toolbar .on .on-notify-icon .last {
+	margin-right: 0px;
+}
+.csdn-toolbar .ugc .icon {
+	background-position: 0px -70px;
+}
+.csdn-toolbar .ugc .p-news .icon {
+	background-position: -42px -52px;
+}
+.csdn-toolbar .ugc .p-news:hover .icon {
+	background-position: -62px -52px;
+}
+.csdn-toolbar .ugc .p-down .icon {
+	background-position: -42px -72px;
+}
+.csdn-toolbar .ugc .p-down:hover .icon {
+	background-position: -62px -72px;
+}
+.csdn-toolbar .ugc .p-doc .icon {
+	background-position: -42px -72px;
+}
+.csdn-toolbar .ugc .p-doc:hover .icon {
+	background-position: -62px -72px;
+}
+.csdn-toolbar .ugc .p-ask .icon {
+	background-position: -42px -131px;
+}
+.csdn-toolbar .ugc .p-ask:hover .icon {
+	background-position: -62px -131px;
+}
+.csdn-toolbar .ugc .c-obj .icon {
+	background-position: -42px -92px;
+}
+.csdn-toolbar .ugc .c-obj:hover .icon {
+	background-position: -62px -92px;
+}
+.csdn-toolbar .ugc .c-code .icon {
+	background-position: -42px -191px;
+}
+.csdn-toolbar .ugc .c-code:hover .icon {
+	background-position: -62px -191px;
+}
+.csdn-toolbar .ugc .p-src .icon {
+	background-position: -42px -170px;
+}
+.csdn-toolbar .ugc .p-src:hover .icon {
+	background-position: -62px -170px;
+}
+.csdn-toolbar .ugc .p-blog .icon {
+	background-position: -42px -111px;
+}
+.csdn-toolbar .ugc .p-blog:hover .icon {
+	background-position: -62px -111px;
+}
+.csdn-toolbar .ugc .p-bbs .icon {
+	background-position: -42px -132px;
+}
+.csdn-toolbar .ugc .p-bbs:hover .icon {
+	background-position: -62px -132px;
+}
+.csdn-toolbar .ugc .c-grop .icon {
+	background-position: -42px -152px;
+}
+.csdn-toolbar .ugc .c-grop:hover .icon {
+	background-position: -62px -152px;
+}
+.csdn-toolbar .on .on-ugc-icon {
+	background-position: -20px -70px;
+}
+.csdn-toolbar .on .on-ugc-icon .wrap {
+	padding: 12px 0px; width: 161px; right: -95px;
+}
+.csdn-toolbar .on .on-ugc-icon dl {
+	margin: 0px;
+}
+.csdn-toolbar .on .on-ugc-icon dl dt {
+	width: 100%; font-weight: normal;
+}
+.csdn-toolbar .on .on-ugc-icon dl dt em.icon {
+	margin: 0px 8px 0px 0px; width: 16px; height: 16px; float: left;
+}
+.csdn-toolbar .on .on-ugc-icon dl dt span {
+	height: 12px; line-height: 12px; margin-top: 3px; float: left; display: block;
+}
+.csdn-toolbar .on .on-ugc-icon dl dt a {
+	padding: 10px 13px; text-align: left; display: block;
+}
+.csdn-toolbar .on .on-ugc-icon dl dt a:hover {
+	background: rgb(238, 238, 238); color: rgb(51, 51, 51);
+}
+.csdn-toolbar .on .on-ugc-icon .curr-icon-wrap {
+	right: 83px;
+}
+.csdn-toolbar .on .on-ugc-icon .last {
+	margin-right: 0px;
+}
+.csdn-toolbar .profile .icon {
+	background-position: 0px 1px;
+}
+.csdn-toolbar .profile .curr-icon-img {
+	margin: 0px; width: 20px; height: 20px; display: block;
+}
+.csdn-toolbar .on .settings {
+	background-position: 0px -150px; padding: 0px 10px; margin-right: 2px;
+}
+.csdn-toolbar .on .quit {
+	background-position: 0px -170px; padding: 0px 10px;
+}
+.csdn-toolbar .on .on-profile-icon {
+	background-position: -20px 0px; font-size: 12px;
+}
+.csdn-toolbar .on .on-profile-icon .wrap {
+	padding: 0px; width: 251px; right: -53px;
+}
+.csdn-toolbar .on .on-profile-icon .curr-icon-wrap {
+	right: 41px;
+}
+.csdn-toolbar .on .on-profile-icon .bd {
+	padding: 20px;
+}
+.csdn-toolbar .on .on-profile-icon .bd .write-icon {
+	background-position: -78px -50px; padding: 3px 10px;
+}
+.csdn-toolbar .on .on-profile-icon .bd .img {
+	width: 100px; margin-right: 7px;
+}
+.csdn-toolbar .on .on-profile-icon .bd .info {
+	width: 103px; text-align: left; float: right; -ms-word-wrap: break-word;
+}
+.csdn-toolbar .on .on-profile-icon .bd .info .nickname {
+	font-size: 14px;
+}
+.csdn-toolbar .on .on-profile-icon .bd .info a {
+	padding-bottom: 5px; display: block;
+}
+.csdn-toolbar .on .on-profile-icon .bd .info .fill-dec {
+	color: rgb(102, 102, 102);
+}
+.csdn-toolbar .on .on-profile-icon .ft {
+	padding: 0px 12px 0px 20px; line-height: 40px; position: relative; background-color: rgb(245, 245, 245);
+}
+.csdn-toolbar .on .on-profile-icon .ft .icon-cog {
+	background: url("../images/f_icon.png") no-repeat -2px -152px; width: 16px; height: 16px; margin-top: -1px; margin-right: 2px; vertical-align: middle; display: inline-block;
+}
+.csdn-toolbar .on .on-profile-icon .ft .icon-signout {
+	background: url("../images/f_icon.png") no-repeat -2px -152px; width: 16px; height: 16px; margin-top: -1px; margin-right: 2px; vertical-align: middle; display: inline-block;
+}
+.csdn-toolbar .on .on-profile-icon .ft .icon-signout {
+	background-position: -2px -172px;
+}
+.csdn-toolbar .on .on-profile-icon .ft a {
+	line-height: 40px;
+}
+.csdn-toolbar .on .on-profile-icon .ft .pull-right {
+	margin-top: 13px;
+}
+.csdn-toolbar .on .on-profile-icon .ft .pull-right .out {
+	display: none;
+}
+.csdn-toolbar .on .on-profile-icon .ft .pull-right:hover .out {
+	background: rgb(245, 245, 245); padding: 2px; border-radius: 5px; border: 1px solid rgb(153, 153, 153); border-image: none; top: -12px; width: 32px; height: 16px; text-align: center; right: -10px; color: rgb(102, 102, 102); line-height: 16px; display: block; position: absolute;
+}
+.csdn-toolbar .on .on-profile-icon .ft a:hover .settings {
+	background-position: -20px -150px;
+}
+.csdn-toolbar .on .on-profile-icon .ft a:hover .quit {
+	background-position: -20px -170px;
+}
+.csdn-toolbar .apps {
+	border-width: 0px 1px; border-right-color: rgb(238, 238, 238);
+}
+.csdn-toolbar .apps .icon {
+	background-position: 0px -51px;
+}
+.csdn-toolbar .on.apps {
+	border-width: 0px 1px; border-right-color: rgb(204, 204, 204);
+}
+.csdn-toolbar .on .on-apps-icon {
+	background-position: -20px -51px;
+}
+.csdn-toolbar .on .on-apps-icon .wrap {
+	padding: 0px 20px 20px; width: 310px; right: -11px;
+}
+.csdn-toolbar .on .on-apps-icon .curr-icon-wrap {
+	right: 0px;
+}
+.csdn-toolbar .on .on-apps-icon .detail {
+	width: 90px; font-size: 14px; margin-right: 20px; float: left;
+}
+.csdn-toolbar .on .on-apps-icon .detail dt {
+	color: rgb(51, 51, 51); line-height: 31px; font-weight: bold; margin-top: 15px; border-bottom-color: rgb(102, 102, 102); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.csdn-toolbar .on .on-apps-icon .detail dd {
+	line-height: 31px; border-bottom-color: rgb(221, 221, 221); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.csdn-toolbar .on .on-apps-icon .detail dd a {
+	color: rgb(51, 51, 51);
+}
+.csdn-toolbar .on .on-apps-icon .last.detail {
+	margin-right: 0px;
+}
+.csdn-toolbar .unlogin .loginlink {
+	width: 60px; height: 20px; line-height: 24px; font-size: 12px; border-right-color: currentColor; border-right-width: medium; border-right-style: none; display: block;
+}
+.csdn-toolbar .unlogin .favor {
+	display: none;
+}
+.csdn-toolbar .unlogin .notify {
+	display: none;
+}
+.csdn-toolbar .unlogin .ugc {
+	display: none;
+}
+.csdn-toolbar .unlogin .profile {
+	display: none;
+}
+.csdn_notice_tip {
+	display: none !important;
+}
+.csdn-toolbar-skin-black {
+	background: rgb(72, 82, 94); height: 40px; border-bottom-color: currentColor; border-bottom-width: medium; border-bottom-style: none;
+}
+.csdn-toolbar-skin-black li {
+	height: 40px; border-right-color: rgb(72, 82, 94); border-left-color: rgb(116, 121, 126); border-right-width: 1px; border-left-width: 1px; border-right-style: solid; border-left-style: solid;
+}
+.csdn-toolbar-skin-black li.on {
+	width: 40px; height: 40px; border-right-color: rgb(255, 255, 255); border-right-width: 1px; border-right-style: solid;
+}
+.csdn-toolbar-skin-black .icon .wrap {
+	top: 30px;
+}
+.csdn-toolbar-skin-black .icon .curr-icon-wrap {
+	width: 41px;
+}
+.csdn-toolbar-skin-black .apps {
+	border-right-color: rgb(116, 121, 126);
+}
+.csdn-toolbar-skin-black .on .on-apps-icon .wrap {
+	right: -12px;
+}
+.csdn-toolbar-skin-black .loginlink {
+	background: none; color: rgb(221, 221, 221);
+}
+.csdn-toolbar-skin-black .loginlink a {
+	color: rgb(221, 221, 221);
+}
+.csdn-toolbar-skin-black .loginlink a:hover {
+	color: rgb(254, 254, 254);
+}
+.csdn-toolbar-skin-black .blog-icon {
+	background-position: -162px -52px;
+}
+.csdn-toolbar-skin-black .down-icon {
+	background-position: -162px -102px;
+}
+.csdn-toolbar-skin-black .bbs-icon {
+	background-position: -162px -152px;
+}
+.csdn-toolbar-skin-black .space-icon {
+	background-position: -162px -202px;
+}
+.csdn-toolbar-skin-black .code-icon {
+	background-position: -162px -252px;
+}
+.csdn-toolbar-skin-black .share-icon {
+	background-position: -162px -305px;
+}
+.csdn-toolbar-skin-black .tag-icon {
+	background-position: -162px -354px;
+}
+.csdn-toolbar-skin-black .dashboard-icon {
+	background-position: -162px -403px;
+}
+.csdn-toolbar-skin-black .news-icon {
+	background-position: -162px -3px;
+}
+.csdn-toolbar-skin-black .tag-icon {
+	background-position: -162px -354px;
+}
+.csdn-toolbar-skin-black .notify-icon {
+	background-position: -162px -456px;
+}
+.csdn-toolbar-skin-black .ask-icon {
+	background-position: -162px -503px;
+}
+.navbar-fixed-top {
+	left: 0px; right: 0px; position: fixed; z-index: 1030;
+}
+.navbar-fixed-bottom {
+	left: 0px; right: 0px; position: fixed; z-index: 1030;
+}
+.navbar-fixed-top {
+	top: 0px;
+}
+.csdn-toolbar .icon-signout {
+	line-height: 40px;
+}

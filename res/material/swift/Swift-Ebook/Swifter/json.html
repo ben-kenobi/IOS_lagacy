@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>JSON | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_90">JSON</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="json" class="calibre1">JSON</h1>
+<p class="calibre9">如果 app 需要有网络功能并且有一个后端服务器处理和返回数据的话，那么现在基本上要和 JSON 打交道是没跑儿了的。在 Swift 里处理 JSON 其实是一件挺棘手的事情，因为 Swift 对于类型的要求非常严格，所以在解析完 JSON 之后想要从结果的 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 中获取某个键值是一件非常麻烦的事情。举个例子，我们使用 <code class="calibre13 pcalibre6 pcalibre5">NSJSONSerialization</code> 解析完一个 JSON 字符串后，得到的是 <code class="calibre13 pcalibre6 pcalibre5">AnyObject?</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// jsonString</span>
+{<span class="hljs-string">"menu"</span>: {
+    <span class="hljs-string">"id"</span>: <span class="hljs-string">"file"</span>,
+    <span class="hljs-string">"value"</span>: <span class="hljs-string">"File"</span>,
+    <span class="hljs-string">"popup"</span>: {
+        <span class="hljs-string">"menuitem"</span>: [
+            {<span class="hljs-string">"value"</span>: <span class="hljs-string">"New"</span>, <span class="hljs-string">"onclick"</span>: <span class="hljs-string">"CreateNewDoc()"</span>},
+            {<span class="hljs-string">"value"</span>: <span class="hljs-string">"Open"</span>, <span class="hljs-string">"onclick"</span>: <span class="hljs-string">"OpenDoc()"</span>},
+            {<span class="hljs-string">"value"</span>: <span class="hljs-string">"Close"</span>, <span class="hljs-string">"onclick"</span>: <span class="hljs-string">"CloseDoc()"</span>}
+        ]
+    }
+}}
+</code></pre>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> jsonString = <span class="hljs-title">//...</span>
+
+<span class="hljs-keyword">let</span> json: <span class="hljs-func">AnyObject</span> = try! <span class="hljs-func">NSJSONSerialization</span>.<span class="hljs-func">JSONObjectWithData</span>(
+    jsonString.dataUsingEncoding(<span class="hljs-func">NSUTF8StringEncoding</span>, allowLossyConversion: <span class="hljs-params">true</span>)!,
+    options: [])
+</code></pre>
+<p class="calibre9">我们如果想要访问 menu 里的 popup 中 第一个 menuitem 的 value 值的话，最正规的情况下，需要写这样的代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> jsonDic = json <span class="hljs-keyword">as</span>? <span class="hljs-func">NSDictionary</span> {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> menu = jsonDic[<span class="hljs-string">"menu"</span>] <span class="hljs-keyword">as</span>? [<span class="hljs-func">String</span>: <span class="hljs-func">AnyObject</span>] {
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> popup: <span class="hljs-func">AnyObject</span> = menu[<span class="hljs-string">"popup"</span>] {
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> popupDic = popup <span class="hljs-keyword">as</span>? [<span class="hljs-func">String</span>: <span class="hljs-func">AnyObject</span>] {
+                <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> menuItems: <span class="hljs-func">AnyObject</span> = popupDic[<span class="hljs-string">"menuitem"</span>] {
+                    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> menuItemsArr = menuItems <span class="hljs-keyword">as</span>? [<span class="hljs-func">AnyObject</span>] {
+                        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> item0 = menuItemsArr[<span class="hljs-params">0</span>]
+                                        <span class="hljs-keyword">as</span>? [<span class="hljs-func">String</span>: <span class="hljs-func">AnyObject</span>] {
+                            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> value: <span class="hljs-func">AnyObject</span> = item0[<span class="hljs-string">"value"</span>] {
+                                <span class="hljs-params">print</span>(value)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+<span class="hljs-title">// 输出 New</span>
+</code></pre>
+<p class="calibre9">什么？你难道把这段代码看完了？我都不忍心写下去了...如果你真的想要坚持这么做的话，我只能说呵呵，并且祝你好运了。</p>
+<p class="calibre9">当然，在 Swift 1.2 中，我们可以在同一个 <code class="calibre13 pcalibre6 pcalibre5">if let</code> 语句中进行 unwrap，这样会比原来稍好一些，但是依旧十分麻烦：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> jsonDic = json <span class="hljs-keyword">as</span>? <span class="hljs-func">NSDictionary</span>,
+          menu = jsonDic[<span class="hljs-string">"menu"</span>] <span class="hljs-keyword">as</span>? [<span class="hljs-func">String</span>: <span class="hljs-func">AnyObject</span>],
+         popup = menu[<span class="hljs-string">"popup"</span>],
+      popupDic = popup <span class="hljs-keyword">as</span>? [<span class="hljs-func">String</span>: <span class="hljs-func">AnyObject</span>],
+     menuItems = popupDic[<span class="hljs-string">"menuitem"</span>],
+  menuItemsArr = menuItems <span class="hljs-keyword">as</span>? [<span class="hljs-func">AnyObject</span>],
+         item0 = menuItemsArr[<span class="hljs-params">0</span>] <span class="hljs-keyword">as</span>? [<span class="hljs-func">String</span>: <span class="hljs-func">AnyObject</span>],
+         value = item0[<span class="hljs-string">"value"</span>]
+{
+    <span class="hljs-params">print</span>(value)
+}
+</code></pre>
+<p class="calibre9">那么，我们应该怎么做呢？在上面的代码中，最大的问题在于我们为了保证类型的正确性，做了太多的转换和判断。我们并没有利用一个有效的 JSON 容器总应该是字典或者数组这个有用的特性，而导致每次使用下标取得的值都是需要转换的 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code>。如果我们能够重载下标的话，就可以通过下标的取值配合 <code class="calibre13 pcalibre6 pcalibre5">Array</code> 和 <code class="calibre13 pcalibre6 pcalibre5">Dictionay</code> 的 Optional Binding 来简单地在 JSON 中取值。鉴于篇幅，我们在这里不给出具体的实现。感兴趣的读者可以移步看看 <a href="https://github.com/owensd/json-swift" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">json-swift</a> 或者 <a href="https://github.com/SwiftyJSON/SwiftyJSON" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">SwiftyJSON</a> 这样的项目，它就使用了重载下标访问的方式简化了 JSON 操作。使用这个工具，上面的访问可以简化为下面的类型安全的样子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// 使用 SwiftJSON</span>
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> value = <span class="hljs-func">JSON</span>(json)[<span class="hljs-string">"menu"</span>][<span class="hljs-string">"popup"</span>][<span class="hljs-string">"menuitem"</span>][<span class="hljs-params">0</span>][<span class="hljs-string">"value"</span>].string {
+    <span class="hljs-params">print</span>(value)
+}
+</code></pre>
+<p class="calibre9">这样就简单多了。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

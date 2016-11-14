@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Toll-Free Bridging 和 Unmanaged | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_77">Toll-Free Bridging 和 Unmanaged</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="toll-free-bridging-%E5%92%8C-unmanaged" class="calibre1">Toll-Free Bridging 和 Unmanaged</h1>
+<p class="calibre9">有经验的读者看到这章的标题就能知道我们要谈论的是 Core Foundation。在 Swift 中对于 Core Foundation (以及其他一系列 Core 开头的框架) 在内存管理进行了一系列简化，大大降低了与这些 Core Foundation (以下简称 CF ) API 打交道的复杂程度。</p>
+<p class="calibre9">首先值得一提的是对于 Cocoa 中 Toll-Free Bridging 的处理。Cocoa 框架中的大部分 <code class="calibre13 pcalibre6 pcalibre5">NS</code> 开头的类其实在 CF 中都有对应的类型存在，可以说 <code class="calibre13 pcalibre6 pcalibre5">NS</code> 只是对 CF 在更高层面的一个封装。比如 <code class="calibre13 pcalibre6 pcalibre5">NSURL</code> 和它在 CF 中的 <code class="calibre13 pcalibre6 pcalibre5">CFURLRef</code> 内存结构其实是同样的，而 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 则对应着 <code class="calibre13 pcalibre6 pcalibre5">CFStringRef</code>。</p>
+<p class="calibre9">因为在 Objective-C 中 ARC 负责的只是 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的自动引用计数，因此对于 CF 对象无法进行内存管理。我们在把对象在 <code class="calibre13 pcalibre6 pcalibre5">NS</code> 和 <code class="calibre13 pcalibre6 pcalibre5">CF</code> 之间进行转换时，需要向编译器说明是否需要转移内存的管理权。对于不涉及到内存管理转换的情况，在 Objective-C 中我们就直接在转换的时候加上 <code class="calibre13 pcalibre6 pcalibre5">__bridge</code> 来进行说明，表示内存管理权不变。例如有一个 API 需要 <code class="calibre13 pcalibre6 pcalibre5">CFURLRef</code>，而我们有一个 ARC 管理的 <code class="calibre13 pcalibre6 pcalibre5">NSURL</code> 对象的话，这样来完成类型转换：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">NSURL</span> *fileURL = [<span class="hljs-params">NSURL</span> URLWithString:<span class="hljs-string">@"SomeURL"</span>];
+SystemSoundID theSoundID;
+<span class="hljs-title">//OSStatus AudioServicesCreateSystemSoundID(CFURLRef inFileURL,</span>
+<span class="hljs-title">//                             SystemSoundID *outSystemSoundID);</span>
+OSStatus error = AudioServicesCreateSystemSoundID(
+        (__bridge <span class="hljs-params">CFURLRef</span>)fileURL,
+        &amp;theSoundID);
+</code></pre>
+<p class="calibre9">而在 Swift 中，这样的转换可以直接省掉了，上面的代码可以写为下面的形式，简单了许多：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">import</span> <span class="hljs-func">AudioToolbox</span>
+
+<span class="hljs-keyword">let</span> fileURL = <span class="hljs-func">NSURL</span>(string: <span class="hljs-string">"SomeURL"</span>)
+<span class="hljs-keyword">var</span> theSoundID: <span class="hljs-func">SystemSoundID</span> = <span class="hljs-params">0</span>
+
+<span class="hljs-title">//AudioServicesCreateSystemSoundID(inFileURL: CFURL,</span>
+<span class="hljs-title">//        _ outSystemSoundID: UnsafeMutablePointer&lt;SystemSoundID&gt;) -&gt; OSStatus</span>
+<span class="hljs-func">AudioServicesCreateSystemSoundID</span>(fileURL!, &amp;theSoundID)
+</code></pre>
+<p class="calibre9">细心的读者可能会发现在 Objective-C 中类型的名字是 <code class="calibre13 pcalibre6 pcalibre5">CFURLRef</code>，而到了 Swift 里成了 <code class="calibre13 pcalibre6 pcalibre5">CFURL</code>。<code class="calibre13 pcalibre6 pcalibre5">CFURLRef</code> 在 Swift 中是被 typealias 到 <code class="calibre13 pcalibre6 pcalibre5">CFURL</code> 上的，其实不仅是 URL，其他的各类 CF 类型都进行了类似的处理。这主要是为了减少 API 的迷惑：现在这些 <code class="calibre13 pcalibre6 pcalibre5">CF</code> 类型的行为更接近于 ARC 管理下的对象，因此去掉 Ref 更能表现出这一特性。</p>
+<p class="calibre9">另外在 Objective-C 时代 ARC 不能处理的一个问题是 CF 类型的创建和释放。虽然不能自动化，但是遵循命名规则来处理的话还是比较简单的：对于 CF 系的 API，如果 API 的名字中含有 <code class="calibre13 pcalibre6 pcalibre5">Create</code>，<code class="calibre13 pcalibre6 pcalibre5">Copy</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">Retain</code> 的话，在使用完成后，我们需要调用 <code class="calibre13 pcalibre6 pcalibre5">CFRelease</code> 来进行释放。</p>
+<p class="calibre9">不过 Swift 中这条规则已成明日黄花。既然我们有了明确的规则，那为什么还要一次一次不厌其烦地手动去写 <code class="calibre13 pcalibre6 pcalibre5">Release</code> 呢？基于这种想法，Swift 中我们不再需要显式地去释放带有这些关键字的内容了 (事实上，含有 <code class="calibre13 pcalibre6 pcalibre5">CFRelease</code> 的代码甚至无法通过编译)。也就是说，CF 现在也在 ARC 的管辖范围之内了。其实背后的机理一点都不复杂，只不过在合适的地方加上了像 <code class="calibre13 pcalibre6 pcalibre5">CF_RETURNS_RETAINED</code> 和 <code class="calibre13 pcalibre6 pcalibre5">CF_RETURNS_NOT_RETAINED</code> 这样的标注。</p>
+<p class="calibre9">但是有一点例外，那就是对于非系统的 CF API (比如你自己写的或者是第三方的)，因为并没有强制机制要求它们一定遵照 Cocoa 的命名规范，所以贸然进行自动内存管理是不可行的。如果你没有明确地使用上面的标注来指明内存管理的方式的话，将这些返回 CF 对象的 API 导入 Swift 时，它们的类型会被对对应为 <code class="calibre13 pcalibre6 pcalibre5">Unmanaged&lt;T&gt;</code>。</p>
+<p class="calibre9">这意味着在使用时我们需要手动进行内存管理，一般来说会使用得到的 <code class="calibre13 pcalibre6 pcalibre5">Unmanaged</code> 对象的 <code class="calibre13 pcalibre6 pcalibre5">takeUnretainedValue</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">takeRetainedValue</code> 从中取出需要的 CF 对象，并同时处理引用计数。<code class="calibre13 pcalibre6 pcalibre5">takeUnretainedValue</code> 将保持原来的引用计数不变，在你明白你没有义务去释放原来的内存时，应该使用这个方法。而如果你需要释放得到的 CF 的对象的内存时，应该使用 <code class="calibre13 pcalibre6 pcalibre5">takeRetainedValue</code> 来让引用计数加一，然后在使用完后对原来的 <code class="calibre13 pcalibre6 pcalibre5">Unmanaged</code> 进行手动释放。为了能手动操作 <code class="calibre13 pcalibre6 pcalibre5">Unmanaged</code> 的引用计数，<code class="calibre13 pcalibre6 pcalibre5">Unmanaged</code> 中还提供了 <code class="calibre13 pcalibre6 pcalibre5">retain</code>，<code class="calibre13 pcalibre6 pcalibre5">release</code> 和 <code class="calibre13 pcalibre6 pcalibre5">autorelease</code> 这样的 "老朋友" 供我们使用。一般来说使用起来是这样的 (当然这些 API 都是我虚构的)：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// CFGetSomething() -&gt; Unmanaged&lt;Something&gt;</span>
+<span class="hljs-title">// CFCreateSomething() -&gt; Unmanaged&lt;Something&gt;</span>
+<span class="hljs-title">// 两者都没有进行标注，Create 中进行了创建</span>
+
+<span class="hljs-keyword">let</span> unmanaged = <span class="hljs-func">CFGetSomething</span>()
+<span class="hljs-keyword">let</span> something = unmanaged.takeUnretainedValue()
+<span class="hljs-title">// something 的类型是 Something，直接使用就可以了</span>
+
+<span class="hljs-keyword">let</span> unmanaged = <span class="hljs-func">CFCreateSomething</span>()
+<span class="hljs-keyword">let</span> something = unmanaged.takeRetainedValue()
+
+<span class="hljs-title">// 使用 something</span>
+
+<span class="hljs-title">//  因为在取值时 retain 了，使用完成后进行 release</span>
+unmanaged.release()
+</code></pre>
+<p class="calibre9">切记，这些只有在没有标注的极少数情况下才会用到，如果你只是调用系统的 CF API，而不会去写自己的 CF API 的话，是没有必要关心这些的。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

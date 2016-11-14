@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Swizzle | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_66">Swizzle</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="swizzle" class="calibre1">Swizzle</h1>
+<p class="calibre9">Swizzle 是 Objective-C 运行时的黑魔法之一。我们可以通过 Swizzle 的手段，在运行时对某些方法的实现进行替换，这是 Objective-C 甚至说 Cocoa 开发中最为华丽，同时也是最为危险的技巧之一。</p>
+<p class="calibre9">因为 Objective-C 在方法调用时是通过类的 dispatch table 来用 selector 对实现进行查找的，因此我们在运行时如果能够替换掉某个 selector 对应的实现，那么我们就能在运行时 “重新定义” 这个方法的行为。如果你不太理解的话，可以想象成某个类能响应的方法是存放在一个类似字典的结构中的，键为方法的名字 (也就是 selector)，而值就是方法真正做的事情。执行某个方法时我们告诉 Objective-C 运行时想要执行的方法的名字，然后使用这个名字从这个 “字典” 中取值并执行。通过替换这里的值，我们就可以在不改变原来代码结构的情况下偷天换日了。</p>
+<p class="calibre9">一般来说可能不太用得到这样的技术，但是在某些情况下会非常有用，特别是当我们需要触及到一些系统框架的东西的时候。比如我们已经有一个庞大的项目，并使用了很多 <code class="calibre13 pcalibre6 pcalibre5">UIButton</code> 来让用户交互。某一天，产品汪突然说我们需要统计一下整个 app 中用户点击所有按钮的次数。对于完全不懂技术的选手来说，在他们眼中这似乎不应该是什么难事 -- 只要弄个计数器然后在每次点按钮的时候加一就可以了嘛。但是对于每一个以代码为生的人来说，面临的一个严峻的问题是，这要怎么办。</p>
+<p class="calibre9">我们当然可以寻遍项目里的所有按钮点击后的事件代码，然后建立一个全局计数器来计数，但是，之后的维护怎么办，寻找的时候发生了遗漏怎么办，新加入的人不知道这茬怎么办？显然这是最糟糕的一条路。另一个方法是创建一个 <code class="calibre13 pcalibre6 pcalibre5">UIButton</code> 的子类，然后重写它的点击事件的方法。这种策略虽然好些，但是我们需要找遍项目中的按钮，并改变它们的继承关系，上面的那些问题也依然存在，而且要是我们已经在项目中使用了其他 <code class="calibre13 pcalibre6 pcalibre5">UIButton</code> 的子类的话，我们就不得不再去为那些子类创建新的子类，费时费力。</p>
+<p class="calibre9">这种时候就该轮到 Swizzle 大显身手了。我们在全局范围内将<strong class="calibre10">所有的</strong> <code class="calibre13 pcalibre6 pcalibre5">UIButton</code> 的发送事件的方法换掉，就可以一劳永逸地解决这个问题 -- 没有一段段代码的替换查找，不会遗漏任何按钮，之后开发中也不需要对这个计数的功能特别地注意什么。</p>
+<p class="calibre9">在 Swift 中，我们也可以利用 Objective-C 运行时来进行 Swizzle。比如上面的例子，我们就可以使用这样的扩展来完成：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">UIButton</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">xxx_swizzleSendAction</span>() </span>{
+        <span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">xxx_swizzleToken</span> </span>{
+            <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> onceToken : dispatch_once_t = <span class="hljs-params">0</span>
+        }
+        dispatch_once(&amp;xxx_swizzleToken.onceToken) {
+            <span class="hljs-keyword">let</span> cls: <span class="hljs-func">AnyClass</span>! = <span class="hljs-func">UIButton</span>.<span class="hljs-keyword">self</span>
+
+            <span class="hljs-keyword">let</span> originalSelector = <span class="hljs-func">Selector</span>(<span class="hljs-string">"sendAction:to:forEvent:"</span>)
+            <span class="hljs-keyword">let</span> swizzledSelector = <span class="hljs-func">Selector</span>(<span class="hljs-string">"xxx_sendAction:to:forEvent:"</span>)
+
+            <span class="hljs-keyword">let</span> originalMethod =
+                        class_getInstanceMethod(cls, originalSelector)
+            <span class="hljs-keyword">let</span> swizzledMethod =
+                        class_getInstanceMethod(cls, swizzledSelector)
+
+            method_exchangeImplementations(originalMethod, swizzledMethod)
+        }
+    }
+
+    public <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">xxx_sendAction</span><span class="hljs-params">(action: Selector,
+                                   to: AnyObject!,
+                             forEvent: UIEvent!)</span></span>
+    {
+        <span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">xxx_buttonTapCounter</span> </span>{
+            <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> <span class="hljs-params">count</span>: <span class="hljs-func">Int</span> = <span class="hljs-params">0</span>
+        }
+
+        xxx_buttonTapCounter.<span class="hljs-params">count</span> += <span class="hljs-params">1</span>
+        <span class="hljs-params">print</span>(xxx_buttonTapCounter.<span class="hljs-params">count</span>)
+        xxx_sendAction(action, to: to, forEvent: forEvent)
+    }
+}
+</code></pre>
+<p class="calibre9">在 <code class="calibre13 pcalibre6 pcalibre5">xxx_swizzleSendAction</code> 方法 (因为是向一个常用类中添加方法，最好还是加上前缀以防万一) 中，我们先获取将被替换的方法 (<code class="calibre13 pcalibre6 pcalibre5">sendAction:to:forEvent:</code>) 和用来替换它的方法 (<code class="calibre13 pcalibre6 pcalibre5">xxx_sendAction:to:forEvent:</code>) 的 selector，然后通过运行时对这两个方法的具体实现进行了交换。在 <code class="calibre13 pcalibre6 pcalibre5">xxx_sendAction:to:forEvent:</code> 的实现中，我们先将计数器进行加一，然后输出。最后我们看起来是在这个方法中调用了自己，似乎会形成一个死循环。但是因为我们实际上已经交换了 <code class="calibre13 pcalibre6 pcalibre5">sendAction:to:forEvent:</code> 和 <code class="calibre13 pcalibre6 pcalibre5">xxx_sendAction:to:forEvent:</code> 的实现，所以在做这个调用时恰好调用到的是原来的那个方法的实现。同理，在外部使用 <code class="calibre13 pcalibre6 pcalibre5">sendAction:to:forEvent:</code> 的时候 (也就是点击按钮的时候)，实际调用的实现会是我们在这里定义的带有计数器累加的实现。</p>
+<p class="calibre9">最后我们需要在 app 启动时调用这个 <code class="calibre13 pcalibre6 pcalibre5">xxx_swizzleSendAction</code> 方法。在 Objective-C 中我们一般在 category 的 <code class="calibre13 pcalibre6 pcalibre5">+load</code> 中完成，但是 Swift 的 <code class="calibre13 pcalibre6 pcalibre5">extension</code> 和 Objective-C 的 category 略有不同，extension 并不是运行时加载的，因此也没有加载时候就会被调用的类似 <code class="calibre13 pcalibre6 pcalibre5">load</code> 的方法。另外，extension 中也不应该做方法重写去覆盖 <code class="calibre13 pcalibre6 pcalibre5">load</code> (其实重写也是无效的)。事实上，Swift 实现的 <code class="calibre13 pcalibre6 pcalibre5">load</code> 并不是在 app 运行开始就被调用的。基于这些理由，我们使用另一个类初始化时会被调用的方法来进行交换：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">UIButton</span> </span>{
+    <span class="hljs-keyword">override</span> public <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">initialize</span>() </span>{
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span> != <span class="hljs-func">UIButton</span>.<span class="hljs-keyword">self</span> {
+            <span class="hljs-keyword">return</span>
+        }
+        <span class="hljs-func">UIButton</span>.xxx_swizzleSendAction()
+    }
+}
+</code></pre>
+<p class="calibre9">和 <code class="calibre13 pcalibre6 pcalibre5">+load</code> 不同的是，<code class="calibre13 pcalibre6 pcalibre5">+initialize</code> 会在当前类以及它的子类被初始化时调用。在这里我们对当前类的类型进行了判断，来保证安全性。另外，在 <code class="calibre13 pcalibre6 pcalibre5">xxx_swizzleSendAction</code> 中，也使用一个 once_token 来保证交换代码仅会被执行一次。</p>
+<p class="calibre9">现在，我们所有的按钮事件都会走我们替换进去的方法了，每点一次实际发送了事件的按钮，你都能在控制台看到当前点击数的输出了。</p>
+<p class="calibre9">这种方式的 Swizzle 使用了 Objective-C 的动态派发，对于 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的子类是可以直接使用的，但是对于 Swift 的类，因为默认并没有使用 Objective-C 运行时，因此也没有动态派发的方法列表，所以如果要 Swizzle 的是 Swift 类型的方法的话，我们需要将原方法和替换方法都加上 <code class="calibre13 pcalibre6 pcalibre5">dynamic</code> 标记，以指明它们需要使用动态派发机制。关于这方面的知识，可以参看 <a href="objc-dynamic.html" class="pcalibre pcalibre2 pcalibre1 calibre4">@objc 和 dynamic</a> 的内容。</p>
+<blockquote class="calibre6">
+<p class="calibre7">我们有另一种方法，甚至可以完全不借助 Objective-C 运行时，而是直接替换 Swift 调用时使用的封装过的类似 “函数指针”，来达到对 Swift 类型进行 “Swizzle” 的目的。但是这个话题和背后的原理超出了本书的范围，如果你对此感兴趣，可以尝试看看 <a href="https://github.com/rodionovd/SWRoute" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4"><code class="calibre13 pcalibre6 pcalibre5">SWRoute</code></a> 这个项目以及它背后的<a href="https://github.com/rodionovd/SWRoute/wiki/Function-hooking-in-Swift" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">原理</a>。</p>
+</blockquote>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

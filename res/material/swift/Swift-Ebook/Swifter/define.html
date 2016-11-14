@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>宏定义 define | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_96">宏定义 define</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%AE%8F%E5%AE%9A%E4%B9%89-define" class="calibre1">宏定义 define</h1>
+<p class="calibre9">Swift 中没有宏定义了。</p>
+<p class="calibre9">宏定义确实是一个让人又爱又恨的特性，合理利用的话，可以让我们写出很多简洁漂亮的代码，但是同时，不可否认的是宏定义无法受益于 IDE 工具，难以重构和维护，很可能隐藏很多 bug，这对于开发其实并不是一件好事。</p>
+<p class="calibre9">Swift 中将宏定义彻底从语言中拿掉了，并且 Apple 给了我们一些替代的建议：</p>
+<ul class="calibre19">
+<li class="calibre3">使用合适作用范围的 <code class="calibre13 pcalibre6 pcalibre5">let</code> 或者 get 属性来替代原来的宏定义值，例如很多 Darwin 中的 C 的 define 值就是这么做的：</li>
+</ul>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> <span class="hljs-func">M_PI</span>: <span class="hljs-func">Double</span> { <span class="hljs-keyword">get</span> } <span class="hljs-title">/* pi */</span>
+</code></pre>
+<ul class="calibre19">
+<li class="calibre3">对于宏定义的方法，类似地在同样作用域写为 Swift 方法。一个最典型的例子是 <code class="calibre13 pcalibre6 pcalibre5">NSLocalizedString</code> 的转变：</li>
+</ul>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// objc</span>
+<span class="hljs-params">#define NSLocalizedString(key, comment) \</span>
+[[<span class="hljs-params">NSBundle</span> mainBundle] localizedStringForKey:(key) value:<span class="hljs-string">@""</span> table:<span class="hljs-params">nil</span>]
+</code></pre>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// Swift</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">NSLocalizedString</span><span class="hljs-params">(
+    key: String,
+    tableName: String? = <span class="hljs-keyword">default</span>,
+    bundle: NSBundle = <span class="hljs-keyword">default</span>,
+    value: String = <span class="hljs-keyword">default</span>,
+    comment: String)</span></span> -&gt; <span class="hljs-func">String</span>
+</code></pre>
+<ul class="calibre19">
+<li class="calibre3">随着 <code class="calibre13 pcalibre6 pcalibre5">#define</code> 的消失，像 <code class="calibre13 pcalibre6 pcalibre5">#ifdef</code> 这样通过宏定义是否存在来进行条件判断并决定某些代码是否参与编译的方式也消失了。但是我们仍然可以使用 <code class="calibre13 pcalibre6 pcalibre5">#if</code> 并配合编译的配置来完成条件编译，具体的方法可以参看<a href="condition-compile.html" class="pcalibre pcalibre2 pcalibre1 calibre4">条件编译</a>一节的内容。</li>
+</ul>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">define</code> 在编译时实际做的事情类似查找替换，因此往往可以用来做一些很强大的事情，比如只替换掉某部分内容。举个例子，如果 Swift 中有 define 的话，我们可能可以写出这样的宏定义：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">#define <span class="hljs-func">PUBLIC_CLASS_START</span>(x) public <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">x</span> </span>{
+#define <span class="hljs-func">PUBLIC_CLASS_END</span> }
+</code></pre>
+<p class="calibre9">然后在文件中这样使用：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func">PUBLIC_CLASS_START</span>(<span class="hljs-func">MyClass</span>)
+
+<span class="hljs-keyword">var</span> myVar: <span class="hljs-func">Int</span> = <span class="hljs-params">1</span>
+
+<span class="hljs-func">PUBLIC_CLASS_END</span>
+</code></pre>
+<p class="calibre9">但事实上这在 Swift 中是无法做到的。</p>
+<p class="calibre9">虽然这只是一个没什么实际用处的例子，但是这展现了我们完全改变代码表现结构的可能性。在自动代码生成或者统一配置修改时有的情况下会很好用。而现在暂时在 Swift 中无法对应这样的用法，所以在 Swift 中可能短期内我们可能很难看到类似 <a href="https://github.com/kiwi-bdd/Kiwi" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">Kiwi</a> 这样的严重依赖宏定义来改变语法结构的有趣的项目了。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

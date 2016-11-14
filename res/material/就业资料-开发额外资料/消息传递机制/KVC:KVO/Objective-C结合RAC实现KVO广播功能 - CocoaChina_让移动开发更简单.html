@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+
+    <title>Objective-C结合RAC实现KVO广播功能 - CocoaChina_让移动开发更简单</title>
+    <meta name="keywords" content="Objective-C,RAC,KVO,广播iPhone开发,iOS开发,iPad开发,Mac开发,苹果开发中文站,iPhone开发中文站,CocoaChina首页, Mac OS开发, Cocoa介绍,移动互联网,触控科技,Cocoa,Apple,developer,iOS,iPhone,iPad,iMac,iPod Touch,iPhone5,iPhone4S,iPad3,招聘,iPhone程序员,Objective-c,iPhone应用外包,ios6,ios面试,Cocos2d-x,cocos2d,iTunes,App Store,苹果开发">
+    <meta name="description" content="CocoaChina前身是全球成立最早规模最大的苹果开发中文站，现致力为所有移动开发者提供资讯服务、问答服务、代码下载、工具库及人才招聘服务">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-tc-cerfication" content="3300a939a1098c27e94457b75a0bb8c1">
+    <script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/jquery_002.js" async="" type="text/javascript"></script><script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/analytics.js" async=""></script><script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/hm.js"></script><script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/ga.js" async="" type="text/javascript"></script><script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/analytics.js" async=""></script><script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/ca-pub-1180518835303646.js" type="text/javascript" async=""></script><script type="text/javascript">
+        function gotoMobilePage() {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var agent_iphone = /iphone/i;
+            var agent_android = /android/i;
+            //var agent_ipad = /ipad/i;
+            var agent_ipod = /ipod/i;
+            var agent_wphone = /windows phone/i;
+            if(agent_iphone.test(sUserAgent) || agent_android.test(sUserAgent) || agent_ipod.test(sUserAgent) || agent_wphone.test(sUserAgent)){
+                var re = /\/\w+\/\d+\/(\d+)\.html/, 
+                    result = re.exec(window.location.pathname);
+                if ( result )
+                {
+                    window.location.href = "http://www.cocoachina.com/cms/wap.php?action=article&id=" + result[1];
+                } else {
+                    window.location.href = "http://m.cocoachina.com/";
+                }
+            }
+        }
+        gotoMobilePage(); 
+    </script>
+    <link rel="stylesheet" href="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/global.css" media="all">
+    <link rel="stylesheet" href="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/index.css" media="all">
+    <link href="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/module.css" rel="stylesheet">
+    <link href="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/style.css" rel="stylesheet">
+    <link href="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/navheader.css" rel="stylesheet">
+    <script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/navbar.js"></script>
+    <script type="text/javascript" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/abase.js"></script><script type="text/javascript" charset="gbk" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/prebat.js"></script>
+    
+<script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/share.js"></script><link href="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/share_style1_32.css" rel="stylesheet"></head>
+<body>
+
+    <div class="nav-header">
+            <div class="nav-header-top">
+                <div class="nav-logo nav-fl"><a href="http://www.cocoachina.com/"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/logo.png"></a></div>
+                <div class="nav-list nav-fl">
+                    <ul>
+                        <li><a href="http://www.cocoachina.com/news/">资讯</a></li>
+                        <li><a href="http://www.cocoachina.com/bbs/">论坛</a></li>
+                        <li><a target="_blank" href="http://code.cocoachina.com/" title="CODE">代码</a></li>
+                        <li><a target="_blank" href="http://job.cocoachina.com/" title="JOB">招聘</a></li>
+                        <li><a target="_blank" href="http://cvp.cocos.com/" title="CVP">CVP</a></li>
+                    </ul>
+                </div>
+                <div class="nav-search nav-fl">
+                    <div class="nav-search-flag" style="display:block"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/search-icon.png"></div>
+                    <div class="nav-search-form" style="display:none">
+                        <form action="/cms/plus/search.php" name="formsearch" method="post" target="_blank">
+                            <input name="kwtype" value="0" type="hidden">
+                            <input name="searchtype" value="titlekeyword" type="hidden">
+                            <input name="keyword" placeholder="站内搜索" type="text">
+                            <input type="button">
+                        </form>
+                    </div>
+                </div>
+                <div class="nav-user nav-fr">
+                    <!-- #region 未登录时显示此区域 -->
+                    <div class="nav-user-login" style="display:block">
+                        <a href="http://www.cocoachina.com/bbs/login.php">登录</a>|
+                        <a href="http://www.cocoachina.com/bbs/register.php">注册</a>
+                    </div>
+                    <!-- #endregion -->
+                    <!-- #region 已登录时显示此区域 -->
+                    <div class="nav-user-name" style="display:none">
+                        <div><alert></alert><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/user.png">Guest</div>
+                        <ul>
+                            <li><a href="#"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/i-man.png">我的主页</a></li>
+                            <li><alert></alert><a href="#"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/i-mail.png">我的消息</a></li>
+                            <li><a href="#"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/i-setting.png">账户设置</a></li>
+                            <li><a href="http://www.cocoachina.com/ios/20150826/index-offline.html"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/i-logout.png">退出</a></li>
+                        </ul>
+                    </div>
+                    <!-- #endregion -->
+                </div>
+                <div class="nav-clear"></div>
+            </div>
+        <div class="nav-header-bottom">
+            <ul>
+                <li><a class="light" id="ios" href="http://www.cocoachina.com/ios/" title="ios">iOS开发</a></li>
+                <li><a id="swift" href="http://www.cocoachina.com/swift/" title="swift">Swift</a></li>
+                <li><a id="app_store" href="http://www.cocoachina.com/appstore/" title="appstore">App Store研究</a></li>
+                <li><a id="design" href="http://www.cocoachina.com/design/" title="design">产品设计</a></li>
+                <li><a id="review" href="http://www.cocoachina.com/review/" title="review">应用评测</a></li>
+                <li><a id="game" href="http://www.cocoachina.com/game/" title="game">游戏开发</a></li>
+                <li><a id="apple" href="http://www.cocoachina.com/apple/" title="apple">苹果相关</a></li>
+                <!-- <li><a id="cocos" href="/cocos/" title="cocos">Cocos引擎</a></li>-->
+                <li><a id="webapp" href="http://www.cocoachina.com/webapp/" title="webapp">WebApp</a></li>
+                <li><a id="android" href="http://www.cocoachina.com/android/" title="android">安卓相关</a></li>
+                <li><a id="market" href="http://www.cocoachina.com/market/" title="market">营销推广</a></li>
+                <li><a id="industry" href="http://www.cocoachina.com/industry/" title="industry">业界动态</a></li>
+                <li><a id="programmer" href="http://www.cocoachina.com/programmer/" title="programmer">程序人生</a></li>
+            </ul>
+        </div>
+    </div>
+<script language="javascript">
+    function IsPC() {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod");
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+        }
+        return flag;
+    }
+    if (!IsPC()){
+           window.location.href = "http://www.cocoachina.com/cms/wap.php?action=article&id=13139";
+    }
+
+</script>
+<!--middle-->
+<div class="middle clearfix">
+    <div class="m-wrap">
+        <div class="m-ad2" style="margin-top:12px;">
+            <div class="ad2-l">
+                <script async="" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/adsbygoogle.js"></script>
+                <!-- CC首页底部左侧72890 -->
+                <ins data-adsbygoogle-status="done" class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1180518835303646" data-ad-slot="8012423965"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" frameborder="0" height="90" width="728"></iframe></ins></ins></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            <div class="ad2-r">
+                <script async="" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/adsbygoogle.js"></script>
+                <!-- CC资讯页25090 -->
+                <ins data-adsbygoogle-status="done" class="adsbygoogle" style="display:inline-block;width:250px;height:90px" data-ad-client="ca-pub-1180518835303646" data-ad-slot="9489157162"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:250px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:250px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;" frameborder="0" height="90" width="250"></iframe></ins></ins></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+        <!--left-->
+        <div class="detail-left float-l">
+            <p class="crumbs"><a href="http://www.cocoachina.com/" title="首页">首页</a> &gt;<a href="http://www.cocoachina.com/ios" title="iOS开发"><span id="type_name">iOS开发</span></a></p>
+            <div class="detail-main">
+                <h2>Objective-C结合RAC实现KVO广播功能</h2>
+                <div class="p-ico clearfix">
+                    <div>
+                        <span class="ml0">2015-08-26 14:12</span>
+                        <span>编辑：
+                        <a href="http://www.cocoachina.com/bbs/u.php?action=feed&amp;uid=340873" id="field_author" target="_blank">suiling</a></span>
+                        <span>分类：<a href="http://www.cocoachina.com/ios/" target="_blank">iOS开发</a></span>
+                        <span id="source">来源：<a href="http://www.jianshu.com/p/44aacb7dcecb" target="_blank">CrespoXiao的简书</a></span>
+
+                        <div class="float-r">
+                            <span id="artical_comment_cnt"><i></i>0</span>
+                            <span><i class="view"></i><script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/count.html" language="javascript"></script>3136</span>
+                    </div>
+                    </div>
+                </div>
+                <div class="p-ico clearfix">
+                    <p class="related float-l"><a href="http://www.cocoachina.com/cms/tags.php?/Objective-C/" target="_blank">Objective-C</a><a href="http://www.cocoachina.com/cms/tags.php?/RAC/" target="_blank">RAC</a><a href="http://www.cocoachina.com/cms/tags.php?/KVO/" target="_blank">KVO</a><a href="http://www.cocoachina.com/cms/tags.php?/%E5%B9%BF%E6%92%AD/" target="_blank">广播</a></p>
+                    <input id="article_id" value="13139" type="hidden">
+                </div>
+                <div class="adsbox clearfix">
+                    <div class="float-l">
+                        <div class="float-l"><b>招聘信息：</b></div>
+                        <ul class="float-l" id="invitelist" style="margin-top: 0px;"><li><a href="http://job.cocoachina.com/job/show?id=67159" target="_blank">iOS开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=66873" target="_blank">iOS开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=67264" target="_blank">资深iOS工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=65299" target="_blank">iOS高级开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=67188" target="_blank">iOS高级开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=66967" target="_blank">手游JAVA 服务器端主程</a></li><li><a href="http://job.cocoachina.com/job/show?id=66966" target="_blank">cocos2dx手游客户端主程</a></li><li><a href="http://job.cocoachina.com/job/show?id=67275" target="_blank">安卓开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=67274" target="_blank">iOS工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=67276" target="_blank">PHP开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=67356" target="_blank">iOS工程师</a></li></ul>
+                    </div>
+                    <div class="float-r">
+                        <a href="javascript:void(0)" class="prev"></a>
+                        <a href="javascript:void(0)" class="next"></a>
+                    </div>
+                </div>
+                <div id="detailbody" class="field_body">
+                    <p style="text-align:center"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/1440042397583127.jpg" title="1440042397583127.jpg" alt="1.jpg"></p><p>作者：<a href="http://www.jianshu.com/users/850cf1ff06d3" target="_self">CrespoXiao</a> 授权本站转载。<br></p><p>如果不想看下面的文字，看这里：<a href="https://gist.github.com/crespoxiao/35177f6af0b6220fb28b" target="_self">示例代码</a></p><p>如果需要监听对象A属性B值的变化，我们通常会考虑用KVO来实现，facebook开源了一个库简化KVO监听与移除监听的流程：</p><p><a href="https://github.com/facebook/KVOController" target="_self">https://github.com/facebook/KVOController</a></p><p>试想一下，如果有很多很多地方需要监听对象A属性B值的变化呢？方法有很多，我随便说说：</p><p>1.在这个对象A属性B的setter方法里post消息，需要监听的地方接受监听消息。</p><p>2.每一个需要监听的地方进行KVO代码编写，观察对象A属性B值的变化。</p><p>3.创建一个观察者来来监听对象A属性B值的变化，然后通过回调广播出去。</p><p>当然，还有一些其他的设计模式都可以实现这个功能。我这里讲讲第3点我的实现思路。</p><p><strong>1.监听属性的变化：</strong></p><p style="text-align:center"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/1440042237410640.png" title="1440042237410640.png" alt="blob.png"></p><p style="text-align: center;">监听token的变化<br></p><p>这段代码的作用就是使用RAC来观察token的变化，如有变化，就通过block的方式广播给所有需要监听的对象。监听放到Appdelegate或者其他比较早运行模块都行。</p><p><strong>2.注册监听方法：</strong></p><p style="text-align:center"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/1440042249433663.png" title="1440042249433663.png" alt="blob.png"></p><p style="text-align: center;">注册监听<br></p><p>注
+释写得很清楚了，每个对象只注册1次，对象销毁前移除监听。需要说明的是，对象与回调的关联使用的是对象内存地址与block，如果直接使用对象，就算传
+参是weakSelf，在添加到array的时候retainCount加1，在RAC释放那里就不执行了，造成内存泄漏。</p><p><strong>3.注册与移除注册代码实现：</strong></p><p style="text-align:center"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/1440042263832928.png" title="1440042263832928.png" alt="blob.png"></p><p style="text-align: center;">注册与移除注册<br></p><p><strong>4.使用示例：</strong></p><p style="text-align:center"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/1440042275583600.png" title="1440042275583600.png" alt="blob.png"></p><p style="text-align: center;">使用示例<br></p><p>讲完了，我不喜欢啰里八嗦，就是分享一个思路，就像REST/AJAX一样没啥新技术，如果有更棒的主意，请留言。</p>
+                </div>
+                <div id="page" style="padding:0"></div>
+
+                <div class="wx_article">
+                    <div class="article_weixin">
+                        <img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/article_weixin.jpg" alt="搜索CocoaChina微信公众号：CocoaChina" height="131" width="131">
+                        <div class="article_scan">微信扫一扫</div>
+                        <div class="article_txt"><span style="color:#999999">订阅每日移动开发及APP推广热点资讯<br>公众号：</span>CocoaChina</div>
+                    </div>
+                </div>
+
+               <div class="clearfix tgbox">
+                    <a href="mailto:support@cocoachina.com" class="tg float-l" target="_blank">我要投稿</a>&nbsp;&nbsp;
+                    <a style="margin-left:10px" href="javascript:void(0)" onclick="add_favors(13139,'Objective-C结合RAC实现KVO广播功能')" class="tg float-l">收藏文章</a>
+                    <div class="share float-r">分享到：
+                        <div data-bd-bind="1447601804570" class="bdsharebuttonbox bdshare-button-style1-32" id="sharediv"><a href="#" class="bds_more" data-cmd="more"></a> <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+                    </div>
+                </div>
+
+
+                <a class="zanbox" href="javascript:void(0)" id="zanbox" onclick="postDigg('good',13139)" title="哎呦，不错噢，赞一个">
+                    <strong id="newdigg">
+                     <script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/count_002.html" language="javascript"></script>7
+                    </strong>
+                </a>
+            </div>
+
+            <div class="article-prev">上一篇：<a href="http://www.cocoachina.com/ios/20150825/13123.html">源码推荐(8.25)：简单易用的Toast，实现水位波浪动画</a> </div>
+            <div class="article-next">下一篇：<a href="http://www.cocoachina.com/ios/20150821/13140.html">iOS 9学习系列：如何使用ATS提高应用的安全性</a> </div>
+
+            <!--相关资讯-->
+            <div class="part-wrap clearfix">
+                <h3>相关资讯</h3>
+                <ul class="info-list clearfix">
+                    <li>
+                        <a href="http://www.cocoachina.com/ios/20151103/14007.html" target="_blank" title="如果你已经使用 Objective-C 编写过任何并发程序，那么想必是见过 @synchronized 这货了。@synchronized 结构所做的事情跟锁（lock）类似：它防止不同的线程同时执行同一段代码。但在某些情况下，相比于使用">关于 @synchronized，这儿比你想知道的还要多</a>
+                     </li>
+<li>
+                        <a href="http://www.cocoachina.com/ios/20151102/13924.html" target="_blank" title="文章的前半部分记录一些之前的OC的现代语法，后面讲解WWDC 2015中介绍的新特性">Objective-C 的现代语法和新特性</a>
+                     </li>
+<li>
+                        <a href="http://www.cocoachina.com/ios/20151104/13913.html" target="_blank" title="NSArray是类类型，而Array是结构体类型。一个是引用类型，一个是值类型，它们是怎样实现无缝转换的呢？">使用_ObjectiveCBridgeable协议实现Objective-C类与Swift结构体的无缝互转</a>
+                     </li>
+<li>
+                        <a href="http://www.cocoachina.com/ios/20151104/13900.html" target="_blank" title="前一篇文章我们介绍了冷信号与热信号的概念，可能有同学会问了，为什么RAC要搞得如此复杂呢，只用一种信号不就行了么？要解释这个问题，需要绕一些圈子。">细说ReactiveCocoa的冷信号与热信号（二）：为什么要区分冷热信号</a>
+                     </li>
+<li>
+                        <a href="http://www.cocoachina.com/ios/20151103/13897.html" target="_blank" title="ReactiveCocoa（简称RAC）是最初由GitHub团队开发的一套基于Cocoa的FRP框架。FRP即Functional Reactive Programming（函数式响应式编程），其优点是用随时间改变的函数表示用户输入，这样就不需要可变状态了。我们">细说ReactiveCocoa的冷信号与热信号（一）</a>
+                     </li>
+<li>
+                        <a href="http://www.cocoachina.com/ios/20150923/13531.html" target="_blank" title="最近一个月除了专门抽时间和精力重构之外，还有就是遇到需要添加功能的模块的时候，由于项目中的代码历史因素比较多，第一件干的事情往往是重构整理代码，发现很多之前的代码写的时候没有注">iOS 代码实践总结</a>
+                     </li>
+<li>
+                        <a href="http://www.cocoachina.com/ios/20150921/13493.html" target="_blank" title="模仿qq小红点的动画，后续会增加回调；Quick是行为驱动的 Swift 和 Objective-C 开发框架。与测试的匹配框架 Nimble 一起使用；Quest2D实现简单的画板功能；CAAnimations 和 UIView 动画都很强大，但想要把多个动">源码推荐(9.21)：模仿qq的小红点的动画，Swift (及Objective-C) 测试框架 -Quick</a>
+                     </li>
+<li>
+                        <a href="http://www.cocoachina.com/ios/20150925/13459.html" target="_blank" title="NSArray NSMutableArray NSDictionary NSMutableDictionary 是我们的在iOS开发中非常常用的类。当然，在享受这些类的便利的同时，它们也给我们带来一些困扰">【投稿】打造Objective-C安全的Collection类型</a>
+                     </li>
+<li>
+                        <a href="http://www.cocoachina.com/ios/20151008/13437.html" target="_blank" title="当我们定义一个类的实例变量的时候，可以指定其修饰符，这使得 ivar (instance variable) 可以像属性一样在 ARC 下进行正确的引用计数管理">Objective-C Class Ivar Layout 探索</a>
+                     </li>
+<li>
+                        <a href="http://www.cocoachina.com/ios/20150907/13336.html" target="_blank" title="如果说对本文有什么预期的话，笔者希望能把一些类似“为什么是这样”的问题说清楚">Objective-C 与 Runtime：为什么是这样？</a>
+                     </li>
+
+                </ul>
+            </div>
+            <div class="clearfix" style="margin-top:20px;">
+                <script async="" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/adsbygoogle.js"></script>
+                <!-- CC评论框 -->
+                <ins data-adsbygoogle-status="done" class="adsbygoogle" style="display:inline-block;width:750px;height:90px" data-ad-client="ca-pub-1180518835303646" data-ad-slot="8242010366"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:750px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:750px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;" frameborder="0" height="90" width="750"></iframe></ins></ins></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            <!-- 评论模块start -->
+            
+            <div class="clearfix" id="commnet_list_holder" style="margin-bottom:50px;">
+                <div class="glab-comment-form">
+                    <div class="dcbt">我来说两句</div>
+                    <div class="user-head">
+                        <img id="user_face_url" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/none.gif" alt="" height="43" width="43">
+                    </div>
+                    <div class="form-region">
+                        <textarea name="comment" id="main_comment_content" cols="30" rows="10" placeholder="你怎么看？快来评论一下吧！"></textarea>
+                        <a class="submitform" id="main_comment_bt">发表评论</a>
+                        <div class="unlogin-mask">
+                            <div>您还没有登录！请<a href="http://www.cocoachina.com/bbs/login.php">登录</a>或<a href="http://www.cocoachina.com/bbs/register.php">注册</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="glab-comment-callback-msg" class="glab-comment-info"></div>
+                <div class="glab-comment-title">所有评论（<span>0</span>）</div>
+                <div class="glab-commentlist" id="commentlist">
+                    <a style="display: none;" id="refresh_comment_btn" href="javascript:;" onclick="$('#morecomment').trigger('click')">刷新评论</a>
+                </div>
+                <div class="glab-comment-more" id="morecomment" style="display:none">
+                    更多评论
+                </div>
+            </div>
+            
+            <!-- 评论模块end -->
+
+
+        </div>
+        <!--./left-->
+        <!--侧边栏-->
+        <div class="clearfix newslist">
+            <div class="rightSide detail-right float-r">
+                <!--两周热门资讯推荐-->
+                <div>
+                    <div class="part-wrap clearfix">
+                        <h3>热门资讯</h3>
+                        <ul class="related-hot">
+                            <li class="clearfix"><a href="http://www.cocoachina.com/ios/20151106/14069.html" class="float-l pic" target="_blank" title="这些 iOS 面试基础题目，你都深入了解吗？"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/f2e8444090ef4dffe19a4d07bc832770.jpg" style="max-height:60px" alt="这些 iOS 面试基础题目，你都深入了解吗？"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151106/14069.html" target="_blank" title="这些 iOS 面试基础题目，你都深入了解吗？">这些 iOS 面试基础题目，你都深入了解吗？</a></p><p class="hits">点击量<span>13894</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151102/13924.html" class="float-l pic" target="_blank" title="Objective-C 的现代语法和新特性"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/de203a522032c8f4ad784bf540af3f0c.jpg" style="max-height:60px" alt="Objective-C 的现代语法和新特性"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151102/13924.html" target="_blank" title="Objective-C 的现代语法和新特性">Objective-C 的现代语法和新特性</a></p><p class="hits">点击量<span>8413</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151110/14102.html" class="float-l pic" target="_blank" title="【译】17个提升iOS开发效率的必用工具"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/c81c182890d34b641a46c70c40dc63fd.jpg" style="max-height:60px" alt="【译】17个提升iOS开发效率的必用工具"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151110/14102.html" target="_blank" title="【译】17个提升iOS开发效率的必用工具">【译】17个提升iOS开发效率的必用工具</a></p><p class="hits">点击量<span>7824</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/webapp/20151030/13985.html" class="float-l pic" target="_blank" title="HTML5 崛起：不再高冷，不再小众"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/60b513419316a145fa34aeb84d0556c3.jpg" style="max-height:60px" alt="HTML5 崛起：不再高冷，不再小众"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/webapp/20151030/13985.html" target="_blank" title="HTML5 崛起：不再高冷，不再小众">HTML5 崛起：不再高冷，不再小众</a></p><p class="hits">点击量<span>6710</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151110/14067.html" class="float-l pic" target="_blank" title="iOS开发——UI组件（个人整理）"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/66d9d9ad083079d10170c91fe8c00bc6.jpg" style="max-height:60px" alt="iOS开发——UI组件（个人整理）"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151110/14067.html" target="_blank" title="iOS开发——UI组件（个人整理）">iOS开发——UI组件（个人整理）</a></p><p class="hits">点击量<span>6154</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151103/14007.html" class="float-l pic" target="_blank" title="关于 @synchronized，这儿比你想知道的还要多"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/d58e98c9208acf7654c3fc222f613354.jpg" style="max-height:60px" alt="关于 @synchronized，这儿比你想知道的还要多"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151103/14007.html" target="_blank" title="关于 @synchronized，这儿比你想知道的还要多">关于 @synchronized，这儿比你想知道的还要多</a></p><p class="hits">点击量<span>5857</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151104/14009.html" class="float-l pic" target="_blank" title="【译】4个你需要知道的Asset Catalog的秘密"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/6845edd2489ffa5b76d7d7a45a949177.jpg" style="max-height:60px" alt="【译】4个你需要知道的Asset Catalog的秘密"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151104/14009.html" target="_blank" title="【译】4个你需要知道的Asset Catalog的秘密">【译】4个你需要知道的Asset Catalog的秘密</a></p><p class="hits">点击量<span>5698</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/programmer/20151030/13949.html" class="float-l pic" target="_blank" title="程序员技术晋升非正式攻略"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/68b634342adc09a46914d39a433b8a79.jpg" style="max-height:60px" alt="程序员技术晋升非正式攻略"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/programmer/20151030/13949.html" target="_blank" title="程序员技术晋升非正式攻略">程序员技术晋升非正式攻略</a></p><p class="hits">点击量<span>4737</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/industry/20151111/14140.html" class="float-l pic" target="_blank" title="出大事了！A商要联合程序员们打淘宝分京东了！"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/200787b3ae4ba49efb868a5ccb124084.png" style="max-height:60px" alt="出大事了！A商要联合程序员们打淘宝分京东了！"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/industry/20151111/14140.html" target="_blank" title="出大事了！A商要联合程序员们打淘宝分京东了！">出大事了！A商要联合程序员们打淘宝分京东了！</a></p><p class="hits">点击量<span>4614</span></p></div></li><li class="clearfix noborder-b"><a href="http://www.cocoachina.com/ios/20151030/13975.html" class="float-l pic" target="_blank" title="【投稿】iOS自定义键盘"><img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/fc7a4d8cb47eed70ad8ddb9624022fc6.jpg" style="max-height:60px" alt="【投稿】iOS自定义键盘"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151030/13975.html" target="_blank" title="【投稿】iOS自定义键盘">【投稿】iOS自定义键盘</a></p><p class="hits">点击量<span>4393</span></p></div></li>
+                        </ul>
+                    </div>
+               </div>
+               <!--./两周热门资讯推荐-->
+                <!-- 广告位：资讯频道列表页面右侧300*90-->
+                <div class="job-ad"><script>CNZZ_SLOT_RENDER('324555');</script><script type="text/javascript" charset="gbk" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/appgcm.js"></script></div>
+               <!--综合评论-->
+                <div class="part-wrap clearfix" style="margin-top: 15px;">
+                    <h3>综合评论</h3>
+                    <ul class="related-comment clearfix" id="all_comments_holder"><li class=""><span class="hide_comment">算账算的好啊，你怎么就知道市场一定相信你，毕竟你已经不是第一个电商了，淘宝关门是早晚的事儿，但是也绝对不是你这理想主义就能推翻的啊</span><br><p><span>jianchuan0118</span><span>评论了</span><a target="_blank" title="因为A商，互联网的寒冬不再冷" href="http://www.cocoachina.com/industry/20151113/14204.html"><span>因为A商，互联网的寒冬不再冷...</span></a></p></li><li class=""><span class="hide_comment">挑战淘宝，挑战阿里巴巴？？别想了，洗洗睡吧！</span><br><p><span>andy2010</span><span>评论了</span><a target="_blank" title="因为A商，互联网的寒冬不再冷" href="http://www.cocoachina.com/industry/20151113/14204.html"><span>因为A商，互联网的寒冬不再冷...</span></a></p></li><li class=""><span class="hide_comment">gun </span><br><p><span>piao_</span><span>评论了</span><a target="_blank" title="因为A商，互联网的寒冬不再冷" href="http://www.cocoachina.com/industry/20151113/14204.html"><span>因为A商，互联网的寒冬不再冷...</span></a></p></li><li class=""><span class="hide_comment">mark</span><br><p><span>caodaxun</span><span>评论了</span><a target="_blank" title="Storyboard中的UIScrollView使用自动布局，使其能够滚动" href="http://www.cocoachina.com/ios/20150104/10810.html"><span>Storyboard中的UIScrollView使...</span></a></p></li><li class=""><span class="hide_comment">mark</span><br><p><span>caodaxun</span><span>评论了</span><a target="_blank" title="Storyboard中的UIScrollView使用自动布局，使其能够滚动" href="http://www.cocoachina.com/ios/20150104/10810.html"><span>Storyboard中的UIScrollView使...</span></a></p></li><li class=""><span class="hide_comment">好</span><br><p><span>nothing123</span><span>评论了</span><a target="_blank" title="Storyboard中的UIScrollView使用自动布局，使其能够滚动" href="http://www.cocoachina.com/ios/20150104/10810.html"><span>Storyboard中的UIScrollView使...</span></a></p></li><li class=""><span class="hide_comment">sb</span><br><p><span>la0fu</span><span>评论了</span><a target="_blank" title="因为A商，互联网的寒冬不再冷" href="http://www.cocoachina.com/industry/20151113/14204.html"><span>因为A商，互联网的寒冬不再冷...</span></a></p></li><li class=""><span class="hide_comment">代码：
+Class currentClass &amp;#61; [self class];
+    for (int i &amp;#61; 0; i &amp;#60; 10; i++&amp;#41; {
+        NSLog(@"Following the isa pointer %d times gives %p", i, currentClass&amp;#41;;
+        NSLog(@"classname&amp;#61;%@",NSStringFromClass(currentClass&amp;#41;&amp;#41;;
+        currentClass &amp;#61; object_getClass(currentClass&amp;#41;;
+    }
+
+结果：
+2015-11-14 12:47:43.445 TestLoadView[4531:1078820] Following the isa pointer 0 times gives 0x7f9f58f82d40
+2015-11-14 12:47:43.445 TestLoadView[4531:1078820] classname&amp;#61;TestClass
+2015-11-14 12:47:43.446 TestLoadView[4531:1078820] Following the isa pointer 1 times gives 0x7f9f58f82d70
+2015-11-14 12:47:43.446 TestLoadView[4531:1078820] classname&amp;#61;TestClass
+2015-11-14 12:47:43.469 TestLoadView[4531:1078820] Following the isa pointer 2 times gives 0x101dd5d50
+2015-11-14 12:47:43.469 TestLoadView[4531:1078820] classname&amp;#61;NSObject
+2015-11-14 12:47:43.469 TestLoadView[4531:1078820] Following the isa pointer 3 times gives 0x101dd5d50
+2015-11-14 12:47:43.469 TestLoadView[4531:1078820] classname&amp;#61;NSObject
+2015-11-14 12:47:43.469 TestLoadView[4531:1078820] Following the isa pointer 4 times gives 0x101dd5d50
+2015-11-14 12:47:43.469 TestLoadView[4531:1078820] classname&amp;#61;NSObject
+2015-11-14 12:47:43.470 TestLoadView[4531:1078820] Following the isa pointer 5 times gives 0x101dd5d50
+2015-11-14 12:47:43.470 TestLoadView[4531:1078820] classname&amp;#61;NSObject
+2015-11-14 12:47:43.470 TestLoadView[4531:1078820] Following the isa pointer 6 times gives 0x101dd5d50
+2015-11-14 12:47:43.470 TestLoadView[4531:1078820] classname&amp;#61;NSObject
+2015-11-14 12:47:43.470 TestLoadView[4531:1078820] Following the isa pointer 7 times gives 0x101dd5d50
+2015-11-14 12:47:43.471 TestLoadView[4531:1078820] classname&amp;#61;NSObject
+2015-11-14 12:47:43.471 TestLoadView[4531:1078820] Following the isa pointer 8 times gives 0x101dd5d50
+2015-11-14 12:47:43.494 TestLoadView[4531:1078820] classname&amp;#61;NSObject
+2015-11-14 12:47:43.494 TestLoadView[4531:1078820] Following the isa pointer 9 times gives 0x101dd5d50
+2015-11-14 12:47:43.494 TestLoadView[4531:1078820] classname&amp;#61;NSObject
+
+
+这就说明了NSObject Metal Class的isa指向了自己</span><br><p><span>lengkuazhong</span><span>评论了</span><a target="_blank" title="Objective-C Runtime 运行时之一：类与对象" href="http://www.cocoachina.com/ios/20141031/10105.html"><span>Objective-C Runtime 运行时之一...</span></a></p></li><li class=""><span class="hide_comment">（currentClass &amp;#61; objc_getClass((__bridge void *&amp;#41;currentClass&amp;#41;;）这个语句错了
+要用object_getClass才是获取isa的
+</span><br><p><span>lengkuazhong</span><span>评论了</span><a target="_blank" title="Objective-C Runtime 运行时之一：类与对象" href="http://www.cocoachina.com/ios/20141031/10105.html"><span>Objective-C Runtime 运行时之一...</span></a></p></li><li class="noborder-b"><span class="hide_comment">楼主总结的不错！</span><br><p><span>yangshu5188</span><span>评论了</span><a target="_blank" title="这8种武器点亮程序员的个人品牌" href="http://www.cocoachina.com/programmer/20151113/14024.html"><span>这8种武器点亮程序员的个人品牌...</span></a></p></li></ul>
+                </div>
+                <!--./综合评论-->
+                <!--相关帖子-->
+                <div class="part-wrap clearfix" style="margin:15px 0 15px 0;">
+                    <h3>相关帖子</h3>
+                    <ul class="related-comment clearfix">
+                        <script charset="gb2312" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/new.html"></script><li><a href="http://www.cocoachina.com/bbs/read.php?tid=331874" target="_blank">求助Objective-C调用JavaScript对象方法</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=331872" target="_blank">EditBox与TextFiled!</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=331871" target="_blank">关于TabBar高度的问题</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=331870" target="_blank">storyboard里的viewcontroller里view上拖进去的控件运行起来看不到?</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=331869" target="_blank">深入iOS语言使用的是消息结构而非函数调用，即iOS的运行期如此动态的原理</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=331868" target="_blank">iOS 类似于小米手环app的通信机制是怎么样的？</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=331867" target="_blank">说说这两个东西区别</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=331866" target="_blank">苹果开发者账号购买退款迟迟不退</a></li><li class="clearfix noborder-b"><a href="http://www.cocoachina.com/bbs/read.php?tid=331865" target="_blank">求助gamecenter获取GKLocalPlayer信息后返回值为nil</a></li>
+                    </ul>
+                </div>
+                <!--./相关帖子-->
+                <iframe class="share_self" scrolling="no" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/index.html" frameborder="0" height="550" width="230"></iframe>
+                <script async="" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/adsbygoogle.js"></script>
+                <!-- CC列表页面230x230 -->
+                <ins data-adsbygoogle-status="done" class="adsbygoogle" style="display:inline-block;width:230px;height:230px" data-ad-client="ca-pub-1180518835303646" data-ad-slot="6765277166"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:230px;margin:0;padding:0;position:relative;visibility:visible;width:230px;background-color:transparent"><ins id="aswift_3_anchor" style="display:block;border:none;height:230px;margin:0;padding:0;position:relative;visibility:visible;width:230px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;" frameborder="0" height="230" width="230"></iframe></ins></ins></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+        <!--./侧边栏-->
+    </div>
+
+    <div id="coco-store" style="display:none">
+        <div class="storebox">
+            <h5>提示</h5>
+            <h3>已经收藏该篇文章</h3>
+            <p class="p1"><a href="http://www.cocoachina.com/bbs/u.php?action=favor&amp;tag=1" target="_blank">去我的收藏夹</a></p>
+            <p class="p2"><a href="http://www.cocoachina.com/bbs/login.php">请登录</a></p>
+        </div>
+    </div> <!--收藏提示-->
+</div>
+
+<script type="text/javascript">
+
+function postDigg(ftype,aid)
+{
+    var taget_obj = document.getElementById('newdigg');
+    var saveid = GetCookie('diggid');
+    if(saveid != null)
+    {
+        var saveids = saveid.split(',');
+        var hasid = false;
+        saveid = '';
+        j = 1;
+        for(i=saveids.length-1;i>=0;i--)
+        {
+            if(saveids[i]==aid && hasid) continue;
+            else {
+                if(saveids[i]==aid && !hasid) hasid = true;
+                saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+                j++;
+                if(j==20 && hasid) break;
+                if(j==19 && !hasid) break;
+            }
+        }
+        if(hasid) { alert("您已经顶过该帖，请不要重复顶帖 ！"); return; }
+        else saveid += ','+aid;
+        SetCookie('diggid',saveid,1);
+    }
+    else
+    {
+        SetCookie('diggid',aid,1);
+    }
+    myajax = new DedeAjax(taget_obj,false,false,'','','');
+    var url = "/cms/plus/digg_ajax.php?action="+ftype+"&id="+aid;
+    myajax.SendGet2(url);
+    DedeXHTTP = null;
+    $('#zanbox').addClass('zanbox-selected');
+}
+function getDigg(aid)
+{
+    var taget_obj = document.getElementById('newdigg');
+    myajax = new DedeAjax(taget_obj,false,false,'','','');
+    myajax.SendGet2("/cms/plus/digg_ajax.php?id="+aid);
+    DedeXHTTP = null;
+}
+
+
+//显示对应的导航：
+$(function(){
+    var article_id = $('#article_id').val();
+    var saveid = GetCookie('diggid');
+
+    if(saveid != null)
+    {
+        var saveids = saveid.split(',');
+        var hasid = false;
+        saveid = '';
+        j = 1;
+        for(i=saveids.length-1;i>=0;i--)
+        {
+            if(saveids[i]==article_id && hasid) continue;
+            else {
+                if(saveids[i]==article_id && !hasid) hasid = true;
+                saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+                j++;
+                if(j==20 && hasid) break;
+                if(j==19 && !hasid) break;
+            }
+        }
+
+        if(hasid)
+        {
+            $('#zanbox').addClass('zanbox-selected');
+        }
+
+    }
+
+
+    // 根据作者名更新链接
+
+    function updateAuthor(name) {
+        if(name != "pockry" && name!= "suiling" && name!= "wupeng") {
+            name = "suiling";
+        }
+        var urls = {
+            "pockry": "http://www.cocoachina.com/bbs/u.php?action=feed&username=pockry",
+            "suiling": "http://www.cocoachina.com/bbs/u.php?action=feed&uid=340873",
+            "wupeng": "http://www.cocoachina.com/bbs/u.php?action=feed&uid=304691"
+        };
+        $("#field_author").attr("href", urls[name]).html(name);
+    }
+    updateAuthor("lansekuangtu");
+
+});
+
+window.onload = function() {
+
+    $('#sharediv').removeClass('bdshare-button-style1-32');
+    $('#sharediv').attr('class','bdsharebuttonbox');
+};
+</script>
+<script type="text/javascript" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/shCore.js"></script>
+    <script type="text/javascript" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/brush.js"></script>
+    <link type="text/css" rel="stylesheet" href="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/shCoreDefault.css">
+    <script type="text/javascript">
+    //SyntaxHighlighter.config.clipboardSwf = '/js/scripts/clipboard.swf';
+
+    SyntaxHighlighter.all();</script>
+
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"Objective-C结合RAC实现KVO广播功能 - 来自CocoaChina苹果开发中文站@CocoaChina","bdMini":"2","bdMiniList":false,"bdPic":"http://api.cocoachina.com/uploads/150820/cec8ef42f2aa53b64499a562dcbd3da2.jpg","bdStyle":"1","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api//js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+<!--./cont-->
+
+<!-- 回复评论框模板 -->
+<script type="text/javascript" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/comment.js"></script>
+<script type="text/javascript" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/mustache.js"></script>
+<!-- 回复评论框模板 -->
+<script id="reply_comment_template" type="x-tmpl-mustache">
+    <div id="sub-reply-comment" class="reply-comment">
+        <textarea name="subcomment" id="sub-reply-txt" cols="30" rows="10" placeholder="你怎么看？快来评论一下吧！"></textarea>
+        <input type="hidden" id="sub-reply-id" value="{{commentid}}" />
+        <input type="hidden" id="sub-reply-userid" value="{{parentuserid}}" />
+        <input type="hidden" id="sub-reply-username" value="{{parentusername}}" />
+        <a type="button" id="sub_comment_bt" class="submitbt">提交</a>
+        <div class="clearfloat"></div>
+        <div class="unlogin-mask">
+            <div>您还没有登录！请<a href="/bbs/login.php">登录</a>或<a href="/bbs/register.php">注册</a></div>
+        </div>
+    </div>
+</script>
+
+<!-- 评论模板 -->
+<script id="main_comment_template" type="x-tmpl-mustache">
+    <div class="glab-comment" rel-data-id="{{comment_id}}" rel-user-id="{{user_id}}" rel-user-name="{{user_name}}" rel-layer="1">
+        <div class="comment-left">
+            <a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank"><img src="{{user_icon_url}}" height="43" width="43" alt=""></a>
+        </div>
+        <div class="comment-right">
+            <div class="comment-author"><a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank">{{user_name}}</a><span class="puptime">{{create_time}}</span></div>
+            <div class="comment-content">{{content}}</div>
+            <div class="comment-buttons">
+                <span class="ding">                    
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-default.png" height="14" width="14" alt="" class="default" style="{{#has_supported}} display:none; {{/has_supported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-active.png" height="14" width="14" alt="" class="actived" style="{{^has_supported}} display:none; {{/has_supported}}">
+                    <span class="zancnt">{{support}}</span>
+                </span>
+                <span class="cai">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-default.png" height="14" width="14" alt="" class="default" style="{{#has_reported}} display:none; {{/has_reported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-active.png" height="14" width="14" alt="" class="actived" style="{{^has_reported}} display:none; {{/has_reported}}">
+                    <span class="zancnt">{{report}}</span>
+                </span>
+                <span class="replybt">回复</span>
+            </div>
+        </div>
+            {{#sub}}
+                <div class="glab-comment glab-sub-comment" rel-data-id="{{comment_id}}" rel-user-id="{{user_id}}" rel-user-name="{{user_name}}" rel-layer="2">
+                    <div class="comment-left">
+                        <a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank"><img src="{{user_icon_url}}" height="43" width="43" alt=""></a>
+                    </div>
+                    <div class="comment-right">
+                        <div class="comment-author"><a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank">{{user_name}}</a><span class="puptime">{{create_time}}</span></div>
+                        <div class="comment-content"><a href="/bbs/u.php?action=feed&uid={{parent_user_id}}" target="_blank">回复：{{parent}}</a>{{content}}</div>
+                        <div class="comment-buttons">
+                            <span class="ding">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/zan-default.png" height="14" width="14" alt="" class="default" style="{{#has_supported}} display:none; {{/has_supported}}">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/zan-active.png" height="14" width="14" alt="" class="actived" style="{{^has_supported}} display:none; {{/has_supported}}">
+                                <span class="zancnt">{{support}}</span>
+                            </span>
+                            <span class="cai">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/cai-default.png" height="14" width="14" alt="" class="default" style="{{#has_reported}} display:none; {{/has_reported}}">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/cai-active.png" height="14" width="14" alt="" class="actived" style="{{^has_reported}} display:none; {{/has_reported}}">
+                                <span class="zancnt">{{report}}</span>
+                            </span>
+                            <span class="replybt">回复</span>
+                        </div>          
+                    </div>
+                </div>
+            {{/sub}}         
+    </div>  
+</script>
+
+
+<script id="sub_comment_template" type="x-tmpl-mustache">
+    <div class="glab-comment glab-sub-comment" rel-data-id="{{comment_id}}" rel-user-id="{{user_id}}" rel-user-name="{{user_name}}" rel-layer="2">
+        <div class="comment-left">
+            <a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank"><img src="{{user_icon_url}}" height="43" width="43" alt=""></a>
+        </div>
+        <div class="comment-right">
+            <div class="comment-author"><a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank">{{user_name}}</a><span class="puptime">{{create_time}}</span></div>
+            <div class="comment-content"><a href="/bbs/u.php?action=feed&uid={{parent_user_id}}" target="_blank">回复：{{parent}}</a>{{content}}</div>
+            <div class="comment-buttons">
+                <span class="ding">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-default.png" height="14" width="14" alt="" class="default" style="{{#has_supported}} display:none; {{/has_supported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-active.png" height="14" width="14" alt="" class="actived" style="{{^has_supported}} display:none; {{/has_supported}}">
+                    <span class="zancnt">{{support}}</span>
+                </span>
+                <span class="cai">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-default.png" height="14" width="14" alt="" class="default" style="{{#has_reported}} display:none; {{/has_reported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-active.png" height="14" width="14" alt="" class="actived" style="{{^has_reported}} display:none; {{/has_reported}}">
+                    <span class="zancnt">{{report}}</span>
+                </span>
+                <span class="replybt">回复</span>
+            </div>          
+        </div>
+    </div>
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68948817-1', 'auto', {'name': 'newTracker'});
+  ga('newTracker.send', 'pageview');
+
+</script>
+<!--右侧浮动-->
+<div class="r-bar">
+    <img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/coco_weixin.png" class="weixin">
+    <a href="http://weibo.com/cocoachina" target="_blank" title="" class="weibo">sina</a>
+    <a href="javascript:void(0);" target="_blank" title="" class="feedback">weixin</a>
+    <a href="mailto:support@cocoachina.com" title="" class="kefu">mail</a>
+    <a href="javascript:;" title="回到顶部" class="returntop">回到顶部</a>
+</div>
+
+<!--./cont-->
+<script type="text/javascript" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/index.js"></script>
+<script language="javascript" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/bbsauth_plus2015.html" type="text/javascript"></script>
+<script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/jquery_002.js" type="text/javascript"></script>
+<script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/script.js" type="text/javascript"></script>
+
+<!--footer-->
+<div class="footer clearfix">
+    <!--<div class="footer-t">
+        <div class="friend-link">
+            <h4 class="rank-tit">友情链接</h4>
+            <ul>
+                <li><a href="https://www.youmi.net/" target="_blank">有米 | </a></li><li><a href="http://www.testin.cn/" target="_blank">Testin | </a></li><li><a href="http://www.apicloud.com/" target="_blank">APICloud | </a></li><li><a href="http://www.oneapm.com" target="_blank">OneAPM | </a></li><li><a href="http://www.jpush.cn" target="_blank">极光推送 | </a></li><li><a href="https://store.cocos.com" target="_blank">Cocos商店 | </a></li><li><a href="http://www.woshipm.com/" target="_blank">人人都是产品经理 | </a></li><li><a href="http://link.cocos.com" target="_blank">Cocos Link | </a></li><li><a href="http://www.tuicool.com/" target="_blank">推酷网 | </a></li><li><a href="http://www.youxituoluo.com/" target="_blank">游戏陀螺 | </a></li><li><a href="http://www.9miao.com" target="_blank">9秒社团 | </a></li><li><a href="http://segmentfault.com/" target="_blank">SegmentFault | </a></li><li><a href="http://www.sykong.com/" target="_blank">手游那点事 | </a></li><li><a href="https://developer.apple.com/" target="_blank">苹果开发者中心 | </a></li><li><a href="http://www.cocos2d-x.org/" target="_blank">cocos2d-x | </a></li><li><a href="http://gamerboom.com/" target="_blank">游戏邦 | </a></li><li><a href="http://www.nooidea.com/" target="_blank">Nooidea.com | </a></li><li><a href="http://www.iapps.im/" target="_blank">爱应用</a></li>
+            </ul>
+        </div>
+        <div class="two-code">
+            <div class="wx-code">
+                <img src="http://cdn.cocimg.com/assets/images/wx-code.jpg?v=20150818" alt="" />
+                <span>关注微信 每日推荐</span>
+            </div>
+            <div class="m-code">
+                <img src="http://cdn.cocimg.com/assets/images/mb-code.jpg?v=20150818" alt="" />
+                <span>扫一扫 浏览移动版</span>
+            </div>
+        </div>
+    </div>-->
+    <div class="footer-b">
+        <div>
+            <a href="http://www.cocoachina.com/aboutus/index.html" target="_blank">关于我们</a>
+            <a href="http://www.cocoachina.com/contactus/" target="_blank">商务合作</a>
+            <a target="_blank" href="mailto:support@cocoachina.com">联系我们</a>
+            <a href="http://www.cocoachina.com/corps/" target="_blank">合作伙伴</a>
+        </div>
+        <p class="footer-b-p">北京触控科技有限公司版权所有</p>
+        <p>
+            ©2015 Chukong Technologies,Inc.
+            <i>
+                <a href="http://www.miibeian.gov.cn/" target="_blank">京ICP备 11006519号 　京ICP证 100954号</a> 京公网安备11010502020289
+                <a href="http://182.131.21.137/ccnt-apply/admin/business/preview/business-preview%21lookUrlRFID.action?main_id=A580B24B1AE846CE9DA949026D63939F" target="_blank">
+                    <img src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/jingwen.png" style="margin: -10px auto -14px -10px;">
+                    京网文[2012]0426-138号
+                </a>
+            </i>
+        </p>
+    </div>
+</div>
+
+<!--./footer-->
+<script language="javascript" type="text/javascript" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/dedeajax2-min.js"></script>
+<script type="text/javascript">
+function subscribe()
+{
+    var email_address = $('#demail').val();
+    var preg_email = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+
+    if( email_address == '' )
+    {
+        alert('请输入邮箱');
+    }
+    else if( !preg_email.test(email_address) )
+    {
+        alert('邮箱格式错误');
+    }
+    else
+    {
+        $.post(
+            '/edm.php',
+            {
+                email: $('#demail').val()
+            },
+            function(data) {
+                alert(data);
+             });
+    }
+}
+function search_check()
+{
+    var search_keyword = $('#search_keyword').val();
+
+    if( search_keyword.length < 2 )
+    {
+        alert("搜索关键字不能少于2个字节，请重新输入。");
+    }
+    else
+    {
+        $('#searchform').submit();
+    }
+}
+
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "http://hm.baidu.com/hm.js?88399e4c4cf744609c4fc8c3a8935691";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+
+$(document).ready(function(){
+    if (typeof(_user_info_html) != 'undefined' && _user_info_html)
+    {
+        $('.nav-user-login').hide();
+        $('.nav-user-name').html(_user_info_html).show();
+    }
+
+    var type = $('#type_name').html();
+    if(type)
+    {
+        switch( type )
+        {
+            case 'iOS开发':
+                $('#ios').addClass('light');
+                break;
+            case 'AppStore研究':
+                $('#app_store').addClass('light');
+                break;
+            case 'Mac开发':
+                $('#mac').addClass('light');
+                break;
+            case '产品设计':
+                $('#design').addClass('light');
+                break;
+            case 'Cocos引擎':
+                $('#cocos').addClass('light');
+                break;
+            case 'WebApp':
+                $('#webapp').addClass('light');
+                break;
+            case 'Swift':
+                $('#swift').addClass('light');
+                break;
+            case '游戏开发':
+                $('#game').addClass('light');
+                break;
+            case '苹果相关':
+                $('#apple').addClass('light');
+                break;
+            case '营销推广':
+                $('#market').addClass('light');
+                break;
+            case '业界动态':
+                $('#industry').addClass('light');
+                break;
+            case '程序人生':
+                $('#programmer').addClass('light');
+                break;
+        }
+    }
+
+    //更改文章来源
+    var source = $('#source a').html();
+    if( source == '未知' )
+        jQuery('#source a').html('CocoaChina');
+    if( jQuery('#source a').attr('href')=='')
+        jQuery('#source').html('来源：'+source);
+
+    //获取用户登录的id
+    var content = jQuery('.t-lid').attr("href");
+    var uid = 0;
+    if( content )
+    {
+        content = content.split('=');
+        uid = content[1];
+    }
+
+    var timestamp = new Date().getTime();
+    var uid_int = parseInt(uid);
+    if (uid_int == uid && uid_int != 0) {
+        uid = uid_int;
+    } else {
+        uid = parseInt($('#user-info').attr('data-uid'));
+    }
+    if ( uid )
+    {
+        uid = uid<<2;
+        uid = uid+''+timestamp;
+    } else {
+        uid = '';
+    }
+
+    var oIframe=document.getElementById("comiframe");
+    if(oIframe){
+        var oUrl=window.location.href;
+        oUrl = encodeURIComponent(oUrl);
+
+        oIframe.src="/comment.php?url="+oUrl+"&uid="+uid;
+    }
+
+});
+</script>
+<script>CNZZ_SLOT_RENDER('337970');</script><script type="text/javascript" charset="gbk" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/appgcm_002.js"></script><div id="cnzz_slot_337970" style="width:-1px;height:-1px;border:none;margin:0px;padding:0px;background-color:#FFFFFF;overflow:hidden;"></div>
+<div style="display:none"><a target="_blank" key="52df886aaf60041470116076" logo_size="83x30" logo_type="official" href="http://www.anquan.org/authenticate/cert/?site=www.cocoachina.com&amp;at=official">
+<script src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/aq_auth.js"></script><span style="display:none;" class="LOGO_aq_jsonp_wrap_" id="AQ_logo_span_init_1"><script async="true" type="text/javascript" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/a.js"></script></span><img alt="安全联盟认证" style="border: medium none;" src="Objective-C%E7%BB%93%E5%90%88RAC%E5%AE%9E%E7%8E%B0KVO%E5%B9%BF%E6%92%AD%E5%8A%9F%E8%83%BD%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/gw_83x30_gray.png" height="30" width="83"></a></div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-16940817-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<div style="display: none;" id="cboxOverlay"></div><div style="display: none;" class="" id="colorbox"><div id="cboxWrapper"><div><div style="float: left;" id="cboxTopLeft"></div><div style="float: left;" id="cboxTopCenter"></div><div style="float: left;" id="cboxTopRight"></div></div><div style="clear: left;"><div style="float: left;" id="cboxMiddleLeft"></div><div style="float: left;" id="cboxContent"><div style="width: 0px; height: 0px; overflow: hidden; float: left;" id="cboxLoadedContent"></div><div style="float: left;" id="cboxLoadingOverlay"></div><div style="float: left;" id="cboxLoadingGraphic"></div><div style="float: left;" id="cboxTitle"></div><div style="float: left;" id="cboxCurrent"></div><div style="float: left;" id="cboxNext"></div><div style="float: left;" id="cboxPrevious"></div><div style="float: left;" id="cboxSlideshow"></div><div style="float: left;" id="cboxClose"></div></div><div style="float: left;" id="cboxMiddleRight"></div></div><div style="clear: left;"><div style="float: left;" id="cboxBottomLeft"></div><div style="float: left;" id="cboxBottomCenter"></div><div style="float: left;" id="cboxBottomRight"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div></body></html>

@@ -1,0 +1,28 @@
+fg755p : 自由门 for Windows (轮子的, 弹出的网站注意辨别)
+GoAgentX-v2.2.9 : 复杂但强大, 全平台 (程序员最喜欢的,貌似就是因为设定复杂,可以装逼)
+lantern-installer-beta : 蓝灯, 傻瓜式一键翻墙 for Mac (好像也有windows版, 使用超简单)
+ShadowsocksX-2.6.3 : 算免费软件中稳定的, 速度不错, 操作便捷, 服务器选择多(百度), 全平台
+
+shadowsocks免费账号网站
+http://www.ishadowsocks.com
+https://github.com/shadowsocks/shadowsocks-iOS/releases
+
+蓝灯相关
+http://tieba.baidu.com/f?kw=lantern&fr=ala0&tpl=5
+http://tieba.baidu.com/p/4177084883?fr=ala0&pstaala=1&tpl=5
+
+其他(可能需翻墙)
+http://www.vpngate.net/cn/
+http://vpnssh.org
+http://www.waitsun.com/goagentx-2-3-7.html
+http://firefoxfan.cc/firefox-gaogent/mac-os-firefox-proxy.html
+https://code.google.com/p/breakwall/
+https://github.com/suede/breakwall
+
+付费VPN(长期经常使用强烈推荐购买付费服务)
+http://www.ishadowsocks.com
+http://vpnssh.org
+https://www.igreenjsq.co/index.php
+http://blog.sina.com.cn/s/blog_411fed0c0101hs26.html
+http://www.shenmavpn.in/index.htm
+https://www.vpnso.com/main.php

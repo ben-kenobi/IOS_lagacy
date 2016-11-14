@@ -1,0 +1,5 @@
+@"profile_image_url":self.userInfo.headURL,
+@"gender":self.userInfo.gender,
+@"objectid":self.userInfo.userId,
+@"nick":self.userInfo.nick,
+@"description":self.userInfo.signature

@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>sizeof 和 sizeofValue | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_73">sizeof 和 sizeofValue</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="sizeof-%E5%92%8C-sizeofvalue" class="calibre1">sizeof 和 sizeofValue</h1>
+<p class="calibre9">喜欢写 C 的读者可能会经常和 <code class="calibre13 pcalibre6 pcalibre5">sizeof</code> 打交道，不论是分配内存，I/O 操作，还是计算数组大小的时候基本都会用到。这个在 C 中定义的运算符可以作用于类型或者某个实际的变量，并返回其在内存中的尺寸 <code class="calibre13 pcalibre6 pcalibre5">size_t</code> (这是和平台无关的一个整数类型)。在 Cocoa 中，我们也有一部分 API 需要涉及到类型或者实例的内存尺寸，这时候就可以使用 <code class="calibre13 pcalibre6 pcalibre5">sizeof</code> 来计算。一个常见的用例是在从一个数组生成 <code class="calibre13 pcalibre6 pcalibre5">NSData</code> 的时候需要传入数据长度。因为在 Objective-C 中 <code class="calibre13 pcalibre6 pcalibre5">sizeof</code> 这个 C 运算符被保留了，因此我们可以直接这么做：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">char</span> bytes[] = {<span class="hljs-params">1</span>, <span class="hljs-params">2</span>, <span class="hljs-params">3</span>};
+<span class="hljs-params">NSData</span> *data = [<span class="hljs-params">NSData</span> dataWithBytes:&amp;bytes length:<span class="hljs-keyword">sizeof</span>(bytes)];
+<span class="hljs-title">// &lt;010203&gt;</span>
+</code></pre>
+<p class="calibre9">C 中的 <code class="calibre13 pcalibre6 pcalibre5">sizeof</code> 有两个版本，既可以接受类型，也可以接受某个具体的值：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>)
+<span class="hljs-keyword">sizeof</span>(a)
+</code></pre>
+<p class="calibre9">与传统的 C 或者 Objective-C 里的运算符的存在形式不同，在 Swift 中，为了保证类型安全，<code class="calibre13 pcalibre6 pcalibre5">sizeof</code> 经过了一层包装。在 Swift 中 <code class="calibre13 pcalibre6 pcalibre5">sizeof</code> 不再是运算符，而是一个只能接受类型的方法。我们还可以找到一个接受具体值，并返回其尺寸的方法：<code class="calibre13 pcalibre6 pcalibre5">sizeofValue</code>。另外，这样个方法返回的都是看起来比较友好和直接的 <code class="calibre13 pcalibre6 pcalibre5">Int</code>，而不再是 <code class="calibre13 pcalibre6 pcalibre5">size_t</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">sizeof</span><span class="hljs-func">&lt;T&gt;</span><span class="hljs-params">(<span class="hljs-params">_</span>: T.<span class="hljs-keyword">Type</span>)</span></span> -&gt; <span class="hljs-func">Int</span>
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">sizeofValue</span><span class="hljs-func">&lt;T&gt;</span><span class="hljs-params">(<span class="hljs-params">_</span>: T)</span></span> -&gt; <span class="hljs-func">Int</span>
+</code></pre>
+<p class="calibre9">虽然 <code class="calibre13 pcalibre6 pcalibre5">sizeofValue</code> 接受的是具体值，但是它和 C 时代的接受具体值的版本的 <code class="calibre13 pcalibre6 pcalibre5">sizeof</code> 行为并不相同。Swift 的 <code class="calibre13 pcalibre6 pcalibre5">sizeofValue</code> 所返回的是<strong class="calibre10">这个值</strong>实际的大小，而并非其内容的大小。具体来说，如果我们在 Swift 中想表示上面的 <code class="calibre13 pcalibre6 pcalibre5">bytes</code> 的话，我们会将其类型写为 <code class="calibre13 pcalibre6 pcalibre5">[CChar]</code>。在 C 或者 Objective-C 中，对 <code class="calibre13 pcalibre6 pcalibre5">bytes</code> 做 <code class="calibre13 pcalibre6 pcalibre5">sizeof</code> 返回的是整个数组内容在内存中占据的尺寸，每个 char 为 1，而数组元素为 3，因此这个值为 3。而在 Swift 中，我们如果直接对 <code class="calibre13 pcalibre6 pcalibre5">bytes</code> 做 <code class="calibre13 pcalibre6 pcalibre5">sizeofValue</code> 操作的话，将返回 8，这其实是在 64 位系统上一个引用的长度：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// C</span>
+char bytes[] = {<span class="hljs-params">1</span>, <span class="hljs-params">2</span>, <span class="hljs-params">3</span>};
+<span class="hljs-params">sizeof</span>(bytes);
+<span class="hljs-title">// 3</span>
+
+<span class="hljs-title">// Swift</span>
+<span class="hljs-keyword">var</span> bytes: [<span class="hljs-func">CChar</span>] = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>]
+<span class="hljs-params">sizeofValue</span>(bytes)
+<span class="hljs-title">// 8</span>
+</code></pre>
+<p class="calibre9">所以，我们不能简单地用 <code class="calibre13 pcalibre6 pcalibre5">sizeofValue</code> 来获取长度，而需要进行一些计算。上面的生成 <code class="calibre13 pcalibre6 pcalibre5">NSData</code> 的方法在 Swift 中书写的话，等效的代码应该是下面这样的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> bytes: [<span class="hljs-func">CChar</span>] = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>]
+<span class="hljs-keyword">let</span> data = <span class="hljs-func">NSData</span>(bytes: &amp;bytes, length:<span class="hljs-params">sizeof</span>(<span class="hljs-func">CChar</span>) * bytes.<span class="hljs-params">count</span>)
+</code></pre>
+<blockquote class="calibre6">
+<p class="calibre9">作为练习，尝试一下指出下面的代码的结果分别是什么，并尝试解释一下</p>
+<pre class="calibre14"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">MyEnum</span>: <span class="hljs-title">UInt16</span> </span>{
+    <span class="hljs-keyword">case</span> <span class="hljs-func">A</span> = <span class="hljs-params">0</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-func">B</span> = <span class="hljs-params">1</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-func">C</span> = <span class="hljs-params">65535</span>
+}
+
+<span class="hljs-params">sizeof</span>(<span class="hljs-func">UInt16</span>)
+<span class="hljs-params">sizeof</span>(<span class="hljs-func">MyEnum</span>)
+<span class="hljs-params">sizeofValue</span>(<span class="hljs-func">MyEnum</span>.<span class="hljs-func">A</span>)
+<span class="hljs-params">sizeofValue</span>(<span class="hljs-func">MyEnum</span>.<span class="hljs-func">A</span>.rawValue)
+</code></pre>
+</blockquote>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

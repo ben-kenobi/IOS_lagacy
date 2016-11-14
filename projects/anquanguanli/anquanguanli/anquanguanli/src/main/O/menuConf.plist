@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>items</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>作业状态上报</string>
+				<key>icon</key>
+				<string>disk_zyztsb</string>
+				<key>vc</key>
+				<string>UserManageVC</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>作业方案查看</string>
+				<key>icon</key>
+				<string>disk_fack</string>
+				<key>vc</key>
+				<string>UserManageVC</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>作业信息上报</string>
+				<key>icon</key>
+				<string>disk_xxsb</string>
+				<key>vc</key>
+				<string>UserManageVC</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>安全管理</string>
+				<key>icon</key>
+				<string>disk_dy</string>
+				<key>vc</key>
+				<string>UserManageVC</string>
+			</dict>
+			<dict>
+				<key>title</key>
+				<string>用户管理</string>
+				<key>icon</key>
+				<string>user_manage</string>
+				<key>vc</key>
+				<string>UserManageVC</string>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

@@ -1,0 +1,430 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		187811851BC49E440025566E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 187811841BC49E440025566E /* main.m */; };
+		187811881BC49E440025566E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187811871BC49E440025566E /* AppDelegate.m */; };
+		1878118B1BC49E440025566E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1878118A1BC49E440025566E /* ViewController.m */; };
+		187811901BC49E440025566E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1878118F1BC49E440025566E /* Images.xcassets */; };
+		1878119F1BC49E440025566E /* day13_ui_blackNwhiteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1878119E1BC49E440025566E /* day13_ui_blackNwhiteTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		187811991BC49E440025566E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 187811771BC49E440025566E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1878117E1BC49E440025566E;
+			remoteInfo = "day13-ui-blackNwhite";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1878117F1BC49E440025566E /* day13-ui-blackNwhite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "day13-ui-blackNwhite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		187811831BC49E440025566E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		187811841BC49E440025566E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		187811861BC49E440025566E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		187811871BC49E440025566E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		187811891BC49E440025566E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		1878118A1BC49E440025566E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		1878118F1BC49E440025566E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		187811981BC49E440025566E /* day13-ui-blackNwhiteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "day13-ui-blackNwhiteTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1878119D1BC49E440025566E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1878119E1BC49E440025566E /* day13_ui_blackNwhiteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day13_ui_blackNwhiteTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1878117C1BC49E440025566E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		187811951BC49E440025566E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		187811761BC49E440025566E = {
+			isa = PBXGroup;
+			children = (
+				187811811BC49E440025566E /* day13-ui-blackNwhite */,
+				1878119B1BC49E440025566E /* day13-ui-blackNwhiteTests */,
+				187811801BC49E440025566E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		187811801BC49E440025566E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1878117F1BC49E440025566E /* day13-ui-blackNwhite.app */,
+				187811981BC49E440025566E /* day13-ui-blackNwhiteTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		187811811BC49E440025566E /* day13-ui-blackNwhite */ = {
+			isa = PBXGroup;
+			children = (
+				187811861BC49E440025566E /* AppDelegate.h */,
+				187811871BC49E440025566E /* AppDelegate.m */,
+				187811AA1BC49E860025566E /* C */,
+				187811A91BC49E840025566E /* V */,
+				187811A81BC49E810025566E /* M */,
+				1878118F1BC49E440025566E /* Images.xcassets */,
+				187811821BC49E440025566E /* Supporting Files */,
+			);
+			path = "day13-ui-blackNwhite";
+			sourceTree = "<group>";
+		};
+		187811821BC49E440025566E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				187811831BC49E440025566E /* Info.plist */,
+				187811841BC49E440025566E /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1878119B1BC49E440025566E /* day13-ui-blackNwhiteTests */ = {
+			isa = PBXGroup;
+			children = (
+				1878119E1BC49E440025566E /* day13_ui_blackNwhiteTests.m */,
+				1878119C1BC49E440025566E /* Supporting Files */,
+			);
+			path = "day13-ui-blackNwhiteTests";
+			sourceTree = "<group>";
+		};
+		1878119C1BC49E440025566E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1878119D1BC49E440025566E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		187811A81BC49E810025566E /* M */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = M;
+			sourceTree = "<group>";
+		};
+		187811A91BC49E840025566E /* V */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = V;
+			sourceTree = "<group>";
+		};
+		187811AA1BC49E860025566E /* C */ = {
+			isa = PBXGroup;
+			children = (
+				187811891BC49E440025566E /* ViewController.h */,
+				1878118A1BC49E440025566E /* ViewController.m */,
+			);
+			name = C;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1878117E1BC49E440025566E /* day13-ui-blackNwhite */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 187811A21BC49E440025566E /* Build configuration list for PBXNativeTarget "day13-ui-blackNwhite" */;
+			buildPhases = (
+				1878117B1BC49E440025566E /* Sources */,
+				1878117C1BC49E440025566E /* Frameworks */,
+				1878117D1BC49E440025566E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "day13-ui-blackNwhite";
+			productName = "day13-ui-blackNwhite";
+			productReference = 1878117F1BC49E440025566E /* day13-ui-blackNwhite.app */;
+			productType = "com.apple.product-type.application";
+		};
+		187811971BC49E440025566E /* day13-ui-blackNwhiteTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 187811A51BC49E440025566E /* Build configuration list for PBXNativeTarget "day13-ui-blackNwhiteTests" */;
+			buildPhases = (
+				187811941BC49E440025566E /* Sources */,
+				187811951BC49E440025566E /* Frameworks */,
+				187811961BC49E440025566E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1878119A1BC49E440025566E /* PBXTargetDependency */,
+			);
+			name = "day13-ui-blackNwhiteTests";
+			productName = "day13-ui-blackNwhiteTests";
+			productReference = 187811981BC49E440025566E /* day13-ui-blackNwhiteTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		187811771BC49E440025566E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = itheima;
+				TargetAttributes = {
+					1878117E1BC49E440025566E = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					187811971BC49E440025566E = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = 1878117E1BC49E440025566E;
+					};
+				};
+			};
+			buildConfigurationList = 1878117A1BC49E440025566E /* Build configuration list for PBXProject "day13-ui-blackNwhite" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 187811761BC49E440025566E;
+			productRefGroup = 187811801BC49E440025566E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1878117E1BC49E440025566E /* day13-ui-blackNwhite */,
+				187811971BC49E440025566E /* day13-ui-blackNwhiteTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1878117D1BC49E440025566E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				187811901BC49E440025566E /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		187811961BC49E440025566E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1878117B1BC49E440025566E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1878118B1BC49E440025566E /* ViewController.m in Sources */,
+				187811881BC49E440025566E /* AppDelegate.m in Sources */,
+				187811851BC49E440025566E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		187811941BC49E440025566E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1878119F1BC49E440025566E /* day13_ui_blackNwhiteTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1878119A1BC49E440025566E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1878117E1BC49E440025566E /* day13-ui-blackNwhite */;
+			targetProxy = 187811991BC49E440025566E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		187811A01BC49E440025566E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		187811A11BC49E440025566E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		187811A31BC49E440025566E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = "day13-ui-blackNwhite/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		187811A41BC49E440025566E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = "day13-ui-blackNwhite/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		187811A61BC49E440025566E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "day13-ui-blackNwhiteTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/day13-ui-blackNwhite.app/day13-ui-blackNwhite";
+			};
+			name = Debug;
+		};
+		187811A71BC49E440025566E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "day13-ui-blackNwhiteTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/day13-ui-blackNwhite.app/day13-ui-blackNwhite";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1878117A1BC49E440025566E /* Build configuration list for PBXProject "day13-ui-blackNwhite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				187811A01BC49E440025566E /* Debug */,
+				187811A11BC49E440025566E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		187811A21BC49E440025566E /* Build configuration list for PBXNativeTarget "day13-ui-blackNwhite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				187811A31BC49E440025566E /* Debug */,
+				187811A41BC49E440025566E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		187811A51BC49E440025566E /* Build configuration list for PBXNativeTarget "day13-ui-blackNwhiteTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				187811A61BC49E440025566E /* Debug */,
+				187811A71BC49E440025566E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 187811771BC49E440025566E /* Project object */;
+}

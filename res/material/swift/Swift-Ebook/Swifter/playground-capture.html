@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Playground 可视化 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_87">Playground 可视化</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="playground-%E5%8F%AF%E8%A7%86%E5%8C%96" class="calibre1">Playground 可视化</h1>
+<p class="calibre9">在程序界，很多小伙伴都会对研究排序算法情有独钟，并且试图将排序执行的过程可视化，以便让大家更清晰直观地了解算法步骤。有人把可视化排序做得很<a href="http://jsdo.it/norahiko/oxIy/fullscreen" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">正统明了</a>，也有人把它做到了<a href="http://sorting.at" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">艺术层次</a>。</p>
+<p class="calibre9">想在 Cocoa 中做一个可视化的排序算法演示可不是一件容易的事情，很可能你会需要一套绘制图形的框架，并且考虑如何在屏幕上呈现每一步的过程。但是在 Playground 中事情就变得简单多了：我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">XCPlayground</code> 框架的 <code class="calibre13 pcalibre6 pcalibre5">XCPCaptureValue</code> 方法来将一组数据轻而易举地绘制到时间轴上，从而让我们能看到每一步的结果。这不仅对我们直观且及时地了解算法内部的变化很有帮助，也会是教学或者演示时候的神兵利器。</p>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">XCPCaptureValue</code> 的使用方法很简单，在 <code class="calibre13 pcalibre6 pcalibre5">import XCPlayground</code> 导入框架后，可以找到该方法的定义：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">XCPCaptureValue</span><span class="hljs-func">&lt;T&gt;</span><span class="hljs-params">(identifier: String, value: T)</span></span>
+</code></pre>
+<p class="calibre9">我们可以多次调用该方法来做图，相同的 <code class="calibre13 pcalibre6 pcalibre5">identifier</code> 的数据将会出现在同一张图上，而 <code class="calibre13 pcalibre6 pcalibre5">value</code> 将根据输入的次序进行排列。举一个完整的例子来说明会比较快，比如下面的代码实现了简单的冒泡排序，我们在每一轮排序完成后使用 <code class="calibre13 pcalibre6 pcalibre5">plot</code> 方法将当前的数组状态用 <code class="calibre13 pcalibre6 pcalibre5">XCPCaptureValue</code> 的方式进行了输出。通过在时间轴 (通过 “Alt+Cmd+回车” 打开 Assistant Editor) 的输出图，我们就可以非常清楚地了解到整个算法的执行过程了。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">import</span> <span class="hljs-func">XCPlayground</span>
+
+<span class="hljs-keyword">var</span> arr = [<span class="hljs-params">14</span>, <span class="hljs-params">11</span>, <span class="hljs-params">20</span>, <span class="hljs-params">1</span>, <span class="hljs-params">3</span>, <span class="hljs-params">9</span>, <span class="hljs-params">4</span>, <span class="hljs-params">15</span>, <span class="hljs-params">6</span>, <span class="hljs-params">19</span>,
+    <span class="hljs-params">2</span>, <span class="hljs-params">8</span>, <span class="hljs-params">7</span>, <span class="hljs-params">17</span>, <span class="hljs-params">12</span>, <span class="hljs-params">5</span>, <span class="hljs-params">10</span>, <span class="hljs-params">13</span>, <span class="hljs-params">18</span>, <span class="hljs-params">16</span>]
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">plot</span><span class="hljs-func">&lt;T&gt;</span><span class="hljs-params">(title: String, array: [T])</span></span> {
+    <span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> array {
+        <span class="hljs-func">XCPCaptureValue</span>(title, value: value)
+    }
+}
+
+plot(<span class="hljs-string">"起始"</span>, array: arr)
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">swap</span><span class="hljs-params">(<span class="hljs-keyword">inout</span> x: Int, <span class="hljs-keyword">inout</span> y: Int)</span></span> {
+    (x, y) = (y, x)
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">bubbleSort</span><span class="hljs-func">&lt;T: Comparable&gt;</span><span class="hljs-params">(<span class="hljs-keyword">inout</span> input: [T])</span></span> {
+    <span class="hljs-keyword">for</span> <span class="hljs-keyword">var</span> i = input.<span class="hljs-params">count</span>; i &gt; <span class="hljs-params">1</span>; i-- {
+        <span class="hljs-keyword">var</span> didSwap = <span class="hljs-params">false</span>
+        <span class="hljs-keyword">for</span> <span class="hljs-keyword">var</span> j = <span class="hljs-params">0</span>; j &lt; i - <span class="hljs-params">1</span>; j++ {
+            <span class="hljs-keyword">if</span> input[j] &gt; input[j + <span class="hljs-params">1</span>] {
+                didSwap = <span class="hljs-params">true</span>
+                <span class="hljs-params">swap</span>(&amp;input[j], &amp;input[j + <span class="hljs-params">1</span>])
+            }
+        }
+        <span class="hljs-keyword">if</span> !didSwap {
+            <span class="hljs-keyword">break</span>
+        }
+        plot(<span class="hljs-string">"第 <span class="hljs-func">\(input.<span class="hljs-params">count</span> - (i - <span class="hljs-params">1</span>)</span>) 次迭代"</span>, array: input)
+    }
+    plot(<span class="hljs-string">"结果"</span>, array: input)
+}
+
+bubbleSort(&amp;arr)
+</code></pre>
+<p class="calibre9">因为 <code class="calibre13 pcalibre6 pcalibre5">XCPCaptureValue</code> 的数据输入是任意类型的，所以不论是传什么进去都是可以表示的。它们将以 QuickLook 预览的方式被表现出来，一些像 <code class="calibre13 pcalibre6 pcalibre5">UIImage</code>，<code class="calibre13 pcalibre6 pcalibre5">UIColor</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">UIBezierPath</code> 这样的类型已经实现了 QuickLook。当然对于那些没有实现快速预览的 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 子类，也可以通过重写</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">debugQuickLookObject</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">AnyObject</span>?
+</code></pre>
+<p class="calibre9">来提供一个预览输出。在上面的冒泡排序方法中，我们可以接收任意满足 <code class="calibre13 pcalibre6 pcalibre5">Comparable</code> 的数组，而绘图方法也可以接受任意类型的输入。作为练习，可以试试看把 <code class="calibre13 pcalibre6 pcalibre5">arr</code> 的全部数字都换成一些随机的字符串看看时间轴的输出是什么样子吧。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>类型编码 @encode | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_71">类型编码 @encode</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A0%81-encode" class="calibre1">类型编码 @encode</h1>
+<p class="calibre9">Objective-C 中有一些很冷僻但是如果知道的话在特定情况下会很有用的关键字，比如说通过类型获取对应编码的 <code class="calibre13 pcalibre6 pcalibre5">@encode</code> 就是其中之一。</p>
+<p class="calibre9">在 Objective-C 中 <code class="calibre13 pcalibre6 pcalibre5">@encode</code> 使用起来很简单，通过传入一个类型，我们就可以获取代表这个类型的编码 C 字符串：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">char</span> *typeChar1 = @encode(int32_t);
+<span class="hljs-keyword">char</span> *typeChar2 = @encode(<span class="hljs-params">NSArray</span>);
+<span class="hljs-title">// typeChar1 = "i", typeChar2 = "{NSArray=#}"</span>
+</code></pre>
+<p class="calibre9">我们可以对任意的类型进行这样的操作。这个关键字最常用的地方是在 Objective-C 运行时的消息发送机制中，在传递参数时，由于类型信息的缺失，需要类型编码进行辅助以保证类型信息也能够被传递。在实际的应用开发中，其实使用案例比较少：某些 API 中 Apple 建议使用 <code class="calibre13 pcalibre6 pcalibre5">NSValue</code> 的 <code class="calibre13 pcalibre6 pcalibre5">valueWithBytes:objCType:</code> 来获取值 (比如 <code class="calibre13 pcalibre6 pcalibre5">CIAffineClamp</code> 的<a href="https://developer.apple.com/library/mac/documentation/graphicsimaging/reference/CoreImageFilterReference/Reference/reference.html#//apple_ref/doc/filter/ci/CIAffineClamp" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">文档</a>里) ，这时的 <code class="calibre13 pcalibre6 pcalibre5">objCType</code> 就需要类型的编码值；另外就是在类型信息丢失时我们可能需要用到这个特性，我们稍后会举一个这方面的例子。</p>
+<p class="calibre9">Swift 使用了自己的 Metatype 来处理类型，并且在运行时保留了这些类型的信息，所以 Swift 并没有必要保留这个关键字。我们现在不能获取任意类型的类型编码了，但是在 Cocoa 中我们还是可以通过 <code class="calibre13 pcalibre6 pcalibre5">NSValue</code> 的 <code class="calibre13 pcalibre6 pcalibre5">objcType</code> 属性来获取对应值的类型指针：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">NSValue</span> : <span class="hljs-title">NSObject</span>, <span class="hljs-title">NSCopying</span>, <span class="hljs-title">NSSecureCoding</span>, <span class="hljs-title">NSCoding</span> </span>{
+    <span class="hljs-title">//...</span>
+    <span class="hljs-keyword">var</span> objCType: <span class="hljs-func">UnsafePointer</span>&lt;<span class="hljs-func">Int8</span>&gt; { <span class="hljs-keyword">get</span> }
+
+    <span class="hljs-title">//...</span>
+}
+</code></pre>
+<p class="calibre9">比如我们如果想要获取某个 Swift 类型的 “等效的” 类型编码的话，我们需要现将它转换为 <code class="calibre13 pcalibre6 pcalibre5">NSNumber</code> (<code class="calibre13 pcalibre6 pcalibre5">NSNumber</code> 是 <code class="calibre13 pcalibre6 pcalibre5">NSValue</code> 的子类)，然后获取类型：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> int: <span class="hljs-func">Int</span> = <span class="hljs-params">0</span>
+<span class="hljs-keyword">let</span> float: <span class="hljs-func">Float</span> = <span class="hljs-params">0.0</span>
+<span class="hljs-keyword">let</span> double: <span class="hljs-func">Double</span> = <span class="hljs-params">0.0</span>
+
+<span class="hljs-keyword">let</span> intNumber: <span class="hljs-func">NSNumber</span> = int
+<span class="hljs-keyword">let</span> floatNumber: <span class="hljs-func">NSNumber</span> = float
+<span class="hljs-keyword">let</span> doubleNumber: <span class="hljs-func">NSNumber</span> = double
+
+<span class="hljs-func">String</span>.fromCString(intNumber.objCType)
+<span class="hljs-func">String</span>.fromCString(floatNumber.objCType)
+<span class="hljs-func">String</span>.fromCString(doubleNumber.objCType)
+
+<span class="hljs-title">// 结果分别为：</span>
+<span class="hljs-title">// {Some "q"}</span>
+<span class="hljs-title">// {Some "f"}</span>
+<span class="hljs-title">// {Some "d"}</span>
+<span class="hljs-title">// 注意，fromCString 返回的是 `String?`</span>
+</code></pre>
+<p class="calibre9">对于像其他一些可以转换为 <code class="calibre13 pcalibre6 pcalibre5">NSValue</code> 的类型，我们也可以通过同样的方式获取类型编码，一般来说这些类型会是某些 struct，因为 <code class="calibre13 pcalibre6 pcalibre5">NSValue</code> 设计的初衷就是被作为那些不能直接放入 <code class="calibre13 pcalibre6 pcalibre5">NSArray</code> 的值的容器来使用的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> p = <span class="hljs-func">NSValue</span>(<span class="hljs-func">CGPoint</span>: <span class="hljs-func">CGPointMake</span>(<span class="hljs-params">3</span>, <span class="hljs-params">3</span>))
+<span class="hljs-func">String</span>.fromCString(p.objCType)
+<span class="hljs-title">// {Some "{CGPoint=dd}"}</span>
+
+<span class="hljs-keyword">let</span> t = <span class="hljs-func">NSValue</span>(<span class="hljs-func">CGAffineTransform</span>: <span class="hljs-func">CGAffineTransformIdentity</span>)
+<span class="hljs-func">String</span>.fromCString(t.objCType)
+<span class="hljs-title">// {Some "{CGAffineTransform=dddddd}"}</span>
+</code></pre>
+<p class="calibre9">有了这些信息之后，我们就能够在这种类型信息可能损失的时候构建起准确的类型转换和还原了。</p>
+<p class="calibre9">举例来说，我们如果想要在 <code class="calibre13 pcalibre6 pcalibre5">NSUserDefaults</code> 中存储一些不同类型的数字，然后读取时需要准确地还原为之前的类型的话，最容易想到的应该是使用<a href="class-cluster.html" class="pcalibre pcalibre2 pcalibre1 calibre4">类簇</a>来获取这些数字转为 <code class="calibre13 pcalibre6 pcalibre5">NSNumber</code> 后真正的类型，然后存储。但是 <code class="calibre13 pcalibre6 pcalibre5">NSNumber</code> 的类簇子类都是私有的，我们如果想要藉此判定的话，就不得不使用私有 API，这是不可接受的。变通的方法就是在存储时使用 <code class="calibre13 pcalibre6 pcalibre5">objCType</code> 获取类型，然后将数字本身和类型的字符串一起存储。在读取时就可以通过匹配类型字符串和类型的编码，确定数字本来所属的类型，从而直接得到像 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">Double</code> 这样的类型明确的量。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

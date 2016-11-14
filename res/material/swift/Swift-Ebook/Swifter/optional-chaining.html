@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Optional Chaining | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_9">Optional Chaining</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="optional-chaining" class="calibre1">Optional Chaining</h1>
+<p class="calibre9">使用 Optional Chaining 可以让我们摆脱很多不必要的判断和取值，但是在使用的时候需要小心陷阱。</p>
+<p class="calibre9">因为 Optional Chaining 是随时都可能提前返回 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 的，所以使用 Optional Chaining 所得到的东西其实都是 Optional 的。比如有下面的一段代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Toy</span> </span>{
+    <span class="hljs-keyword">let</span> name: <span class="hljs-func">String</span>
+    <span class="hljs-keyword">init</span>(name: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span>.name = name
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Pet</span> </span>{
+    <span class="hljs-keyword">var</span> toy: <span class="hljs-func">Toy</span>?
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Child</span> </span>{
+    <span class="hljs-keyword">var</span> pet: <span class="hljs-func">Pet</span>?
+}
+</code></pre>
+<p class="calibre9">在实际使用中，我们想要知道小明的宠物的玩具的名字的时候，可以通过下面的 Optional Chaining 拿到：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> toyName = xiaoming.pet?.toy?.name
+</code></pre>
+<p class="calibre9">注意虽然我们最后访问的是 <code class="calibre13 pcalibre6 pcalibre5">name</code>，并且在 <code class="calibre13 pcalibre6 pcalibre5">Toy</code> 的定义中 <code class="calibre13 pcalibre6 pcalibre5">name</code> 是被定义为一个确定的 <code class="calibre13 pcalibre6 pcalibre5">String</code> 而非 <code class="calibre13 pcalibre6 pcalibre5">String?</code> 的，但是我们拿到的 <code class="calibre13 pcalibre6 pcalibre5">toyName</code> 其实还是一个 <code class="calibre13 pcalibre6 pcalibre5">String?</code> 的类型。这是由于在 Optional Chaining 中我们在任意一个 <code class="calibre13 pcalibre6 pcalibre5">?.</code> 的时候都可能遇到 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 而提前返回，这个时候当然就只能拿到 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 了。</p>
+<p class="calibre9">在实际的使用中，我们大多数情况下可能更希望使用 Optional Binding 来直接取值的这样的代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> toyName = xiaoming.pet?.toy?.name {
+    <span class="hljs-title">// 太好了，小明既有宠物，而且宠物还正好有个玩具</span>
+}
+</code></pre>
+<p class="calibre9">可能单独拿出来看会很清楚，但是只要稍微和其他特性结合一下，事情就会变得复杂起来。来看看下面的例子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">Toy</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">play</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-title">//...</span>
+    }
+}
+</code></pre>
+<p class="calibre9">我们为 <code class="calibre13 pcalibre6 pcalibre5">Toy</code> 定义了一个扩展，以及一个玩玩具的 <code class="calibre13 pcalibre6 pcalibre5">play()</code> 方法。还是拿小明举例子，要是有玩具的话，就玩之：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">xiaoming.pet?.toy?.play()
+</code></pre>
+<p class="calibre9">除了小明也许我们还有小红小李小张等等..在这种时候我们会想要把这一串调用抽象出来，做一个闭包方便使用。传入一个 <code class="calibre13 pcalibre6 pcalibre5">Child</code> 对象，如果小朋友有宠物并且宠物有玩具的话，就去玩。于是很可能你会写出这样的代码：</p>
+<blockquote class="calibre6">
+<h3 id="%E8%BF%99%E6%98%AF%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81" class="calibre16">这是错误代码</h3>
+<pre class="calibre14"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> playClosure = {(child: <span class="hljs-func">Child</span>) -&gt; () <span class="hljs-keyword">in</span> child.pet?.toy?.play()}
+</code></pre>
+</blockquote>
+<p class="calibre9">这样的代码是没有意义的！</p>
+<p class="calibre9">问题在于对于 <code class="calibre13 pcalibre6 pcalibre5">play()</code> 的调用上。定义的时候我们没有写 <code class="calibre13 pcalibre6 pcalibre5">play()</code> 的返回，这表示这个方法返回 <code class="calibre13 pcalibre6 pcalibre5">Void</code> (或者写作一对小括号 <code class="calibre13 pcalibre6 pcalibre5">()</code>，它们是等价的)。但是正如上所说，经过 Optional Chaining 以后我们得到的是一个 Optional 的结果。也就是说，我们最后得到的应该是这样一个 closure：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> playClosure = {(child: <span class="hljs-func">Child</span>) -&gt; ()? <span class="hljs-keyword">in</span> child.pet?.toy?.play()}
+</code></pre>
+<p class="calibre9">这样调用的返回将是一个 <code class="calibre13 pcalibre6 pcalibre5">()?</code> (或者写成 <code class="calibre13 pcalibre6 pcalibre5">Void?</code> 会更清楚一些)，虽然看起来挺奇怪的，但这就是事实。使用的时候我们可以通过 Optional Binding 来判定方法是否调用成功：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> result: () = playClosure(xiaoming) {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"好开心~"</span>)
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"没有玩具可以玩 :("</span>)
+}
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

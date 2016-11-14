@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>clz</key>
+		<string>YFHallCon</string>
+		<key>title</key>
+		<string>hall</string>
+	</dict>
+	<dict>
+		<key>clz</key>
+		<string>YFArenaVC</string>
+		<key>title</key>
+		<string>arena</string>
+	</dict>
+	<dict>
+		<key>clz</key>
+		<string>YFDiscVC</string>
+		<key>title</key>
+		<string>discovery</string>
+		<key>pname</key>
+		<string>disc</string>
+	</dict>
+	<dict>
+		<key>clz</key>
+		<string>YFHisVC</string>
+		<key>title</key>
+		<string>history</string>
+	</dict>
+	<dict>
+		<key>clz</key>
+		<string>YFMylotCon</string>
+		<key>title</key>
+		<string>lottery</string>
+	</dict>
+</array>
+</plist>

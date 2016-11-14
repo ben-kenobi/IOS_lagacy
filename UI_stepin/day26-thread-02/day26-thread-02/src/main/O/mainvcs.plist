@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>hall</string>
+		<key>clz</key>
+		<string>YFDLVC05</string>
+	</dict>
+	<dict>
+		<key>clz</key>
+		<string>YFHallVC</string>
+		<key>title</key>
+		<string>arena</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>discovery</string>
+		<key>clz</key>
+		<string>YFHallVC</string>
+		<key>pname</key>
+		<string>disc</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>history</string>
+		<key>clz</key>
+		<string>YFHallVC</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>lottery</string>
+		<key>clz</key>
+		<string>YFHallVC</string>
+		<key>pname</key>
+		<string>setting</string>
+	</dict>
+</array>
+</plist>

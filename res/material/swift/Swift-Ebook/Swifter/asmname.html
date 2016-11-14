@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>C 代码调用和 @asmname | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_72">C 代码调用和 @asmname</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="c-%E4%BB%A3%E7%A0%81%E8%B0%83%E7%94%A8%E5%92%8C-asmname" class="calibre1">C 代码调用和 @asmname</h1>
+<p class="calibre9">如果我们导入了 <code class="calibre13 pcalibre6 pcalibre5">Darwin</code> 的 C 库的话，我们就可以在 Swift 中无缝地使用 <code class="calibre13 pcalibre6 pcalibre5">Darwin</code> 中定义的 C 函数了。它们涵盖了绝大多数 <a href="http://en.wikipedia.org/wiki/C_standard_library" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">C 标准库</a>中的内容，可以说为程序设计提供了丰富的工具和基础。导入 <code class="calibre13 pcalibre6 pcalibre5">Darwin</code> 十分简单，只需要加上 <code class="calibre13 pcalibre6 pcalibre5">import Darwin</code> 即可。但事实上，<code class="calibre13 pcalibre6 pcalibre5">Foundation</code> 框架中包含了 <code class="calibre13 pcalibre6 pcalibre5">Darwin</code> 的导入，而我们在开发 app 时肯定会使用 <code class="calibre13 pcalibre6 pcalibre5">UIKit</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">Cocoa</code> 这样的框架，它们又导入了 <code class="calibre13 pcalibre6 pcalibre5">Foundation</code>，因此我们在平时开发时并不需要特别做什么，就可以使用这些标准的 C 函数了。很让人开心的一件事情是 Swift 在导入时为我们将 <code class="calibre13 pcalibre6 pcalibre5">Darwin</code> 也进行了类型的自动转换对应，比如对于三角函数的计算输入和返回都是 Swift 的 <code class="calibre13 pcalibre6 pcalibre5">Double</code> 类型，而非 C 的类型：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">sin</span><span class="hljs-params">(x: Double)</span></span> -&gt; <span class="hljs-func">Double</span>
+</code></pre>
+<p class="calibre9">使用起来也很简单，因为这些函数都是定义在全局的，所以只需要直接调用就可以了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">sin(<span class="hljs-func">M_PI_2</span>)
+<span class="hljs-title">// 输出：1.0</span>
+</code></pre>
+<p class="calibre9">而对于第三方的 C 代码，Swift 也提供了协同使用的方法。我们知道，Swift 中调用 Objective-C 代码非常简单，只需要将合适的头文件暴露在 <code class="calibre13 pcalibre6 pcalibre5">{product-module-name}-Bridging-Header.h</code> 文件中就行了。而如果我们想要调用非标准库的 C 代码的话，可以遵循同样的方式，将 C 代码的头文件在桥接的头文件中进行导入：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">//test.h</span>
+int test(int a);
+
+<span class="hljs-title">//test.c</span>
+int test(int a) {
+    <span class="hljs-keyword">return</span> a + <span class="hljs-params">1</span>;
+}
+
+<span class="hljs-title">//Module-Bridging-Header.h</span>
+#<span class="hljs-keyword">import</span> <span class="hljs-string">"test.h"</span>
+
+<span class="hljs-title">//File.swift</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">testSwift</span><span class="hljs-params">(input: Int32)</span></span> {
+    <span class="hljs-keyword">let</span> result = test(input)
+    <span class="hljs-params">print</span>(result)
+}
+
+testSwift(<span class="hljs-params">1</span>)
+<span class="hljs-title">// 输出：2</span>
+</code></pre>
+<p class="calibre9">另外，我们甚至还有一种不需要借助头文件和 <code class="calibre13 pcalibre6 pcalibre5">Bridging-Header</code> 来导入 C 函数的方法，那就是使用 Swift 中的一个隐藏的符号 <code class="calibre13 pcalibre6 pcalibre5">@asmname</code>。<code class="calibre13 pcalibre6 pcalibre5">@asmname</code> 可以通过方法名字将某个 C 函数直接映射为 Swift 中的函数。比如上面的例子，我们可以将 <code class="calibre13 pcalibre6 pcalibre5">test.h</code> 和 <code class="calibre13 pcalibre6 pcalibre5">Module-Bridging-Header.h</code> 都删掉，然后将 swift 文件中改为下面这样，也是可以正常进行使用的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">//File.swift</span>
+<span class="hljs-title">//将 C 的 test 方法映射为 Swift 的 c_test 方法</span>
+@asmname(<span class="hljs-string">"test"</span>) <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">c_test</span><span class="hljs-params">(a: Int32)</span></span> -&gt; <span class="hljs-func">Int32</span>
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">testSwift</span><span class="hljs-params">(input: Int32)</span></span> {
+    <span class="hljs-keyword">let</span> result = c_test(input)
+    <span class="hljs-params">print</span>(result)
+}
+
+testSwift(<span class="hljs-params">1</span>)
+<span class="hljs-title">// 输出：2</span>
+</code></pre>
+<p class="calibre9">这种导入在第三方 C 方法与系统库重名导致调用发生命名冲突时，可以用来为其中之一的函数重新命名以解决问题。当然我们也可以利用 Module 名字 + 方法名字的方式来解决这个问题。</p>
+<p class="calibre9">除了作为非头文件方式的导入之外，<code class="calibre13 pcalibre6 pcalibre5">@asmname</code> 还承担着和 <a href="objc-dynamic.html" class="pcalibre pcalibre2 pcalibre1 calibre4"><code class="calibre13 pcalibre6 pcalibre5">@objc</code></a> 的 “重命名 Swift 中类和方法名字” 类似的任务，这可以将 C 中不认可的 Swift 程序元素字符重命名为 ascii 码，以便在 C 中使用。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

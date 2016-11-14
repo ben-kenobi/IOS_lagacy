@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>func 的参数修饰 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_11">func 的参数修饰</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="func-%E7%9A%84%E5%8F%82%E6%95%B0%E4%BF%AE%E9%A5%B0" class="calibre1">func 的参数修饰</h1>
+<p class="calibre9">在声明一个 Swift 的方法的时候，我们一般不去指定参数前面的修饰符，而是直接声明参数：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">incrementor</span><span class="hljs-params">(variable: Int)</span></span> -&gt; <span class="hljs-func">Int</span> {
+    <span class="hljs-keyword">return</span> variable + <span class="hljs-params">1</span>
+}
+</code></pre>
+<p class="calibre9">这个方法接受一个 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 的输入，然后通过将这个输入加 1，返回一个新的比输入大 1 的 <code class="calibre13 pcalibre6 pcalibre5">Int</code>。嘛，就是一个简单的 <strong class="calibre10">+1器</strong>。</p>
+<p class="calibre9">有些同学在大学的 C 程序设计里可能学过像 <code class="calibre13 pcalibre6 pcalibre5">++</code> 这样的“自增”运算符，再加上做了不少关于“判断一个数被各种前置 <code class="calibre13 pcalibre6 pcalibre5">++</code> 和后置 <code class="calibre13 pcalibre6 pcalibre5">++</code> 折磨后的输出是什么”的考试题，所以之后写代码时也会不自觉地喜欢带上这种风格。于是同样的功能可能会写出类似这样的方法：</p>
+<blockquote class="calibre6">
+<h3 id="%E8%BF%99%E6%98%AF%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81" class="calibre16">这是错误代码</h3>
+<pre class="calibre14"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">incrementor</span><span class="hljs-params">(variable: Int)</span></span> -&gt; <span class="hljs-func">Int</span> {
+    <span class="hljs-keyword">return</span> ++variable
+}
+</code></pre>
+</blockquote>
+<p class="calibre9">残念..编译错误。为什么在 Swift 里这样都不行呢？答案是因为 Swift 其实是一门讨厌变化的语言。所有有可能的地方，都被默认认为是不可变的，也就是用 <code class="calibre13 pcalibre6 pcalibre5">let</code> 进行声明的。这样不仅可以确保安全，也能在编译器的性能优化上更有作为。在方法的参数上也是如此，我们不写修饰符的话，默认情况下所有参数都是 <code class="calibre13 pcalibre6 pcalibre5">let</code> 的，上面的代码等效为：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">incrementor</span><span class="hljs-params">(<span class="hljs-keyword">let</span> variable: Int)</span></span> -&gt; <span class="hljs-func">Int</span> {
+    <span class="hljs-keyword">return</span> ++variable
+}
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">let</code> 的参数，不能重新赋值这是理所当然的。要让这个方法正确编译，我们需要做的改动是将 <code class="calibre13 pcalibre6 pcalibre5">let</code> 改为 <code class="calibre13 pcalibre6 pcalibre5">var</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">incrementor</span><span class="hljs-params">(<span class="hljs-keyword">var</span> variable: Int)</span></span> -&gt; <span class="hljs-func">Int</span> {
+    <span class="hljs-keyword">return</span> ++variable
+}
+</code></pre>
+<p class="calibre9">现在我们的 <strong class="calibre10">+1器</strong> 又可以正确工作了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> luckyNumber = <span class="hljs-params">7</span>
+<span class="hljs-keyword">let</span> newNumber = incrementor(luckyNumber)
+<span class="hljs-title">// newNumber = 8</span>
+
+<span class="hljs-params">print</span>(luckyNumber)
+<span class="hljs-title">// luckyNumber 还是 7</span>
+</code></pre>
+<p class="calibre9">正如上面的例子，我们将参数写作 <code class="calibre13 pcalibre6 pcalibre5">var</code> 后，通过调用返回的值是正确的，而 <code class="calibre13 pcalibre6 pcalibre5">luckyNumber</code> 还是保持了原来的值。这说明 <code class="calibre13 pcalibre6 pcalibre5">var</code> 只是在方法内部作用，而不直接影响输入的值。有些时候我们会希望在方法内部<strong class="calibre10">直接</strong>修改输入的值，这时候我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">inout</code> 来对参数进行修饰：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">incrementor</span><span class="hljs-params">(<span class="hljs-keyword">inout</span> variable: Int)</span></span> {
+    ++variable
+}
+</code></pre>
+<p class="calibre9">因为在函数内部就更改了值，所以也不需要返回了。调用也要改变为相应的形式，在前面加上 <code class="calibre13 pcalibre6 pcalibre5">&amp;</code> 符号：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> luckyNumber = <span class="hljs-params">7</span>
+incrementor(&amp;luckyNumber)
+
+<span class="hljs-params">println</span>(luckyNumber)
+<span class="hljs-title">// luckyNumber = 8</span>
+</code></pre>
+<p class="calibre9">最后，要注意的是参数的修饰是具有传递限制的，就是说对于跨越层级的调用，我们需要保证同一参数的修饰是统一的。举个例子，比如我们想扩展一下上面的方法，实现一个可以累加任意数字的 <strong class="calibre10">+N器</strong> 的话，可以写成这样：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">makeIncrementor</span><span class="hljs-params">(addNumber: Int)</span></span> -&gt; ((<span class="hljs-keyword">inout</span> <span class="hljs-func">Int</span>) -&gt; ()) {
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">incrementor</span><span class="hljs-params">(<span class="hljs-keyword">inout</span> variable: Int)</span></span> -&gt; () {
+        variable += addNumber;
+    }
+    <span class="hljs-keyword">return</span> incrementor;
+}
+</code></pre>
+<p class="calibre9">外层的 <code class="calibre13 pcalibre6 pcalibre5">makeIncrementor</code> 的返回里也需要在参数的类型前面明确指出修饰词，以符合内部的定义，否则将无法编译通过。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

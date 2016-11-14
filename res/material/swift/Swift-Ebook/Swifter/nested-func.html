@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>方法嵌套 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_14">方法嵌套</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E6%96%B9%E6%B3%95%E5%B5%8C%E5%A5%97" class="calibre1">方法嵌套</h1>
+<p class="calibre9">方法终于成为了<a href="http://en.wikipedia.org/wiki/First-class_citizen" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">一等公民</a>，也就是说，我们可以将方法当作变量或者参数来使用了。更进一步地，我们甚至可以在一个方法中定义新的方法，这给代码结构层次和访问级别的控制带来了新的选择。</p>
+<p class="calibre9">想想看有多少次我们因为一个方法主体内容过长，而不得不将它重构为好几个小的功能块的方法，然后在原来的主体方法中去调用这些小方法。这些具体负责一个个小功能块的方法也许一辈子就被调用这么一次，但是却不得不存在于整个类型的作用域中。虽然我们会将它们标记为私有方法，但是事实上它们所承担的任务往往和这个类型没有直接关系，而只是会在这个类型中的某个方法中被用到。更甚至这些小方法也可能有些复杂，我们还想进一步将它们分成更小的模块，我们很可能也只有将它们放到和其他方法平级的地方。这样一来，本来应该是进深的结构，却被整个展平了，导致之后在对代码的理解和维护上都很成问题。在 Swift 中，我们对于这种情况有了很好的应对，我们可以在方法中定义其他方法，也就是说让方法嵌套起来。</p>
+<p class="calibre9">举个例子，我们在写一个网络请求的类 <code class="calibre13 pcalibre6 pcalibre5">Request</code> 时，可能面临着将请求的参数编码到 url 里的任务。因为输入的参数可能包括单个的值，字典，或者是数组，因此为了结构漂亮和保持方法短小，我们可能将情况分开，写出这样的代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">appendQuery</span><span class="hljs-params">(<span class="hljs-keyword">var</span> url: String,
+                     key: String,
+                   value: AnyObject)</span></span> -&gt; <span class="hljs-func">String</span> {
+
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> dictionary = value <span class="hljs-keyword">as</span>? [<span class="hljs-func">String</span>: <span class="hljs-func">AnyObject</span>] {
+        <span class="hljs-keyword">return</span> appendQueryDictionary(url, key, dictionary)
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> array = value <span class="hljs-keyword">as</span>? [<span class="hljs-func">AnyObject</span>] {
+        <span class="hljs-keyword">return</span> appendQueryArray(url, key, array)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> appendQuerySingle(url, key, value)
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">appendQueryDictionary</span><span class="hljs-params">(<span class="hljs-keyword">var</span> url: String,
+                               key: String,
+                             value: [String: AnyObject])</span></span> -&gt; <span class="hljs-func">String</span> {
+    <span class="hljs-title">//...</span>
+    <span class="hljs-keyword">return</span> result
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">appendQueryArray</span><span class="hljs-params">(<span class="hljs-keyword">var</span> url: String,
+                          key: String,
+                        value: [AnyObject])</span></span> -&gt; <span class="hljs-func">String</span> {
+    <span class="hljs-title">//...</span>
+    <span class="hljs-keyword">return</span> result
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">appendQuerySingle</span><span class="hljs-params">(<span class="hljs-keyword">var</span> url: String,
+                           key: String,
+                         value: AnyObject)</span></span> -&gt; <span class="hljs-func">String</span> {
+    <span class="hljs-title">//...</span>
+    <span class="hljs-keyword">return</span> result
+}
+</code></pre>
+<p class="calibre9">事实上后三个方法都只会在第一个方法中被调用，它们其实和 <code class="calibre13 pcalibre6 pcalibre5">Request</code> 没有直接的关系，所以将它们放到 <code class="calibre13 pcalibre6 pcalibre5">appendQuery</code> 中去会是一个更好的组织形式：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">appendQuery</span><span class="hljs-params">(<span class="hljs-keyword">var</span> url: String,
+                     key: String,
+                   value: AnyObject)</span></span> -&gt; <span class="hljs-func">String</span> {
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">appendQueryDictionary</span><span class="hljs-params">(<span class="hljs-keyword">var</span> url: String,
+                                   key: String,
+                                 value: [String: AnyObject])</span></span> -&gt; <span class="hljs-func">String</span> {
+        <span class="hljs-title">//...</span>
+        <span class="hljs-keyword">return</span> result
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">appendQueryArray</span><span class="hljs-params">(<span class="hljs-keyword">var</span> url: String,
+                              key: String,
+                            value: [AnyObject])</span></span> -&gt; <span class="hljs-func">String</span> {
+        <span class="hljs-title">//...</span>
+        <span class="hljs-keyword">return</span> result
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">appendQuerySingle</span><span class="hljs-params">(<span class="hljs-keyword">var</span> url: String,
+                               key: String,
+                             value: AnyObject)</span></span> -&gt; <span class="hljs-func">String</span> {
+        <span class="hljs-title">//...</span>
+        <span class="hljs-keyword">return</span> result
+    }
+
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> dictionary = value <span class="hljs-keyword">as</span>? [<span class="hljs-func">String</span>: <span class="hljs-func">AnyObject</span>] {
+        <span class="hljs-keyword">return</span> appendQueryDictionary(url, key, dictionary)
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> array = value <span class="hljs-keyword">as</span>? [<span class="hljs-func">AnyObject</span>] {
+        <span class="hljs-keyword">return</span> appendQueryArray(url, key, array)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> appendQuerySingle(url, key, value)
+    }
+}
+</code></pre>
+<p class="calibre9">另一个重要的考虑是虽然 Swift 提供了 <code class="calibre13 pcalibre6 pcalibre5">public</code>，<code class="calibre13 pcalibre6 pcalibre5">internal</code> 和 <code class="calibre13 pcalibre6 pcalibre5">private</code> 三种访问权限，但是有些方法我们完全不希望在其他地方被直接使用。最常见的例子就是在方法的模板中：我们一方面希望灵活地提供一个模板来让使用者可以通过模板定制他们想要的方法，但另一方面又不希望暴露太多实现细节，或者甚至是让使用者可以直接调用到模板。一个最简单的例子就是在<a href="func-params.html" class="pcalibre pcalibre2 pcalibre1 calibre4">参数修饰</a>一节中提到过的类似这样的代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">makeIncrementor</span><span class="hljs-params">(addNumber: Int)</span></span> -&gt; ((<span class="hljs-keyword">inout</span> <span class="hljs-func">Int</span>) -&gt; <span class="hljs-func">Void</span> {
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">incrementor</span><span class="hljs-params">(<span class="hljs-keyword">inout</span> variable: Int)</span></span> -&gt; <span class="hljs-func">Void</span> {
+        variable += addNumber;
+    }
+    <span class="hljs-keyword">return</span> incrementor;
+}
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

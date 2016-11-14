@@ -1,0 +1,431 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1850527C1BA3E74F00C07C28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1850527B1BA3E74F00C07C28 /* main.m */; };
+		1850527F1BA3E74F00C07C28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1850527E1BA3E74F00C07C28 /* AppDelegate.m */; };
+		185052821BA3E74F00C07C28 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185052811BA3E74F00C07C28 /* ViewController.m */; };
+		185052851BA3E74F00C07C28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 185052831BA3E74F00C07C28 /* Main.storyboard */; };
+		185052871BA3E74F00C07C28 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 185052861BA3E74F00C07C28 /* Images.xcassets */; };
+		1850528A1BA3E74F00C07C28 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185052881BA3E74F00C07C28 /* LaunchScreen.xib */; };
+		185052961BA3E74F00C07C28 /* day02_ui_loginpageCodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 185052951BA3E74F00C07C28 /* day02_ui_loginpageCodeTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		185052901BA3E74F00C07C28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1850526E1BA3E74F00C07C28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 185052751BA3E74F00C07C28;
+			remoteInfo = "day02-ui-loginpageCode";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		185052761BA3E74F00C07C28 /* day02-ui-loginpageCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "day02-ui-loginpageCode.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1850527A1BA3E74F00C07C28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1850527B1BA3E74F00C07C28 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1850527D1BA3E74F00C07C28 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1850527E1BA3E74F00C07C28 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		185052801BA3E74F00C07C28 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		185052811BA3E74F00C07C28 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		185052841BA3E74F00C07C28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		185052861BA3E74F00C07C28 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		185052891BA3E74F00C07C28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		1850528F1BA3E74F00C07C28 /* day02-ui-loginpageCodeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "day02-ui-loginpageCodeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		185052941BA3E74F00C07C28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		185052951BA3E74F00C07C28 /* day02_ui_loginpageCodeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = day02_ui_loginpageCodeTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		185052731BA3E74F00C07C28 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1850528C1BA3E74F00C07C28 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1850526D1BA3E74F00C07C28 = {
+			isa = PBXGroup;
+			children = (
+				185052781BA3E74F00C07C28 /* day02-ui-loginpageCode */,
+				185052921BA3E74F00C07C28 /* day02-ui-loginpageCodeTests */,
+				185052771BA3E74F00C07C28 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		185052771BA3E74F00C07C28 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				185052761BA3E74F00C07C28 /* day02-ui-loginpageCode.app */,
+				1850528F1BA3E74F00C07C28 /* day02-ui-loginpageCodeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		185052781BA3E74F00C07C28 /* day02-ui-loginpageCode */ = {
+			isa = PBXGroup;
+			children = (
+				1850527D1BA3E74F00C07C28 /* AppDelegate.h */,
+				1850527E1BA3E74F00C07C28 /* AppDelegate.m */,
+				185052801BA3E74F00C07C28 /* ViewController.h */,
+				185052811BA3E74F00C07C28 /* ViewController.m */,
+				185052831BA3E74F00C07C28 /* Main.storyboard */,
+				185052861BA3E74F00C07C28 /* Images.xcassets */,
+				185052881BA3E74F00C07C28 /* LaunchScreen.xib */,
+				185052791BA3E74F00C07C28 /* Supporting Files */,
+			);
+			path = "day02-ui-loginpageCode";
+			sourceTree = "<group>";
+		};
+		185052791BA3E74F00C07C28 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1850527A1BA3E74F00C07C28 /* Info.plist */,
+				1850527B1BA3E74F00C07C28 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		185052921BA3E74F00C07C28 /* day02-ui-loginpageCodeTests */ = {
+			isa = PBXGroup;
+			children = (
+				185052951BA3E74F00C07C28 /* day02_ui_loginpageCodeTests.m */,
+				185052931BA3E74F00C07C28 /* Supporting Files */,
+			);
+			path = "day02-ui-loginpageCodeTests";
+			sourceTree = "<group>";
+		};
+		185052931BA3E74F00C07C28 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				185052941BA3E74F00C07C28 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		185052751BA3E74F00C07C28 /* day02-ui-loginpageCode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 185052991BA3E74F00C07C28 /* Build configuration list for PBXNativeTarget "day02-ui-loginpageCode" */;
+			buildPhases = (
+				185052721BA3E74F00C07C28 /* Sources */,
+				185052731BA3E74F00C07C28 /* Frameworks */,
+				185052741BA3E74F00C07C28 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "day02-ui-loginpageCode";
+			productName = "day02-ui-loginpageCode";
+			productReference = 185052761BA3E74F00C07C28 /* day02-ui-loginpageCode.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1850528E1BA3E74F00C07C28 /* day02-ui-loginpageCodeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1850529C1BA3E74F00C07C28 /* Build configuration list for PBXNativeTarget "day02-ui-loginpageCodeTests" */;
+			buildPhases = (
+				1850528B1BA3E74F00C07C28 /* Sources */,
+				1850528C1BA3E74F00C07C28 /* Frameworks */,
+				1850528D1BA3E74F00C07C28 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				185052911BA3E74F00C07C28 /* PBXTargetDependency */,
+			);
+			name = "day02-ui-loginpageCodeTests";
+			productName = "day02-ui-loginpageCodeTests";
+			productReference = 1850528F1BA3E74F00C07C28 /* day02-ui-loginpageCodeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1850526E1BA3E74F00C07C28 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = itheima;
+				TargetAttributes = {
+					185052751BA3E74F00C07C28 = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					1850528E1BA3E74F00C07C28 = {
+						CreatedOnToolsVersion = 6.3;
+						TestTargetID = 185052751BA3E74F00C07C28;
+					};
+				};
+			};
+			buildConfigurationList = 185052711BA3E74F00C07C28 /* Build configuration list for PBXProject "day02-ui-loginpageCode" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1850526D1BA3E74F00C07C28;
+			productRefGroup = 185052771BA3E74F00C07C28 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				185052751BA3E74F00C07C28 /* day02-ui-loginpageCode */,
+				1850528E1BA3E74F00C07C28 /* day02-ui-loginpageCodeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		185052741BA3E74F00C07C28 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				185052851BA3E74F00C07C28 /* Main.storyboard in Resources */,
+				1850528A1BA3E74F00C07C28 /* LaunchScreen.xib in Resources */,
+				185052871BA3E74F00C07C28 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1850528D1BA3E74F00C07C28 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		185052721BA3E74F00C07C28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				185052821BA3E74F00C07C28 /* ViewController.m in Sources */,
+				1850527F1BA3E74F00C07C28 /* AppDelegate.m in Sources */,
+				1850527C1BA3E74F00C07C28 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1850528B1BA3E74F00C07C28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				185052961BA3E74F00C07C28 /* day02_ui_loginpageCodeTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		185052911BA3E74F00C07C28 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 185052751BA3E74F00C07C28 /* day02-ui-loginpageCode */;
+			targetProxy = 185052901BA3E74F00C07C28 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		185052831BA3E74F00C07C28 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				185052841BA3E74F00C07C28 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		185052881BA3E74F00C07C28 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				185052891BA3E74F00C07C28 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		185052971BA3E74F00C07C28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		185052981BA3E74F00C07C28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1850529A1BA3E74F00C07C28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "day02-ui-loginpageCode/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1850529B1BA3E74F00C07C28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "day02-ui-loginpageCode/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1850529D1BA3E74F00C07C28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "day02-ui-loginpageCodeTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/day02-ui-loginpageCode.app/day02-ui-loginpageCode";
+			};
+			name = Debug;
+		};
+		1850529E1BA3E74F00C07C28 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "day02-ui-loginpageCodeTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/day02-ui-loginpageCode.app/day02-ui-loginpageCode";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		185052711BA3E74F00C07C28 /* Build configuration list for PBXProject "day02-ui-loginpageCode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				185052971BA3E74F00C07C28 /* Debug */,
+				185052981BA3E74F00C07C28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		185052991BA3E74F00C07C28 /* Build configuration list for PBXNativeTarget "day02-ui-loginpageCode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1850529A1BA3E74F00C07C28 /* Debug */,
+				1850529B1BA3E74F00C07C28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1850529C1BA3E74F00C07C28 /* Build configuration list for PBXNativeTarget "day02-ui-loginpageCodeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1850529D1BA3E74F00C07C28 /* Debug */,
+				1850529E1BA3E74F00C07C28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1850526E1BA3E74F00C07C28 /* Project object */;
+}

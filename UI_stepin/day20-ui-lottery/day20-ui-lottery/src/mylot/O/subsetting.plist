@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>header</key>
+		<string>header1</string>
+		<key>footer</key>
+		<string>footer1</string>
+		<key>mems</key>
+		<array>
+			<dict>
+				<key>img</key>
+				<string>handShake</string>
+				<key>title</key>
+				<string>title11111111</string>
+				<key>acclz</key>
+				<string>UIImageView</string>
+				<key>acimg</key>
+				<string>arrow_right</string>
+				<key>vc</key>
+				<string>YFSettingCon</string>
+				<key>pname</key>
+				<string>subsetting</string>
+			</dict>
+			<dict>
+				<key>img</key>
+				<string>handShake</string>
+				<key>title</key>
+				<string>title11111111</string>
+				<key>acclz</key>
+				<string>UISwitch</string>
+				<key>acimg</key>
+				<string></string>
+				<key>vc</key>
+				<string>YFMainCon</string>
+			</dict>
+			<dict>
+				<key>img</key>
+				<string>handShake</string>
+				<key>title</key>
+				<string>title11111111</string>
+				<key>vc</key>
+				<string>YFSettingCon</string>
+				<key>pname</key>
+				<string>sub2</string>
+			</dict>
+			<dict>
+				<key>img</key>
+				<string>handShake</string>
+				<key>title</key>
+				<string>title11111111</string>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

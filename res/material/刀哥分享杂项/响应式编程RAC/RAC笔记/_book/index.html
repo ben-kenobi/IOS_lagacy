@@ -1,0 +1,347 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>ReactiveCocoa | Reactive Cocoa</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="官方网站：https://github.com/ReactiveCocoa/ReactiveCocoa">
+        <meta name="generator" content="GitBook 2.1.0">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="gitbook/style.css">
+    
+    
+
+        
+    
+    
+    <link rel="next" href="./01-singleton.html" />
+    
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book" data-level="0" data-basepath="." data-revision="Mon Aug 31 2015 04:20:19 GMT+0800 (CST)">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+        
+        
+        
+
+        
+
+        
+    
+        <li class="chapter active" data-level="0" data-path="index.html">
+            
+                
+                    <a href="./index.html">
+                        <i class="fa fa-check"></i>
+                        
+                        ReactiveCocoa
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="0.1" data-path="01-singleton.html">
+            
+                
+                    <a href="./01-singleton.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.</b>
+                        
+                        Swift 单例
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.2" data-path="02-rac_demo.html">
+            
+                
+                    <a href="./02-rac_demo.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.</b>
+                        
+                        RAC 演练
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.3" data-path="03-afnetworking.html">
+            
+                
+                    <a href="./03-afnetworking.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.</b>
+                        
+                        AFNetworking
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="0.3.1" data-path="03-01-swift_network_tools.html">
+            
+                
+                    <a href="./03-01-swift_network_tools.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.1.</b>
+                        
+                        Swift 网络框架
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="0.4" data-path="04-pod.html">
+            
+                
+                    <a href="./04-pod.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.</b>
+                        
+                        cocoa pods
+                    </a>
+                
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.5" data-path="05-install_as_submodule.html">
+            
+                
+                    <a href="./05-install_as_submodule.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.5.</b>
+                        
+                        手动安装 - Submodule
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                Published with GitBook
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">
+                    Share on Twitter
+                </button>
+                <button type="button" data-sharing="google-plus" class="button">
+                    Share on Google
+                </button>
+                <button type="button" data-sharing="facebook" class="button">
+                    Share on Facebook
+                </button>
+                <button type="button" data-sharing="weibo" class="button">
+                    Share on Weibo
+                </button>
+                <button type="button" data-sharing="instapaper" class="button">
+                    Share on Instapaper
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+    
+
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="./" >Reactive Cocoa</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="reactive-cocoa">Reactive Cocoa</h1>
+<ul>
+<li><code>Reactive Cocoa</code> &#x662F; iOS &#x5F00;&#x53D1;&#x7684;&#x4E00;&#x4E2A;<code>&#x91CD;&#x91CF;&#x7EA7;</code>&#x6846;&#x67B6;</li>
+<li>&#x9AD8;&#x5927;&#x4E0A;&#x7684;&#x6982;&#x5FF5;&#xFF1A;&#x54CD;&#x5E94;&#x5F0F;&#x7F16;&#x7A0B;</li>
+<li>&#x6838;&#x5FC3;&#x6982;&#x5FF5;&#xFF1A;<code>&#x4FE1;&#x53F7; Signal</code></li>
+</ul>
+<p>&#x5B98;&#x65B9;&#x7F51;&#x7AD9;&#xFF1A;<a href="https://github.com/ReactiveCocoa/ReactiveCocoa" target="_blank">https://github.com/ReactiveCocoa/ReactiveCocoa</a></p>
+<h2 id="%E6%A6%82%E5%BF%B5">&#x6982;&#x5FF5;</h2>
+<h3 id="%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B">&#x54CD;&#x5E94;&#x5F0F;&#x7F16;&#x7A0B;</h3>
+<ul>
+<li>&#x4E3E;&#x4E2A;&#x6817;&#x5B50;&#xFF0C;&#x5728;&#x4E00;&#x822C;&#x7A0B;&#x5E8F;&#x5F00;&#x53D1;&#x65F6;</li>
+</ul>
+<pre><code>a = b + c
+</code></pre><p>&#x8D4B;&#x503C;&#x4E4B;&#x540E; <code>b</code> &#x6216;&#x8005; <code>c</code> &#x7684;&#x503C;&#x53D8;&#x5316;&#x540E;&#xFF0C;<code>a</code> &#x7684;&#x503C;&#x4E0D;&#x4F1A;&#x8DDF;&#x7740;&#x53D8;&#x5316;</p>
+<p>&#x5982;&#x679C;&#x4F7F;&#x7528;<code>&#x54CD;&#x5E94;&#x5F0F;&#x7F16;&#x7A0B;</code>&#xFF0C;&#x76EE;&#x6807;&#x5C31;&#x662F;&#xFF0C;&#x5982;&#x679C; <code>b</code> &#x6216;&#x8005; <code>c</code> &#x7684;&#x6570;&#x503C;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;<code>a</code> &#x7684;&#x6570;&#x503C;&#x4F1A;&#x540C;&#x65F6;&#x53D1;&#x751F;&#x53D8;&#x5316;</p>
+<blockquote>
+<p>&#x601D;&#x8003;&#xFF1F;&#x5982;&#x4F55;&#x624D;&#x80FD;&#x505A;&#x5230;&#x53CA;&#x65F6;&#x54CD;&#x5E94;&#x5462;&#xFF1F;</p>
+</blockquote>
+<p>&#x5BF9; <code>b</code> &#x548C; <code>c</code> &#x8FDB;&#x884C;&#x89C2;&#x5BDF;&#xFF0C;&#x4E00;&#x65E6;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;&#x53CA;&#x65F6;&#x901A;&#x77E5; <code>a</code> &#x53D1;&#x751F;&#x53D8;&#x5316;</p>
+<h3 id="rac-%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3">RAC &#x7684;&#x6838;&#x5FC3;&#x601D;&#x60F3;</h3>
+<ul>
+<li>&#x6240;&#x8C13;<code>&#x54CD;&#x5E94;</code>&#xFF0C;&#x5C31;&#x662F; <code>&#x4E8B;&#x4EF6;</code> &#x53D1;&#x751F;&#x540E;&#x505A;&#x51FA;<code>&#x54CD;&#x5E94;</code></li>
+<li><p>iOS &#x5F00;&#x53D1;&#x4E2D;&#x7684;&#x4E8B;&#x4EF6;&#x5305;&#x62EC;&#xFF1A;</p>
+<ul>
+<li>Target</li>
+<li>Delegate</li>
+<li>KVO</li>
+<li>&#x901A;&#x77E5;</li>
+<li>&#x65F6;&#x949F;</li>
+<li>&#x7F51;&#x7EDC;&#x5F02;&#x6B65;&#x56DE;&#x8C03;</li>
+</ul>
+</li>
+<li><p>&#x800C; <code>ReactiveCocoa</code> &#xFF0C;&#x5C31;&#x662F;&#x7528; <code>&#x4FE1;&#x53F7;</code> &#x63A5;&#x7BA1;&#x4E86; iOS &#x4E2D;&#x7684;&#x6240;&#x6709;&#x4E8B;&#x4EF6;</p>
+</li>
+</ul>
+<p><img src="images/RAC.png" alt=""></p>
+<h3 id="rac-%E5%B0%8F%E7%BB%93">RAC &#x5C0F;&#x7ED3;</h3>
+<ul>
+<li>&#x8D85;&#x91CD;&#x91CF;&#x7EA7;&#x7684;&#x6838;&#x5FC3;&#x6846;&#x67B6;&#xFF0C;&#x5B66;&#x4E60;&#x6210;&#x672C;&#x8F83;&#x9AD8;</li>
+<li>&#x5229;&#x7528;<code>&#x4FE1;&#x53F7;</code>&#xFF0C;&#x63A5;&#x7BA1; iOS &#x7684;&#x6240;&#x6709;&#x4E8B;&#x4EF6;</li>
+<li>&#x5229;&#x7528; Block &#x7684;&#x65B9;&#x5F0F;&#x5C06;&#x6240;&#x6709;&#x76F8;&#x5173;&#x4EE3;&#x7801;&#x96C6;&#x4E2D;&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x4ECE;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x4E0A;&#x89E3;&#x51B3;&#x4E86;&#x4EE3;&#x7801;&#x5206;&#x6563;&#x7684;&#x95EE;&#x9898;</li>
+<li>&#x4F7F;&#x7528;&#x65F6;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5FAA;&#x73AF;&#x5F15;&#x7528;&#xFF0C;&#x6CE8;&#x518C; <code>rac_willDeallocSignal</code> &#x4FE1;&#x53F7;&#x80FD;&#x591F;&#x8DDF;&#x8E2A;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x88AB;&#x91CA;&#x653E;</li>
+<li>&#x901A;&#x8FC7; KVO &#x76D1;&#x542C;&#xFF0C;&#x80FD;&#x591F;&#x53CA;&#x65F6;&#x5C06;&#x6A21;&#x578B;&#x6570;&#x636E;&#x53D8;&#x5316;&#x4F53;&#x73B0;&#x5728;&#x754C;&#x9762;&#x4E0A;</li>
+</ul>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        
+        <a href="./01-singleton.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Swift 单例"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="gitbook/app.js"></script>
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>初始化方法顺序 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_19">初始化方法顺序</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95%E9%A1%BA%E5%BA%8F" class="calibre1">初始化方法顺序</h1>
+<p class="calibre9">与 Objective-C 不同，Swift 的初始化方法需要保证类型的所有属性都被初始化。所以初始化方法的调用顺序就很有讲究。在某个类的子类中，初始化方法里语句的顺序并不是随意的，我们需要保证在当前子类实例的成员初始化完成后才能调用父类的初始化方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Cat</span> </span>{
+    <span class="hljs-keyword">var</span> name: <span class="hljs-func">String</span>
+    <span class="hljs-keyword">init</span>() {
+        name = <span class="hljs-string">"cat"</span>
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Tiger</span>: <span class="hljs-title">Cat</span> </span>{
+    <span class="hljs-keyword">let</span> power: <span class="hljs-func">Int</span>
+    <span class="hljs-keyword">override</span> <span class="hljs-keyword">init</span>() {
+        power = <span class="hljs-params">10</span>
+        <span class="hljs-keyword">super</span>.<span class="hljs-keyword">init</span>()
+        name = <span class="hljs-string">"tiger"</span>
+    }
+}
+</code></pre>
+<p class="calibre9">一般来说，子类的初始化顺序是：</p>
+<ol class="calibre2">
+<li class="calibre3">设置子类自己需要初始化的参数，<code class="calibre13 pcalibre6 pcalibre5">power = 10</code></li>
+<li class="calibre3">调用父类的相应的初始化方法，<code class="calibre13 pcalibre6 pcalibre5">super.init()</code></li>
+<li class="calibre3">对父类中的需要改变的成员进行设定，<code class="calibre13 pcalibre6 pcalibre5">name = "tiger"</code></li>
+</ol>
+<p class="calibre9">其中第三步是根据具体情况决定的，如果我们在子类中不需要对父类的成员做出改变的话，就不存在第 3 步。而在这种情况下，Swift 会自动地对父类的对应 <code class="calibre13 pcalibre6 pcalibre5">init</code> 方法进行调用，也就是说，第 2 步的 <code class="calibre13 pcalibre6 pcalibre5">super.init()</code> 也是可以不用写的 (但是实际上还是调用的，只不过是为了简便 Swift 帮我们完成了)。这种情况下的初始化方法看起来就很简单：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Cat</span> </span>{
+    <span class="hljs-keyword">var</span> name: <span class="hljs-func">String</span>
+    <span class="hljs-keyword">init</span>() {
+        name = <span class="hljs-string">"cat"</span>
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Tiger</span>: <span class="hljs-title">Cat</span> </span>{
+    <span class="hljs-keyword">let</span> power: <span class="hljs-func">Int</span>
+    <span class="hljs-keyword">override</span> <span class="hljs-keyword">init</span>() {
+        power = <span class="hljs-params">10</span>
+        <span class="hljs-title">// 如果我们不需要打改变 name 的话，</span>
+        <span class="hljs-title">// 虽然我们没有显式地对 super.init() 进行调用</span>
+        <span class="hljs-title">// 不过由于这是初始化的最后了，Swift 替我们自动完成了</span>
+    }
+}
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+
+    <title>NSURLSession使用说明及后台工作流程分析 - CocoaChina_让移动开发更简单</title>
+    <meta name="keywords" content="NSURLSessioniPhone开发,iOS开发,iPad开发,Mac开发,苹果开发中文站,iPhone开发中文站,CocoaChina首页, Mac OS开发, Cocoa介绍,移动互联网,触控科技,Cocoa,Apple,developer,iOS,iPhone,iPad,iMac,iPod Touch,iPhone5,iPhone4S,iPad3,招聘,iPhone程序员,Objective-c,iPhone应用外包,ios6,ios面试,Cocos2d-x,cocos2d,iTunes,App Store,苹果开发">
+    <meta name="description" content="CocoaChina前身是全球成立最早规模最大的苹果开发中文站，现致力为所有移动开发者提供资讯服务、问答服务、代码下载、工具库及人才招聘服务">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="baidu-tc-cerfication" content="3300a939a1098c27e94457b75a0bb8c1">
+    <script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/jquery_002.js" async="" type="text/javascript"></script><script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/analytics.js" async=""></script><script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/hm.js"></script><script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/ga.js" async="" type="text/javascript"></script><script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/analytics.js" async=""></script><script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/ca-pub-1180518835303646.js" type="text/javascript" async=""></script><script type="text/javascript">
+        function gotoMobilePage() {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var agent_iphone = /iphone/i;
+            var agent_android = /android/i;
+            //var agent_ipad = /ipad/i;
+            var agent_ipod = /ipod/i;
+            var agent_wphone = /windows phone/i;
+            if(agent_iphone.test(sUserAgent) || agent_android.test(sUserAgent) || agent_ipod.test(sUserAgent) || agent_wphone.test(sUserAgent)){
+                var re = /\/\w+\/\d+\/(\d+)\.html/, 
+                    result = re.exec(window.location.pathname);
+                if ( result )
+                {
+                    window.location.href = "http://www.cocoachina.com/cms/wap.php?action=article&id=" + result[1];
+                } else {
+                    window.location.href = "http://m.cocoachina.com/";
+                }
+            }
+        }
+        gotoMobilePage(); 
+    </script>
+    <link rel="stylesheet" href="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/global.css" media="all">
+    <link rel="stylesheet" href="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/index.css" media="all">
+    <link href="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/module.css" rel="stylesheet">
+    <link href="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/style.css" rel="stylesheet">
+    <link href="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/navheader.css" rel="stylesheet">
+    <script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/navbar.js"></script>
+    <script type="text/javascript" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/abase.js"></script><script type="text/javascript" charset="gbk" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/prebat.js"></script>
+    
+<script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/share.js"></script><link href="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/share_style1_32.css" rel="stylesheet"></head>
+<body>
+
+    <div class="nav-header">
+            <div class="nav-header-top">
+                <div class="nav-logo nav-fl"><a href="http://www.cocoachina.com/"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/logo.png"></a></div>
+                <div class="nav-list nav-fl">
+                    <ul>
+                        <li><a href="http://www.cocoachina.com/news/">资讯</a></li>
+                        <li><a href="http://www.cocoachina.com/bbs/">论坛</a></li>
+                        <li><a target="_blank" href="http://code.cocoachina.com/" title="CODE">代码</a></li>
+                        <li><a target="_blank" href="http://job.cocoachina.com/" title="JOB">招聘</a></li>
+                        <li><a target="_blank" href="http://cvp.cocos.com/" title="CVP">CVP</a></li>
+                    </ul>
+                </div>
+                <div class="nav-search nav-fl">
+                    <div class="nav-search-flag" style="display:block"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/search-icon.png"></div>
+                    <div class="nav-search-form" style="display:none">
+                        <form action="/cms/plus/search.php" name="formsearch" method="post" target="_blank">
+                            <input name="kwtype" value="0" type="hidden">
+                            <input name="searchtype" value="titlekeyword" type="hidden">
+                            <input name="keyword" placeholder="站内搜索" type="text">
+                            <input type="button">
+                        </form>
+                    </div>
+                </div>
+                <div class="nav-user nav-fr">
+                    <!-- #region 未登录时显示此区域 -->
+                    <div class="nav-user-login" style="display: none;">
+                        <a href="http://www.cocoachina.com/bbs/login.php">登录</a>|
+                        <a href="http://www.cocoachina.com/bbs/register.php">注册</a>
+                    </div>
+                    <!-- #endregion -->
+                    <!-- #region 已登录时显示此区域 -->
+                    <div class="nav-user-name" style=""><div id="user-info" data-uid="520645"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/none.gif">TCoder</div><ul><li><a href="http://www.cocoachina.com/bbs/u.php?tid=520645" target="_blank"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/i-man.png">我的主页</a></li><li><a href="http://www.cocoachina.com/bbs/message.php" target="_blank"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/i-mail.png">我的消息</a></li><li><a href="http://www.cocoachina.com/bbs/u.php?action=show&amp;uid=520645" target="_blank"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/i-setting.png">账户设置</a></li><li><a href="http://www.cocoachina.com/bbs/login.php?action=quit"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/i-logout.png">退出</a></li></ul></div>
+                    <!-- #endregion -->
+                </div>
+                <div class="nav-clear"></div>
+            </div>
+        <div class="nav-header-bottom">
+            <ul>
+                <li><a class="light" id="ios" href="http://www.cocoachina.com/ios/" title="ios">iOS开发</a></li>
+                <li><a id="swift" href="http://www.cocoachina.com/swift/" title="swift">Swift</a></li>
+                <li><a id="app_store" href="http://www.cocoachina.com/appstore/" title="appstore">App Store研究</a></li>
+                <li><a id="design" href="http://www.cocoachina.com/design/" title="design">产品设计</a></li>
+                <li><a id="review" href="http://www.cocoachina.com/review/" title="review">应用评测</a></li>
+                <li><a id="game" href="http://www.cocoachina.com/game/" title="game">游戏开发</a></li>
+                <li><a id="apple" href="http://www.cocoachina.com/apple/" title="apple">苹果相关</a></li>
+                <!-- <li><a id="cocos" href="/cocos/" title="cocos">Cocos引擎</a></li>-->
+                <li><a id="webapp" href="http://www.cocoachina.com/webapp/" title="webapp">WebApp</a></li>
+                <li><a id="android" href="http://www.cocoachina.com/android/" title="android">安卓相关</a></li>
+                <li><a id="market" href="http://www.cocoachina.com/market/" title="market">营销推广</a></li>
+                <li><a id="industry" href="http://www.cocoachina.com/industry/" title="industry">业界动态</a></li>
+                <li><a id="programmer" href="http://www.cocoachina.com/programmer/" title="programmer">程序人生</a></li>
+            </ul>
+        </div>
+    </div>
+<script language="javascript">
+    function IsPC() {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPod");
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+        }
+        return flag;
+    }
+    if (!IsPC()){
+           window.location.href = "http://www.cocoachina.com/cms/wap.php?action=article&id=7304";
+    }
+
+</script>
+<!--middle-->
+<div class="middle clearfix">
+    <div class="m-wrap">
+        <div class="m-ad2" style="margin-top:12px;">
+            <div class="ad2-l">
+                <script async="" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/adsbygoogle.js"></script>
+                <!-- CC首页底部左侧72890 -->
+                <ins data-adsbygoogle-status="done" class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1180518835303646" data-ad-slot="8012423965"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" frameborder="0" height="90" width="728"></iframe></ins></ins></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            <div class="ad2-r">
+                <script async="" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/adsbygoogle.js"></script>
+                <!-- CC资讯页25090 -->
+                <ins data-adsbygoogle-status="done" class="adsbygoogle" style="display:inline-block;width:250px;height:90px" data-ad-client="ca-pub-1180518835303646" data-ad-slot="9489157162"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:250px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:250px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;" frameborder="0" height="90" width="250"></iframe></ins></ins></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+        <!--left-->
+        <div class="detail-left float-l">
+            <p class="crumbs"><a href="http://www.cocoachina.com/" title="首页">首页</a> &gt;<a href="http://www.cocoachina.com/ios" title="iOS开发"><span id="type_name">iOS开发</span></a></p>
+            <div class="detail-main">
+                <h2>NSURLSession使用说明及后台工作流程分析</h2>
+                <div class="p-ico clearfix">
+                    <div>
+                        <span class="ml0">2013-11-06 10:53</span>
+                        <span>编辑：
+                        <a href="http://www.cocoachina.com/bbs/u.php?action=feed&amp;uid=340873" id="field_author" target="_blank">suiling</a></span>
+                        <span>分类：<a href="http://www.cocoachina.com/ios/" target="_blank">iOS开发</a></span>
+                        <span id="source">来源：CocoaChina</span>
+
+                        <div class="float-r">
+                            <span id="artical_comment_cnt"><i></i>0</span>
+                            <span><i class="view"></i><script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/count_002.html" language="javascript"></script>29551</span>
+                    </div>
+                    </div>
+                </div>
+                <div class="p-ico clearfix">
+                    <p class="related float-l"><a href="http://www.cocoachina.com/cms/tags.php?/NSURLSession/" target="_blank">NSURLSession</a></p>
+                    <input id="article_id" value="7304" type="hidden">
+                </div>
+                <div class="adsbox clearfix">
+                    <div class="float-l">
+                        <div class="float-l"><b>招聘信息：</b></div>
+                        <ul class="float-l" id="invitelist" style="margin-top: -3.57951px;"><li><a href="http://job.cocoachina.com/job/show?id=66800" target="_blank">iOS开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=66801" target="_blank">Android开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=66302" target="_blank">android应用开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=65786" target="_blank">Cocos2d-X 前端主程</a></li><li><a href="http://job.cocoachina.com/job/show?id=67195" target="_blank">【新浪微博】手机客户端iOS研发工程师 20k-40k</a></li><li><a href="http://job.cocoachina.com/job/show?id=67263" target="_blank">iOS 开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=67303" target="_blank">iOS高级开发工程师（中国排名第一的企业级移动互联网云计算公司 和创科技 红圈营销）</a></li><li><a href="http://job.cocoachina.com/job/show?id=66873" target="_blank">iOS开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=66661" target="_blank">Cocos2d-x 工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=67188" target="_blank">iOS高级开发工程师</a></li><li><a href="http://job.cocoachina.com/job/show?id=66799" target="_blank">Cocos2d-x开发工程师</a></li></ul>
+                    </div>
+                    <div class="float-r">
+                        <a href="javascript:void(0)" class="prev"></a>
+                        <a href="javascript:void(0)" class="next"></a>
+                    </div>
+                </div>
+                <div id="detailbody" class="field_body">
+                    <div style="text-align: center;"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/4196_131106105349_1.png" alt="" style="cursor:pointer" onclick="window.open('/cms/uploads/allimg/131106/4196_131106105349_1.png')" border="0" width="550"></div>
+<div>NSURLSession是iOS7中新的网络接口，它与咱们熟悉的NSURLConnection是并列的。在程序在前台时，NSURLSession与NSURLConnection可以互为替代工作。注意，如果用户强制将程序关闭，NSURLSession会断掉。</div>
+<div>&nbsp;</div>
+<div>NSURLSession提供的功能：</div>
+<div><span style="color: rgb(153, 51, 0);">1.通过URL将数据下载到内存</span></div>
+<div><span style="color: rgb(153, 51, 0);">2.通过URL将数据下载到文件系统</span></div>
+<div><span style="color: rgb(153, 51, 0);">3.将数据上传到指定URL</span></div>
+<div><span style="color: rgb(153, 51, 0);">4.在后台完成上述功能</span></div>
+<div><span style="color: rgb(51, 153, 102);"><strong>&nbsp;</strong></span></div>
+<div><span style="color: rgb(51, 153, 102);"><strong>工作流程</strong></span></div>
+<div><strong>如果我们需要利用NSURLSession进行数据传输我们需要：</strong></div>
+<div><span style="color: rgb(153, 51, 0);">1.创建一个NSURLSessionConfiguration，用于第二步创建NSSession时设置工作模式和网络设置：</span></div>
+<div>工作模式分为：</div>
+<div><span style="color: rgb(153, 51, 0);">一般模式（default）：</span>工作模式类似于原来的NSURLConnection，可以使用缓存的Cache，Cookie，鉴权。</div>
+<div><span style="color: rgb(153, 51, 0);">及时模式（ephemeral）</span>：不使用缓存的Cache，Cookie，鉴权。</div>
+<div><span style="color: rgb(153, 51, 0);">后台模式（background）：</span>在后台完成上传下载，创建Configuration对象的时候需要给一个NSString的ID用于追踪完成工作的Session是哪一个（后面会讲到）。</div>
+<div><strong>&nbsp;</strong></div>
+<div><strong>网络设置：参考NSURLConnection中的设置项。</strong></div>
+<div><span style="color: rgb(153, 51, 0);">1. 创建一个NSURLSession，系统提供了两个创建方法：</span></div>
+<div>sessionWithConfiguration:</div>
+<div>sessionWithConfiguration:delegate:delegateQueue:</div>
+<div>　　　　</div>
+<div>第一个粒度较低就是根据刚才创建的Configuration创建一个Session，系统默认创建一个新的OperationQueue处理Session的消息。</div>
+<div>&nbsp;</div>
+<div>第二个粒度比较高，可以设定回调的delegate（注意这个回调delegate会被强引用），并且可以设定delegate在哪个
+OperationQueue回调，如果我们将其设置为[NSOperationQueue mainQueue]就能在主线程进行回调非常的方便。</div>
+<div>&nbsp;</div>
+<div><span style="color: rgb(153, 51, 0);">2.创建一个NSURLRequest调用刚才的NSURLSession对象提供的Task函数，创建一个NSURLSessionTask。</span></div>
+<div>&nbsp;</div>
+<div>根据职能不同Task有三种子类：</div>
+<div><span style="color: rgb(153, 51, 0);">NSURLSessionUploadTask：</span>上传用的Task，传完以后不会再下载返回结果；</div>
+<div><span style="color: rgb(153, 51, 0);">NSURLSessionDownloadTask：</span><span style="color: rgb(0, 0, 0);">下载用的Task；</span></div>
+<div><span style="color: rgb(153, 51, 0);">NSURLSessionDataTask：</span>可以上传内容，上传完成后再进行下载。</div>
+<div>&nbsp;</div>
+<div>得到的Task，调用resume开始工作。</div>
+<div>&nbsp;</div>
+<div><span style="color: rgb(153, 51, 0);">3.如果是细粒度的Session调用，Session与Delegate会在指定的OperationQueue中进行交互，以咱们下载例子，交互过程的顺序图如下</span>（假如不需要鉴权，即非HTTPS请求）：</div>
+<div style="text-align: center;"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/4196_131106105843_1.jpg" alt="" style="cursor:pointer" onclick="window.open('/cms/uploads/allimg/131106/4196_131106105843_1.jpg')" border="0" height="704" width="582"></div>
+<div><span style="color: rgb(153, 51, 0);">4.当不再需要连接调用Session的invalidateAndCancel直接关闭，或者调用finishTasksAndInvalidate等待当前Task结束后关闭。</span>这时Delegate会收到URLSession:didBecomeInvalidWithError:这个事件。Delegate收到这个事件之后会被解引用。</div>
+<div>&nbsp;</div>
+<div><span style="color: rgb(153, 51, 0);">5.如果是一个BackgroundSession，在Task执行的时候，用户切到后台，Session会和ApplicationDelegate做交互。</span>当程序切到后台后，在BackgroundSession中的Task还会继续下载，这部分文档叙述比较少，现在分三个场景分析下Session和Application的关系：</div>
+<div>&nbsp;</div>
+<div>1）当加入了多个Task，程序没有切换到后台。</div>
+<div>这种情况Task会按照NSURLSessionConfiguration的设置正常下载，不会和ApplicationDelegate有交互。</div>
+<div>&nbsp;</div>
+<div>2）当加入了多个Task，程序切到后台，所有Task都完成下载。</div>
+<div>&nbsp;</div>
+<div>在切到后台之后，Session的Delegate不会再收到，Task相关的消息，直到所有Task全都完成后，系统会调用
+ApplicationDelegate的
+application:handleEventsForBackgroundURLSession:completionHandler:回调，之后
+“汇报”下载工作，对于每一个后台下载的Task调用Session的Delegate中的
+URLSession:downloadTask:didFinishDownloadingToURL:（成功的话）和
+URLSession:task:didCompleteWithError:（成功或者失败都会调用）。</div>
+<div>&nbsp;</div>
+<div>之后调用Session的Delegate回调URLSessionDidFinishEventsForBackgroundURLSession:。</div>
+<div>&nbsp;</div>
+<div><span style="color: rgb(255, 0, 0);">注意：</span><span style="color: rgb(255, 0, 0);">在ApplicationDelegate被唤醒后，会有个参数ComplietionHandler，这个参数是个Block，这个参数要在后面Session的Delegate中didFinish的时候调用一下，如下：</span></div>
+<pre><ol class="dp-c"><li class="alt"><span><span>@implementation&nbsp;APLAppDelegate&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>-&nbsp;(<span class="keyword">void</span><span>)application:(UIApplication&nbsp;*)application&nbsp;handleEventsForBackgroundURLSession:(NSString&nbsp;*)identifier&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;completionHandler:(<span class="keyword">void</span><span>&nbsp;(^)())completionHandler&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>{&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;BLog();&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">/*</span>&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Store&nbsp;the&nbsp;completion&nbsp;handler.&nbsp;The&nbsp;completion&nbsp;handler&nbsp;is&nbsp;invoked&nbsp;by&nbsp;the&nbsp;view&nbsp;controller's&nbsp;checkForAllDownloadsHavingCompleted&nbsp;method&nbsp;(if&nbsp;all&nbsp;the&nbsp;download&nbsp;tasks&nbsp;have&nbsp;been&nbsp;completed).</span>&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</span><span>&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.backgroundSessionCompletionHandler&nbsp;=&nbsp;completionHandler;&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>}&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span><span class="comment">//……</span><span>&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>@end&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span><span class="comment">//Session的Delegate</span><span>&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>@implementation&nbsp;APLViewController&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>-&nbsp;(<span class="keyword">void</span><span>)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession&nbsp;*)session&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>{&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;APLAppDelegate&nbsp;*appDelegate&nbsp;=&nbsp;(APLAppDelegate&nbsp;*)[[UIApplication&nbsp;sharedApplication]&nbsp;delegate];&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;(appDelegate.backgroundSessionCompletionHandler)&nbsp;{&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">void</span><span>&nbsp;(^completionHandler)()&nbsp;=&nbsp;appDelegate.backgroundSessionCompletionHandler;&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appDelegate.backgroundSessionCompletionHandler&nbsp;=&nbsp;nil;&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;completionHandler();&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;NSLog(@<span class="string">"All&nbsp;tasks&nbsp;are&nbsp;finished"</span><span>);&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>}&nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>@end&nbsp;</span></li></ol></pre>
+<div>&nbsp;</div>
+<div>3）当加入了多个Task，程序切到后台，下载完成了几个Task，然后用户又切换到前台。（程序没有退出）</div>
+<div>　　</div>
+<div>切到后台之后，Session的Delegate仍然收不到消息。在下载完成几个Task之后再切换到前台，系统会先汇报已经下载完成的Task的情况，然后继续下载没有下载完成的Task，后面的过程同第一种情况。</div>
+<div>&nbsp;</div>
+<div>4）当加入了多个Task，程序切到后台，几个Task已经完成，但还有Task还没有下载完的时候关掉强制退出程序，然后再进入程序的时候。（程序退出了）</div>
+<div>&nbsp;</div>
+<div>最后这个情况比较有意思，由于程序已经退出了，后面没有下完Session就不在了后面的Task肯定是失败了。但是已经下载成功的那些
+Task，新启动的程序也没有听“汇报”的机会了。经过实验发现，这个时候之前在NSURLSessionConfiguration设置的
+NSString类型的ID起作用了，当ID相同的时候，一旦生成Session对象并设置Delegate，马上可以收到上一次关闭程序之前没有汇报工
+作的Task的结束情况（成功或者失败）。但是当ID不相同，这些情况就收不到了，因此<span style="color: rgb(255, 0, 0);">为了不让自己的消息被别的应用程序收到，或者收到别的应用程序的消息，起见ID还是和程序的Bundle名称绑定上比较好，至少保证唯一性。</span></div>
+<div><span style="color: rgb(51, 153, 102);"><strong>&nbsp;</strong></span></div>
+<div><span style="color: rgb(51, 153, 102);"><strong>总结</strong></span></div>
+<div>就像前面说的，在普通的应用场景下NSURLSession与NSURLConnection相比没有什么优势，但是在程序切换到后台之后Background的Session就显得更加灵活了。</div>
+<div>&nbsp;</div>
+<div>另外，现在主流的网络开发框架AFNetworking已经更新到了2.0（<span style="color: rgb(255, 0, 0);">只支持iOS 6 / iOS 7</span>），其中最重要的一个更新就是添加了NSURLSession相关的支持。虽然就我现在（2013.10.13）看到他们的源码中，还没有完全的支持后台的Session（或者说没有考虑全我上述的后台情况），但是大家有兴趣可以关注一下他们后续的更新情况。</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div><strong>参考资料：</strong></div>
+<div>苹果官方文档：<a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/URLLoadingSystem/Articles/UsingNSURLSession.html#//apple_ref/doc/uid/TP40013509-SW1" target="_blank"><span style="color: rgb(0, 0, 255);">Using NSURLSession</span></a></div>
+<div>注意：苹果又开始不更新Xcode 中的文档，然后悄悄在网上更新了，大家请关注相关文档最后的更新时间，以最新的为准</div>
+<div>&nbsp;</div>
+<div><a href="https://github.com/AFNetworking/AFNetworking/" target="_blank"><span style="color: rgb(0, 0, 255);">AFNetworking 2.0:</span></a></div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>来源：<span style="color: rgb(0, 0, 255);"><a href="http://www.cnblogs.com/biosli/p/iOS_Network_URL_Session.html" target="_blank">biosli（摇滚诗人）的博客</a></span></div>
+<p>&nbsp;</p>
+                </div>
+                <div id="page" style="padding:0"></div>
+
+                <div class="wx_article">
+                    <div class="article_weixin">
+                        <img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/article_weixin.jpg" alt="搜索CocoaChina微信公众号：CocoaChina" height="131" width="131">
+                        <div class="article_scan">微信扫一扫</div>
+                        <div class="article_txt"><span style="color:#999999">订阅每日移动开发及APP推广热点资讯<br>公众号：</span>CocoaChina</div>
+                    </div>
+                </div>
+
+               <div class="clearfix tgbox">
+                    <a href="mailto:support@cocoachina.com" class="tg float-l" target="_blank">我要投稿</a>&nbsp;&nbsp;
+                    <a style="margin-left:10px" href="javascript:void(0)" onclick="add_favors(7304,'NSURLSession使用说明及后台工作流程分析')" class="tg float-l">收藏文章</a>
+                    <div class="share float-r">分享到：
+                        <div data-bd-bind="1446870051220" class="bdsharebuttonbox" id="sharediv"><a href="#" class="bds_more" data-cmd="more"></a> <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a> <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+                    </div>
+                </div>
+
+
+                <a class="zanbox" href="javascript:void(0)" id="zanbox" onclick="postDigg('good',7304)" title="哎呦，不错噢，赞一个">
+                    <strong id="newdigg">
+                     <script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/count.html" language="javascript"></script>58
+                    </strong>
+                </a>
+            </div>
+
+            <div class="article-prev">上一篇：<a href="http://www.cocoachina.com/ios/20131106/7303.html">轻量级KVO[译]</a> </div>
+            <div class="article-next">下一篇：<a href="http://www.cocoachina.com/ios/20131106/7306.html">3年创业总结</a> </div>
+
+            <!--相关资讯-->
+            <div class="part-wrap clearfix">
+                <h3>相关资讯</h3>
+                <ul class="info-list clearfix">
+                    <li>
+                        <a href="http://www.cocoachina.com/ios/20150528/11944.html" target="_blank" title="本系列文章中，我们将尝试使用 NSURLSession 技术构建一个自己的网络请求库">自己动手写一个 iOS 网络请求库（一）—— NSURLSession 初探</a>
+                     </li>
+
+                </ul>
+            </div>
+            <div class="clearfix" style="margin-top:20px;">
+                <script async="" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/adsbygoogle.js"></script>
+                <!-- CC评论框 -->
+                <ins data-adsbygoogle-status="done" class="adsbygoogle" style="display:inline-block;width:750px;height:90px" data-ad-client="ca-pub-1180518835303646" data-ad-slot="8242010366"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:750px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:750px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;" frameborder="0" height="90" width="750"></iframe></ins></ins></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            <!-- 评论模块start -->
+            
+            <div class="clearfix" id="commnet_list_holder" style="margin-bottom:50px;">
+                <div class="glab-comment-form">
+                    <div class="dcbt">我来说两句</div>
+                    <div class="user-head">
+                        <img id="user_face_url" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/none.gif" alt="" height="43" width="43">
+                    </div>
+                    <div class="form-region">
+                        <textarea name="comment" id="main_comment_content" cols="30" rows="10" placeholder="你怎么看？快来评论一下吧！"></textarea>
+                        <a class="submitform" id="main_comment_bt">发表评论</a>
+                        <div style="display: none;" class="unlogin-mask">
+                            <div>您还没有登录！请<a href="http://www.cocoachina.com/bbs/login.php">登录</a>或<a href="http://www.cocoachina.com/bbs/register.php">注册</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="glab-comment-callback-msg" class="glab-comment-info"></div>
+                <div class="glab-comment-title">所有评论（<span>0</span>）</div>
+                <div class="glab-commentlist" id="commentlist">
+                    
+                </div>
+                <div class="glab-comment-more" id="morecomment" style="display:none">
+                    更多评论
+                </div>
+            </div>
+            
+            <!-- 评论模块end -->
+
+
+        </div>
+        <!--./left-->
+        <!--侧边栏-->
+        <div class="clearfix newslist">
+            <div class="rightSide detail-right float-r">
+                <!--两周热门资讯推荐-->
+                <div>
+                    <div class="part-wrap clearfix">
+                        <h3>热门资讯</h3>
+                        <ul class="related-hot">
+                            <li class="clearfix"><a href="http://www.cocoachina.com/ios/20151026/13884.html" class="float-l pic" target="_blank" title="8 次尝试，带你走进 iOS 精益编程"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/154023f2c7efd5b8438b792677fe24bc.jpg" style="max-height:60px" alt="8 次尝试，带你走进 iOS 精益编程"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151026/13884.html" target="_blank" title="8 次尝试，带你走进 iOS 精益编程">8 次尝试，带你走进 iOS 精益编程</a></p><p class="hits">点击量<span>9775</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151023/13860.html" class="float-l pic" target="_blank" title="【译】利用UIWebView打造一个炫酷的视频背景视图（OC &amp; Swift）"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/9a8aa53662c9fa47e571b85456140554.gif" style="max-height:60px" alt="【译】利用UIWebView打造一个炫酷的视频背景视图（OC &amp; Swift）"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151023/13860.html" target="_blank" title="【译】利用UIWebView打造一个炫酷的视频背景视图（OC &amp; Swift）">【译】利用UIWebView打造一个炫酷的视频背景视图（OC &amp; Swift）</a></p><p class="hits">点击量<span>8915</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151027/13812.html" class="float-l pic" target="_blank" title="iOS 9 新特性之实现 3D Touch 就是 So easy -- OC版"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/99190fc9d78a8a3a48f2141e6aaa5ede.jpg" style="max-height:60px" alt="iOS 9 新特性之实现 3D Touch 就是 So easy -- OC版"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151027/13812.html" target="_blank" title="iOS 9 新特性之实现 3D Touch 就是 So easy -- OC版">iOS 9 新特性之实现 3D Touch 就是 So easy -- OC版</a></p><p class="hits">点击量<span>7157</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151029/13896.html" class="float-l pic" target="_blank" title="自定义 push 和 pop 实现有趣的相册翻开效果(上)"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/3ac59963f59244e231db2c1b29e57e07.gif" style="max-height:60px" alt="自定义 push 和 pop 实现有趣的相册翻开效果(上)"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151029/13896.html" target="_blank" title="自定义 push 和 pop 实现有趣的相册翻开效果(上)">自定义 push 和 pop 实现有趣的相册翻开效果(上)</a></p><p class="hits">点击量<span>7047</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151102/13924.html" class="float-l pic" target="_blank" title="Objective-C 的现代语法和新特性"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/de203a522032c8f4ad784bf540af3f0c.jpg" style="max-height:60px" alt="Objective-C 的现代语法和新特性"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151102/13924.html" target="_blank" title="Objective-C 的现代语法和新特性">Objective-C 的现代语法和新特性</a></p><p class="hits">点击量<span>6819</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/webapp/20151030/13985.html" class="float-l pic" target="_blank" title="HTML5 崛起：不再高冷，不再小众"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/60b513419316a145fa34aeb84d0556c3.jpg" style="max-height:60px" alt="HTML5 崛起：不再高冷，不再小众"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/webapp/20151030/13985.html" target="_blank" title="HTML5 崛起：不再高冷，不再小众">HTML5 崛起：不再高冷，不再小众</a></p><p class="hits">点击量<span>5877</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151026/13868.html" class="float-l pic" target="_blank" title="Xcode 7：Storyboard Reference、Strong IBOutlet以及Scene Dock"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/b0e050a5f2be191f2df947bc284e7917.jpg" style="max-height:60px" alt="Xcode 7：Storyboard Reference、Strong IBOutlet以及Scene Dock"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151026/13868.html" target="_blank" title="Xcode 7：Storyboard Reference、Strong IBOutlet以及Scene Dock">Xcode 7：Storyboard Reference、Strong IBOutlet以及Scene Dock</a></p><p class="hits">点击量<span>5528</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/programmer/20151028/13885.html" class="float-l pic" target="_blank" title="月薪3万的程序员都避开了哪些坑"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/d71c4e5a358321cc319cc0817f312360.jpg" style="max-height:60px" alt="月薪3万的程序员都避开了哪些坑"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/programmer/20151028/13885.html" target="_blank" title="月薪3万的程序员都避开了哪些坑">月薪3万的程序员都避开了哪些坑</a></p><p class="hits">点击量<span>4940</span></p></div></li><li class="clearfix"><a href="http://www.cocoachina.com/ios/20151027/13916.html" class="float-l pic" target="_blank" title="【译】iOS Xcode部署配置"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/576292d718df22af4e255c7e8935f873.jpg" style="max-height:60px" alt="【译】iOS Xcode部署配置"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151027/13916.html" target="_blank" title="【译】iOS Xcode部署配置">【译】iOS Xcode部署配置</a></p><p class="hits">点击量<span>4736</span></p></div></li><li class="clearfix noborder-b"><a href="http://www.cocoachina.com/ios/20151103/14007.html" class="float-l pic" target="_blank" title="关于 @synchronized，这儿比你想知道的还要多"><img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/d58e98c9208acf7654c3fc222f613354.jpg" style="max-height:60px" alt="关于 @synchronized，这儿比你想知道的还要多"></a><div style="margin-left:86px"><p class="related-intro"><a href="http://www.cocoachina.com/ios/20151103/14007.html" target="_blank" title="关于 @synchronized，这儿比你想知道的还要多">关于 @synchronized，这儿比你想知道的还要多</a></p><p class="hits">点击量<span>4669</span></p></div></li>
+                        </ul>
+                    </div>
+               </div>
+               <!--./两周热门资讯推荐-->
+                <!-- 广告位：资讯频道列表页面右侧300*90-->
+                <div class="job-ad"><script>CNZZ_SLOT_RENDER('324555');</script><script type="text/javascript" charset="gbk" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/appgcm_002.js"></script></div>
+               <!--综合评论-->
+                <div class="part-wrap clearfix" style="margin-top: 15px;">
+                    <h3>综合评论</h3>
+                    <ul class="related-comment clearfix" id="all_comments_holder"><li class=""><span class="hide_comment">我是广西叶道网络科技，我们帮助 iOS 平台的 App快速进入审核状态，跳过漫长的两到三周的等待时间。首发加急，更新加急都可以，联系QQ1160110238，电话15177254010</span><br><p><span>yes1160110238</span><span>评论了</span><a target="_blank" title="App Store将于11月4日新增“购物”分类，开发者需注意关键词投放" href="http://www.cocoachina.com/appstore/20151028/13947.html"><span>App Store将于11月4日新增“购物”分类，...</span></a></p></li><li class=""><span class="hide_comment">还是论坛里用户明白些，简书上看到的，下面一帮叫好的，这种鸡汤类文章有吊用</span><br><p><span>去寻找1991</span><span>评论了</span><a target="_blank" title="月薪3万的程序员都避开了哪些坑" href="http://www.cocoachina.com/programmer/20151028/13885.html"><span>月薪3万的程序员都避开了哪些坑...</span></a></p></li><li class=""><span class="hide_comment">mark.</span><br><p><span>静听雨落</span><span>评论了</span><a target="_blank" title="iOS 9适配技巧（更新版）" href="http://www.cocoachina.com/ios/20150929/13598.html"><span>iOS 9适配技巧（更新版）...</span></a></p></li><li class=""><span class="hide_comment">mark.</span><br><p><span>静听雨落</span><span>评论了</span><a target="_blank" title="整理 iOS 9 适配中出现的坑（图文）" href="http://www.cocoachina.com/ios/20151016/13715.html"><span>整理 iOS 9 适配中出现的坑（图文）...</span></a></p></li><li class=""><span class="hide_comment">mark&amp;#46;&amp;#46;mark&amp;#46;&amp;#46;</span><br><p><span>静听雨落</span><span>评论了</span><a target="_blank" title="【投稿】Xcode7中你一定要知道的炸裂调试神技" href="http://www.cocoachina.com/ios/20151020/13794.html"><span>【投稿】Xcode7中你一定要知道的炸裂调试神技...</span></a></p></li><li class=""><span class="hide_comment">mark了</span><br><p><span>cfl2005</span><span>评论了</span><a target="_blank" title="这些 iOS 面试基础题目，你都深入了解吗？" href="http://www.cocoachina.com/ios/20151106/14069.html"><span>这些 iOS 面试基础题目，你都深入了解吗？...</span></a></p></li><li class=""><span class="hide_comment">为什么我下载下来有4个报错</span><br><p><span>galaxyfanfan</span><span>评论了</span><a target="_blank" title="[XTPaster] iOS 贴纸功能实现" href="http://www.cocoachina.com/ios/20151105/14065.html"><span>[XTPaster] iOS 贴纸功能实现...</span></a></p></li><li class=""><span class="hide_comment">页面不存在啦？</span><br><p><span>miss_mao</span><span>评论了</span><a target="_blank" title="源码推荐(10.22)：一行代码搞定自动布局，无限循环自动轮播器" href="http://www.cocoachina.com/ios/20151022/13830.html"><span>源码推荐(10.22)：一行代码搞定自动布局，无限...</span></a></p></li><li class=""><span class="hide_comment">没代码呀</span><br><p><span>miss_mao</span><span>评论了</span><a target="_blank" title="源码推荐(10.29)：cell下拉点击，高仿百度糯米iOS" href="http://www.cocoachina.com/ios/20151029/13958.html"><span>源码推荐(10.29)：cell下拉点击，高仿百度...</span></a></p></li><li class="noborder-b"><span class="hide_comment">mark
+</span><br><p><span>galaxyfanfan</span><span>评论了</span><a target="_blank" title="这些 iOS 面试基础题目，你都深入了解吗？" href="http://www.cocoachina.com/ios/20151106/14069.html"><span>这些 iOS 面试基础题目，你都深入了解吗？...</span></a></p></li></ul>
+                </div>
+                <!--./综合评论-->
+                <!--相关帖子-->
+                <div class="part-wrap clearfix" style="margin:15px 0 15px 0;">
+                    <h3>相关帖子</h3>
+                    <ul class="related-comment clearfix">
+                        <script charset="gb2312" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/new.html"></script><li><a href="http://www.cocoachina.com/bbs/read.php?tid=330857" target="_blank">用AFN上传图片一直不成功</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=330856" target="_blank">怎么获取音乐网站的接口，接口怎么用？？</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=330855" target="_blank">请教</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=330854" target="_blank">请各位大神请教帮忙，希望一行代码能搞定的！！！！</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=330853" target="_blank">新人求指导。。。</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=330852" target="_blank">用SDWebImage缓存的图片</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=330851" target="_blank">菜鸟求指点</a></li><li><a href="http://www.cocoachina.com/bbs/read.php?tid=330850" target="_blank">我把程序打包之后，点击一个按钮就会崩掉，在模拟器上真机上面测试了很多次，都没有问题</a></li><li class="clearfix noborder-b"><a href="http://www.cocoachina.com/bbs/read.php?tid=330849" target="_blank">自动登陆问题</a></li>
+                    </ul>
+                </div>
+                <!--./相关帖子-->
+                <iframe class="share_self" scrolling="no" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/index.html" frameborder="0" height="550" width="230"></iframe>
+                <script async="" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/adsbygoogle.js"></script>
+                <!-- CC列表页面230x230 -->
+                <ins data-adsbygoogle-status="done" class="adsbygoogle" style="display:inline-block;width:230px;height:230px" data-ad-client="ca-pub-1180518835303646" data-ad-slot="6765277166"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:230px;margin:0;padding:0;position:relative;visibility:visible;width:230px;background-color:transparent"><ins id="aswift_3_anchor" style="display:block;border:none;height:230px;margin:0;padding:0;position:relative;visibility:visible;width:230px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;" frameborder="0" height="230" width="230"></iframe></ins></ins></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+        <!--./侧边栏-->
+    </div>
+
+    <div id="coco-store" style="display:none">
+        <div class="storebox">
+            <h5>提示</h5>
+            <h3>已经收藏该篇文章</h3>
+            <p class="p1"><a href="http://www.cocoachina.com/bbs/u.php?action=favor&amp;tag=1" target="_blank">去我的收藏夹</a></p>
+            <p class="p2"><a href="http://www.cocoachina.com/bbs/login.php">请登录</a></p>
+        </div>
+    </div> <!--收藏提示-->
+</div>
+
+<script type="text/javascript">
+
+function postDigg(ftype,aid)
+{
+    var taget_obj = document.getElementById('newdigg');
+    var saveid = GetCookie('diggid');
+    if(saveid != null)
+    {
+        var saveids = saveid.split(',');
+        var hasid = false;
+        saveid = '';
+        j = 1;
+        for(i=saveids.length-1;i>=0;i--)
+        {
+            if(saveids[i]==aid && hasid) continue;
+            else {
+                if(saveids[i]==aid && !hasid) hasid = true;
+                saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+                j++;
+                if(j==20 && hasid) break;
+                if(j==19 && !hasid) break;
+            }
+        }
+        if(hasid) { alert("您已经顶过该帖，请不要重复顶帖 ！"); return; }
+        else saveid += ','+aid;
+        SetCookie('diggid',saveid,1);
+    }
+    else
+    {
+        SetCookie('diggid',aid,1);
+    }
+    myajax = new DedeAjax(taget_obj,false,false,'','','');
+    var url = "/cms/plus/digg_ajax.php?action="+ftype+"&id="+aid;
+    myajax.SendGet2(url);
+    DedeXHTTP = null;
+    $('#zanbox').addClass('zanbox-selected');
+}
+function getDigg(aid)
+{
+    var taget_obj = document.getElementById('newdigg');
+    myajax = new DedeAjax(taget_obj,false,false,'','','');
+    myajax.SendGet2("/cms/plus/digg_ajax.php?id="+aid);
+    DedeXHTTP = null;
+}
+
+
+//显示对应的导航：
+$(function(){
+    var article_id = $('#article_id').val();
+    var saveid = GetCookie('diggid');
+
+    if(saveid != null)
+    {
+        var saveids = saveid.split(',');
+        var hasid = false;
+        saveid = '';
+        j = 1;
+        for(i=saveids.length-1;i>=0;i--)
+        {
+            if(saveids[i]==article_id && hasid) continue;
+            else {
+                if(saveids[i]==article_id && !hasid) hasid = true;
+                saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+                j++;
+                if(j==20 && hasid) break;
+                if(j==19 && !hasid) break;
+            }
+        }
+
+        if(hasid)
+        {
+            $('#zanbox').addClass('zanbox-selected');
+        }
+
+    }
+
+
+    // 根据作者名更新链接
+
+    function updateAuthor(name) {
+        if(name != "pockry" && name!= "suiling" && name!= "wupeng") {
+            name = "suiling";
+        }
+        var urls = {
+            "pockry": "http://www.cocoachina.com/bbs/u.php?action=feed&username=pockry",
+            "suiling": "http://www.cocoachina.com/bbs/u.php?action=feed&uid=340873",
+            "wupeng": "http://www.cocoachina.com/bbs/u.php?action=feed&uid=304691"
+        };
+        $("#field_author").attr("href", urls[name]).html(name);
+    }
+    updateAuthor("suiling");
+
+});
+
+window.onload = function() {
+
+    $('#sharediv').removeClass('bdshare-button-style1-32');
+    $('#sharediv').attr('class','bdsharebuttonbox');
+};
+</script>
+<script type="text/javascript" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/shCore.js"></script>
+    <script type="text/javascript" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/brush.js"></script>
+    <link type="text/css" rel="stylesheet" href="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/shCoreDefault.css">
+    <script type="text/javascript">
+    //SyntaxHighlighter.config.clipboardSwf = '/js/scripts/clipboard.swf';
+
+    SyntaxHighlighter.all();</script>
+
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"NSURLSession使用说明及后台工作流程分析 - 来自CocoaChina苹果开发中文站@CocoaChina","bdMini":"2","bdMiniList":false,"bdPic":"/cms/uploads/allimg/131106/4196-1311061054270-L.jpg","bdStyle":"1","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api//js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+<!--./cont-->
+
+<!-- 回复评论框模板 -->
+<script type="text/javascript" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/comment.js"></script>
+<script type="text/javascript" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/mustache.js"></script>
+<!-- 回复评论框模板 -->
+<script id="reply_comment_template" type="x-tmpl-mustache">
+    <div id="sub-reply-comment" class="reply-comment">
+        <textarea name="subcomment" id="sub-reply-txt" cols="30" rows="10" placeholder="你怎么看？快来评论一下吧！"></textarea>
+        <input type="hidden" id="sub-reply-id" value="{{commentid}}" />
+        <input type="hidden" id="sub-reply-userid" value="{{parentuserid}}" />
+        <input type="hidden" id="sub-reply-username" value="{{parentusername}}" />
+        <a type="button" id="sub_comment_bt" class="submitbt">提交</a>
+        <div class="clearfloat"></div>
+        <div class="unlogin-mask">
+            <div>您还没有登录！请<a href="/bbs/login.php">登录</a>或<a href="/bbs/register.php">注册</a></div>
+        </div>
+    </div>
+</script>
+
+<!-- 评论模板 -->
+<script id="main_comment_template" type="x-tmpl-mustache">
+    <div class="glab-comment" rel-data-id="{{comment_id}}" rel-user-id="{{user_id}}" rel-user-name="{{user_name}}" rel-layer="1">
+        <div class="comment-left">
+            <a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank"><img src="{{user_icon_url}}" height="43" width="43" alt=""></a>
+        </div>
+        <div class="comment-right">
+            <div class="comment-author"><a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank">{{user_name}}</a><span class="puptime">{{create_time}}</span></div>
+            <div class="comment-content">{{content}}</div>
+            <div class="comment-buttons">
+                <span class="ding">                    
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-default.png" height="14" width="14" alt="" class="default" style="{{#has_supported}} display:none; {{/has_supported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-active.png" height="14" width="14" alt="" class="actived" style="{{^has_supported}} display:none; {{/has_supported}}">
+                    <span class="zancnt">{{support}}</span>
+                </span>
+                <span class="cai">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-default.png" height="14" width="14" alt="" class="default" style="{{#has_reported}} display:none; {{/has_reported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-active.png" height="14" width="14" alt="" class="actived" style="{{^has_reported}} display:none; {{/has_reported}}">
+                    <span class="zancnt">{{report}}</span>
+                </span>
+                <span class="replybt">回复</span>
+            </div>
+        </div>
+            {{#sub}}
+                <div class="glab-comment glab-sub-comment" rel-data-id="{{comment_id}}" rel-user-id="{{user_id}}" rel-user-name="{{user_name}}" rel-layer="2">
+                    <div class="comment-left">
+                        <a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank"><img src="{{user_icon_url}}" height="43" width="43" alt=""></a>
+                    </div>
+                    <div class="comment-right">
+                        <div class="comment-author"><a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank">{{user_name}}</a><span class="puptime">{{create_time}}</span></div>
+                        <div class="comment-content"><a href="/bbs/u.php?action=feed&uid={{parent_user_id}}" target="_blank">回复：{{parent}}</a>{{content}}</div>
+                        <div class="comment-buttons">
+                            <span class="ding">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/zan-default.png" height="14" width="14" alt="" class="default" style="{{#has_supported}} display:none; {{/has_supported}}">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/zan-active.png" height="14" width="14" alt="" class="actived" style="{{^has_supported}} display:none; {{/has_supported}}">
+                                <span class="zancnt">{{support}}</span>
+                            </span>
+                            <span class="cai">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/cai-default.png" height="14" width="14" alt="" class="default" style="{{#has_reported}} display:none; {{/has_reported}}">
+                                <img src="http://cdn.cocimg.com/cms/templets/images/cai-active.png" height="14" width="14" alt="" class="actived" style="{{^has_reported}} display:none; {{/has_reported}}">
+                                <span class="zancnt">{{report}}</span>
+                            </span>
+                            <span class="replybt">回复</span>
+                        </div>          
+                    </div>
+                </div>
+            {{/sub}}         
+    </div>  
+</script>
+
+
+<script id="sub_comment_template" type="x-tmpl-mustache">
+    <div class="glab-comment glab-sub-comment" rel-data-id="{{comment_id}}" rel-user-id="{{user_id}}" rel-user-name="{{user_name}}" rel-layer="2">
+        <div class="comment-left">
+            <a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank"><img src="{{user_icon_url}}" height="43" width="43" alt=""></a>
+        </div>
+        <div class="comment-right">
+            <div class="comment-author"><a href="/bbs/u.php?action=feed&uid={{user_id}}" target="_blank">{{user_name}}</a><span class="puptime">{{create_time}}</span></div>
+            <div class="comment-content"><a href="/bbs/u.php?action=feed&uid={{parent_user_id}}" target="_blank">回复：{{parent}}</a>{{content}}</div>
+            <div class="comment-buttons">
+                <span class="ding">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-default.png" height="14" width="14" alt="" class="default" style="{{#has_supported}} display:none; {{/has_supported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/zan-active.png" height="14" width="14" alt="" class="actived" style="{{^has_supported}} display:none; {{/has_supported}}">
+                    <span class="zancnt">{{support}}</span>
+                </span>
+                <span class="cai">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-default.png" height="14" width="14" alt="" class="default" style="{{#has_reported}} display:none; {{/has_reported}}">
+                    <img src="http://cdn.cocimg.com/cms/templets/images/cai-active.png" height="14" width="14" alt="" class="actived" style="{{^has_reported}} display:none; {{/has_reported}}">
+                    <span class="zancnt">{{report}}</span>
+                </span>
+                <span class="replybt">回复</span>
+            </div>          
+        </div>
+    </div>
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68948817-1', 'auto', {'name': 'newTracker'});
+  ga('newTracker.send', 'pageview');
+
+</script>
+<!--右侧浮动-->
+<div style="position: fixed; top: inherit; bottom: 10px;" class="r-bar">
+    <img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/coco_weixin.png" class="weixin">
+    <a href="http://weibo.com/cocoachina" target="_blank" title="" class="weibo">sina</a>
+    <a href="javascript:void(0);" target="_blank" title="" class="feedback">weixin</a>
+    <a href="mailto:support@cocoachina.com" title="" class="kefu">mail</a>
+    <a style="display: inline;" href="javascript:;" title="回到顶部" class="returntop">回到顶部</a>
+</div>
+
+<!--./cont-->
+<script type="text/javascript" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/index.js"></script>
+<script language="javascript" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/bbsauth_plus2015.html" type="text/javascript"></script>
+<script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/jquery_002.js" type="text/javascript"></script>
+<script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/script.js" type="text/javascript"></script>
+
+<!--footer-->
+<div class="footer clearfix">
+    <!--<div class="footer-t">
+        <div class="friend-link">
+            <h4 class="rank-tit">友情链接</h4>
+            <ul>
+                <li><a href="https://www.youmi.net/" target="_blank">有米 | </a></li><li><a href="http://www.testin.cn/" target="_blank">Testin | </a></li><li><a href="http://www.apicloud.com/" target="_blank">APICloud | </a></li><li><a href="http://www.oneapm.com" target="_blank">OneAPM | </a></li><li><a href="http://www.jpush.cn" target="_blank">极光推送 | </a></li><li><a href="https://store.cocos.com" target="_blank">Cocos商店 | </a></li><li><a href="http://www.woshipm.com/" target="_blank">人人都是产品经理 | </a></li><li><a href="http://link.cocos.com" target="_blank">Cocos Link | </a></li><li><a href="http://www.tuicool.com/" target="_blank">推酷网 | </a></li><li><a href="http://www.youxituoluo.com/" target="_blank">游戏陀螺 | </a></li><li><a href="http://www.9miao.com" target="_blank">9秒社团 | </a></li><li><a href="http://segmentfault.com/" target="_blank">SegmentFault | </a></li><li><a href="http://www.sykong.com/" target="_blank">手游那点事 | </a></li><li><a href="https://developer.apple.com/" target="_blank">苹果开发者中心 | </a></li><li><a href="http://www.cocos2d-x.org/" target="_blank">cocos2d-x | </a></li><li><a href="http://gamerboom.com/" target="_blank">游戏邦 | </a></li><li><a href="http://www.nooidea.com/" target="_blank">Nooidea.com | </a></li><li><a href="http://www.iapps.im/" target="_blank">爱应用</a></li>
+            </ul>
+        </div>
+        <div class="two-code">
+            <div class="wx-code">
+                <img src="http://cdn.cocimg.com/assets/images/wx-code.jpg?v=20150818" alt="" />
+                <span>关注微信 每日推荐</span>
+            </div>
+            <div class="m-code">
+                <img src="http://cdn.cocimg.com/assets/images/mb-code.jpg?v=20150818" alt="" />
+                <span>扫一扫 浏览移动版</span>
+            </div>
+        </div>
+    </div>-->
+    <div class="footer-b">
+        <div>
+            <a href="http://www.cocoachina.com/aboutus/index.html" target="_blank">关于我们</a>
+            <a href="http://www.cocoachina.com/contactus/" target="_blank">商务合作</a>
+            <a target="_blank" href="mailto:support@cocoachina.com">联系我们</a>
+            <a href="http://www.cocoachina.com/corps/" target="_blank">合作伙伴</a>
+        </div>
+        <p class="footer-b-p">北京触控科技有限公司版权所有</p>
+        <p>
+            ©2015 Chukong Technologies,Inc.
+            <i>
+                <a href="http://www.miibeian.gov.cn/" target="_blank">京ICP备 11006519号 　京ICP证 100954号</a> 京公网安备11010502020289
+                <a href="http://182.131.21.137/ccnt-apply/admin/business/preview/business-preview%21lookUrlRFID.action?main_id=A580B24B1AE846CE9DA949026D63939F" target="_blank">
+                    <img src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/jingwen.png" style="margin: -10px auto -14px -10px;">
+                    京网文[2012]0426-138号
+                </a>
+            </i>
+        </p>
+    </div>
+</div>
+
+<!--./footer-->
+<script language="javascript" type="text/javascript" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/dedeajax2-min.js"></script>
+<script type="text/javascript">
+function subscribe()
+{
+    var email_address = $('#demail').val();
+    var preg_email = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+
+    if( email_address == '' )
+    {
+        alert('请输入邮箱');
+    }
+    else if( !preg_email.test(email_address) )
+    {
+        alert('邮箱格式错误');
+    }
+    else
+    {
+        $.post(
+            '/edm.php',
+            {
+                email: $('#demail').val()
+            },
+            function(data) {
+                alert(data);
+             });
+    }
+}
+function search_check()
+{
+    var search_keyword = $('#search_keyword').val();
+
+    if( search_keyword.length < 2 )
+    {
+        alert("搜索关键字不能少于2个字节，请重新输入。");
+    }
+    else
+    {
+        $('#searchform').submit();
+    }
+}
+
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "http://hm.baidu.com/hm.js?88399e4c4cf744609c4fc8c3a8935691";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+
+$(document).ready(function(){
+    if (typeof(_user_info_html) != 'undefined' && _user_info_html)
+    {
+        $('.nav-user-login').hide();
+        $('.nav-user-name').html(_user_info_html).show();
+    }
+
+    var type = $('#type_name').html();
+    if(type)
+    {
+        switch( type )
+        {
+            case 'iOS开发':
+                $('#ios').addClass('light');
+                break;
+            case 'AppStore研究':
+                $('#app_store').addClass('light');
+                break;
+            case 'Mac开发':
+                $('#mac').addClass('light');
+                break;
+            case '产品设计':
+                $('#design').addClass('light');
+                break;
+            case 'Cocos引擎':
+                $('#cocos').addClass('light');
+                break;
+            case 'WebApp':
+                $('#webapp').addClass('light');
+                break;
+            case 'Swift':
+                $('#swift').addClass('light');
+                break;
+            case '游戏开发':
+                $('#game').addClass('light');
+                break;
+            case '苹果相关':
+                $('#apple').addClass('light');
+                break;
+            case '营销推广':
+                $('#market').addClass('light');
+                break;
+            case '业界动态':
+                $('#industry').addClass('light');
+                break;
+            case '程序人生':
+                $('#programmer').addClass('light');
+                break;
+        }
+    }
+
+    //更改文章来源
+    var source = $('#source a').html();
+    if( source == '未知' )
+        jQuery('#source a').html('CocoaChina');
+    if( jQuery('#source a').attr('href')=='')
+        jQuery('#source').html('来源：'+source);
+
+    //获取用户登录的id
+    var content = jQuery('.t-lid').attr("href");
+    var uid = 0;
+    if( content )
+    {
+        content = content.split('=');
+        uid = content[1];
+    }
+
+    var timestamp = new Date().getTime();
+    var uid_int = parseInt(uid);
+    if (uid_int == uid && uid_int != 0) {
+        uid = uid_int;
+    } else {
+        uid = parseInt($('#user-info').attr('data-uid'));
+    }
+    if ( uid )
+    {
+        uid = uid<<2;
+        uid = uid+''+timestamp;
+    } else {
+        uid = '';
+    }
+
+    var oIframe=document.getElementById("comiframe");
+    if(oIframe){
+        var oUrl=window.location.href;
+        oUrl = encodeURIComponent(oUrl);
+
+        oIframe.src="/comment.php?url="+oUrl+"&uid="+uid;
+    }
+
+});
+</script>
+<script>CNZZ_SLOT_RENDER('337970');</script><script type="text/javascript" charset="gbk" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/appgcm.js"></script><div id="cnzz_slot_337970" style="width:-1px;height:-1px;border:none;margin:0px;padding:0px;background-color:#FFFFFF;overflow:hidden;"></div>
+<div style="display:none"><a target="_blank" key="52df886aaf60041470116076" logo_size="83x30" logo_type="official" href="http://www.anquan.org/authenticate/cert/?site=www.cocoachina.com&amp;at=official">
+<script src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/aq_auth.js"></script><span style="display:none;" class="LOGO_aq_jsonp_wrap_" id="AQ_logo_span_init_1"><script async="true" type="text/javascript" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/a.js"></script></span><img alt="安全联盟认证" style="border: medium none;" src="NSURLSession%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E5%8F%8A%E5%90%8E%E5%8F%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90%20-%20CocoaChina_%E8%AE%A9%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91%E6%9B%B4%E7%AE%80%E5%8D%95_files/gw_83x30_gray.png" height="30" width="83"></a></div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-16940817-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<div style="display: none;" id="cboxOverlay"></div><div style="display: none;" class="" id="colorbox"><div id="cboxWrapper"><div><div style="float: left;" id="cboxTopLeft"></div><div style="float: left;" id="cboxTopCenter"></div><div style="float: left;" id="cboxTopRight"></div></div><div style="clear: left;"><div style="float: left;" id="cboxMiddleLeft"></div><div style="float: left;" id="cboxContent"><div style="width: 0px; height: 0px; overflow: hidden; float: left;" id="cboxLoadedContent"></div><div style="float: left;" id="cboxLoadingOverlay"></div><div style="float: left;" id="cboxLoadingGraphic"></div><div style="float: left;" id="cboxTitle"></div><div style="float: left;" id="cboxCurrent"></div><div style="float: left;" id="cboxNext"></div><div style="float: left;" id="cboxPrevious"></div><div style="float: left;" id="cboxSlideshow"></div><div style="float: left;" id="cboxClose"></div></div><div style="float: left;" id="cboxMiddleRight"></div></div><div style="clear: left;"><div style="float: left;" id="cboxBottomLeft"></div><div style="float: left;" id="cboxBottomCenter"></div><div style="float: left;" id="cboxBottomRight"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div></body></html>

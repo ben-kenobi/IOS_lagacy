@@ -1,0 +1,622 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Objective-C语法之KVC使用 - 容芳志专栏 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/style.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/stoic/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/stoic/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/stoic/wlwmanifest.xml">
+<script src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/map.js" async="" type="text/javascript"></script><script src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/encoder.js" type="text/javascript"></script><script src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/gpt.js" type="text/javascript" async=""></script><script src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'stoic', cb_enable_mathjax=false;</script>
+<script src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.js" type="text/javascript"></script>
+<script src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/pubads_impl_42.js" type="text/javascript" async=""></script><script src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/osd.js" type="text/javascript"></script></head>
+<body>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/stoic/">容芳志专栏</a></div>
+<div class="subtitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学无止境 知行合一</div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"></li>
+<li id="nav_myhome"><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/stoic/">首页</a></li>
+<li id="nav_q"><a class="menu" href="http://q.cnblogs.com/">博问</a></li>
+<li id="nav_ing"><a class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+<li id="nav_newpost"><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/%e5%ae%b9%e8%8a%b3%e5%bf%97%e4%b8%93%e6%a0%8f">联系</a></li>
+<li id="nav_rss"><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/stoic/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/stoic/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔-120&nbsp;
+文章-0&nbsp;
+评论-66&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/stoic/archive/2012/07/20/2601315.html">Objective-C语法之KVC使用</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>除了一般的赋值和取值的方法，我们还可以用Key-Value-Coding(KVC)键值编码来访问你要存取的类的属性。</p>
+<p>下图来自苹果官网：</p>
+<p><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/2012072414545828.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>如何使用KVC存取对象属性呢?看个示例</p>
+<p><span style="font-size: 16px;"><strong>1、使用KVC</strong></span></p>
+<p>定义一个Student类，继承于NSObject。</p>
+<p>.h文件</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#import</span> &lt;Foundation/Foundation.h&gt;
+
+<span style="color: #0000ff;">@interface</span><span style="color: #000000;"> Student : NSObject
+{
+    NSString </span>*<span style="color: #000000;">name;
+}
+</span><span style="color: #0000ff;">@end</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>.m文件</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">#import</span> <span style="color: #800000;">"</span><span style="color: #800000;">Student.h</span><span style="color: #800000;">"</span>
+
+<span style="color: #0000ff;">@implementation</span><span style="color: #000000;"> Student
+
+</span><span style="color: #0000ff;">@end</span></pre>
+</div>
+<p>.m文件也没有实现。name属性没有加property，原来的访问方法就访问不了name属性了。怎么办呢？用kvc就可以了</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#import</span> <span style="color: #800000;">"</span><span style="color: #800000;">Student.h</span><span style="color: #800000;">"</span>
+
+<span style="color: #0000ff;">int</span> main(<span style="color: #0000ff;">int</span> argc, <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">char</span> *<span style="color: #000000;"> argv[])
+{
+    @autoreleasepool {
+        Student </span>*student =<span style="color: #000000;"> [[[Student alloc]init ]autorelease];
+        [student setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">张三</span><span style="color: #800000;">"</span> forKey:<span style="color: #800000;">@"</span><span style="color: #800000;">name</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSString </span>*name = [student valueForKey:<span style="color: #800000;">@"</span><span style="color: #800000;">name</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">学生姓名:%@</span><span style="color: #800000;">"</span><span style="color: #000000;">,name);
+    }
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>打印结果：</p>
+<p class="p1"><strong>2012-07-20 15:04:09.920 objectiveC[1977:403] </strong><span class="s1"><strong>学生姓名</strong></span><strong>:</strong><span class="s1"><strong>张三</strong></span></p>
+<p>张三 这个值存进去了，通过valueForKey取出来了。</p>
+<p>如果存的时候key和类属性的名称不一致会怎么样呢？</p>
+<p>代码改成&nbsp;</p>
+<p class="p1">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;[student <span class="s1">setValue</span>:<span class="s2">@"</span><span class="s3">张三</span><span class="s2">"</span> <span class="s1">forKey</span>:<span class="s2">@"name1"</span>];</p>
+<p>运行，程序崩溃 ，打印：</p>
+<p class="p1"><strong>2012-07-20 15:09:40.432 objectiveC[2069:403] *** 
+Terminating app due to uncaught exception 'NSUnknownKeyException', 
+reason: '[&lt;Student 0x106f14270&gt; setValue:forUndefinedKey:]: this 
+class is not key value coding-compliant for the key name1.'</strong></p>
+<p class="p1">提示没有这个name1 这个key。</p>
+<p><strong><span style="font-size: 16px;">2、键路径访问属性</span></strong></p>
+<p>如果访问这个类里中的属性中的属性呢？那就用到了键路径&nbsp;</p>
+<p class="p1">关键字：键路径取值valueForKeyPath 键路径存值：forKeyPath</p>
+<p>新建一个类Course，课程类，课程类有课程名称这个属性</p>
+<p>.h文件</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#import</span> &lt;Foundation/Foundation.h&gt;
+
+<span style="color: #0000ff;">@interface</span><span style="color: #000000;"> Course : NSObject
+{
+    NSString </span>*<span style="color: #000000;">CourseName;
+}
+</span><span style="color: #0000ff;">@end</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>.m文件</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">#import</span> <span style="color: #800000;">"</span><span style="color: #800000;">Course.h</span><span style="color: #800000;">"</span>
+
+<span style="color: #0000ff;">@implementation</span><span style="color: #000000;"> Course
+
+</span><span style="color: #0000ff;">@end</span></pre>
+</div>
+<p>在Student中添加Course属性 ,student.h文件中代码如下：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#import</span> &lt;Foundation/Foundation.h&gt;
+<span style="color: #0000ff;">@class</span><span style="color: #000000;"> Course;
+</span><span style="color: #0000ff;">@interface</span><span style="color: #000000;"> Student : NSObject
+{
+    NSString </span>*<span style="color: #000000;">name;
+    Course </span>*<span style="color: #000000;">course;
+}
+</span><span style="color: #0000ff;">@end</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>实现还是什么都没有，这里就不贴代码了</p>
+<p>在main方法中，我们实验通过键路径访问Course中CourseName的属性</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#import</span> <span style="color: #800000;">"</span><span style="color: #800000;">Student.h</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">#import</span> <span style="color: #800000;">"</span><span style="color: #800000;">Course.h</span><span style="color: #800000;">"</span>
+
+<span style="color: #0000ff;">int</span> main(<span style="color: #0000ff;">int</span> argc, <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">char</span> *<span style="color: #000000;"> argv[])
+{
+    @autoreleasepool {
+        Student </span>*student =<span style="color: #000000;"> [[[Student alloc]init ]autorelease];
+        [student setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">张三</span><span style="color: #800000;">"</span> forKey:<span style="color: #800000;">@"</span><span style="color: #800000;">name</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSString </span>*name = [student valueForKey:<span style="color: #800000;">@"</span><span style="color: #800000;">name</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">学生姓名:%@</span><span style="color: #800000;">"</span><span style="color: #000000;">,name);
+        
+        Course </span>*course =<span style="color: #000000;"> [[[Course alloc]init] autorelease];
+        [course setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">语文课</span><span style="color: #800000;">"</span> forKey:<span style="color: #800000;">@"</span><span style="color: #800000;">CourseName</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        [student setValue:course forKey:</span><span style="color: #800000;">@"</span><span style="color: #800000;">course</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSString </span>*courseName = [student valueForKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">course.CourseName</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">课程名称:%@</span><span style="color: #800000;">"</span><span style="color: #000000;">, courseName);
+        
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">也可以这样存值</span>
+        [student setValue:<span style="color: #800000;">@"</span><span style="color: #800000;">数学课</span><span style="color: #800000;">"</span> forKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">course.CourseName</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        courseName </span>= [student valueForKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">course.CourseName</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">课程名称:%@</span><span style="color: #800000;">"</span><span style="color: #000000;">, courseName);
+        
+    }
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>运行打印结果：</p>
+<p class="p1"><strong>2012-07-20 15:33:51.902 objectiveC[2415:403] </strong><span class="s1"><strong>学生姓名</strong></span><strong>:</strong><span class="s1"><strong>张三</strong></span></p>
+<p class="p1"><strong>2012-07-20 15:33:51.904 objectiveC[2415:403] </strong><span class="s1"><strong>课程名称</strong></span><strong>:</strong><span class="s1"><strong>语文课</strong></span></p>
+<p class="p1"><strong>2012-07-20 15:33:51.904 objectiveC[2415:403] </strong><span class="s1"><strong>课程名称</strong></span><strong>:</strong><span class="s1"><strong>数学课</strong></span></p>
+<p><span style="font-size: 16px;"><strong>3、自动封装基本数据类型</strong></span></p>
+<p>我们在Student类中添加分数属性 NSInteger point;</p>
+<p>.h文件</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#import</span> &lt;Foundation/Foundation.h&gt;
+<span style="color: #0000ff;">@class</span><span style="color: #000000;"> Course;
+</span><span style="color: #0000ff;">@interface</span><span style="color: #000000;"> Student : NSObject
+{
+    NSString </span>*<span style="color: #000000;">name;
+    Course </span>*<span style="color: #000000;">course;
+    NSInteger point;
+}
+</span><span style="color: #0000ff;">@end</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>.m文件不改变</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#import</span> <span style="color: #800000;">"</span><span style="color: #800000;">Student.h</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">#import</span> <span style="color: #800000;">"</span><span style="color: #800000;">Course.h</span><span style="color: #800000;">"</span>
+
+<span style="color: #0000ff;">int</span> main(<span style="color: #0000ff;">int</span> argc, <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">char</span> *<span style="color: #000000;"> argv[])
+{
+    @autoreleasepool {
+        Student </span>*student =<span style="color: #000000;"> [[[Student alloc]init ]autorelease];
+        [student setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">张三</span><span style="color: #800000;">"</span> forKey:<span style="color: #800000;">@"</span><span style="color: #800000;">name</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSString </span>*name = [student valueForKey:<span style="color: #800000;">@"</span><span style="color: #800000;">name</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">学生姓名:%@</span><span style="color: #800000;">"</span><span style="color: #000000;">,name);
+        
+        Course </span>*course =<span style="color: #000000;"> [[[Course alloc]init] autorelease];
+        [course setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">语文课</span><span style="color: #800000;">"</span> forKey:<span style="color: #800000;">@"</span><span style="color: #800000;">CourseName</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        [student setValue:course forKey:</span><span style="color: #800000;">@"</span><span style="color: #800000;">course</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSString </span>*courseName = [student valueForKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">course.CourseName</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">课程名称:%@</span><span style="color: #800000;">"</span><span style="color: #000000;">, courseName);
+        
+        </span><span style="color: #008000;">//</span><span style="color: #008000;">也可以这样存值</span>
+        [student setValue:<span style="color: #800000;">@"</span><span style="color: #800000;">数学课</span><span style="color: #800000;">"</span> forKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">course.CourseName</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        courseName </span>= [student valueForKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">course.CourseName</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">课程名称:%@</span><span style="color: #800000;">"</span><span style="color: #000000;">, courseName);
+        
+        [student setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">88</span><span style="color: #800000;">"</span> forKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">point</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSString </span>*point = [student valueForKey:<span style="color: #800000;">@"</span><span style="color: #800000;">point</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">分数:%@</span><span style="color: #800000;">"</span><span style="color: #000000;">, point);
+        
+    }
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>打印结果：</p>
+<p class="p1"><strong>2012-07-20 15:43:19.593 objectiveC[2533:403] </strong><span class="s1"><strong>学生姓名</strong></span><strong>:</strong><span class="s1"><strong>张三</strong></span></p>
+<p class="p1"><strong>2012-07-20 15:43:19.596 objectiveC[2533:403] </strong><span class="s1"><strong>课程名称</strong></span><strong>:</strong><span class="s1"><strong>语文课</strong></span></p>
+<p class="p1"><strong>2012-07-20 15:43:19.596 objectiveC[2533:403] </strong><span class="s1"><strong>课程名称</strong></span><strong>:</strong><span class="s1"><strong>数学课</strong></span></p>
+<p class="p1"><strong>2012-07-20 15:43:19.598 objectiveC[2533:403] </strong><span class="s1"><strong>分数</strong></span><strong>:88</strong></p>
+<p class="p1">我们用NSString*类型设置的属性值@"88"，而我们的属性是NSInteger类型的，存取都没有问题。</p>
+<p class="p1"><span style="font-size: 16px;"><strong>4、操作集合</strong></span></p>
+<p class="p1">在Student类中加入数组NSArray,用来表示其他的学生。这样我们可以添加多个其他的学生，再用集合操作计算学生的分数，最高分，最低分，平均分等</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#import</span> &lt;Foundation/Foundation.h&gt;
+<span style="color: #0000ff;">@class</span><span style="color: #000000;"> Course;
+</span><span style="color: #0000ff;">@interface</span><span style="color: #000000;"> Student : NSObject
+{
+    NSString </span>*<span style="color: #000000;">name;
+    Course </span>*<span style="color: #000000;">course;
+    NSInteger point;
+    NSArray </span>*<span style="color: #000000;">otherStudent;
+}
+</span><span style="color: #0000ff;">@end</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>.m文件实现不变。</p>
+<p>在main函数中添加三个学生，添加到数组中，然后求平均分，最高，最低分，学生数量</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #0000ff;">#import</span> <span style="color: #800000;">"</span><span style="color: #800000;">Student.h</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">#import</span> <span style="color: #800000;">"</span><span style="color: #800000;">Course.h</span><span style="color: #800000;">"</span>
+
+<span style="color: #0000ff;">int</span> main(<span style="color: #0000ff;">int</span> argc, <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">char</span> *<span style="color: #000000;"> argv[])
+{
+    @autoreleasepool {
+        Student </span>*student =<span style="color: #000000;"> [[[Student alloc]init ]autorelease];
+        [student setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">张三</span><span style="color: #800000;">"</span> forKey:<span style="color: #800000;">@"</span><span style="color: #800000;">name</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSString </span>*name = [student valueForKey:<span style="color: #800000;">@"</span><span style="color: #800000;">name</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">学生姓名:%@</span><span style="color: #800000;">"</span><span style="color: #000000;">,name);
+        
+        [student setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">88</span><span style="color: #800000;">"</span> forKey:<span style="color: #800000;">@"</span><span style="color: #800000;">point</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSString </span>*point = [student valueForKey:<span style="color: #800000;">@"</span><span style="color: #800000;">point</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">分数:%@</span><span style="color: #800000;">"</span><span style="color: #000000;">, point);
+        
+        Student </span>*student1 =<span style="color: #000000;"> [[[Student alloc]init]autorelease];
+        Student </span>*student2 =<span style="color: #000000;"> [[[Student alloc]init]autorelease];
+        Student </span>*student3 =<span style="color: #000000;"> [[[Student alloc]init]autorelease];
+        [student1 setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">65</span><span style="color: #800000;">"</span> forKey:<span style="color: #800000;">@"</span><span style="color: #800000;">point</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        [student2 setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">77</span><span style="color: #800000;">"</span> forKey:<span style="color: #800000;">@"</span><span style="color: #800000;">point</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        [student3 setValue:</span><span style="color: #800000;">@"</span><span style="color: #800000;">99</span><span style="color: #800000;">"</span> forKey:<span style="color: #800000;">@"</span><span style="color: #800000;">point</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSArray </span>*array =<span style="color: #000000;"> [NSArray arrayWithObjects:student1,student2,student3,nil];
+        [student setValue:array forKey:</span><span style="color: #800000;">@"</span><span style="color: #800000;">otherStudent</span><span style="color: #800000;">"</span><span style="color: #000000;">];
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">其他学生的成绩%@</span><span style="color: #800000;">"</span>, [student valueForKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">otherStudent.point</span><span style="color: #800000;">"</span><span style="color: #000000;">]);
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">共%@个学生</span><span style="color: #800000;">"</span>, [student valueForKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">otherStudent.@count</span><span style="color: #800000;">"</span><span style="color: #000000;">]);
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">最高成绩:%@</span><span style="color: #800000;">"</span>, [student valueForKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">otherStudent.@max.point</span><span style="color: #800000;">"</span><span style="color: #000000;">]);
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">最低成绩:%@</span><span style="color: #800000;">"</span>, [student valueForKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">otherStudent.@min.point</span><span style="color: #800000;">"</span><span style="color: #000000;">]);
+        NSLog(</span><span style="color: #800000;">@"</span><span style="color: #800000;">平均成绩:%@</span><span style="color: #800000;">"</span>, [student valueForKeyPath:<span style="color: #800000;">@"</span><span style="color: #800000;">otherStudent.@avg.point</span><span style="color: #800000;">"</span><span style="color: #000000;">]);
+    }
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>运行打印结果</p>
+<p class="p1"><strong>2012-07-20 16:09:17.101 objectiveC[2857:403] </strong><span class="s1"><strong>学生姓名</strong></span><strong>:</strong><span class="s1"><strong>张三</strong></span></p>
+<p class="p1"><strong>2012-07-20 16:09:17.104 objectiveC[2857:403] </strong><span class="s1"><strong>分数</strong></span><strong>:88</strong></p>
+<p class="p1"><strong>2012-07-20 16:09:17.105 objectiveC[2857:403] </strong><span class="s1"><strong>其他学生的成绩</strong></span><strong>(</strong></p>
+<p class="p1"><strong>&nbsp; &nbsp; 65,</strong></p>
+<p class="p1"><strong>&nbsp; &nbsp; 77,</strong></p>
+<p class="p1"><strong>&nbsp; &nbsp; 99</strong></p>
+<p class="p1"><strong>)</strong></p>
+<p class="p1"><strong>2012-07-20 16:09:17.106 objectiveC[2857:403] </strong><span class="s1"><strong>共</strong></span><strong>3</strong><span class="s1"><strong>个学生</strong></span></p>
+<p class="p1"><strong>2012-07-20 16:09:17.106 objectiveC[2857:403] </strong><span class="s1"><strong>最高成绩</strong></span><strong>:99</strong></p>
+<p class="p1"><strong>2012-07-20 16:09:17.107 objectiveC[2857:403] </strong><span class="s1"><strong>最低成绩</strong></span><strong>:65</strong></p>
+<p class="p1"><strong>2012-07-20 16:09:17.108 objectiveC[2857:403] </strong><span class="s1"><strong>平均成绩</strong></span><strong>:80.333333333333333333333333333333333333</strong></p>
+<p class="p1">还可以求总和 &nbsp;@sum。</p></div><div id="MySignature"><p style="margin: 10px auto; padding-top: 0px; padding-bottom: 0px; font-family: verdana, 宋体, Arial; font-size: 13px; line-height: 24px;"><span style="color: rgb(255, 0, 0);">容芳志 (<a href="http://www.cnblogs.com/stoic/" target="_blank" style="color: rgb(255, 153, 0); text-decoration: initial; margin: 0px; padding: 0px; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(51, 51, 51);">http://www.cnblogs.com/stoic/</a>)</span></p><p style="margin: 10px auto; padding-top: 0px; padding-bottom: 0px; font-family: verdana, 宋体, Arial; font-size: 13px; line-height: 24px;"><span style="color: rgb(255, 0, 0);">本文遵循“<a href="http://creativecommons.org/licenses/by-nc-sa/2.5/cn/" target="_blank" style="color: rgb(255, 153, 0); text-decoration: initial; margin: 0px; padding: 0px; border-bottom-width: 1px; border-bottom-style: dotted; border-bottom-color: rgb(51, 51, 51);">署名-非商业用途-保持一致</a>”创作公用协议</span></p></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/stoic/category/394304.html">深入浅出Objective-C</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(cb_entryId,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/%e5%ae%b9%e8%8a%b3%e5%bf%97%e4%b8%93%e6%a0%8f" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/stoic/" target="_blank"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/u322584.jpg" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/stoic/">容芳志专栏</a><br>
+<a href="http://home.cnblogs.com/u/stoic/followees">关注 - 0</a><br>
+<a href="http://home.cnblogs.com/u/stoic/followers">粉丝 - 63</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+	<div class="diggit" onclick="votePost(cb_entryId,'Digg')"> 
+		<span class="diggnum" id="digg_count">3</span>
+	</div>
+	<div class="buryit" onclick="votePost(cb_entryId,'Bury')"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/stoic/archive/2012/07/20/2600494.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/stoic/archive/2012/07/20/2600494.html" title="发布于2012-07-20 08:48">Android Map Api 使用和开发(1) 添加地图和界面</a><br><a href="http://www.cnblogs.com/stoic/archive/2012/07/20/2785194.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/stoic/archive/2012/07/20/2785194.html" title="发布于2012-07-20 16:18">Objective-C语法之KVC的使用</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2012-07-20 16:14</span> <a href="http://www.cnblogs.com/stoic/">容芳志专栏</a> 阅读(<span id="post_view_count">2409</span>) 评论(<span id="post_comment_count">3</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=2601315" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2601315);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=94681,cb_entryId=2601315,cb_blogApp=currentBlogApp,cb_blogUserGuid='394f5af8-7dc2-e011-8673-842b2b196315',cb_entryCreatedDate='2012/7/20 16:14:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+<a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<!--done-->
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#2431797" class="layer">#1楼</a><a name="2431797" id="comment_anchor_2431797"></a>  <span class="comment_date">2012-07-20 22:43</span> <a id="a_comment_author_2431797" href="http://www.cnblogs.com/iguor/" target="_blank">i果儿网(www.iguor.com)</a> <a href="http://space.cnblogs.com/msg/send/i%e6%9e%9c%e5%84%bf%e7%bd%91%28www.iguor.com%29" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2431797" class="blog_comment_body">第一次看到这样的用法，感谢博主分享，收藏了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2431797,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2431797,'Bury',this)">反对(0)</a></div><span id="comment_2431797_avatar" style="display:none;">http://pic.cnitblog.com/face/u423830.jpg?id=20221833</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#2435365" class="layer">#2楼</a><a name="2435365" id="comment_anchor_2435365"></a>  <span class="comment_date">2012-07-26 14:14</span> <a id="a_comment_author_2435365" href="http://www.cnblogs.com/dong22yue/" target="_blank">云端天籁</a> <a href="http://space.cnblogs.com/msg/send/%e4%ba%91%e7%ab%af%e5%a4%a9%e7%b1%81" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2435365" class="blog_comment_body">学习了 谢谢楼主分享。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2435365,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2435365,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#2447132" class="layer">#3楼</a><a name="2447132" id="comment_anchor_2447132"></a><span id="comment-maxId" style="display:none;">2447132</span><span id="comment-maxDate" style="display:none;">2012/8/12 22:22:13</span>  <span class="comment_date">2012-08-12 22:22</span> <a id="a_comment_author_2447132" href="http://www.cnblogs.com/zimulala/" target="_blank">zimulala</a> <a href="http://space.cnblogs.com/msg/send/zimulala" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2447132" class="blog_comment_body">楼主讲的很容易理解<br>但是问下楼主，在3、自动封装基本数据类型中，我写得如下代码为啥报错啊？希望给我指出一下哪里错了<br> 　　[student setValue:@"98" forKeyPath:@"score"];<br>        NSString *scores = [student valueForKey:@"score"];<br>        NSLog(@"This student's score is %@ .",scores);</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2447132,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2447132,'Bury',this)">反对(0)</a></div><span id="comment_2447132_avatar" style="display:none;">http://pic.cnitblog.com/face/426212/20130217210748.png</span>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login('commentform');">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="开发者的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    var enableGoogleAd = true;var googletag = googletag || {};googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</script>
+<div id="ad_under_post_holder">
+<script type="text/javascript">
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        var gads = document.createElement('script');
+        gads.async = true;
+        gads.type = 'text/javascript';
+        var useSSL = 'https:' == document.location.protocol;
+        gads.src = (useSSL ? 'https:' : 'http:') +'//www.googletagservices.com/tag/js/gpt.js';
+        var node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(gads, node);
+    })();
+</script>
+<script type="text/javascript">
+    try {
+        googletag.cmd.push(function () {
+            googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    } catch (e) { }
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+    <div id="div-gpt-ad-1346480159711-0" style="width: 300px; height: 250px;">
+    <script type="text/javascript">
+    try{
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });
+    } catch (e) { }
+    </script>
+    <div style="border: 0pt none;" id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__container__"><iframe src="javascript:&quot;<html><body style='background:transparent'></body></html>&quot;" style="border: 0px none; vertical-align: bottom;" marginheight="0" marginwidth="0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" frameborder="0" height="250" scrolling="no" width="300"></iframe></div><iframe src="javascript:&quot;<html><body style='background:transparent'></body></html>&quot;" style="border: 0px none; vertical-align: bottom; visibility: hidden; display: none;" marginheight="0" marginwidth="0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" frameborder="0" height="0" scrolling="no" width="0"></iframe></div>
+</div>
+</div>
+<div id="blog_news_kb"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/212276/" target="_blank">皮尤研究中心：未来互联网世界“威胁”重重</a><br> ·  <a href="http://news.cnblogs.com/n/212235/" target="_blank">欧洲掀起反对数字殖民战争：阻击硅谷科技巨头</a><br> ·  <a href="http://news.cnblogs.com/n/212217/" target="_blank">谷歌收购Songza物美价廉 苹果收购Beats是浪费</a><br> ·  <a href="http://news.cnblogs.com/n/212216/" target="_blank">智能手表缺乏卖点 Android Wear任重道远</a><br> ·  <a href="http://news.cnblogs.com/n/212215/" target="_blank">12招让你的孩子成为科技大富翁</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/211867/" target="_blank">程序员的自我修养(2)——计算机网络</a><br> ·  <a href="http://kb.cnblogs.com/page/188386/" target="_blank">你是否中了工程师文化的毒？</a><br> ·  <a href="http://kb.cnblogs.com/page/187094/" target="_blank">不安分的工程师</a><br> ·  <a href="http://kb.cnblogs.com/page/211670/" target="_blank">流量劫持——浮层登录框的隐患</a><br> ·  <a href="http://kb.cnblogs.com/page/201982/" target="_blank">Amazon前技术副总裁解剖完美技术面试</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    $.ajax({ url: 'http://counter.cnblogs.com/blog/post/' + cb_entryId, type: 'get', dataType: 'script', cache: true });
+});
+</script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><p>&nbsp;</p><div><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/203330913.gif" alt=""><a href="http://blog.csdn.net/totogo2010" target="_blank"><span style="color: #800000; font-size: 14pt; ">我的</span><z><span style="color: #800000; font-size: 14pt; ">CSDN</span></z><span style="color: #800000; font-size: 14pt; ">博客</span></a></div><p>&nbsp;</p>
+访问者地图:
+<div style="width: 160px; height: 106px; position: relative;" id="clustrmaps-widget"><a style="border: medium none;" href="http://www4.clustrmaps.com/counter/maps.php?url=http://www.cnblogs.com/stoic/"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/www_002.png" style="background: url(&quot;http://www4.clustrmaps.com/images/nasa_classic.jpg&quot;) repeat scroll 0% 0% transparent; border: medium none; position: absolute; left: 0px; top: 0px; padding: 0px;"><img style="position: absolute; border: medium none; z-index: 1; left: 0px; top: 0px; padding: 0px;" src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/www.png"><script src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/dynamic.js"></script><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 127px; top: 41px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 129px; top: 45px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 140px; top: 77px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 129px; top: 45px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 126px; top: 49px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 126px; top: 49px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 127px; top: 41px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 32px; top: 42px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 126px; top: 44px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 26px; top: 44px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/smallyellow.png" style="left: 126px; top: 46px; position: absolute; width: 9px; height: 9px; border: medium none; display: inline; z-index: 1; padding: 0px;"></a></div><noscript><a href="http://www4.clustrmaps.com/user/750fb23b"><img src="http://www4.clustrmaps.com/stats/maps-no_clusters/www.cnblogs.com-stoic--thumb.jpg" alt="Locations of visitors to this page" /></a></noscript>
+<img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/tongji.gif" border="0" height="1" width="1"><a href="http://tongji.linezing.com/report.html?unit_id=2939470" target="_blank"><img src="Objective-C%E8%AF%AD%E6%B3%95%E4%B9%8BKVC%E4%BD%BF%E7%94%A8%20-%20%E5%AE%B9%E8%8A%B3%E5%BF%97%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon1.gif" alt="量子统计" border="0"></a><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/stoic/">容芳志专栏</a><br>园龄：<a href="http://home.cnblogs.com/u/stoic/" title="入园时间：2011-08-09">2年10个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/stoic/followers/">63</a><br>关注：<a href="http://home.cnblogs.com/u/stoic/followees/">0</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger('394f5af8-7dc2-e011-8673-842b2b196315')">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+<div class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk" type="text">&nbsp;<input onclick="zzk_go()" value="找找看" id="btnZzk" class="btn_my_zzk" type="button"></div>
+<div id="widget_my_google" class="div_my_zzk"><input name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk" type="text">&nbsp;<input onclick="google_go()" value="谷歌搜索" class="btn_my_zzk" type="button"></div>
+</div>
+
+
+<div class="catListPostCategory">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/stoic/category/394314.html">Android开发(19)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/stoic/category/431687.html">Cocos-2D游戏开发(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/stoic/category/431685.html">iOS开发进阶(14)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/stoic/category/431686.html">iOS开发经验技巧(14)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/stoic/category/431684.html">iOS开发入门(38)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/stoic/category/456203.html">iOS斯坦福公开课(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/stoic/category/431689.html">Lbs研究(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/stoic/category/394304.html">深入浅出Objective-C(18)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/stoic/category/431688.html">数据结构与算法(1)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListPostArchive">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/stoic/archive/2013/02.html">2013年2月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/stoic/archive/2013/01.html">2013年1月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/stoic/archive/2012/12.html">2012年12月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/stoic/archive/2012/11.html">2012年11月 (13)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/stoic/archive/2012/10.html">2012年10月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/stoic/archive/2012/09.html">2012年9月 (13)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/stoic/archive/2012/08.html">2012年8月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/stoic/archive/2012/07.html">2012年7月 (28)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/stoic/archive/2012/06.html">2012年6月 (23)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/stoic/archive/2012/05.html">2012年5月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/stoic/archive/2012/03.html">2012年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/stoic/archive/2012/01.html">2012年1月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/stoic/archive/2011/12.html">2011年12月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/stoic/archive/2011/11.html">2011年11月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/stoic/archive/2011/10.html">2011年10月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/stoic/archive/2011/09.html">2011年9月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/stoic/archive/2011/06.html">2011年6月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/stoic/archive/2011/05.html">2011年5月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/stoic/archive/2011/04.html">2011年4月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/stoic/archive/2011/03.html">2011年3月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/stoic/archive/2011/02.html">2011年2月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	68630
+	</li>
+	<li class="liRank">
+		排名 -	2141
+	</li>
+</ul>
+</div>
+
+
+<div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+	<div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/stoic/archive/2012/07/10/2584145.html#2976583">1. Re:Objective-C语法之NSSet和NSMutableSet</a></li>
+    <li class="recent_comment_body">很详细，赞一个！</li>
+    <li class="recent_comment_author">--铁泉</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/stoic/archive/2012/07/08/2581298.html#2866658">2. Re:iOS学习之iOS程序名称及内容国际化（本地化）</a></li>
+    <li class="recent_comment_body">Good job</li>
+    <li class="recent_comment_author">--cokecoffe</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/stoic/archive/2012/11/24/2940046.html#2862800">3. Re:Vim命令图解和XVim使用</a></li>
+    <li class="recent_comment_body">您好，我安装好xvim之后，怎么在xcode中使用呀？</li>
+    <li class="recent_comment_author">--forunix</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/stoic/archive/2012/11/21/2785176.html#2835908">4. Re:2011年冬斯坦福大学公开课 iOS应用开发教程学习笔记(第一课)</a></li>
+    <li class="recent_comment_body">谢谢</li>
+    <li class="recent_comment_author">--shallecker</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/stoic/archive/2012/09/07/2674609.html#2736285">5. Re:iOS学习之Tab Bar的使用和视图切换</a></li>
+    <li class="recent_comment_body">博主，为什么，我照着做完了，启动后界面上是白色的呢，没看到有其它界面出来？？？</li>
+    <li class="recent_comment_author">--网客5</li>
+</ul>
+</div>
+</div>
+</div><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/09/2582773.html">1. Objective-C语法之NSArray和NSMutableArray(11571)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/11/2586963.html">2. Android监听应用程序安装和卸载(11189)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/16/2593862.html">3. android https 连接建立(6879)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/31/2616423.html">4. iOS学习之动态添加Button和监听UIAlertView按钮(5543)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/10/2584145.html">5. Objective-C语法之NSSet和NSMutableSet(4133)</a></li></ul></div>
+</div>
+</div><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/11/2585910.html">1. 十分钟让你明白Objective-C的语法（和Java、C++的对比）(8)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/24/2606784.html">2. Objective-C语法之KVO的使用(7)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/09/07/2674609.html">3. iOS学习之Tab Bar的使用和视图切换(5)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/31/2616423.html">4. iOS学习之动态添加Button和监听UIAlertView按钮(5)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/09/26/2704074.html">5. Objective-C语法之基本数据类型(4)</a></li></ul></div>
+</div>
+</div><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/11/2585910.html">1. 十分钟让你明白Objective-C的语法（和Java、C++的对比）(5)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/20/2601315.html">2. Objective-C语法之KVC使用(3)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/09/2582227.html">3. Android上PhoneGap打包本地网站和在线网站(3)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/26/2610667.html">4. Android Map Api 使用和开发(2) 定位我的位置、地图弹出泡泡、通过经纬度获取地址(3)</a></li><li><a href="http://www.cnblogs.com/stoic/archive/2012/07/24/2606784.html">5. Objective-C语法之KVO的使用(2)</a></li></ul></div>
+</div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2014 容芳志专栏
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>将 protocol 的方法声明为 mutating | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_5">将 protocol 的方法声明为 mutating</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%B0%86-protocol-%E7%9A%84%E6%96%B9%E6%B3%95%E5%A3%B0%E6%98%8E%E4%B8%BA-mutating" class="calibre1">将 protocol 的方法声明为 mutating</h1>
+<p class="calibre9">Swift 的 protocol 不仅可以被 <code class="calibre13 pcalibre6 pcalibre5">class</code> 类型实现，也适用于 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 和 <code class="calibre13 pcalibre6 pcalibre5">enum</code>。因为这个原因，我们在写给别人用的接口时需要多考虑是否使用 <code class="calibre13 pcalibre6 pcalibre5">mutating</code> 来修饰方法，比如定义为 <code class="calibre13 pcalibre6 pcalibre5">mutating func myMethod()</code>。Swift 的 <code class="calibre13 pcalibre6 pcalibre5">mutating</code> 关键字修饰方法是为了能在该方法中修改 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 或是 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 的变量，所以如果你没在接口方法里写 mutating 的话，别人如果用 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 来实现这个接口的话，就不能在方法里改变自己的变量了。比如下面的代码</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">Vehicle</span>
+</span>{
+    <span class="hljs-keyword">var</span> numberOfWheels: <span class="hljs-func">Int</span> {<span class="hljs-keyword">get</span>}
+    <span class="hljs-keyword">var</span> color: <span class="hljs-func">UIColor</span> {<span class="hljs-keyword">get</span> <span class="hljs-keyword">set</span>}
+
+    <span class="hljs-keyword">mutating</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">changeColor</span><span class="hljs-params">()</span></span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">MyCar</span>: <span class="hljs-title">Vehicle</span> </span>{
+    <span class="hljs-keyword">let</span> numberOfWheels = <span class="hljs-params">4</span>
+    <span class="hljs-keyword">var</span> color = <span class="hljs-func">UIColor</span>.blueColor()
+
+    <span class="hljs-keyword">mutating</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">changeColor</span><span class="hljs-params">()</span></span> {
+        color = <span class="hljs-func">UIColor</span>.redColor()
+    }
+}
+</code></pre>
+<p class="calibre9">如果把 protocol 定义中的 <code class="calibre13 pcalibre6 pcalibre5">mutating</code> 去掉的话，<code class="calibre13 pcalibre6 pcalibre5">MyCar</code> 就怎么都过不了编译了：保持现有代码不变的话，会报错说没有实现接口；如果去掉 <code class="calibre13 pcalibre6 pcalibre5">mutating</code> 的话，会报错说不能改变结构体成员。这个接口的使用者的忧伤的眼神，相信你能想象得出。</p>
+<p class="calibre9">另外，在使用 <code class="calibre13 pcalibre6 pcalibre5">class</code> 来实现带有 <code class="calibre13 pcalibre6 pcalibre5">mutating</code> 的方法的接口时，具体实现的前面是不需要加 <code class="calibre13 pcalibre6 pcalibre5">mutating</code> 修饰的，因为 <code class="calibre13 pcalibre6 pcalibre5">class</code> 可以随意更改自己的成员变量。所以说在接口里用 <code class="calibre13 pcalibre6 pcalibre5">mutating</code> 修饰方法，对于 <code class="calibre13 pcalibre6 pcalibre5">class</code> 的实现是完全透明，可以当作不存在的。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

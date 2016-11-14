@@ -1,0 +1,22 @@
+# 切换目录
+echo "切换至/usr目录"
+cd /usr
+# 设置用户admin的密码
+echo "设置admin的密码"
+htpasswd -c /usr/user.passwd admin
+# 设置密码文件的访问群组
+echo "正在创建相关目录并修改访问权限..."
+chgrp www /usr/user.passwd
+# 建立var文件夹，保存DavLockDB相关文件
+mkdir -p /usr/var
+# 修改var文件夹用户群组
+chown -R www:www /usr/var
+# 建立上传文件夹：uploads
+mkdir -p /usr/uploads
+# 修改uploads文件夹用户群组
+chown -R www:www /usr/uploads
+echo "修改完毕，请确认..."
+ls -lG
+echo "重新启动Apache服务器"
+# 重新启动Apache
+apachectl -k restart

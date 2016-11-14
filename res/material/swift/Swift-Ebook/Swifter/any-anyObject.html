@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Any 和 AnyObject | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_16">Any 和 AnyObject</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="any-%E5%92%8C-anyobject" class="calibre1">Any 和 AnyObject</h1>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">Any</code> 和 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 是 Swift 中两个妥协的产物，也是很让人迷惑的概念。在 Swift 官方编程指南中指出</p>
+<blockquote class="calibre6">
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 可以代表任何 <code class="calibre13 pcalibre6 pcalibre5">class</code> 类型的实例</p>
+<p class="calibre7"><code class="calibre13 pcalibre6 pcalibre5">Any</code> 可以表示任意类型，甚至包括方法 (func) 类型</p>
+</blockquote>
+<p class="calibre9">先来说说 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 吧。写过 Objective-C 的读者可能会知道在 Objective-C 中有一个叫做 <code class="calibre13 pcalibre6 pcalibre5">id</code> 的神奇的东西。编译器不会对向声明为 <code class="calibre13 pcalibre6 pcalibre5">id</code> 的变量进行类型检查，它可以表示任意类的实例这样的概念。在 Cocoa 框架中很多地方都使用了 <code class="calibre13 pcalibre6 pcalibre5">id</code> 来进行像参数传递和方法返回这样的工作，这是 Objective-C 动态特性的一种表现。现在的 Swift 最主要的用途依然是使用 Cocoa 框架进行 app 开发，因此为了与 Cocoa 架构协作，将原来 <code class="calibre13 pcalibre6 pcalibre5">id</code> 的概念使用了一个类似的，可以代表任意 <code class="calibre13 pcalibre6 pcalibre5">class</code> 类型的 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 来进行替代。</p>
+<p class="calibre9">但是两者其实是有本质区别的。在 Swift 中编译器不仅不会对 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 实例的方法调用做出检查，甚至对于 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 的所有方法调用都会返回 Optional 的结果。这虽然是符合 Objective-C 中的理念的，但是在 Swift 环境下使用起来就非常麻烦，也很危险。应该选择的做法是在使用时先确定 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 真正的类型并进行转换以后再进行调用。</p>
+<p class="calibre9">假设原来的某个 API 返回的是一个 <code class="calibre13 pcalibre6 pcalibre5">id</code>，那么在 Swift 中现在就将被映射为 <code class="calibre13 pcalibre6 pcalibre5">AnyObject?</code> (因为 <code class="calibre13 pcalibre6 pcalibre5">id</code> 是可以指向 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 的，所以在这里我们需要一个 Optional 的版本)，虽然我们知道调用来说应该是没问题的，但是我们依然最好这样写：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">someMethod</span><span class="hljs-params">()</span></span> -&gt; <span class="hljs-func">AnyObject</span>? {
+    <span class="hljs-title">// ...</span>
+
+    <span class="hljs-title">// 返回一个 AnyObject?，等价于在 Objective-C 中返回一个 id</span>
+    <span class="hljs-keyword">return</span> result
+}
+
+<span class="hljs-keyword">let</span> anyObject: <span class="hljs-func">AnyObject</span>? = <span class="hljs-func">SomeClass</span>.someMethod()
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> someInstance = anyObject <span class="hljs-keyword">as</span>? <span class="hljs-func">SomeRealClass</span> {
+    <span class="hljs-title">// ...</span>
+    <span class="hljs-title">// 这里我们拿到了具体 SomeRealClass 的实例</span>
+
+    someInstance.funcOfSomeRealClass()
+}
+</code></pre>
+<p class="calibre9">如果我们注意到 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 的定义，可以发现它其实就是一个接口：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">AnyObject</span> </span>{
+}
+</code></pre>
+<p class="calibre9">特别之处在于，所有的 <code class="calibre13 pcalibre6 pcalibre5">class</code> 都隐式地实现了这个接口，这也是 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 只适用于 <code class="calibre13 pcalibre6 pcalibre5">class</code> 类型的原因。而在 Swift 中所有的基本类型，包括 <code class="calibre13 pcalibre6 pcalibre5">Array</code> 和 <code class="calibre13 pcalibre6 pcalibre5">Dictionary</code> 这些传统意义上会是 <code class="calibre13 pcalibre6 pcalibre5">class</code> 的东西，统统都是 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 类型，并不能由 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 来表示，于是 Apple 提出了一个更为特殊的 <code class="calibre13 pcalibre6 pcalibre5">Any</code>，除了 <code class="calibre13 pcalibre6 pcalibre5">class</code> 以外，它还可以表示包括 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 和 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 在内的所有类型。</p>
+<p class="calibre9">为了深入理解，举个很有意思的例子。为了实验 <code class="calibre13 pcalibre6 pcalibre5">Any</code> 和 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 的特性，在 Playground 里写如下代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">import</span> <span class="hljs-func">UIKit</span>
+
+<span class="hljs-keyword">let</span> swiftInt: <span class="hljs-func">Int</span> = <span class="hljs-params">1</span>
+<span class="hljs-keyword">let</span> swiftString: <span class="hljs-func">String</span> = <span class="hljs-string">"miao"</span>
+
+<span class="hljs-keyword">var</span> array: [<span class="hljs-func">AnyObject</span>] = []
+array.append(swiftInt)
+array.append(swiftString)
+</code></pre>
+<p class="calibre9">我们在这里声明了一个 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 和一个 <code class="calibre13 pcalibre6 pcalibre5">String</code>，按理说它们都应该只能被 <code class="calibre13 pcalibre6 pcalibre5">Any</code> 代表，而不能被 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 代表的。但是你会发现这段代码是可以编译运行通过的。那是不是说其实 Apple 的编程指南出错了呢？不是这样的，你可以打印一下 <code class="calibre13 pcalibre6 pcalibre5">array</code>，就会发现里面的元素其实已经变成了 <code class="calibre13 pcalibre6 pcalibre5">NSNumber</code> 和 <code class="calibre13 pcalibre6 pcalibre5">NSString</code> 了，这里发生了一个自动的转换。因为我们 <code class="calibre13 pcalibre6 pcalibre5">import</code> 了 <code class="calibre13 pcalibre6 pcalibre5">UIKit</code> (其实这里我们需要的只是 <code class="calibre13 pcalibre6 pcalibre5">Foundation</code>，而在导入 <code class="calibre13 pcalibre6 pcalibre5">UIKit</code> 的时候也会同时将 <code class="calibre13 pcalibre6 pcalibre5">Foundation</code> 导入)，在 Swift 和 Cocoa 中的这几个对应的类型是可以进行自动转换的。因为我们显式地声明了需要 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code>，编译器认为我们需要的的是 Cocoa 类型而非原生类型，而帮我们进行了自动的转换。</p>
+<p class="calibre9">在上面的代码中如果我们把 <code class="calibre13 pcalibre6 pcalibre5">import UIKit</code> 去掉的话，就会得到无法适配 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 的编译错误了。我们需要做的是将声明 <code class="calibre13 pcalibre6 pcalibre5">array</code> 时的 <code class="calibre13 pcalibre6 pcalibre5">[AnyObject]</code> 换成 <code class="calibre13 pcalibre6 pcalibre5">[Any]</code>，就一切正确了。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> swiftInt: <span class="hljs-func">Int</span> = <span class="hljs-params">1</span>
+<span class="hljs-keyword">let</span> swiftString: <span class="hljs-func">String</span> = <span class="hljs-string">"miao"</span>
+
+<span class="hljs-keyword">var</span> array: [<span class="hljs-func">Any</span>] = []
+array.append(swiftInt)
+array.append(swiftString)
+array
+</code></pre>
+<p class="calibre9">顺便值得一提的是，只使用 Swift 类型而不转为 Cocoa 类型，对性能的提升是有所帮助的，所以我们应该尽可能地使用原生的类型。</p>
+<p class="calibre9">其实说真的，使用 <code class="calibre13 pcalibre6 pcalibre5">Any</code> 和 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 并不是什么令人愉悦的事情，正如开头所说，这都是为妥协而存在的。如果在我们自己的代码里需要大量经常地使用这两者的话，往往意味着代码可能在结构和设计上存在问题，应该及时重新审视。简单来说，我们最好避免依赖和使用这两者，而去尝试明确地指出确定的类型。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

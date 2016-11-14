@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>GCD 和延时调用 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_58">GCD 和延时调用</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="gcd-%E5%92%8C%E5%BB%B6%E6%97%B6%E8%B0%83%E7%94%A8" class="calibre1">GCD 和延时调用</h1>
+<blockquote class="calibre6">
+<p class="calibre7">因为 Playground 不进行特别配置的话是无法在线程中进行调度的，因此本节中的示例代码需要在 Xcode 项目环境中运行。在 Playground 中可能无法得到正确的结果。</p>
+</blockquote>
+<p class="calibre9">GCD 是一种非常方便的使用多线程的方式。通过使用 GCD，我们可以在确保尽量简单的语法的前提下进行灵活的多线程编程。在 “复杂必死” 的多线程编程中，保持简单就是避免错误的金科玉律。好消息是在 Swift 中是可以无缝使用 GCD 的 API 的，而且得益于闭包特性的加入，使用起来比之前在 Objective-C 中更加简单方便。在这里我不打算花费很多时间介绍 GCD 的语法和要素，如果这么做的话就可以专门为 GCD 写上一节了。在下面我给出了一个日常里最通常会使用到的例子 (说这个例子能覆盖到日常的 GCD 使用的 50% 以上也不为过)，来展示一下 Swift 里的 GCD 调用会是什么样子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// 创建目标队列</span>
+<span class="hljs-keyword">let</span> workingQueue = dispatch_queue_create(<span class="hljs-string">"my_queue"</span>, <span class="hljs-params">nil</span>)
+
+<span class="hljs-title">// 派发到刚创建的队列中，GCD 会负责进行线程调度</span>
+dispatch_async(workingQueue) {
+    <span class="hljs-title">// 在 workingQueue 中异步进行</span>
+    <span class="hljs-params">print</span>(<span class="hljs-string">"努力工作"</span>)
+    <span class="hljs-func">NSThread</span>.sleepForTimeInterval(<span class="hljs-params">2</span>)  <span class="hljs-title">// 模拟两秒的执行时间</span>
+
+    dispatch_async(dispatch_get_main_queue()) {
+        <span class="hljs-title">// 返回到主线程更新 UI</span>
+        <span class="hljs-params">print</span>(<span class="hljs-string">"结束工作，更新 UI"</span>)
+    }
+}
+</code></pre>
+<p class="calibre9">因为 <code class="calibre13 pcalibre6 pcalibre5">UIKit</code> 是只能在主线程工作的，如果我们在主线程进行繁重的工作的话，就会导致 app 出现 “卡死” 的现象：UI 不能更新，用户输入无法响应等等，是非常糟糕的用户体验。为了避免这种情况的出现，对于繁重 (如图像加滤镜等) 或会很长时间才能完成的 (如从网络下载图片) 处理，我们应该把它们放到后台线程进行，这样在用户看来 UI 还是可以交互的，也不会出现卡顿。在工作进行完成后，我们需要更新 UI 的话，必须回到主线程进行 (牢记 UI 相关的工作都需要在主线程执行，否则可能发生不可预知的错误)。</p>
+<p class="calibre9">在日常的开发工作中，我们经常会遇到这样的需求：在 xx 秒后执行某个方法。比如切换界面 2 秒后开始播一段动画，或者提示框出现 3 秒后自动消失等等。以前在 Objective-C 中，我们可以使用一个 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的实例方法，<code class="calibre13 pcalibre6 pcalibre5">-performSelector:withObject:afterDelay:</code> 来指定在若干时间后执行某个 selector。在 Swift 2 之前，如果你新建一个 Swift 的项目，并且试图使用这个方法 (或者这个方法的其他一切变形) 的话，会发现这个方法并不存在。在 Swift 2 中虽然这一系列 <code class="calibre13 pcalibre6 pcalibre5">performSelector</code> 的方法被加回了标准库，但是由于 Swift 中创建一个 <a href="selector.html" class="pcalibre pcalibre2 pcalibre1 calibre4">selector</a> 并不是一件安全的事情 (你需要通过字符串来创建，这在之后代码改动时会很危险)，所以最好尽可能的话避免使用这个方法。另外，原来的 <code class="calibre13 pcalibre6 pcalibre5">performSelector:</code> 这套东西在 ARC 下并不是安全的。ARC 为了确保参数在方法运行期间的存在，在无法准确确定参数内存情况的时候，会将输入参数在方法开始时先进行 retain，然后在最后 release。而对于 <code class="calibre13 pcalibre6 pcalibre5">performSelector:</code> 这个方法我们并没有机会为被调用的方法指定参数，于是被调用的 selector 的输入有可能会是指向未知的垃圾内存地址，然后...HOHO，要命的是这种崩溃还不能每次重现，想调试？见鬼去吧..</p>
+<p class="calibre9">但是如果不论如何，我们都还想继续做延时调用的话应该怎么办呢？最容易想到的是使用 <code class="calibre13 pcalibre6 pcalibre5">NSTimer</code> 来创建一个若干秒后调用一次的计时器。但是这么做我们需要创建新的对象，和一个本来并不相干的 <code class="calibre13 pcalibre6 pcalibre5">NSTimer</code> 类扯上关系，同时也会用到 Objective-C 的运行时特性去查找方法等等，总觉着有点笨重。其实 GCD 里有一个很好用的延时调用我们可以加以利用写出很漂亮的方法来，那就是 <code class="calibre13 pcalibre6 pcalibre5">dispatch_after</code>。最简单的使用方法看起来是这样的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> time: <span class="hljs-func">NSTimeInterval</span> = <span class="hljs-params">2.0</span>
+<span class="hljs-keyword">let</span> delay = dispatch_time(<span class="hljs-func">DISPATCH_TIME_NOW</span>,
+                         <span class="hljs-func">Int64</span>(time * <span class="hljs-func">Double</span>(<span class="hljs-func">NSEC_PER_SEC</span>)))
+dispatch_after(delay, dispatch_get_main_queue()) {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"2 秒后输出"</span>)
+}
+</code></pre>
+<p class="calibre9">代码非常简单，并没什么值得详细说明的。只是每次写这么多的话也挺累的，在这里我们可以稍微将它封装的好用一些，最好再加上取消的功能。在 iOS 8 中 GCD 得到了惊人的进化，现在我们可以通过将一个 <code class="calibre13 pcalibre6 pcalibre5">dispatch_block_t</code> 对象传递给 <code class="calibre13 pcalibre6 pcalibre5">dispatch_block_cancel</code>，来取消一个正在等待执行的 <code class="calibre13 pcalibre6 pcalibre5">block</code>。取消一个任务这样的特性，这在以前是 <code class="calibre13 pcalibre6 pcalibre5">NSOperation</code> 的专利，但是现在我们使用 GCD 也能达到同样的目的了。这里我们将类似地来尝试实现 delay call 的取消，整个封装也许有点长，但我还是推荐一读。大家也可以把它当作练习材料检验一下自己的 Swift 基础语法的掌握和理解的情况：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">import</span> <span class="hljs-func">Foundation</span>
+
+<span class="hljs-keyword">typealias</span> <span class="hljs-func">Task</span> = (cancel : <span class="hljs-func">Bool</span>) -&gt; <span class="hljs-func">Void</span>
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">delay</span><span class="hljs-params">(time:NSTimeInterval, task:<span class="hljs-params">()</span></span></span>-&gt;()) -&gt;  <span class="hljs-func">Task</span>? {
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">dispatch_later</span><span class="hljs-params">(block:<span class="hljs-params">()</span></span></span>-&gt;()) {
+        dispatch_after(
+            dispatch_time(
+                <span class="hljs-func">DISPATCH_TIME_NOW</span>,
+                <span class="hljs-func">Int64</span>(time * <span class="hljs-func">Double</span>(<span class="hljs-func">NSEC_PER_SEC</span>))),
+            dispatch_get_main_queue(),
+            block)
+    }
+
+    <span class="hljs-keyword">var</span> closure: dispatch_block_t? = task
+    <span class="hljs-keyword">var</span> result: <span class="hljs-func">Task</span>?
+
+    <span class="hljs-keyword">let</span> delayedClosure: <span class="hljs-func">Task</span> = {
+        cancel <span class="hljs-keyword">in</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> internalClosure = closure {
+            <span class="hljs-keyword">if</span> (cancel == <span class="hljs-params">false</span>) {
+                dispatch_async(dispatch_get_main_queue(), internalClosure);
+            }
+        }
+        closure = <span class="hljs-params">nil</span>
+        result = <span class="hljs-params">nil</span>
+    }
+
+    result = delayedClosure
+
+    dispatch_later {
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> delayedClosure = result {
+            delayedClosure(cancel: <span class="hljs-params">false</span>)
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">cancel</span><span class="hljs-params">(task:Task?)</span></span> {
+    task?(cancel: <span class="hljs-params">true</span>)
+}
+</code></pre>
+<p class="calibre9">使用的时候就很简单了，我们想在 2 秒以后干点儿什么的话：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">delay(<span class="hljs-params">2</span>) { <span class="hljs-params">println</span>(<span class="hljs-string">"2 秒后输出"</span>) }
+</code></pre>
+<p class="calibre9">想要取消的话，我们可以先保留一个对 <code class="calibre13 pcalibre6 pcalibre5">Task</code> 的引用，然后调用 <code class="calibre13 pcalibre6 pcalibre5">cancel</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> task = delay(<span class="hljs-params">5</span>) { <span class="hljs-params">print</span>(<span class="hljs-string">"拨打 110"</span>) }
+
+<span class="hljs-title">// 仔细想一想..</span>
+<span class="hljs-title">// 还是取消为妙..</span>
+cancel(task)
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

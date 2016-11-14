@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Options | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_69">Options</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="options" class="calibre1">Options</h1>
+<p class="calibre9">不要误会，我们谈的是 Options，不是 Optional。后者已经被谈论太多了，我不想再在上面再多补充什么了。</p>
+<p class="calibre9">我们来说说 Options，或者在 Objective-C 中的 <code class="calibre13 pcalibre6 pcalibre5">NS_OPTIONS</code>，在 Swift 中是怎样的形式吧。</p>
+<p class="calibre9">在 Objective-C 中，我们有很多需要提供某些选项的 API，它们一般用来控制 API 的具体的行为配置等。举个例子，常用的 <code class="calibre13 pcalibre6 pcalibre5">UIView</code> 动画的 API 在使用时就可以进行选项指定：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">[<span class="hljs-func">UIView</span> animateWithDuration:<span class="hljs-params">0.3</span>
+                      delay:<span class="hljs-params">0.0</span>
+                    options:<span class="hljs-func">UIViewAnimationOptionCurveEaseIn</span> |
+                            <span class="hljs-func">UIViewAnimationOptionAllowUserInteraction</span>
+                 animations:^{
+    <span class="hljs-title">// ...</span>
+} completion:<span class="hljs-params">nil</span>];
+</code></pre>
+<p class="calibre9">我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">|</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">&amp;</code> 这样的按位逻辑符对这些选项进行操作，这是因为一般来说在 Objective-C 中的 Options 的定义都是类似这样的按位错开的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">typedef</span> <span class="hljs-params">NS_OPTIONS</span>(<span class="hljs-params">NSUInteger</span>, <span class="hljs-params">UIViewAnimationOptions</span>) {
+    <span class="hljs-params">UIViewAnimationOptionLayoutSubviews</span>            = <span class="hljs-params">1</span> &lt;&lt;  <span class="hljs-params">0</span>,
+    <span class="hljs-params">UIViewAnimationOptionAllowUserInteraction</span>      = <span class="hljs-params">1</span> &lt;&lt;  <span class="hljs-params">1</span>,
+    <span class="hljs-params">UIViewAnimationOptionBeginFromCurrentState</span>     = <span class="hljs-params">1</span> &lt;&lt;  <span class="hljs-params">2</span>,
+
+    <span class="hljs-title">//...</span>
+
+    <span class="hljs-params">UIViewAnimationOptionTransitionFlipFromBottom</span>  = <span class="hljs-params">7</span> &lt;&lt; <span class="hljs-params">20</span>,
+}
+</code></pre>
+<p class="calibre9">通过一个 <code class="calibre13 pcalibre6 pcalibre5">typedef</code> 的定义，我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">NS_OPTIONS</code> 来把 <code class="calibre13 pcalibre6 pcalibre5">UIViewAnimationOptions</code> 映射为每一位都不同的一组 <code class="calibre13 pcalibre6 pcalibre5">NSUInteger</code>。不仅是这个动画的选项如此，其他的 Option 值也都遵循着相同的规范映射到整数上。如果我们不需要特殊的什么选项的话，可以使用 <code class="calibre13 pcalibre6 pcalibre5">kNilOptions</code> 作为输入，它被定义为数字 0。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">    <span class="hljs-keyword">enum</span> {
+      kNilOptions = <span class="hljs-params">0</span>
+    };
+</code></pre>
+<p class="calibre9">在 Swift 中，对于原来的枚举类型 <code class="calibre13 pcalibre6 pcalibre5">NS_ENUM</code> 我们有新的 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 类型来对应。但是原来的 <code class="calibre13 pcalibre6 pcalibre5">NS_OPTIONS</code> 在 Swift 里显然没有枚举类型那样重要，并没有直接的源生类型来进行定义。原来的 Option 值现在被映射为了满足 <code class="calibre13 pcalibre6 pcalibre5">OptionSetType</code> 接口的 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 类型，以及一组静态的 <code class="calibre13 pcalibre6 pcalibre5">get</code> 属性：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">public <span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">UIViewAnimationOptions</span> : <span class="hljs-title">OptionSetType</span> </span>{
+    public <span class="hljs-keyword">init</span>(rawValue: <span class="hljs-func">UInt</span>)
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> <span class="hljs-func">LayoutSubviews</span>: <span class="hljs-func">UIViewAnimationOptions</span> { <span class="hljs-keyword">get</span> }
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> <span class="hljs-func">AllowUserInteraction</span>: <span class="hljs-func">UIViewAnimationOptions</span> { <span class="hljs-keyword">get</span> }
+
+    <span class="hljs-title">//...</span>
+
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">var</span> <span class="hljs-func">TransitionFlipFromBottom</span>: <span class="hljs-func">UIViewAnimationOptions</span> { <span class="hljs-keyword">get</span> }
+}
+</code></pre>
+<p class="calibre9">这样一来，我们就可以用和原来类似的方式为方法指定选项了。用 Swift 重写上面的 <code class="calibre13 pcalibre6 pcalibre5">UIView</code> 动画的代码的话，我们可以使用这个新的 struct 的值。在使用时，可以用生成集合的方法来制定符合“或”逻辑多个选项：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func">UIView</span>.animateWithDuration(<span class="hljs-params">0.3</span>,
+    delay: <span class="hljs-params">0.0</span>,
+    options: [.<span class="hljs-func">CurveEaseIn</span>, .<span class="hljs-func">AllowUserInteraction</span>],
+    animations: {},
+    completion: <span class="hljs-params">nil</span>)
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">OptionSetType</code> 是实现了 <code class="calibre13 pcalibre6 pcalibre5">SetAlgebraType</code> 的，因此我们可以对两个集合进行各种集合运算，包括并集 (<code class="calibre13 pcalibre6 pcalibre5">union</code>)、交集 (<code class="calibre13 pcalibre6 pcalibre5">intersect</code>) 等等。另外，对于不需要选项输入的情况，也就是对应原来的 <code class="calibre13 pcalibre6 pcalibre5">kNilOptions</code>，现在我们直接使用一个空的集合 <code class="calibre13 pcalibre6 pcalibre5">[]</code> 来表示：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func">UIView</span>.animateWithDuration(<span class="hljs-params">0.3</span>,
+    delay: <span class="hljs-params">0.0</span>,
+    options: [],
+    animations: {},
+    completion: <span class="hljs-params">nil</span>)
+</code></pre>
+<p class="calibre9">要实现一个 Options 的 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 的话，可以参照已有的写法建立类并实现 <code class="calibre13 pcalibre6 pcalibre5">OptionSetType</code>。因为基本上所有的 Options 都是很相似的，所以最好是准备一个 snippet 以快速重用：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">YourOption</span>: <span class="hljs-title">OptionSetType</span> </span>{
+    <span class="hljs-keyword">let</span> rawValue: <span class="hljs-func">UInt</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> <span class="hljs-func">None</span> = <span class="hljs-func">YourOption</span>(rawValue: <span class="hljs-params">0</span>)
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> <span class="hljs-func">Option1</span> = <span class="hljs-func">YourOption</span>(rawValue: <span class="hljs-params">1</span>)
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">let</span> <span class="hljs-func">Option2</span> = <span class="hljs-func">YourOption</span>(rawValue: <span class="hljs-params">1</span> &lt;&lt; <span class="hljs-params">1</span>)
+    <span class="hljs-title">//...</span>
+}
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

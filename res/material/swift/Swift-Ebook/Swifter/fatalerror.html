@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>fatalError | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_84">fatalError</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="fatalerror" class="calibre1">fatalError</h1>
+<p class="calibre9">细心的读者可能会发现，在我们调试一些纯 Swift 类型出现类似数组越界这样的情况时，我们在控制台得到的报错信息会和传统调试 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 子类时不太一样，比如在使用 <code class="calibre13 pcalibre6 pcalibre5">NSArray</code> 时：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> array: <span class="hljs-func">NSArray</span> = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>]
+array[<span class="hljs-params">100</span>]
+<span class="hljs-title">// 输出:</span>
+<span class="hljs-title">// *** Terminating app due to uncaught exception 'NSRangeException',</span>
+<span class="hljs-title">// reason: '*** -[__NSArrayI objectAtIndex:]:</span>
+<span class="hljs-title">// index 100 beyond bounds [0 .. 2]'</span>
+</code></pre>
+<p class="calibre9">而如果我们使用 Swift 类型的话：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> array = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>]
+array[<span class="hljs-params">100</span>]
+<span class="hljs-title">// 输出:</span>
+<span class="hljs-title">// fatal error: Array index out of range</span>
+</code></pre>
+<p class="calibre9">在调试时我们可以使用<a href="assert.html" class="pcalibre pcalibre2 pcalibre1 calibre4">断言</a>来排除类似这样的问题，但是断言只会在 Debug 环境中有效，而在 Release 编译中所有的断言都将被禁用。在遇到确实因为输入的错误无法使程序继续运行的时候，我们一般考虑以产生致命错误 (fatalError) 的方式来终止程序。</p>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">fatalError</code> 的使用非常简单，它的 API 和断言的比较类似</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">@noreturn</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">fatalError</span><span class="hljs-params">(@autoclosure message: <span class="hljs-params">()</span></span></span> -&gt; <span class="hljs-func">String</span> = <span class="hljs-keyword">default</span>,
+                                          file: <span class="hljs-func">StaticString</span> = <span class="hljs-keyword">default</span>,
+                                          line: <span class="hljs-func">UInt</span> = <span class="hljs-keyword">default</span>)
+</code></pre>
+<p class="calibre9">关于语法，唯一要需要解释的是 <code class="calibre13 pcalibre6 pcalibre5">@noreturn</code>，这表示调用这个方法的话可以不再需要返回值，因为程序整个都将终止。这可以帮助编译器进行一些检查，比如在某些需要返回值的 switch 语句中，我们只希望被 switch 的内容在某些范围内，那么我们在可以在不属于这些范围的 default 块里直接写 <code class="calibre13 pcalibre6 pcalibre5">fatalError</code> 而不再需要指定返回值：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">MyEnum</span> </span>{
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Value1</span>,<span class="hljs-func">Value2</span>,<span class="hljs-func">Value3</span>
+}
+
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">check</span><span class="hljs-params">(someValue: MyEnum)</span></span> -&gt; <span class="hljs-func">String</span> {
+    <span class="hljs-keyword">switch</span> someValue {
+    <span class="hljs-keyword">case</span> .<span class="hljs-func">Value1</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"OK"</span>
+    <span class="hljs-keyword">case</span> .<span class="hljs-func">Value2</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"Maybe OK"</span>
+    <span class="hljs-keyword">default</span>:
+        <span class="hljs-title">// 这个分支没有返回 String，也能编译通过</span>
+        fatalError(<span class="hljs-string">"Should not show!"</span>)
+    }
+}
+</code></pre>
+<p class="calibre9">在我们实际自己编码的时候，经常会有不想让别人调用某个方法，但又不得不将其暴露出来的时候。一个最常见并且合理的需求就是“<a href="http://en.wikipedia.org/wiki/Abstract_type" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">抽象类型或者抽象函数</a>”。在很多语言中都有这样的特性：父类定义了某个方法，但是自己并不给出具体实现，而是要求继承它的子类去实现这个方法，而在 Objective-C 和 Swift 中都没有直接的这样的抽象函数语法支持，虽然在 Cocoa 中对于这类需求我们有时候会转为依赖接口和委托的设计模式来变通地实现，但是其实 Apple 自己在 Cocoa 中也有很多类似抽象函数的设计。比如 <a href="https://developer.apple.com/library/ios/documentation/uikit/reference/uiactivity_class/Reference/Reference.html" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4"><code class="calibre13 pcalibre6 pcalibre5">UIActivity</code></a> 的子类必须要实现一大堆指定的方法，而正因为缺少抽象函数机制，这些方法都必须在文档中写明。</p>
+<p class="calibre9">在面对这种情况时，为了确保子类实现这些方法，而父类中的方法不被错误地调用，我们就可以利用 <code class="calibre13 pcalibre6 pcalibre5">fatalError</code> 来在父类中强制抛出错误，以保证使用这些代码的开发者留意到他们必须在自己的子类中实现相关方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">methodMustBeImplementedInSubclass</span><span class="hljs-params">()</span></span> {
+        fatalError(<span class="hljs-string">"这个方法必须在子类中被重写"</span>)
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">YourClass</span>: <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-keyword">override</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">methodMustBeImplementedInSubclass</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"YourClass 实现了该方法"</span>)
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">TheirClass</span>: <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">someOtherMethod</span><span class="hljs-params">()</span></span> {
+
+    }
+}
+
+<span class="hljs-func">YourClass</span>().methodMustBeImplementedInSubclass()
+<span class="hljs-title">// YourClass 实现了该方法</span>
+
+<span class="hljs-func">TheirClass</span>().methodMustBeImplementedInSubclass()
+<span class="hljs-title">// 这个方法必须在子类中被重写</span>
+</code></pre>
+<p class="calibre9">不过一个好消息是 Apple <a href="https://devforums.apple.com/thread/236231?start=0&amp;tstart=0" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">意识到了</a>抽象函数这个特性的缺失，所以很可能在今后的 Swift 版本中我们能看到这个语法特性的加入。</p>
+<p class="calibre9">不仅仅是对于类似抽象函数的使用中可以选择 <code class="calibre13 pcalibre6 pcalibre5">fatalError</code>，对于其他一切我们不希望别人随意调用，但是又不得不去实现的方法，我们都应该使用 <code class="calibre13 pcalibre6 pcalibre5">fatalError</code> 来避免任何可能的误会。比如父类标明了某个 <code class="calibre13 pcalibre6 pcalibre5">init</code> 方法是 <code class="calibre13 pcalibre6 pcalibre5">required</code> 的，但是你的子类永远不会使用这个方法来初始化时，就可以采用类似的方式， 被广泛使用 (以及被广泛讨厌的) <code class="calibre13 pcalibre6 pcalibre5">init(coder: NSCoder)</code> 就是一个例子。在子类中，我们往往会写：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">required <span class="hljs-keyword">init</span>(coder: <span class="hljs-func">NSCoder</span>) {
+  fatalError(<span class="hljs-string">"NSCoding not supported"</span>)
+}
+</code></pre>
+<p class="calibre9">来避免编译错误。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

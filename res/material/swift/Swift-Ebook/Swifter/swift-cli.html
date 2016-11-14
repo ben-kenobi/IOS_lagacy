@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Swift 命令行工具 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_79">Swift 命令行工具</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="swift-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7" class="calibre1">Swift 命令行工具</h1>
+<p class="calibre9">Swift 的 REPL (Read-Eval-Print Loop) 环境可以让我们使用 Swift 进行简单的交互式编程。也就是说每输入一句语句就立即执行和输出。这在很多解释型的语言中是很常见的，非常适合用来对语言的特性进行学习。</p>
+<p class="calibre9">要启动 REPL 环境，就要使用 Swift 的命令行工具，它是以 <code class="calibre13 pcalibre6 pcalibre5">xcrun</code> 命令的参数形式存在的。首先我们需要确认使用的 Xcode 版本是否是 6.1 或者以上，如果不是的话，可以在 Xcode 设置里 Locations 中的 Command Line Tools 一项中进行选择。然后我们就可以在命令行中输入 <code class="calibre13 pcalibre6 pcalibre5">xcrun swift</code> 来启动 REPL 环境了。</p>
+<p class="calibre9">要指出的是，REPL 环境只是<strong class="calibre10">表现得</strong>像是即时的解释执行，但是其实质还是每次输入代码后进行编译再运行。这就限制了我们不太可能在 REPL 环境中做很复杂的事情。</p>
+<p class="calibre9">另一个用法是直接将一个 <code class="calibre13 pcalibre6 pcalibre5">.swift</code> 文件作为命令行工具的输入，这样里面的代码也会被自动地编译和执行。我们甚至还可以在 <code class="calibre13 pcalibre6 pcalibre5">.swift</code> 文件最上面加上命令行工具的路径，然后将文件权限改为可执行，之后就可以直接执行这个 <code class="calibre13 pcalibre6 pcalibre5">.swift</code> 文件了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">#!/usr/bin/env <span class="hljs-params">swift</span>
+<span class="hljs-params">print</span>(<span class="hljs-string">"hello"</span>)
+</code></pre>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">// Terminal
+&gt; chmod <span class="hljs-params">755</span> hello.swift
+&gt; ./hello.swift
+
+// 输出：
+hello
+</code></pre>
+<p class="calibre9">这些特性与其他的解释性语言表现得完全一样。</p>
+<p class="calibre9">相对于直接用 <code class="calibre13 pcalibre6 pcalibre5">swift</code> 命令执行，Swift 命令行工具的另一个常用的地方是直接脱离 Xcode 环境进行编译和生成可执行的二进制文件。我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">swiftc</code> 来进行编译，比如下面的例子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// MyClass.swift</span>
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-keyword">let</span> name = <span class="hljs-string">"XiaoMing"</span>
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">hello</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-params">println</span>(<span class="hljs-string">"Hello <span class="hljs-func">\(name)</span>"</span>)
+    }
+}
+
+<span class="hljs-title">// main.swift</span>
+<span class="hljs-keyword">let</span> object = <span class="hljs-func">MyClass</span>()
+object.hello()
+</code></pre>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">&gt; swiftc MyClass.swift main.swift
+</code></pre>
+<p class="calibre9">将生成一个名叫 <code class="calibre13 pcalibre6 pcalibre5">main</code> 的可执行文件。运行之：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">&gt; ./main
+// 输出：
+// Hello XiaoMing
+</code></pre>
+<p class="calibre9">利用这个方法，我们就可以用 Swift 写出一些命令行的程序了。</p>
+<p class="calibre9">最后想说明的一个 Swift 命令行工具的使用案例是生成汇编级别的代码。有时候我们想要确认经过优化后的汇编代码实际上做了些什么。<code class="calibre13 pcalibre6 pcalibre5">swiftc</code> 提供了参数来生成 <code class="calibre13 pcalibre6 pcalibre5">asm</code> 级别的汇编代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">swiftc -<span class="hljs-func">O</span> hello.<span class="hljs-params">swift</span> -o hello.asm
+</code></pre>
+<p class="calibre9">再结合像是 <a href="http://www.hopperapp.com" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">Hopper</a> 这样的工具，我们就能够了解编译器具体做了什么工作。</p>
+<p class="calibre9">Swift 的命令行工具还有不少强大的功能，对此感兴趣的读者不妨使用 <code class="calibre13 pcalibre6 pcalibre5">swift --help</code> 以及 <code class="calibre13 pcalibre6 pcalibre5">swiftc --help</code> 来查看具体还有哪些参数可以使用。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

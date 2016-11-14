@@ -1,0 +1,614 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>查询数据 | SQLite</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.5.0-beta.6">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../Swift/bind insert.html" />
+    
+    
+    <link rel="prev" href="../Swift/update and delete.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book" data-level="0.1.6" data-basepath=".." data-revision="Sun Dec 20 2015 06:19:55 GMT+0800 (CST)">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        SQL Lite
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="0.1" data-path="Swift/index.html">
+            
+                
+                    <a href="../Swift/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.</b>
+                        
+                        在 Swift 中使用 SQLite
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="0.1.1" data-path="Swift/preparation.html">
+            
+                
+                    <a href="../Swift/preparation.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.1.</b>
+                        
+                        准备工作
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.2" data-path="Swift/open db.html">
+            
+                
+                    <a href="../Swift/open db.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.2.</b>
+                        
+                        打开数据库
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.3" data-path="Swift/create table.html">
+            
+                
+                    <a href="../Swift/create table.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.3.</b>
+                        
+                        创建数据表
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.4" data-path="Swift/insert.html">
+            
+                
+                    <a href="../Swift/insert.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.4.</b>
+                        
+                        新增数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.5" data-path="Swift/update and delete.html">
+            
+                
+                    <a href="../Swift/update and delete.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.5.</b>
+                        
+                        修改和删除数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="0.1.6" data-path="Swift/select.html">
+            
+                
+                    <a href="../Swift/select.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.6.</b>
+                        
+                        查询数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.7" data-path="Swift/bind insert.html">
+            
+                
+                    <a href="../Swift/bind insert.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.7.</b>
+                        
+                        利用绑定参数插入数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.8" data-path="Swift/batch update.html">
+            
+                
+                    <a href="../Swift/batch update.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.8.</b>
+                        
+                        批量更新
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="0.2" data-path="fmdb.html">
+            
+                
+                    <a href="../fmdb.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.</b>
+                        
+                        FMDB
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.3" data-path="SQL/index.html">
+            
+                
+                    <a href="../SQL/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.</b>
+                        
+                        常用 SQL
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.4" data-path="谓词.html">
+            
+                
+                    <a href="../谓词.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.</b>
+                        
+                        谓词
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >SQLite</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE">&#x67E5;&#x8BE2;&#x6570;&#x636E;</h1>
+<h2 id="%E7%9B%AE%E6%A0%87">&#x76EE;&#x6807;</h2>
+<ul>
+<li>&#x638C;&#x63E1;&#x67E5;&#x8BE2; SQLite &#x7ED3;&#x679C;&#x96C6;&#x7684;&#x65B9;&#x6CD5;</li>
+<li>&#x5C01;&#x88C5; SQLite &#x64CD;&#x4F5C;&#x65B9;&#x6CD5;</li>
+</ul>
+<h2 id="%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E7%A4%BA%E6%84%8F%E5%9B%BE">&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x793A;&#x610F;&#x56FE;</h2>
+<p><img src="&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x793A;&#x610F;&#x56FE;.png" alt=""></p>
+<h2 id="%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">&#x4EE3;&#x7801;&#x5B9E;&#x73B0;</h2>
+<ul>
+<li>&#x51C6;&#x5907;&#x4F2A;&#x4EE3;&#x7801;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x4ECE;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x52A0;&#x8F7D; person &#x6570;&#x7EC4;</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">persons</span>() -&gt; [<span class="hljs-title">Person</span>]? </span>{
+
+    <span class="hljs-comment">// 1. &#x51C6;&#x5907; SQL</span>
+    <span class="hljs-keyword">let</span> sql = <span class="hljs-string">&quot;SELECT id, name, age, height FROM T_Person;&quot;</span>
+
+    <span class="hljs-comment">// 2. &#x8BBF;&#x95EE;&#x6570;&#x636E;&#x5E93;</span>
+
+    <span class="hljs-comment">// 3. &#x8FD4;&#x56DE;&#x7ED3;&#x679C;</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<ul>
+<li>&#x5728; <code>SQLiteManager</code> &#x4E2D;&#x6DFB;&#x52A0;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#xFF0C;&#x51C6;&#x5907;&#x7ED3;&#x679C;&#x96C6;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x6267;&#x884C; SQL &#x8FD4;&#x56DE;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x96C6;</span>
+<span class="hljs-comment">///</span>
+<span class="hljs-comment">/// - parameter sql: &#x4EFB;&#x610F;&#x7ED9;&#x5B9A;&#x7684; SELETE &#x67E5;&#x8BE2; SQL</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">execRecordSet</span><span class="hljs-params">(sql: String)</span></span> {
+
+    <span class="hljs-comment">// 1. &#x9884;&#x7F16;&#x8BD1; SQL</span>
+    <span class="hljs-comment">/**
+        &#x53C2;&#x6570;
+
+        1. &#x5DF2;&#x7ECF;&#x6253;&#x5F00;&#x7684;&#x6570;&#x636E;&#x5E93;&#x53E5;&#x67C4;
+        2. &#x8981;&#x6267;&#x884C;&#x7684; SQL
+        3. &#x4EE5;&#x5B57;&#x8282;&#x4E3A;&#x5355;&#x4F4D;&#x7684; SQL &#x6700;&#x5927;&#x957F;&#x5EA6;&#xFF0C;&#x4F20;&#x5165; -1 &#x4F1A;&#x81EA;&#x52A8;&#x8BA1;&#x7B97;
+        4. SQL &#x8BED;&#x53E5;&#x53E5;&#x67C4;
+            - &#x540E;&#x7EED;&#x9488;&#x5BF9;&#x5F53;&#x524D;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x7684;&#x64CD;&#x4F5C;&#x5168;&#x90E8;&#x57FA;&#x4E8E;&#x6B64;&#x53E5;&#x67C4;
+            - &#x9700;&#x8981;&#x8C03;&#x7528; sqlite3_finalize &#x91CA;&#x653E;
+        5. &#x672A;&#x4F7F;&#x7528;&#x7684;&#x6307;&#x9488;&#x5730;&#x5740;&#xFF0C;&#x901A;&#x5E38;&#x4F20;&#x5165; nil
+    */</span>
+    <span class="hljs-keyword">var</span> stmt: <span class="hljs-type">COpaquePointer</span> = <span class="hljs-literal">nil</span>
+    <span class="hljs-keyword">if</span> sqlite3_prepare_v2(db, sql, -<span class="hljs-number">1</span>, &amp;stmt, <span class="hljs-literal">nil</span>) != <span class="hljs-type">SQLITE_OK</span> {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;SQL &#x9519;&#x8BEF;&quot;</span>)
+        <span class="hljs-keyword">return</span>
+    }
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;SQL &#x6B63;&#x786E;&quot;</span>)
+    <span class="hljs-comment">// 2. &#x904D;&#x5386;&#x96C6;&#x5408;</span>
+
+    <span class="hljs-comment">// 3. &#x91CA;&#x653E;&#x8BED;&#x53E5;&#x53E5;&#x67C4; - &#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x5426;&#x5219;&#x4F1A;&#x5185;&#x5BB9;&#x6CC4;&#x6F0F;</span>
+    sqlite3_finalize(stmt)
+}
+</code></pre>
+<ul>
+<li><p>&#x4EE3;&#x7801;&#x5C0F;&#x7ED3;</p>
+<ul>
+<li>&#x8FD9;&#x4E00;&#x90E8;&#x5206;&#x7684;&#x5DE5;&#x4F5C;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;&#x5BF9;&#x5B57;&#x7B26;&#x4E32;&#x7684; SQL &#x8BED;&#x53E5;&#x8FDB;&#x884C;&#x7F16;&#x8BD1;&#xFF0C;&#x5E76;&#x4E14;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x5B58;&#x5728;&#x8BED;&#x6CD5;&#x95EE;&#x9898;</li>
+<li>&#x7F16;&#x8BD1;&#x6210;&#x529F;&#x540E;&#x901A;&#x8FC7; <code>sqlite3_step</code> &#x6267;&#x884C; SQL&#xFF0C;&#x6BCF;&#x6267;&#x884C;&#x4E00;&#x6B21;&#xFF0C;&#x83B7;&#x53D6;&#x4E00;&#x6761;&#x8BB0;&#x5F55;</li>
+<li>&#x901A;&#x8FC7; <code>while</code> &#x5FAA;&#x73AF;&#x76F4;&#x81F3;&#x6267;&#x884C;&#x5B8C;&#x6BD5;</li>
+<li>&#x6CE8;&#x610F;&#xFF0C;&#x6307;&#x4EE4;&#x6267;&#x884C;&#x5B8C;&#x6BD5;&#x540E;&#x9700;&#x8981;&#x91CA;&#x653E;</li>
+</ul>
+</li>
+<li><p>&#x5355;&#x6B65;&#x6267;&#x884C;</p>
+</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">// 2. &#x5355;&#x6B65;&#x6267;&#x884C;&#x83B7;&#x53D6;&#x7ED3;&#x679C;&#x96C6;&#x5185;&#x5BB9;</span>
+<span class="hljs-keyword">var</span> row = <span class="hljs-number">0</span>
+<span class="hljs-keyword">while</span> sqlite3_step(stmt) == <span class="hljs-type">SQLITE_ROW</span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&#x8BB0;&#x5F55; <span class="hljs-subst">\(row++)</span>&quot;</span>)
+}
+</code></pre>
+<ul>
+<li>&#x65B0;&#x5EFA;&#x51FD;&#x6570;&#x8D1F;&#x8D23;&#x4ECE; <code>stmt</code> &#x4E2D;&#x83B7;&#x53D6;&#x4E00;&#x6761;&#x5B8C;&#x6574;&#x7684;&#x8BB0;&#x5F55;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x4ECE; stmt &#x4E2D;&#x83B7;&#x53D6;&#x4E00;&#x6761;&#x5B8C;&#x6574;&#x7684;&#x8BB0;&#x5F55;</span>
+<span class="hljs-comment">///</span>
+<span class="hljs-comment">/// - parameter stmt: stmt</span>
+private <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">record</span><span class="hljs-params">(stmt: COpaquePointer)</span></span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&#x8BB0;&#x5F55;&quot;</span>)
+}
+</code></pre>
+<h3 id="%E8%8E%B7%E5%8F%96%E5%8D%95%E6%9D%A1%E8%AE%B0%E5%BD%95">&#x83B7;&#x53D6;&#x5355;&#x6761;&#x8BB0;&#x5F55;</h3>
+<blockquote>
+<p>&#x6240;&#x6709;&#x51FD;&#x6570;&#x90FD;&#x662F;&#x4EE5; <code>sqlite3_column_</code> &#x5F00;&#x59CB;</p>
+</blockquote>
+<ul>
+<li>&#x83B7;&#x53D6;<code>&#x5217;&#x6570;</code></li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">// &#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x5217;&#x6570;</span>
+<span class="hljs-keyword">let</span> colCount = sqlite3_column_count(stmt)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&#x5217;&#x6570; <span class="hljs-subst">\(colCount)</span>&quot;</span>)
+</code></pre>
+<ul>
+<li>&#x904D;&#x5386;&#x6BCF;&#x4E00;&#x5217;&#x83B7;&#x53D6;&#x5BF9;&#x5E94;&#x7684;<code>&#x5217;&#x540D;</code>&#x548C;<code>&#x6570;&#x636E;&#x7C7B;&#x578B;</code></li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">// &#x904D;&#x5386;&#x6BCF;&#x4E00;&#x5217;</span>
+<span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;colCount {
+    <span class="hljs-comment">// &#x5217;&#x540D;</span>
+    <span class="hljs-keyword">let</span> cName = sqlite3_column_name(stmt, col)
+    <span class="hljs-keyword">let</span> name = <span class="hljs-type">String</span>(<span class="hljs-type">CString</span>: cName, encoding: <span class="hljs-type">NSUTF8StringEncoding</span>) ?? <span class="hljs-string">&quot;&quot;</span>
+    <span class="hljs-comment">// &#x6570;&#x636E;&#x7C7B;&#x578B;</span>
+    <span class="hljs-keyword">let</span> type = sqlite3_column_type(stmt, col)
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&#x5217;&#x540D; <span class="hljs-subst">\(name)</span> &#x503C; <span class="hljs-subst">\(value)</span>&quot;</span>)
+}
+</code></pre>
+<h4 id="%E6%A0%B9%E6%8D%AE%E4%B8%8D%E5%90%8C%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%B0%E5%80%BC">&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x5BF9;&#x5E94;&#x7684;&#x6570;&#x503C;</h4>
+<ul>
+<li>&#x5C0F;&#x6570;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-keyword">var</span> value: <span class="hljs-type">AnyObject</span>?
+<span class="hljs-keyword">switch</span> type {
+<span class="hljs-keyword">case</span> <span class="hljs-type">SQLITE_FLOAT</span>:
+    value = sqlite3_column_double(stmt, col)
+<span class="hljs-keyword">default</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&#x4E0D;&#x652F;&#x6301;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&quot;</span>)
+}
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&#x5217;&#x540D; <span class="hljs-subst">\(name)</span> &#x503C; <span class="hljs-subst">\(value)</span>&quot;</span>)
+</code></pre>
+<ul>
+<li>&#x6574;&#x6570;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-keyword">case</span> <span class="hljs-type">SQLITE_INTEGER</span>:
+    value = <span class="hljs-type">Int</span>(sqlite3_column_int64(stmt, col))
+</code></pre>
+<ul>
+<li>&#x5B57;&#x7B26;&#x4E32;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-keyword">case</span> <span class="hljs-type">SQLITE3_TEXT</span>:
+    <span class="hljs-keyword">let</span> cText = <span class="hljs-type">UnsafePointer</span>&lt;<span class="hljs-type">Int8</span>&gt;(sqlite3_column_text(stmt, col))
+    value = <span class="hljs-type">String</span>(<span class="hljs-type">CString</span>: cText, encoding: <span class="hljs-type">NSUTF8StringEncoding</span>)
+</code></pre>
+<ul>
+<li>&#x7A7A;&#x503C;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-keyword">case</span> <span class="hljs-type">SQLITE_NULL</span>:
+    value = <span class="hljs-type">NSNull</span>()
+</code></pre>
+<ul>
+<li>&#x589E;&#x52A0;&#x8FD4;&#x56DE;&#x503C;&#x548C;&#x5B57;&#x5178;&#xFF0C;&#x8C03;&#x6574;&#x540E;&#x7684;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x4ECE; stmt &#x4E2D;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x8BB0;&#x5F55;&#x7684;&#x5B8C;&#x6574;&#x5185;&#x5BB9;</span>
+<span class="hljs-comment">///</span>
+<span class="hljs-comment">/// - parameter stmt: stmt &#x53E5;&#x67C4;</span>
+private <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">record</span><span class="hljs-params">(stmt: COpaquePointer)</span></span> -&gt; [<span class="hljs-type">String</span>: <span class="hljs-type">AnyObject</span>] {
+
+    <span class="hljs-comment">// 1. &#x83B7;&#x53D6;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x5217;&#x6570;</span>
+    <span class="hljs-keyword">let</span> colCount = sqlite3_column_count(stmt)
+
+    <span class="hljs-comment">// &#x5355;&#x6761;&#x8BB0;&#x5F55;&#x5B57;&#x5178;</span>
+    <span class="hljs-keyword">var</span> row = [<span class="hljs-type">String</span>: <span class="hljs-type">AnyObject</span>]()
+
+    <span class="hljs-comment">// 2. &#x904D;&#x5386;&#x6240;&#x6709;&#x5217;&#xFF0C;&#x83B7;&#x53D6;&#x6BCF;&#x4E00;&#x5217;&#x7684;&#x4FE1;&#x606F;</span>
+    <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;colCount {
+        <span class="hljs-comment">// 1&gt; &#x83B7;&#x53D6;&#x5217;&#x540D;</span>
+        <span class="hljs-keyword">let</span> cName = sqlite3_column_name(stmt, col)
+        <span class="hljs-keyword">let</span> name = <span class="hljs-type">String</span>(<span class="hljs-type">CString</span>: cName, encoding: <span class="hljs-type">NSUTF8StringEncoding</span>) ?? <span class="hljs-string">&quot;&quot;</span>
+
+        <span class="hljs-comment">// 2&gt; &#x83B7;&#x53D6;&#x6BCF;&#x5217;&#x6570;&#x636E;&#x7C7B;&#x578B;</span>
+        <span class="hljs-keyword">let</span> type = sqlite3_column_type(stmt, col)
+
+        <span class="hljs-comment">// 3&gt; &#x6839;&#x636E;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x83B7;&#x53D6;&#x5BF9;&#x5E94;&#x7ED3;&#x679C;</span>
+        <span class="hljs-keyword">var</span> value: <span class="hljs-type">AnyObject</span>?
+        <span class="hljs-keyword">switch</span>(type) {
+        <span class="hljs-keyword">case</span> <span class="hljs-type">SQLITE_FLOAT</span>:
+            value = sqlite3_column_double(stmt, col)
+        <span class="hljs-keyword">case</span> <span class="hljs-type">SQLITE_INTEGER</span>:
+            value = <span class="hljs-type">Int</span>(sqlite3_column_int64(stmt, col))
+        <span class="hljs-keyword">case</span> <span class="hljs-type">SQLITE3_TEXT</span>:
+            <span class="hljs-keyword">let</span> cText = <span class="hljs-type">UnsafePointer</span>&lt;<span class="hljs-type">Int8</span>&gt;(sqlite3_column_text(stmt, col))
+            value = <span class="hljs-type">String</span>(<span class="hljs-type">CString</span>: cText, encoding: <span class="hljs-type">NSUTF8StringEncoding</span>)
+        <span class="hljs-keyword">case</span> <span class="hljs-type">SQLITE_NULL</span>:
+            value = <span class="hljs-type">NSNull</span>()
+        <span class="hljs-keyword">default</span>:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&#x4E0D;&#x652F;&#x6301;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&quot;</span>)
+        }
+
+<span class="hljs-comment">//            print(&quot;&#x5217;&#x540D; \(name) &#x503C; \(value)&quot;)</span>
+        row[name] = value ?? <span class="hljs-type">NSNull</span>()
+    }
+
+    <span class="hljs-keyword">return</span> row
+}
+</code></pre>
+<h4 id="%E5%AE%8C%E5%96%84-execrecordset-%E5%87%BD%E6%95%B0">&#x5B8C;&#x5584; <code>execRecordSet</code> &#x51FD;&#x6570;</h4>
+<ul>
+<li>&#x5B8C;&#x5584; <code>execRecordSet</code> &#x51FD;&#x6570;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x6267;&#x884C; SQL &#x8FD4;&#x56DE;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x96C6;</span>
+<span class="hljs-comment">///</span>
+<span class="hljs-comment">/// - parameter sql: &#x4EFB;&#x610F;&#x7ED9;&#x5B9A;&#x7684; SELETE &#x67E5;&#x8BE2; SQL</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">execRecordSet</span><span class="hljs-params">(sql: String)</span></span> -&gt; [[<span class="hljs-type">String</span>: <span class="hljs-type">AnyObject</span>]]? {
+
+    <span class="hljs-comment">// 1. &#x9884;&#x7F16;&#x8BD1; SQL</span>
+    <span class="hljs-comment">/**
+        &#x53C2;&#x6570;
+
+        1. &#x5DF2;&#x7ECF;&#x6253;&#x5F00;&#x7684;&#x6570;&#x636E;&#x5E93;&#x53E5;&#x67C4;
+        2. &#x8981;&#x6267;&#x884C;&#x7684; SQL
+        3. &#x4EE5;&#x5B57;&#x8282;&#x4E3A;&#x5355;&#x4F4D;&#x7684; SQL &#x6700;&#x5927;&#x957F;&#x5EA6;&#xFF0C;&#x4F20;&#x5165; -1 &#x4F1A;&#x81EA;&#x52A8;&#x8BA1;&#x7B97;
+        4. SQL &#x8BED;&#x53E5;&#x53E5;&#x67C4;
+            - &#x540E;&#x7EED;&#x9488;&#x5BF9;&#x5F53;&#x524D;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x7684;&#x64CD;&#x4F5C;&#x5168;&#x90E8;&#x57FA;&#x4E8E;&#x6B64;&#x53E5;&#x67C4;
+            - &#x9700;&#x8981;&#x8C03;&#x7528; sqlite3_finalize &#x91CA;&#x653E;
+        5. &#x672A;&#x4F7F;&#x7528;&#x7684;&#x6307;&#x9488;&#x5730;&#x5740;&#xFF0C;&#x901A;&#x5E38;&#x4F20;&#x5165; nil
+    */</span>
+    <span class="hljs-keyword">var</span> stmt: <span class="hljs-type">COpaquePointer</span> = <span class="hljs-literal">nil</span>
+    <span class="hljs-keyword">if</span> sqlite3_prepare_v2(db, sql, -<span class="hljs-number">1</span>, &amp;stmt, <span class="hljs-literal">nil</span>) != <span class="hljs-type">SQLITE_OK</span> {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;SQL &#x9519;&#x8BEF;&quot;</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+    }
+
+    <span class="hljs-comment">// &#x521B;&#x5EFA;&#x7ED3;&#x679C;&#x6570;&#x7EC4;</span>
+    <span class="hljs-keyword">var</span> rows = [[<span class="hljs-type">String</span>: <span class="hljs-type">AnyObject</span>]]()
+
+    <span class="hljs-comment">// 2. &#x904D;&#x5386;&#x96C6;&#x5408;</span>
+    <span class="hljs-keyword">while</span> sqlite3_step(stmt) == <span class="hljs-type">SQLITE_ROW</span> {
+        <span class="hljs-comment">// &#x5C06;&#x5355;&#x6761;&#x8BB0;&#x5F55;&#x5B57;&#x5178;&#x6DFB;&#x52A0;&#x5230;&#x7ED3;&#x679C;&#x6570;&#x7EC4;&#x4E2D;</span>
+        rows.append(record(stmt))
+    }
+
+    <span class="hljs-comment">// 3. &#x91CA;&#x653E;&#x8BED;&#x53E5;&#x53E5;&#x67C4; - &#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x5426;&#x5219;&#x4F1A;&#x5185;&#x5BB9;&#x6CC4;&#x6F0F;</span>
+    sqlite3_finalize(stmt)
+
+    <span class="hljs-comment">// 4. &#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x6570;&#x7EC4;</span>
+    <span class="hljs-keyword">return</span> rows
+}
+</code></pre>
+<ul>
+<li>&#x5728; <code>Person</code> &#x6A21;&#x578B;&#x4E2D;&#x52A0;&#x8F7D; <code>Person</code> &#x5217;&#x8868;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x4ECE;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x52A0;&#x8F7D; person &#x6570;&#x7EC4;</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">persons</span>() -&gt; [<span class="hljs-title">Person</span>]? </span>{
+
+    <span class="hljs-comment">// 1. &#x51C6;&#x5907; SQL</span>
+    <span class="hljs-keyword">let</span> sql = <span class="hljs-string">&quot;SELECT id, name, age, height FROM T_Person;&quot;</span>
+
+    <span class="hljs-comment">// 2. &#x8BBF;&#x95EE;&#x6570;&#x636E;&#x5E93;&#x83B7;&#x5F97;&#x5B57;&#x5178;&#x6570;&#x7EC4;</span>
+    guard <span class="hljs-keyword">let</span> rows = <span class="hljs-type">SQLiteManager</span>.sharedManager.execRecordSet(sql) <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+    }
+
+    <span class="hljs-comment">// 3. &#x904D;&#x5386;&#x5B57;&#x5178;&#x6570;&#x7EC4; - &#x5B57;&#x5178;&#x8F6C;&#x6A21;&#x578B;</span>
+    <span class="hljs-keyword">var</span> arrayM = [<span class="hljs-type">Person</span>]()
+    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> rows {
+        arrayM.append(<span class="hljs-type">Person</span>(dict: row))
+    }
+
+    <span class="hljs-comment">// 4. &#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x96C6;&#x5408;</span>
+    <span class="hljs-keyword">return</span> arrayM
+}
+</code></pre>
+<ul>
+<li>&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-built_in">print</span>((<span class="hljs-type">Person</span>.persons() ?? []) <span class="hljs-keyword">as</span> <span class="hljs-type">NSArray</span>)
+</code></pre>
+<h3 id="%E5%B0%8F%E7%BB%93">&#x5C0F;&#x7ED3;</h3>
+<p><img src="&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x793A;&#x610F;&#x56FE;2.png" alt=""></p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../Swift/update and delete.html" class="navigation navigation-prev " aria-label="Previous page: 修改和删除数据"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../Swift/bind insert.html" class="navigation navigation-next " aria-label="Next page: 利用绑定参数插入数据"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"highlight":{},"search":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

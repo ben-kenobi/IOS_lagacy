@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>indirect 和嵌套 enum | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_41">indirect 和嵌套 enum</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="indirect-%E5%92%8C%E5%B5%8C%E5%A5%97-enum" class="calibre1">indirect 和嵌套 enum</h1>
+<p class="calibre9">在涉及到一些数据结构的经典理论和模型 (没错，就是链表，树和图) 时，我们往往会用到嵌套的类型。比如<a href="https://zh.wikipedia.org/wiki/链表" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">链表</a>，在 Swift 中，我们可以这样来定义一个单向链表：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">T</span>&gt; </span>{
+    <span class="hljs-keyword">let</span> value: <span class="hljs-func">T</span>?
+    <span class="hljs-keyword">let</span> next: <span class="hljs-func">Node</span>&lt;<span class="hljs-func">T</span>&gt;?
+
+    <span class="hljs-keyword">init</span>(value: <span class="hljs-func">T</span>?, next: <span class="hljs-func">Node</span>&lt;<span class="hljs-func">T</span>&gt;?) {
+        <span class="hljs-keyword">self</span>.value = value
+        <span class="hljs-keyword">self</span>.next = next
+    }
+}
+
+<span class="hljs-keyword">let</span> list = <span class="hljs-func">Node</span>(value: <span class="hljs-params">1</span>,
+             next: <span class="hljs-func">Node</span>(value: <span class="hljs-params">2</span>,
+               next: <span class="hljs-func">Node</span>(value: <span class="hljs-params">3</span>,
+                 next: <span class="hljs-func">Node</span>(value: <span class="hljs-params">4</span>, next: <span class="hljs-params">nil</span>))))
+<span class="hljs-title">// 单向链表：1 -&gt; 2 -&gt; 3 -&gt; 4</span>
+</code></pre>
+<p class="calibre9">看起来还不错，但是这样的形式在表达空节点的时候并不十分理想。我们不得不借助于 nil 来表达空节点，但是事实上空节点和 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 并不是等价的。另外，如果我们想表达一个空链表的话，要么需要把 <code class="calibre13 pcalibre6 pcalibre5">list</code> 设置为 Optional，要么把 Node 里的 <code class="calibre13 pcalibre6 pcalibre5">value</code> 以及 <code class="calibre13 pcalibre6 pcalibre5">next</code> 都设为 <code class="calibre13 pcalibre6 pcalibre5">nil</code>，这导致描述中存在歧义，我们不得不去做一些人为的约定来表述这样的情况，这在算法描述中是十分致命的。</p>
+<p class="calibre9">在 Swift 2 中，我们现在可以使用嵌套的 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 了 -- 而这在 Swift 1.x 里是编译器所不允许的。我们用 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 来重新定义链表结构的话，会是下面这个样子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">indirect <span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">LinkedList</span>&lt;<span class="hljs-title">Element</span>: <span class="hljs-title">Comparable</span>&gt; </span>{
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Empty</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-func">Node</span>(<span class="hljs-func">Element</span>, <span class="hljs-func">LinkedList</span>&lt;<span class="hljs-func">Element</span>&gt;)
+}
+<span class="hljs-keyword">let</span> linkedList = <span class="hljs-func">LinkedList</span>.<span class="hljs-func">Node</span>(<span class="hljs-params">1</span>, .<span class="hljs-func">Node</span>(<span class="hljs-params">2</span>, .<span class="hljs-func">Node</span>(<span class="hljs-params">3</span>, .<span class="hljs-func">Node</span>(<span class="hljs-params">4</span>, .<span class="hljs-func">Empty</span>))))
+<span class="hljs-title">// 单项链表：1 -&gt; 2 -&gt; 3 -&gt; 4</span>
+</code></pre>
+<p class="calibre9">在 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 的定义中嵌套自身对于 class 这样的引用类型来说没有任何问题，但是对于像 struct 或者 enum 这样的值类型来说，普通的做法是不可行的。我们需要在定义前面加上 <code class="calibre13 pcalibre6 pcalibre5">indirect</code> 来提示编译器不要直接在值类型中直接嵌套。用 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 表达链表的好处在于，我们可以清晰地表示出空节点这一定义，这在像 Swift 这样类型十分严格的语言中是很有帮助的。比如我们可以寥寥数行就轻易地实现链表节点的删除方法，在 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 中添加：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">linkedListByRemovingElement</span><span class="hljs-params">(element: Element)</span></span>
+                            -&gt; <span class="hljs-func">LinkedList</span>&lt;<span class="hljs-func">Element</span>&gt; {
+    guard <span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> .<span class="hljs-func">Node</span>(value, next) = <span class="hljs-keyword">self</span> <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> .<span class="hljs-func">Empty</span>
+    }
+    <span class="hljs-keyword">return</span> value == element ?
+        next : <span class="hljs-func">LinkedList</span>.<span class="hljs-func">Node</span>(value, next.linkedListByRemovingElement(element))
+}
+
+<span class="hljs-keyword">let</span> result = linkedList.linkedListByRemovingElement(<span class="hljs-params">2</span>)
+<span class="hljs-params">print</span>(result)
+<span class="hljs-title">// 1 -&gt; 3 -&gt; 4</span>
+</code></pre>
+<p class="calibre9">对于上面的算法的分析，就交给读者作为练习吧。:)</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

@@ -1,0 +1,33 @@
+.commentform {
+	
+}
+.commentform ul {
+	font: 12px/24px Arial, Helvetica, sans-serif; margin: 0px 20px 5px; clear: both; font-size-adjust: none; font-stretch: normal;
+}
+.commentform .left {
+	width: 80px; float: left; display: block;
+}
+.commentform .right {
+	margin-left: 90px; display: block;
+}
+.commentform textarea {
+	font: 14px/24px Arial, Helvetica, sans-serif; padding: 5px; border: 1px solid rgb(221, 221, 221); border-image: none; color: rgb(85, 85, 85); font-size-adjust: none; font-stretch: normal;
+}
+#lang_list {
+	border: 1px solid rgb(204, 204, 204); border-image: none; width: 388px; font-size: 12px; background-color: rgb(255, 255, 255);
+}
+#lang_list a {
+	padding: 0px 5px; text-align: center; border-right-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-right-width: 1px; border-bottom-width: 1px; border-right-style: solid; border-bottom-style: solid; float: left; display: inline-block; cursor: pointer;
+}
+#lang_list a:hover {
+	color: rgb(255, 255, 255); background-color: rgb(102, 102, 102);
+}
+.long_name {
+	width: 70px;
+}
+.duan_name {
+	width: 25px;
+}
+.zhong_name {
+	width: 48px;
+}

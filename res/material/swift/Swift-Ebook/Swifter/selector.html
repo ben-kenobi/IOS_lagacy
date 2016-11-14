@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Selector | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_43">Selector</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="selector" class="calibre1">Selector</h1>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">@selector</code> 是 Objective-C 时代的一个关键字，它可以将一个方法转换并赋值给一个 <code class="calibre13 pcalibre6 pcalibre5">SEL</code> 类型，它的表现很类似一个动态的函数指针。在 Objective-C 时 selector 非常常用，从设定 target-action，到自举询问是否响应某个方法，再到指定接受通知时需要调用的方法等等，都是由 selector 来负责的。在 Objective-C 里生成一个 selector 的方法一般是这个样子的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">-(<span class="hljs-keyword">void</span>) callMe {
+    <span class="hljs-title">//...</span>
+}
+
+-(<span class="hljs-keyword">void</span>) callMeWithParam:(<span class="hljs-keyword">id</span>)obj {
+    <span class="hljs-title">//...</span>
+}
+
+SEL someMethod = <span class="hljs-keyword">@selector</span>(callMe);
+SEL anotherMethod = <span class="hljs-keyword">@selector</span>(callMeWithParam:);
+
+<span class="hljs-title">// 或者也可以使用 NSSelectorFromString</span>
+<span class="hljs-title">// SEL someMethod = NSSelectorFromString(@"callMe");</span>
+<span class="hljs-title">// SEL anotherMethod = NSSelectorFromString(@"callMeWithParam:");</span>
+</code></pre>
+<p class="calibre9">一般为了方便，很多人会选择使用 <code class="calibre13 pcalibre6 pcalibre5">@selector</code>，但是如果要追求灵活的话，可能会更愿意使用 <code class="calibre13 pcalibre6 pcalibre5">NSSelectorFromString</code> 的版本 -- 因为我们可以在运行时动态生成字符串，从而通过方法的名字来调用到对应的方法。</p>
+<p class="calibre9">在 Swift 中没有 <code class="calibre13 pcalibre6 pcalibre5">@selector</code> 了，我们要生成一个 selector 的话现在只能使用字符串。Swift 里对应原来 <code class="calibre13 pcalibre6 pcalibre5">SEL</code> 的类型是一个叫做 <code class="calibre13 pcalibre6 pcalibre5">Selector</code> 的结构体，它提供了一个接受字符串的初始化方法。像上面的两个例子在 Swift 中等效的写法是：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">callMe</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-title">//...</span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">callMeWithParam</span><span class="hljs-params">(obj: AnyObject!)</span></span> {
+    <span class="hljs-title">//...</span>
+}
+
+<span class="hljs-keyword">let</span> someMethod = <span class="hljs-func">Selector</span>(<span class="hljs-string">"callMe"</span>)
+<span class="hljs-keyword">let</span> anotherMethod = <span class="hljs-func">Selector</span>(<span class="hljs-string">"callMeWithParam:"</span>)
+</code></pre>
+<p class="calibre9">和 Objective-C 时一样，记得在 <code class="calibre13 pcalibre6 pcalibre5">callMeWithParam</code> 后面加上冒号 (:)，这才是完整的方法名字。多个参数的方法名也和原来类似，是这个样子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">turnByAngle</span><span class="hljs-params">(theAngle: Int, speed: Float)</span></span> {
+    <span class="hljs-title">//...</span>
+}
+
+<span class="hljs-keyword">let</span> method = <span class="hljs-func">Selector</span>(<span class="hljs-string">"turnByAngle:speed:"</span>)
+</code></pre>
+<p class="calibre9">另外，因为 <code class="calibre13 pcalibre6 pcalibre5">Selector</code> 类型实现了 <code class="calibre13 pcalibre6 pcalibre5">StringLiteralConvertible</code>，因此我们甚至可以不使用它的初始化方法，而直接用一个字符串进行赋值，就可以完成创建了。</p>
+<p class="calibre9">最后需要注意的是，selector 其实是 Objective-C runtime 的概念，如果你的 selector 对应的方法只在 Swift 中可见的话 (也就是说它是一个 Swift 中的 private 方法)，在调用这个 selector 时你会遇到一个 unrecognized selector 错误：</p>
+<blockquote class="calibre6">
+<h3 id="%E8%BF%99%E6%98%AF%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81" class="calibre16">这是错误代码</h3>
+<pre class="calibre14"><code class="pcalibre3 lang-swift pcalibre4">private <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">callMe</span><span class="hljs-params">()</span></span> {
+     <span class="hljs-title">//...</span>
+}
+<span class="hljs-func">NSTimer</span>.scheduledTimerWithTimeInterval(<span class="hljs-params">1</span>, target: <span class="hljs-keyword">self</span>,
+            selector:<span class="hljs-string">"callMe"</span>, userInfo: <span class="hljs-params">nil</span>, repeats: <span class="hljs-params">true</span>)
+</code></pre>
+</blockquote>
+<p class="calibre9">正确的做法是在 <code class="calibre13 pcalibre6 pcalibre5">private</code> 前面加上 <code class="calibre13 pcalibre6 pcalibre5">@objc</code> 关键字，这样运行时就能找到对应的方法了。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">@objc private func callMe() {
+    <span class="hljs-title">//...</span>
+}
+
+<span class="hljs-params">NSTimer</span><span class="hljs-variable">.scheduledTimerWithTimeInterval</span>(<span class="hljs-params">1</span>, target: <span class="hljs-keyword">self</span>,
+             selector:<span class="hljs-string">"callMe"</span>, userInfo: <span class="hljs-params">nil</span>, repeats: <span class="hljs-params">true</span>)
+</code></pre>
+<p class="calibre9">另外，如果方法的第一个参数有外部变量的话，在通过字符串生成 <code class="calibre13 pcalibre6 pcalibre5">Selector</code> 时还有一个约定，那就是在方法名和第一个外部参数之间加上 <code class="calibre13 pcalibre6 pcalibre5">with</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">aMethod</span><span class="hljs-params">(external paramName: AnyObject!)</span></span> { ... }
+</code></pre>
+<p class="calibre9">想获取对应的获取 <code class="calibre13 pcalibre6 pcalibre5">Selector</code>，应该这么写：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> s = <span class="hljs-func">Selector</span>(<span class="hljs-string">"aMethodWithExternal:"</span>)
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

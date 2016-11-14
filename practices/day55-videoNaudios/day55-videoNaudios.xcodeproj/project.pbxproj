@@ -1,0 +1,747 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		18DAC18F1C3216BB00F342A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC18E1C3216BB00F342A4 /* main.m */; };
+		18DAC19A1C3216BB00F342A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18DAC1991C3216BB00F342A4 /* Assets.xcassets */; };
+		18DAC19D1C3216BB00F342A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18DAC19B1C3216BB00F342A4 /* LaunchScreen.storyboard */; };
+		18DAC20D1C3216FE00F342A4 /* FileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1A71C3216FD00F342A4 /* FileUtil.m */; };
+		18DAC20E1C3216FE00F342A4 /* IUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1A91C3216FD00F342A4 /* IUtil.m */; };
+		18DAC20F1C3216FE00F342A4 /* NetUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1AB1C3216FD00F342A4 /* NetUtil.m */; };
+		18DAC2101C3216FE00F342A4 /* NSArray+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1AD1C3216FD00F342A4 /* NSArray+Ex.m */; };
+		18DAC2111C3216FE00F342A4 /* NSDate+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1AF1C3216FD00F342A4 /* NSDate+Ex.m */; };
+		18DAC2121C3216FE00F342A4 /* NSObject+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1B11C3216FD00F342A4 /* NSObject+Ex.m */; };
+		18DAC2131C3216FE00F342A4 /* NSString+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1B31C3216FD00F342A4 /* NSString+Ex.m */; };
+		18DAC2141C3216FE00F342A4 /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1B61C3216FD00F342A4 /* NSString+Hash.m */; };
+		18DAC2151C3216FE00F342A4 /* UIBarButtonItem+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1B81C3216FD00F342A4 /* UIBarButtonItem+Ex.m */; };
+		18DAC2161C3216FE00F342A4 /* UIColor+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1BA1C3216FD00F342A4 /* UIColor+Ex.m */; };
+		18DAC2171C3216FE00F342A4 /* UIImage+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1BC1C3216FD00F342A4 /* UIImage+Ex.m */; };
+		18DAC2181C3216FE00F342A4 /* UIView+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1BE1C3216FD00F342A4 /* UIView+Ex.m */; };
+		18DAC2191C3216FE00F342A4 /* UIViewController+Ex.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1C01C3216FD00F342A4 /* UIViewController+Ex.m */; };
+		18DAC21A1C3216FE00F342A4 /* YFCate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1C21C3216FD00F342A4 /* YFCate.m */; };
+		18DAC21B1C3216FE00F342A4 /* cons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18DAC1C41C3216FD00F342A4 /* cons.plist */; };
+		18DAC21C1C3216FE00F342A4 /* YFConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1C61C3216FD00F342A4 /* YFConst.m */; };
+		18DAC21D1C3216FE00F342A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1C91C3216FD00F342A4 /* AppDelegate.m */; };
+		18DAC21E1C3216FE00F342A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18DAC1CA1C3216FD00F342A4 /* InfoPlist.strings */; };
+		18DAC21F1C3216FE00F342A4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18DAC1CC1C3216FD00F342A4 /* Localizable.strings */; };
+		18DAC2201C3216FE00F342A4 /* conf.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18DAC1CE1C3216FD00F342A4 /* conf.plist */; };
+		18DAC2211C3216FE00F342A4 /* mystring.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18DAC1CF1C3216FD00F342A4 /* mystring.strings */; };
+		18DAC2221C3216FE00F342A4 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1D51C3216FE00F342A4 /* AFHTTPRequestOperation.m */; };
+		18DAC2231C3216FE00F342A4 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1D71C3216FE00F342A4 /* AFHTTPRequestOperationManager.m */; };
+		18DAC2241C3216FE00F342A4 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1D91C3216FE00F342A4 /* AFHTTPSessionManager.m */; };
+		18DAC2251C3216FE00F342A4 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1DC1C3216FE00F342A4 /* AFNetworkReachabilityManager.m */; };
+		18DAC2261C3216FE00F342A4 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1DE1C3216FE00F342A4 /* AFSecurityPolicy.m */; };
+		18DAC2271C3216FE00F342A4 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1E01C3216FE00F342A4 /* AFURLConnectionOperation.m */; };
+		18DAC2281C3216FE00F342A4 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1E21C3216FE00F342A4 /* AFURLRequestSerialization.m */; };
+		18DAC2291C3216FE00F342A4 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1E41C3216FE00F342A4 /* AFURLResponseSerialization.m */; };
+		18DAC22A1C3216FE00F342A4 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1E61C3216FE00F342A4 /* AFURLSessionManager.m */; };
+		18DAC22B1C3216FE00F342A4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18DAC1E81C3216FE00F342A4 /* Info.plist */; };
+		18DAC22C1C3216FE00F342A4 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1EA1C3216FE00F342A4 /* MASCompositeConstraint.m */; };
+		18DAC22D1C3216FE00F342A4 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1ED1C3216FE00F342A4 /* MASConstraint.m */; };
+		18DAC22E1C3216FE00F342A4 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1EF1C3216FE00F342A4 /* MASConstraintMaker.m */; };
+		18DAC22F1C3216FE00F342A4 /* MASLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1F11C3216FE00F342A4 /* MASLayoutConstraint.m */; };
+		18DAC2301C3216FE00F342A4 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1F51C3216FE00F342A4 /* MASViewAttribute.m */; };
+		18DAC2311C3216FE00F342A4 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1F71C3216FE00F342A4 /* MASViewConstraint.m */; };
+		18DAC2321C3216FE00F342A4 /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1F91C3216FE00F342A4 /* NSArray+MASAdditions.m */; };
+		18DAC2331C3216FE00F342A4 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1FC1C3216FE00F342A4 /* NSLayoutConstraint+MASDebugAdditions.m */; };
+		18DAC2341C3216FE00F342A4 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC1FE1C3216FE00F342A4 /* View+MASAdditions.m */; };
+		18DAC2351C3216FE00F342A4 /* AudioVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC2031C3216FE00F342A4 /* AudioVC.m */; };
+		18DAC2381C321EB600F342A4 /* AVUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC2371C321EB600F342A4 /* AVUtil.m */; };
+		18DAC2451C32636300F342A4 /* VideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC2441C32636300F342A4 /* VideoVC.m */; };
+		18DAC2481C32762E00F342A4 /* VideoVC02.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC2471C32762E00F342A4 /* VideoVC02.m */; };
+		18DAC24A1C32841D00F342A4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DAC2491C32841C00F342A4 /* MobileCoreServices.framework */; };
+		18DAC24D1C328AD900F342A4 /* VideoVC03.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC24C1C328AD900F342A4 /* VideoVC03.m */; };
+		18DAC2501C32AE9600F342A4 /* 音频:视频-课堂笔记.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DAC24F1C32AE9600F342A4 /* 音频:视频-课堂笔记.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		18DAC18A1C3216BB00F342A4 /* day55-videoNaudios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "day55-videoNaudios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		18DAC18E1C3216BB00F342A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		18DAC1991C3216BB00F342A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		18DAC19C1C3216BB00F342A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		18DAC19E1C3216BB00F342A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18DAC1A61C3216FD00F342A4 /* FileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileUtil.h; sourceTree = "<group>"; };
+		18DAC1A71C3216FD00F342A4 /* FileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileUtil.m; sourceTree = "<group>"; };
+		18DAC1A81C3216FD00F342A4 /* IUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IUtil.h; sourceTree = "<group>"; };
+		18DAC1A91C3216FD00F342A4 /* IUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IUtil.m; sourceTree = "<group>"; };
+		18DAC1AA1C3216FD00F342A4 /* NetUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetUtil.h; sourceTree = "<group>"; };
+		18DAC1AB1C3216FD00F342A4 /* NetUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetUtil.m; sourceTree = "<group>"; };
+		18DAC1AC1C3216FD00F342A4 /* NSArray+Ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Ex.h"; sourceTree = "<group>"; };
+		18DAC1AD1C3216FD00F342A4 /* NSArray+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Ex.m"; sourceTree = "<group>"; };
+		18DAC1AE1C3216FD00F342A4 /* NSDate+Ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Ex.h"; sourceTree = "<group>"; };
+		18DAC1AF1C3216FD00F342A4 /* NSDate+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Ex.m"; sourceTree = "<group>"; };
+		18DAC1B01C3216FD00F342A4 /* NSObject+Ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Ex.h"; sourceTree = "<group>"; };
+		18DAC1B11C3216FD00F342A4 /* NSObject+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Ex.m"; sourceTree = "<group>"; };
+		18DAC1B21C3216FD00F342A4 /* NSString+Ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Ex.h"; sourceTree = "<group>"; };
+		18DAC1B31C3216FD00F342A4 /* NSString+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Ex.m"; sourceTree = "<group>"; };
+		18DAC1B51C3216FD00F342A4 /* NSString+Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hash.h"; sourceTree = "<group>"; };
+		18DAC1B61C3216FD00F342A4 /* NSString+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hash.m"; sourceTree = "<group>"; };
+		18DAC1B71C3216FD00F342A4 /* UIBarButtonItem+Ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Ex.h"; sourceTree = "<group>"; };
+		18DAC1B81C3216FD00F342A4 /* UIBarButtonItem+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Ex.m"; sourceTree = "<group>"; };
+		18DAC1B91C3216FD00F342A4 /* UIColor+Ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Ex.h"; sourceTree = "<group>"; };
+		18DAC1BA1C3216FD00F342A4 /* UIColor+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Ex.m"; sourceTree = "<group>"; };
+		18DAC1BB1C3216FD00F342A4 /* UIImage+Ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Ex.h"; sourceTree = "<group>"; };
+		18DAC1BC1C3216FD00F342A4 /* UIImage+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Ex.m"; sourceTree = "<group>"; };
+		18DAC1BD1C3216FD00F342A4 /* UIView+Ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Ex.h"; sourceTree = "<group>"; };
+		18DAC1BE1C3216FD00F342A4 /* UIView+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Ex.m"; sourceTree = "<group>"; };
+		18DAC1BF1C3216FD00F342A4 /* UIViewController+Ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Ex.h"; sourceTree = "<group>"; };
+		18DAC1C01C3216FD00F342A4 /* UIViewController+Ex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Ex.m"; sourceTree = "<group>"; };
+		18DAC1C11C3216FD00F342A4 /* YFCate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFCate.h; sourceTree = "<group>"; };
+		18DAC1C21C3216FD00F342A4 /* YFCate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFCate.m; sourceTree = "<group>"; };
+		18DAC1C41C3216FD00F342A4 /* cons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cons.plist; sourceTree = "<group>"; };
+		18DAC1C51C3216FD00F342A4 /* YFConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFConst.h; sourceTree = "<group>"; };
+		18DAC1C61C3216FD00F342A4 /* YFConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFConst.m; sourceTree = "<group>"; };
+		18DAC1C81C3216FD00F342A4 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		18DAC1C91C3216FD00F342A4 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		18DAC1CB1C3216FD00F342A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		18DAC1CD1C3216FD00F342A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		18DAC1CE1C3216FD00F342A4 /* conf.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = conf.plist; sourceTree = "<group>"; };
+		18DAC1CF1C3216FD00F342A4 /* mystring.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = mystring.strings; sourceTree = "<group>"; };
+		18DAC1D01C3216FE00F342A4 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		18DAC1D41C3216FE00F342A4 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
+		18DAC1D51C3216FE00F342A4 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		18DAC1D61C3216FE00F342A4 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
+		18DAC1D71C3216FE00F342A4 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperationManager.m; sourceTree = "<group>"; };
+		18DAC1D81C3216FE00F342A4 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		18DAC1D91C3216FE00F342A4 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		18DAC1DA1C3216FE00F342A4 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		18DAC1DB1C3216FE00F342A4 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		18DAC1DC1C3216FE00F342A4 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		18DAC1DD1C3216FE00F342A4 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		18DAC1DE1C3216FE00F342A4 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		18DAC1DF1C3216FE00F342A4 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
+		18DAC1E01C3216FE00F342A4 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		18DAC1E11C3216FE00F342A4 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		18DAC1E21C3216FE00F342A4 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		18DAC1E31C3216FE00F342A4 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		18DAC1E41C3216FE00F342A4 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		18DAC1E51C3216FE00F342A4 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		18DAC1E61C3216FE00F342A4 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		18DAC1E81C3216FE00F342A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18DAC1E91C3216FE00F342A4 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
+		18DAC1EA1C3216FE00F342A4 /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
+		18DAC1EB1C3216FE00F342A4 /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
+		18DAC1EC1C3216FE00F342A4 /* MASConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraint.h; sourceTree = "<group>"; };
+		18DAC1ED1C3216FE00F342A4 /* MASConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraint.m; sourceTree = "<group>"; };
+		18DAC1EE1C3216FE00F342A4 /* MASConstraintMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraintMaker.h; sourceTree = "<group>"; };
+		18DAC1EF1C3216FE00F342A4 /* MASConstraintMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraintMaker.m; sourceTree = "<group>"; };
+		18DAC1F01C3216FE00F342A4 /* MASLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASLayoutConstraint.h; sourceTree = "<group>"; };
+		18DAC1F11C3216FE00F342A4 /* MASLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASLayoutConstraint.m; sourceTree = "<group>"; };
+		18DAC1F21C3216FE00F342A4 /* Masonry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Masonry.h; sourceTree = "<group>"; };
+		18DAC1F31C3216FE00F342A4 /* MASUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASUtilities.h; sourceTree = "<group>"; };
+		18DAC1F41C3216FE00F342A4 /* MASViewAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewAttribute.h; sourceTree = "<group>"; };
+		18DAC1F51C3216FE00F342A4 /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
+		18DAC1F61C3216FE00F342A4 /* MASViewConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewConstraint.h; sourceTree = "<group>"; };
+		18DAC1F71C3216FE00F342A4 /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
+		18DAC1F81C3216FE00F342A4 /* NSArray+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASAdditions.h"; sourceTree = "<group>"; };
+		18DAC1F91C3216FE00F342A4 /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MASAdditions.m"; sourceTree = "<group>"; };
+		18DAC1FA1C3216FE00F342A4 /* NSArray+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		18DAC1FB1C3216FE00F342A4 /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
+		18DAC1FC1C3216FE00F342A4 /* NSLayoutConstraint+MASDebugAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+MASDebugAdditions.m"; sourceTree = "<group>"; };
+		18DAC1FD1C3216FE00F342A4 /* View+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASAdditions.h"; sourceTree = "<group>"; };
+		18DAC1FE1C3216FE00F342A4 /* View+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View+MASAdditions.m"; sourceTree = "<group>"; };
+		18DAC1FF1C3216FE00F342A4 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		18DAC2021C3216FE00F342A4 /* AudioVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioVC.h; sourceTree = "<group>"; };
+		18DAC2031C3216FE00F342A4 /* AudioVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioVC.m; sourceTree = "<group>"; };
+		18DAC2361C321EB600F342A4 /* AVUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVUtil.h; sourceTree = "<group>"; };
+		18DAC2371C321EB600F342A4 /* AVUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVUtil.m; sourceTree = "<group>"; };
+		18DAC2431C32636300F342A4 /* VideoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoVC.h; sourceTree = "<group>"; };
+		18DAC2441C32636300F342A4 /* VideoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoVC.m; sourceTree = "<group>"; };
+		18DAC2461C32762E00F342A4 /* VideoVC02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoVC02.h; sourceTree = "<group>"; };
+		18DAC2471C32762E00F342A4 /* VideoVC02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoVC02.m; sourceTree = "<group>"; };
+		18DAC2491C32841C00F342A4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		18DAC24B1C328AD900F342A4 /* VideoVC03.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoVC03.h; sourceTree = "<group>"; };
+		18DAC24C1C328AD900F342A4 /* VideoVC03.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoVC03.m; sourceTree = "<group>"; };
+		18DAC24F1C32AE9600F342A4 /* 音频:视频-课堂笔记.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "音频:视频-课堂笔记.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18DAC1871C3216BB00F342A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18DAC24A1C32841D00F342A4 /* MobileCoreServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18DAC1811C3216BB00F342A4 = {
+			isa = PBXGroup;
+			children = (
+				18DAC2491C32841C00F342A4 /* MobileCoreServices.framework */,
+				18DAC18C1C3216BB00F342A4 /* day55-videoNaudios */,
+				18DAC18B1C3216BB00F342A4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		18DAC18B1C3216BB00F342A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC18A1C3216BB00F342A4 /* day55-videoNaudios.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		18DAC18C1C3216BB00F342A4 /* day55-videoNaudios */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC24E1C32AE9600F342A4 /* note */,
+				18DAC1A41C3216FD00F342A4 /* src */,
+				18DAC1991C3216BB00F342A4 /* Assets.xcassets */,
+				18DAC19B1C3216BB00F342A4 /* LaunchScreen.storyboard */,
+				18DAC19E1C3216BB00F342A4 /* Info.plist */,
+				18DAC18D1C3216BB00F342A4 /* Supporting Files */,
+			);
+			path = "day55-videoNaudios";
+			sourceTree = "<group>";
+		};
+		18DAC18D1C3216BB00F342A4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC18E1C3216BB00F342A4 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		18DAC1A41C3216FD00F342A4 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC1A51C3216FD00F342A4 /* cate */,
+				18DAC1C31C3216FD00F342A4 /* common */,
+				18DAC1C71C3216FD00F342A4 /* conf */,
+				18DAC1D11C3216FE00F342A4 /* ext */,
+				18DAC1D21C3216FE00F342A4 /* libs */,
+				18DAC2001C3216FE00F342A4 /* main */,
+				18DAC2071C3216FE00F342A4 /* submodule */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		18DAC1A51C3216FD00F342A4 /* cate */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC1A61C3216FD00F342A4 /* FileUtil.h */,
+				18DAC1A71C3216FD00F342A4 /* FileUtil.m */,
+				18DAC1A81C3216FD00F342A4 /* IUtil.h */,
+				18DAC1A91C3216FD00F342A4 /* IUtil.m */,
+				18DAC1AA1C3216FD00F342A4 /* NetUtil.h */,
+				18DAC1AB1C3216FD00F342A4 /* NetUtil.m */,
+				18DAC1AC1C3216FD00F342A4 /* NSArray+Ex.h */,
+				18DAC1AD1C3216FD00F342A4 /* NSArray+Ex.m */,
+				18DAC1AE1C3216FD00F342A4 /* NSDate+Ex.h */,
+				18DAC1AF1C3216FD00F342A4 /* NSDate+Ex.m */,
+				18DAC1B01C3216FD00F342A4 /* NSObject+Ex.h */,
+				18DAC1B11C3216FD00F342A4 /* NSObject+Ex.m */,
+				18DAC1B21C3216FD00F342A4 /* NSString+Ex.h */,
+				18DAC1B31C3216FD00F342A4 /* NSString+Ex.m */,
+				18DAC1B41C3216FD00F342A4 /* Security */,
+				18DAC1B71C3216FD00F342A4 /* UIBarButtonItem+Ex.h */,
+				18DAC1B81C3216FD00F342A4 /* UIBarButtonItem+Ex.m */,
+				18DAC1B91C3216FD00F342A4 /* UIColor+Ex.h */,
+				18DAC1BA1C3216FD00F342A4 /* UIColor+Ex.m */,
+				18DAC1BB1C3216FD00F342A4 /* UIImage+Ex.h */,
+				18DAC1BC1C3216FD00F342A4 /* UIImage+Ex.m */,
+				18DAC1BD1C3216FD00F342A4 /* UIView+Ex.h */,
+				18DAC1BE1C3216FD00F342A4 /* UIView+Ex.m */,
+				18DAC1BF1C3216FD00F342A4 /* UIViewController+Ex.h */,
+				18DAC1C01C3216FD00F342A4 /* UIViewController+Ex.m */,
+				18DAC1C11C3216FD00F342A4 /* YFCate.h */,
+				18DAC1C21C3216FD00F342A4 /* YFCate.m */,
+				18DAC2361C321EB600F342A4 /* AVUtil.h */,
+				18DAC2371C321EB600F342A4 /* AVUtil.m */,
+			);
+			path = cate;
+			sourceTree = "<group>";
+		};
+		18DAC1B41C3216FD00F342A4 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC1B51C3216FD00F342A4 /* NSString+Hash.h */,
+				18DAC1B61C3216FD00F342A4 /* NSString+Hash.m */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		18DAC1C31C3216FD00F342A4 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC1C41C3216FD00F342A4 /* cons.plist */,
+				18DAC1C51C3216FD00F342A4 /* YFConst.h */,
+				18DAC1C61C3216FD00F342A4 /* YFConst.m */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		18DAC1C71C3216FD00F342A4 /* conf */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC1C81C3216FD00F342A4 /* AppDelegate.h */,
+				18DAC1C91C3216FD00F342A4 /* AppDelegate.m */,
+				18DAC1CA1C3216FD00F342A4 /* InfoPlist.strings */,
+				18DAC1CC1C3216FD00F342A4 /* Localizable.strings */,
+				18DAC1CE1C3216FD00F342A4 /* conf.plist */,
+				18DAC1CF1C3216FD00F342A4 /* mystring.strings */,
+				18DAC1D01C3216FE00F342A4 /* PrefixHeader.pch */,
+			);
+			path = conf;
+			sourceTree = "<group>";
+		};
+		18DAC1D11C3216FE00F342A4 /* ext */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ext;
+			sourceTree = "<group>";
+		};
+		18DAC1D21C3216FE00F342A4 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC1D31C3216FE00F342A4 /* AFNetworking */,
+				18DAC1E71C3216FE00F342A4 /* Masonry */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		18DAC1D31C3216FE00F342A4 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC1D41C3216FE00F342A4 /* AFHTTPRequestOperation.h */,
+				18DAC1D51C3216FE00F342A4 /* AFHTTPRequestOperation.m */,
+				18DAC1D61C3216FE00F342A4 /* AFHTTPRequestOperationManager.h */,
+				18DAC1D71C3216FE00F342A4 /* AFHTTPRequestOperationManager.m */,
+				18DAC1D81C3216FE00F342A4 /* AFHTTPSessionManager.h */,
+				18DAC1D91C3216FE00F342A4 /* AFHTTPSessionManager.m */,
+				18DAC1DA1C3216FE00F342A4 /* AFNetworking.h */,
+				18DAC1DB1C3216FE00F342A4 /* AFNetworkReachabilityManager.h */,
+				18DAC1DC1C3216FE00F342A4 /* AFNetworkReachabilityManager.m */,
+				18DAC1DD1C3216FE00F342A4 /* AFSecurityPolicy.h */,
+				18DAC1DE1C3216FE00F342A4 /* AFSecurityPolicy.m */,
+				18DAC1DF1C3216FE00F342A4 /* AFURLConnectionOperation.h */,
+				18DAC1E01C3216FE00F342A4 /* AFURLConnectionOperation.m */,
+				18DAC1E11C3216FE00F342A4 /* AFURLRequestSerialization.h */,
+				18DAC1E21C3216FE00F342A4 /* AFURLRequestSerialization.m */,
+				18DAC1E31C3216FE00F342A4 /* AFURLResponseSerialization.h */,
+				18DAC1E41C3216FE00F342A4 /* AFURLResponseSerialization.m */,
+				18DAC1E51C3216FE00F342A4 /* AFURLSessionManager.h */,
+				18DAC1E61C3216FE00F342A4 /* AFURLSessionManager.m */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		18DAC1E71C3216FE00F342A4 /* Masonry */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC1E81C3216FE00F342A4 /* Info.plist */,
+				18DAC1E91C3216FE00F342A4 /* MASCompositeConstraint.h */,
+				18DAC1EA1C3216FE00F342A4 /* MASCompositeConstraint.m */,
+				18DAC1EB1C3216FE00F342A4 /* MASConstraint+Private.h */,
+				18DAC1EC1C3216FE00F342A4 /* MASConstraint.h */,
+				18DAC1ED1C3216FE00F342A4 /* MASConstraint.m */,
+				18DAC1EE1C3216FE00F342A4 /* MASConstraintMaker.h */,
+				18DAC1EF1C3216FE00F342A4 /* MASConstraintMaker.m */,
+				18DAC1F01C3216FE00F342A4 /* MASLayoutConstraint.h */,
+				18DAC1F11C3216FE00F342A4 /* MASLayoutConstraint.m */,
+				18DAC1F21C3216FE00F342A4 /* Masonry.h */,
+				18DAC1F31C3216FE00F342A4 /* MASUtilities.h */,
+				18DAC1F41C3216FE00F342A4 /* MASViewAttribute.h */,
+				18DAC1F51C3216FE00F342A4 /* MASViewAttribute.m */,
+				18DAC1F61C3216FE00F342A4 /* MASViewConstraint.h */,
+				18DAC1F71C3216FE00F342A4 /* MASViewConstraint.m */,
+				18DAC1F81C3216FE00F342A4 /* NSArray+MASAdditions.h */,
+				18DAC1F91C3216FE00F342A4 /* NSArray+MASAdditions.m */,
+				18DAC1FA1C3216FE00F342A4 /* NSArray+MASShorthandAdditions.h */,
+				18DAC1FB1C3216FE00F342A4 /* NSLayoutConstraint+MASDebugAdditions.h */,
+				18DAC1FC1C3216FE00F342A4 /* NSLayoutConstraint+MASDebugAdditions.m */,
+				18DAC1FD1C3216FE00F342A4 /* View+MASAdditions.h */,
+				18DAC1FE1C3216FE00F342A4 /* View+MASAdditions.m */,
+				18DAC1FF1C3216FE00F342A4 /* View+MASShorthandAdditions.h */,
+			);
+			path = Masonry;
+			sourceTree = "<group>";
+		};
+		18DAC2001C3216FE00F342A4 /* main */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC2011C3216FE00F342A4 /* C */,
+				18DAC2041C3216FE00F342A4 /* M */,
+				18DAC2051C3216FE00F342A4 /* O */,
+				18DAC2061C3216FE00F342A4 /* V */,
+			);
+			path = main;
+			sourceTree = "<group>";
+		};
+		18DAC2011C3216FE00F342A4 /* C */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC2021C3216FE00F342A4 /* AudioVC.h */,
+				18DAC2031C3216FE00F342A4 /* AudioVC.m */,
+				18DAC2431C32636300F342A4 /* VideoVC.h */,
+				18DAC2441C32636300F342A4 /* VideoVC.m */,
+				18DAC2461C32762E00F342A4 /* VideoVC02.h */,
+				18DAC2471C32762E00F342A4 /* VideoVC02.m */,
+				18DAC24B1C328AD900F342A4 /* VideoVC03.h */,
+				18DAC24C1C328AD900F342A4 /* VideoVC03.m */,
+			);
+			path = C;
+			sourceTree = "<group>";
+		};
+		18DAC2041C3216FE00F342A4 /* M */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = M;
+			sourceTree = "<group>";
+		};
+		18DAC2051C3216FE00F342A4 /* O */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = O;
+			sourceTree = "<group>";
+		};
+		18DAC2061C3216FE00F342A4 /* V */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = V;
+			sourceTree = "<group>";
+		};
+		18DAC2071C3216FE00F342A4 /* submodule */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC2081C3216FE00F342A4 /* home */,
+			);
+			path = submodule;
+			sourceTree = "<group>";
+		};
+		18DAC2081C3216FE00F342A4 /* home */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC2091C3216FE00F342A4 /* C */,
+				18DAC20A1C3216FE00F342A4 /* M */,
+				18DAC20B1C3216FE00F342A4 /* O */,
+				18DAC20C1C3216FE00F342A4 /* V */,
+			);
+			path = home;
+			sourceTree = "<group>";
+		};
+		18DAC2091C3216FE00F342A4 /* C */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = C;
+			sourceTree = "<group>";
+		};
+		18DAC20A1C3216FE00F342A4 /* M */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = M;
+			sourceTree = "<group>";
+		};
+		18DAC20B1C3216FE00F342A4 /* O */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = O;
+			sourceTree = "<group>";
+		};
+		18DAC20C1C3216FE00F342A4 /* V */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = V;
+			sourceTree = "<group>";
+		};
+		18DAC24E1C32AE9600F342A4 /* note */ = {
+			isa = PBXGroup;
+			children = (
+				18DAC24F1C32AE9600F342A4 /* 音频:视频-课堂笔记.m */,
+			);
+			path = note;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		18DAC1891C3216BB00F342A4 /* day55-videoNaudios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18DAC1A11C3216BB00F342A4 /* Build configuration list for PBXNativeTarget "day55-videoNaudios" */;
+			buildPhases = (
+				18DAC1861C3216BB00F342A4 /* Sources */,
+				18DAC1871C3216BB00F342A4 /* Frameworks */,
+				18DAC1881C3216BB00F342A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "day55-videoNaudios";
+			productName = "day55-videoNaudios";
+			productReference = 18DAC18A1C3216BB00F342A4 /* day55-videoNaudios.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18DAC1821C3216BB00F342A4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = yf;
+				TargetAttributes = {
+					18DAC1891C3216BB00F342A4 = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 18DAC1851C3216BB00F342A4 /* Build configuration list for PBXProject "day55-videoNaudios" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 18DAC1811C3216BB00F342A4;
+			productRefGroup = 18DAC18B1C3216BB00F342A4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				18DAC1891C3216BB00F342A4 /* day55-videoNaudios */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		18DAC1881C3216BB00F342A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18DAC22B1C3216FE00F342A4 /* Info.plist in Resources */,
+				18DAC21F1C3216FE00F342A4 /* Localizable.strings in Resources */,
+				18DAC19D1C3216BB00F342A4 /* LaunchScreen.storyboard in Resources */,
+				18DAC21E1C3216FE00F342A4 /* InfoPlist.strings in Resources */,
+				18DAC21B1C3216FE00F342A4 /* cons.plist in Resources */,
+				18DAC2201C3216FE00F342A4 /* conf.plist in Resources */,
+				18DAC19A1C3216BB00F342A4 /* Assets.xcassets in Resources */,
+				18DAC2211C3216FE00F342A4 /* mystring.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		18DAC1861C3216BB00F342A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18DAC2221C3216FE00F342A4 /* AFHTTPRequestOperation.m in Sources */,
+				18DAC2131C3216FE00F342A4 /* NSString+Ex.m in Sources */,
+				18DAC2101C3216FE00F342A4 /* NSArray+Ex.m in Sources */,
+				18DAC2111C3216FE00F342A4 /* NSDate+Ex.m in Sources */,
+				18DAC2181C3216FE00F342A4 /* UIView+Ex.m in Sources */,
+				18DAC2321C3216FE00F342A4 /* NSArray+MASAdditions.m in Sources */,
+				18DAC2161C3216FE00F342A4 /* UIColor+Ex.m in Sources */,
+				18DAC21A1C3216FE00F342A4 /* YFCate.m in Sources */,
+				18DAC2241C3216FE00F342A4 /* AFHTTPSessionManager.m in Sources */,
+				18DAC2171C3216FE00F342A4 /* UIImage+Ex.m in Sources */,
+				18DAC20E1C3216FE00F342A4 /* IUtil.m in Sources */,
+				18DAC2251C3216FE00F342A4 /* AFNetworkReachabilityManager.m in Sources */,
+				18DAC22E1C3216FE00F342A4 /* MASConstraintMaker.m in Sources */,
+				18DAC2341C3216FE00F342A4 /* View+MASAdditions.m in Sources */,
+				18DAC2331C3216FE00F342A4 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				18DAC22A1C3216FE00F342A4 /* AFURLSessionManager.m in Sources */,
+				18DAC22D1C3216FE00F342A4 /* MASConstraint.m in Sources */,
+				18DAC2141C3216FE00F342A4 /* NSString+Hash.m in Sources */,
+				18DAC2311C3216FE00F342A4 /* MASViewConstraint.m in Sources */,
+				18DAC2151C3216FE00F342A4 /* UIBarButtonItem+Ex.m in Sources */,
+				18DAC2271C3216FE00F342A4 /* AFURLConnectionOperation.m in Sources */,
+				18DAC2291C3216FE00F342A4 /* AFURLResponseSerialization.m in Sources */,
+				18DAC2481C32762E00F342A4 /* VideoVC02.m in Sources */,
+				18DAC21C1C3216FE00F342A4 /* YFConst.m in Sources */,
+				18DAC2281C3216FE00F342A4 /* AFURLRequestSerialization.m in Sources */,
+				18DAC24D1C328AD900F342A4 /* VideoVC03.m in Sources */,
+				18DAC2451C32636300F342A4 /* VideoVC.m in Sources */,
+				18DAC20F1C3216FE00F342A4 /* NetUtil.m in Sources */,
+				18DAC2501C32AE9600F342A4 /* 音频:视频-课堂笔记.m in Sources */,
+				18DAC2381C321EB600F342A4 /* AVUtil.m in Sources */,
+				18DAC2351C3216FE00F342A4 /* AudioVC.m in Sources */,
+				18DAC18F1C3216BB00F342A4 /* main.m in Sources */,
+				18DAC2301C3216FE00F342A4 /* MASViewAttribute.m in Sources */,
+				18DAC22F1C3216FE00F342A4 /* MASLayoutConstraint.m in Sources */,
+				18DAC2191C3216FE00F342A4 /* UIViewController+Ex.m in Sources */,
+				18DAC21D1C3216FE00F342A4 /* AppDelegate.m in Sources */,
+				18DAC22C1C3216FE00F342A4 /* MASCompositeConstraint.m in Sources */,
+				18DAC20D1C3216FE00F342A4 /* FileUtil.m in Sources */,
+				18DAC2231C3216FE00F342A4 /* AFHTTPRequestOperationManager.m in Sources */,
+				18DAC2261C3216FE00F342A4 /* AFSecurityPolicy.m in Sources */,
+				18DAC2121C3216FE00F342A4 /* NSObject+Ex.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		18DAC19B1C3216BB00F342A4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18DAC19C1C3216BB00F342A4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		18DAC1CA1C3216FD00F342A4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18DAC1CB1C3216FD00F342A4 /* Base */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		18DAC1CC1C3216FD00F342A4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				18DAC1CD1C3216FD00F342A4 /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		18DAC19F1C3216BB00F342A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		18DAC1A01C3216BB00F342A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		18DAC1A21C3216BB00F342A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "day55-videoNaudios/src/conf/PrefixHeader.pch";
+				INFOPLIST_FILE = "day55-videoNaudios/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yf.day55-videoNaudios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		18DAC1A31C3216BB00F342A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "day55-videoNaudios/src/conf/PrefixHeader.pch";
+				INFOPLIST_FILE = "day55-videoNaudios/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yf.day55-videoNaudios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		18DAC1851C3216BB00F342A4 /* Build configuration list for PBXProject "day55-videoNaudios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18DAC19F1C3216BB00F342A4 /* Debug */,
+				18DAC1A01C3216BB00F342A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18DAC1A11C3216BB00F342A4 /* Build configuration list for PBXNativeTarget "day55-videoNaudios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18DAC1A21C3216BB00F342A4 /* Debug */,
+				18DAC1A31C3216BB00F342A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 18DAC1821C3216BB00F342A4 /* Project object */;
+}

@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>初始化返回 nil | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_21">初始化返回 nil</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BF%94%E5%9B%9E-nil" class="calibre1">初始化返回 nil</h1>
+<p class="calibre9">在 Objective-C 中，<code class="calibre13 pcalibre6 pcalibre5">init</code> 方法除了返回 <code class="calibre13 pcalibre6 pcalibre5">self</code> 以外，其实和一个普通的实例方法并没有太大区别。如果你喜欢的话，甚至可以多次进行调用，这都没有限制。一般来说，我们还会在初始化失败 (比如输入不满足要求无法正确初始化) 的时候返回 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 来通知调用者这次初始化没有正确完成。</p>
+<p class="calibre9">但是，在 Swift 中默认情况下初始化方法是不能写 <code class="calibre13 pcalibre6 pcalibre5">return</code> 语句来返回值的，也就是说我们没有机会初始化一个 Optional 的值。一个很典型的例子就是初始化一个 url。在 Objective-C 中，如果我们使用一个错误的字符串来初始化一个 <code class="calibre13 pcalibre6 pcalibre5">NSURL</code> 对象时，返回会是 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 代表初始化失败。所以下面这种 "防止度娘吞链接" 式的字符串 (注意两个 t 之间的空格和中文的句号) 的话，也是可以正常编译和运行的，只是结果是个 <code class="calibre13 pcalibre6 pcalibre5">nil</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">NSURL</span> *url = [[<span class="hljs-params">NSURL</span> alloc] initWithString:<span class="hljs-string">@"ht tp://swifter。tips"</span>];
+<span class="hljs-params">NSLog</span>(<span class="hljs-string">@"%@"</span>,url);
+<span class="hljs-title">// 输出 (null)</span>
+</code></pre>
+<p class="calibre9">但是在 Swift 中情况就不那么乐观了，<code class="calibre13 pcalibre6 pcalibre5">-initWithString:</code> 在 Swift 中对应的是一个 convenience init 方法：<code class="calibre13 pcalibre6 pcalibre5">init(string URLString: String!)</code>。上面的 Objective-C 代码在 Swift 中等效为：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> url = <span class="hljs-func">NSURL</span>(string: <span class="hljs-string">"ht tp://swifter。tips"</span>)
+<span class="hljs-params">print</span>(url)
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">init</code> 方法在 Swift 1.1 中发生了很大的变化，为了将来龙去脉讲述清楚，我们先来看看在 Swift 1.0 下的表现。</p>
+<h3 id="swift-1-0-%E5%8F%8A%E4%B9%8B%E5%89%8D" class="calibre8">Swift 1.0 及之前</h3>
+<p class="calibre9">如果在 Swift 1.0 的环境下尝试运行上面代码的话，我们会得到一个 <code class="calibre13 pcalibre6 pcalibre5">EXC_BAD_INSTRUCTION</code>，这说明触发了 Swift 内部的断言，这个初始化方法不接受这样的输入。一个常见的解决方法是使用工厂模式，也就是写一个类方法来生成和返回实例，或者在失败的时候返回 <code class="calibre13 pcalibre6 pcalibre5">nil</code>。Swift 的 <code class="calibre13 pcalibre6 pcalibre5">NSURL</code> 就做了这样的处理：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">URLWithString</span>(<span class="hljs-title">URLString</span>: <span class="hljs-title">String</span>!) -&gt; <span class="hljs-title">Self</span>!
+</span></code></pre>
+<p class="calibre9">使用的时候：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> url = <span class="hljs-func">NSURL</span>.<span class="hljs-func">URLWithString</span>(<span class="hljs-string">"ht tp://swifter。tips"</span>)
+<span class="hljs-params">print</span>(url)
+<span class="hljs-title">// 输出 nil</span>
+</code></pre>
+<p class="calibre9">不过虽然可以用这种方式来和原来一样返回 <code class="calibre13 pcalibre6 pcalibre5">nil</code>，但是这也算是一种折衷。在可能的情况下，我们还是应该倾向于尽量减少出现 Optional 的可能性，这样更有助于代码的简化。</p>
+<blockquote class="calibre6">
+<p class="calibre9">如果你确实想使用初始化方法而不愿意用工厂函数的话，也可以考虑用一个 Optional 量来存储结果</p>
+<p class="calibre9">这样你就可以处理初始化失败了，不过相应的代价是代码复杂度的增加</p>
+<pre class="calibre14"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> url: <span class="hljs-func">NSURL</span>? = <span class="hljs-func">NSURL</span>(string: <span class="hljs-string">"ht tp://swifter。tips"</span>)
+<span class="hljs-title">// nil</span>
+</code></pre>
+</blockquote>
+<h3 id="swift-1-1-%E5%8F%8A%E4%B9%8B%E5%90%8E" class="calibre8">Swift 1.1 及之后</h3>
+<p class="calibre9">虽然在默认情况下不能在 <code class="calibre13 pcalibre6 pcalibre5">init</code> 中返回 <code class="calibre13 pcalibre6 pcalibre5">nil</code>，但是通过上面的例子我们可以看到 Apple 自家的 API 还是有这个能力的。</p>
+<p class="calibre9">好消息是在 Swift 1.1 中 Apple 已经为我们加上了初始化方法中返回 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 的能力。我们可以在 <code class="calibre13 pcalibre6 pcalibre5">init</code> 声明时在其后加上一个 <code class="calibre13 pcalibre6 pcalibre5">?</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">!</code> 来表示初始化失败时可能返回 <code class="calibre13 pcalibre6 pcalibre5">nil</code>。比如为 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 添加一个接收 <code class="calibre13 pcalibre6 pcalibre5">String</code> 作为参数的初始化方法。我们希望在方法中对中文和英文的数据进行解析，并输出 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 结果。对其解析并初始化的时候，就可能遇到初始化失败的情况：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">Int</span> </span>{
+    <span class="hljs-keyword">init</span>?(fromString: <span class="hljs-func">String</span>) {
+        <span class="hljs-keyword">self</span> = <span class="hljs-params">0</span>
+        <span class="hljs-keyword">var</span> digit = fromString.characters.<span class="hljs-params">count</span> - <span class="hljs-params">1</span>
+        <span class="hljs-keyword">for</span> <span class="hljs-params">c</span> <span class="hljs-keyword">in</span> fromString.characters {
+            <span class="hljs-keyword">var</span> number = <span class="hljs-params">0</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> n = <span class="hljs-func">Int</span>(<span class="hljs-func">String</span>(<span class="hljs-params">c</span>)) {
+                number = n
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">switch</span> <span class="hljs-params">c</span> {
+                <span class="hljs-keyword">case</span> <span class="hljs-string">"一"</span>: number = <span class="hljs-params">1</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-string">"二"</span>: number = <span class="hljs-params">2</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-string">"三"</span>: number = <span class="hljs-params">3</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-string">"四"</span>: number = <span class="hljs-params">4</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-string">"五"</span>: number = <span class="hljs-params">5</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-string">"六"</span>: number = <span class="hljs-params">6</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-string">"七"</span>: number = <span class="hljs-params">7</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-string">"八"</span>: number = <span class="hljs-params">8</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-string">"九"</span>: number = <span class="hljs-params">9</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-string">"零"</span>: number = <span class="hljs-params">0</span>
+                <span class="hljs-keyword">default</span>: <span class="hljs-keyword">return</span> <span class="hljs-params">nil</span>
+                }
+            }
+
+            <span class="hljs-keyword">self</span> = <span class="hljs-keyword">self</span> + number * <span class="hljs-func">Int</span>(pow(<span class="hljs-params">10</span>, <span class="hljs-func">Double</span>(digit)))
+            digit = digit - <span class="hljs-params">1</span>
+        }
+    }
+}
+
+<span class="hljs-keyword">let</span> number1 = <span class="hljs-func">Int</span>(fromString: <span class="hljs-string">"12"</span>)
+<span class="hljs-title">// {Some 12}</span>
+
+<span class="hljs-keyword">let</span> number2 = <span class="hljs-func">Int</span>(fromString: <span class="hljs-string">"三二五"</span>)
+<span class="hljs-title">// {Some 325}</span>
+
+<span class="hljs-keyword">let</span> number3 = <span class="hljs-func">Int</span>(fromString: <span class="hljs-string">"七9八"</span>)
+<span class="hljs-title">// {Some 798}</span>
+
+<span class="hljs-keyword">let</span> number4 = <span class="hljs-func">Int</span>(fromString: <span class="hljs-string">"吃了么"</span>)
+<span class="hljs-title">// nil</span>
+
+<span class="hljs-keyword">let</span> number5 = <span class="hljs-func">Int</span>(fromString: <span class="hljs-string">"1a4n"</span>)
+<span class="hljs-title">// nil</span>
+</code></pre>
+<p class="calibre9">所有的结果都将是 <code class="calibre13 pcalibre6 pcalibre5">Int?</code> 类型，通过 Optional Binding，我们就能知道初始化是否成功，并安全地使用它们了。我们在这类初始化方法中还可以对 <code class="calibre13 pcalibre6 pcalibre5">self</code> 进行赋值，也算是 <code class="calibre13 pcalibre6 pcalibre5">init</code> 方法里的特权之一。</p>
+<p class="calibre9">同时像上面例子中的 <code class="calibre13 pcalibre6 pcalibre5">NSURL.URLWithString</code> 这样的工厂方法，在 Swift 1.1 中已经不再需要。为了简化 API 和安全，Apple 已经被标记为不可用了并无法编译。而对应地，可能返回 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 的 <code class="calibre13 pcalibre6 pcalibre5">init</code> 方法都加上了 <code class="calibre13 pcalibre6 pcalibre5">?</code> 标记：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">convenience <span class="hljs-keyword">init</span>?(string <span class="hljs-func">URLString</span>: <span class="hljs-func">String</span>)
+</code></pre>
+<p class="calibre9">在新版本的 Swift 中，对于可能初始化失败的情况，我们应该始终使用可返回 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 的初始化方法，而不是类型工厂方法。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

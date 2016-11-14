@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>多类型和容器 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_24">多类型和容器</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%A4%9A%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%AE%B9%E5%99%A8" class="calibre1">多类型和容器</h1>
+<p class="calibre9">Swift 中有两个原生的容器类型，<code class="calibre13 pcalibre6 pcalibre5">Array</code> 和 <code class="calibre13 pcalibre6 pcalibre5">Dictionay</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">Array</span>&lt;<span class="hljs-title">Element</span>&gt; :
+    <span class="hljs-title">CollectionType</span>, <span class="hljs-title">Indexable</span>, <span class="hljs-title">SequenceType</span>,
+    <span class="hljs-title">MutableCollectionType</span>, <span class="hljs-title">_DestructorSafeContainer</span> </span>{
+
+    <span class="hljs-title">//...</span>
+
+}
+
+<span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">Dictionary</span>&lt;<span class="hljs-title">Key</span> : <span class="hljs-title">Hashable</span>, <span class="hljs-title">Value</span>&gt; :
+    <span class="hljs-title">CollectionType</span>, <span class="hljs-title">Indexable</span>, <span class="hljs-title">SequenceType</span>,
+    <span class="hljs-title">DictionaryLiteralConvertible</span> </span>{
+
+    <span class="hljs-title">//...</span>
+
+}
+</code></pre>
+<p class="calibre9">它们都是泛型的，也就是说我们在一个集合中只能放同一个类型的元素。比如：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> numbers = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>,<span class="hljs-params">4</span>,<span class="hljs-params">5</span>]
+<span class="hljs-title">// numbers 的类型是 [Int]</span>
+
+<span class="hljs-keyword">let</span> strings = [<span class="hljs-string">"hello"</span>, <span class="hljs-string">"world"</span>]
+<span class="hljs-title">// strings 的类型是 [String]</span>
+</code></pre>
+<p class="calibre9">如果我们要把不相关的类型放到同一个容器类型中的话，一个比较容易想到的是使用 <a href="any-anyObject.html" class="pcalibre pcalibre2 pcalibre1 calibre4"><code class="calibre13 pcalibre6 pcalibre5">Any</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code></a>，或者是使用 <code class="calibre13 pcalibre6 pcalibre5">NSArray</code>：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">import</span> <span class="hljs-func">UIKit</span>
+
+<span class="hljs-keyword">let</span> mixed: [<span class="hljs-func">Any</span>] = [<span class="hljs-params">1</span>, <span class="hljs-string">"two"</span>, <span class="hljs-params">3</span>]
+
+<span class="hljs-title">// 如果不指明类型，由于 UIKit 的存在</span>
+<span class="hljs-title">// 将被推断为 [NSObject]</span>
+<span class="hljs-keyword">let</span> objectArray = [<span class="hljs-params">1</span>, <span class="hljs-string">"two"</span>, <span class="hljs-params">3</span>]
+</code></pre>
+<p class="calibre9">这样的转换会造成部分信息的损失，我们从容器中取值时只能得到信息完全丢失后的结果，在使用时还需要进行一次类型转换。这其实是在无其他可选方案后的最差选择：因为使用这样的转换的话，编译器就不能再给我们提供警告信息了。我们可以随意地将任意对象添加进容器，也可以将容器中取出的值转换为任意类型，这是一件十分危险的事情：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> any = mixed[<span class="hljs-params">0</span>]  <span class="hljs-title">// Any 类型</span>
+<span class="hljs-keyword">let</span> nsObject = objectArray[<span class="hljs-params">0</span>] <span class="hljs-title">// NSObject 类型</span>
+</code></pre>
+<p class="calibre9">其实我们注意到，<code class="calibre13 pcalibre6 pcalibre5">Any</code> 其实是 <code class="calibre13 pcalibre6 pcalibre5">protocol</code>，而不是具体的某个类型。因此就是说其实在容器类型泛型的帮助下，我们不仅可以在容器中添加同一具体类型的对象，也可以添加实现了同一接口的类型的对象。绝大多数情况下，我们想要放入一个容器中的元素或多或少会有某些共同点，这就使得用接口来规定容器类型会很有用。比如上面的例子如果我们希望的是打印出容器内的元素的 <code class="calibre13 pcalibre6 pcalibre5">description</code>，可能我们更倾向于将数组声明为 <code class="calibre13 pcalibre6 pcalibre5">[CustomStringConvertible]</code> 的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">import</span> <span class="hljs-func">Foundation</span>
+<span class="hljs-keyword">let</span> mixed: [<span class="hljs-func">CustomStringConvertible</span>] = [<span class="hljs-params">1</span>, <span class="hljs-string">"two"</span>, <span class="hljs-params">3</span>]
+
+<span class="hljs-keyword">for</span> obj <span class="hljs-keyword">in</span> mixed {
+    <span class="hljs-params">print</span>(obj.description)
+}
+</code></pre>
+<p class="calibre9">这种方法虽然也损失了一部分类型信息，但是相对于 <code class="calibre13 pcalibre6 pcalibre5">Any</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 还是改善很多，在对于对象中存在某种共同特性的情况下无疑是最方便的。另一种做法是使用 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 可以带有值的特点，将类型信息封装到特定的 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 中。下面的代码封装了 <code class="calibre13 pcalibre6 pcalibre5">Int</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">String</code> 类型：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">import</span> <span class="hljs-func">Foundation</span>
+<span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">IntOrString</span> </span>{
+    <span class="hljs-keyword">case</span> <span class="hljs-func">IntValue</span>(<span class="hljs-func">Int</span>)
+    <span class="hljs-keyword">case</span> <span class="hljs-func">StringValue</span>(<span class="hljs-func">String</span>)
+}
+
+<span class="hljs-keyword">let</span> mixed = [<span class="hljs-func">IntOrString</span>.<span class="hljs-func">IntValue</span>(<span class="hljs-params">1</span>),
+             <span class="hljs-func">IntOrString</span>.<span class="hljs-func">StringValue</span>(<span class="hljs-string">"two"</span>),
+             <span class="hljs-func">IntOrString</span>.<span class="hljs-func">IntValue</span>(<span class="hljs-params">3</span>)]
+
+<span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> mixed {
+    <span class="hljs-keyword">switch</span> value {
+    <span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> .<span class="hljs-func">IntValue</span>(i):
+        <span class="hljs-params">println</span>(i * <span class="hljs-params">2</span>)
+    <span class="hljs-keyword">case</span> <span class="hljs-keyword">let</span> .<span class="hljs-func">StringValue</span>(s):
+        <span class="hljs-params">println</span>(s.capitalizedString)
+    }
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// 2</span>
+<span class="hljs-title">// Two</span>
+<span class="hljs-title">// 6</span>
+</code></pre>
+<p class="calibre9">通过这种方法，我们完整地在编译时保留了不同类型的信息。为了方便，我们甚至可以进一步为 <code class="calibre13 pcalibre6 pcalibre5">IntOrString</code> 使用<a href="literal-convertible.html" class="pcalibre pcalibre2 pcalibre1 calibre4">字面量转换</a>的方法编写简单的获取方式，但那是另外一个故事了。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

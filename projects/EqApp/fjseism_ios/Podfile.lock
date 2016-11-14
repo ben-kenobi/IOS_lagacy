@@ -1,0 +1,21 @@
+PODS:
+  - ArcGIS-Runtime-SDK-iOS (10.2.5)
+  - pop (1.0.9)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - SSZipArchive (1.6.1)
+
+DEPENDENCIES:
+  - ArcGIS-Runtime-SDK-iOS
+  - pop
+  - SDWebImage
+  - SSZipArchive
+
+SPEC CHECKSUMS:
+  ArcGIS-Runtime-SDK-iOS: 0d62980b8ed60c1ee8ca292c1c644e74e0e922aa
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SSZipArchive: 0847403f612553a361f9b44f1c7e135cefbc668d
+
+COCOAPODS: 0.39.0

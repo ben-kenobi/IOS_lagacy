@@ -1,0 +1,415 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>KVC - gagag - 博客园</title>
+<link type="text/css" rel="stylesheet" href="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/style.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/jay-dong/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/jay-dong/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/jay-dong/wlwmanifest.xml">
+<script src="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/gpt.js" type="text/javascript" async=""></script><script src="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'jay-dong', cb_enable_mathjax=false;</script>
+<script src="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.js" type="text/javascript"></script>
+<script src="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/pubads_impl_42.js" type="text/javascript" async=""></script><script src="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/osd.js" type="text/javascript"></script></head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/jay-dong/"><img id="blogLogo" src="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/jay-dong/">gagag</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="navigator">
+			
+<!--done-->
+			<ul id="navList">
+				<li><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+				<li><a id="MyLinks1_IngLink" class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+				<li><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/jay-dong/">首页</a></li>
+				<li><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+				<li><a id="MyLinks1_ContactLink" accesskey="9" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/gagag">联系</a></li>
+				<li><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+				<li><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/jay-dong/rss">订阅</a>
+				<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/jay-dong/rss"><img src="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/xml.gif" alt="订阅"></a></li>
+			</ul>
+
+
+			<div class="blogStats">
+				
+				
+<!--done-->
+随笔- 52&nbsp;
+文章- 0&nbsp;
+评论- 7&nbsp;
+
+				
+			</div><!--end: blogStats -->
+		</div><!--end: navigator 博客导航栏 -->
+		
+
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/jay-dong/archive/2012/12/13/2815778.html">KVC</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><div id="sina_keyword_ad_area2" class="articalContent  ">
+<p>熟悉oc语法的同学也许都会懂得这么一点：在oc中，类的成员变量或是方法是没有绝对私有的。</p>
+<p>私有方法直接通过类实例无法访问，但可以借助oc的“编译运行时”机制，也即“瞎子摸黑”机制（个人理解：只要确定了该类有方法A，管你是私有共
+有，我用performSelector函数就能调用你），说到这，也许有同学会自然想起，那私有变量如何去访问呢？貌似以前还真没这样搞过，然而现实是
+可以的，只不过一般我们把变量设为类的私有变量后是不希望自己或是其他人再去访问的，不然我只能说你自己又在找贱了。。。。。。。。。。。。。。</p>
+<p>好吧，言归正传，这篇文章主要是想介绍下oc中的KVC、KVO、KVB的实现机制，当然跟我上面说的那些肯定是有关系的啦。。</p>
+<h2><strong>1. KVC:&nbsp; key-value coding(键值编码)</strong></h2>
+<p>它 
+是一种使用字符串标识符，间接访问对象属性的机制，它是很多技术的基础。主要的方法就两对方法：
+（setValue:forKey，valueForKey）、setValue:forKeyPath，valueForKeyPath）；这个东西有
+什么作用呢，我先不说原理，先说怎么用，例子如下：</p>
+<pre>@interface A { NSString* foo; }<br>&nbsp;... // 其它代码<br>&nbsp;@end <br>@interface B { NSString* bar; A* myA; }<br>&nbsp;... // 其它代码 <br>@end <br>@implementation B <br>... // 假设 A 类型的对象 a，B 类型的对象<br>&nbsp;b A* a = ...;<br>&nbsp;B* b = ...;<br>&nbsp;NSString* s1 = [a valueForKey:@"foo"]; // 正确<br>&nbsp;NSString* s2 = [b valueForKey:@"bar"]; // 正确<br>&nbsp;NSString* s3 = [b valueForKey:@"myA"]; // 正确<br>&nbsp;NSString* s4 = [b valueForKeyPath:@"myA.foo"]; // 正确<br>&nbsp;NSString* s5 = [b valueForKey:@"myA.foo"]; // 错误<br>&nbsp;NSString* s6 = [b valueForKeyPath:@"bar"]; // 正确<br>&nbsp;... <br>@end</pre>
+<p>其实上面说的那两对方法使用上基本是一样的，只是valueForKeyPath的值是一个路径（路径之间以点号 . 分割），比如数据成员就是对象自己，寻值过程就会向下深入下去。<br>注意，这里的数据成员的名字都是使用的字符串的形式。这种使用方法的最好的用处在于将数据（名字）绑定到一些触发器（尤其是方法调用）上，<br>例如键值对观察（Key-Value Observing, KVO）等。</p>
+<p>上述代码说明了类的成员变量也可以使用基类NSObject的那两对方法去访问，不一定直接通过类实例访问，但是这种方式还是有一定的风险，具体危
+险情况请参考这个：http://www.devbean.info/2011/04/from_cpp_to_objc_20/<br>然后我再说下原理，是俺Copy过来的，大家观赏下：<br>KVC运用了一个isa- swizzling技术。isa-swizzling就是类型混合指针机制。KVC主要通过isa- swizzling，来实现其内部查找定位的。<br>isa指针，如其名称所指，（就是is a kind of的意思），指向维护分发表的对象的类。该分发表实际上包含了指向实现类中的方法的指针，和其它数据。</p>
+<p>比如说如下的一行KVC的代码：</p>
+<p>[site setValue:@"sitename" forKey:@"name"];<br>就会被编译器处理成：</p>
+<p>SEL sel = sel_get_uid ("setValue:forKey:");<br>IMP method = objc_msg_lookup (site-&gt;isa,sel);<br>method(site, sel, @"sitename", @"name");<br>首先介绍两个基本概念：</p>
+<p>（1）SEL数据类型：它是编译器运行Objective-C里的方法的环境参数。</p>
+<p>（2）IMP数据 类型：他其实就是一个编译器内部实现时候的函数指针。当Objective-C编译器去处理实现一个方法的时候，就会指向一个IMP对象，这个对象是C语言表述的类型（事实上，在Objective-C的编译器处理的时候，基本上都是C语言的）。<br>这下KVC内部的实现就很清楚的清楚了：一个对象在调用setValue的时候，<br>（1）首先根据方法名找到运行方法的时候所需要的环境参 数。<br>（2）他会从自己isa指针结合环境参数，找到具体的方法实现的接口。<br>（3）再直接查找得来的具体的方法实现。</p>
+<h2><strong>2.KVO:&nbsp; key-value observing(键值监听)与KVB: key-value Binding（键值绑定）</strong></h2>
+<p>这两个机制是结合起来使用的，分别说下，</p>
+<p>Key-Value Observing (简写为KVO)：当指定的对象的属性被修改了，允许对象接受到通知的机制。每次指定的被观察对象的属性被修改的时候，KVO都会自动的去通知相应的观察者。</p>
+<p>KVO的优点</p>
+<p>当 
+有属性改变，KVO会提供自动的消息通知。这样的架构有很多好处。首先，开发人员不需要自己去实现这样的方案：每次属性改变了就发送消息通知。这是KVO
+机制提供的最大的优点。因为这个方案已经被明确定义，获得框架级支持，可以方便地采用。开发人员不需要添加任何代码，不需要设计自己的观察者模型，直接可
+以在工程里使用。其次，KVO的架构非常的强大，可以很容易的支持多个观察者观察同一个属性，以及相关的值。</p>
+<p>KVB实现的两个基本方法<br>1:为对象添加观察者OBserver&nbsp; addObserver:forKeyPath:options:context:<br>2:观察者OBserver收到信息的处理函数&nbsp;&nbsp; observeValueForKeyPath:ofObject:change:context:</p>
+<p>KVO和KVB最明显的使用场景就是在一些界面实时显示行很强的地方，比如股票走向、售票余额等，这种方式免去了我们自己操作通知的麻烦，想到这，我发现当初点金和91市场中下载页面进度的显示也完全可以采用这种方式。</p>
+<p>先说到这儿吧，更精彩的待续。。。。。。。。</p>
+<p>原英文链接：http://maniacdev.com/2012/12/helper-classes-for-easy-cocoa-touch-key-value-observing-kvo-and-key-value-binding-kvb/</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>1、setValue:forKey: 可以访问到setXXX：方法。</p>
+<p>2、valueForKey：可以访问到实例变量和不带参数的方法。</p>
+<p>3、performSelector可以访问所有方法。</p>
+</div></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(cb_entryId,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/gagag" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/jay-dong/" target="_blank"><img src="KVC%20-%20gagag%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/sample_face.gif" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/jay-dong/">gagag</a><br>
+<a href="http://home.cnblogs.com/u/jay-dong/followees">关注 - 3</a><br>
+<a href="http://home.cnblogs.com/u/jay-dong/followers">粉丝 - 9</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+	<div class="diggit" onclick="votePost(cb_entryId,'Digg')"> 
+		<span class="diggnum" id="digg_count">2</span>
+	</div>
+	<div class="buryit" onclick="votePost(cb_entryId,'Bury')"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/jay-dong/archive/2012/11/15/2772414.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/jay-dong/archive/2012/11/15/2772414.html" title="发布于2012-11-15 22:41">oc宏</a><br><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/17/2821379.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/jay-dong/archive/2012/12/17/2821379.html" title="发布于2012-12-17 10:57">iOS学习之iOS沙盒(sandbox)机制和文件操作(转)</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2012-12-13 10:02</span> <a href="http://www.cnblogs.com/jay-dong/">gagag</a> 阅读(<span id="post_view_count">4000</span>) 评论(<span id="post_comment_count">3</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=2815778" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2815778);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=116139,cb_entryId=2815778,cb_blogApp=currentBlogApp,cb_blogUserGuid='4d16182c-4490-e111-aa3f-842b2b196315',cb_entryCreatedDate='2012/12/13 10:02:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+<a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<!--done-->
+<br>
+<div class="feedback_area_title">评论</div>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#2735567" class="layer">#1楼</a><a name="2735567" id="comment_anchor_2735567"></a> <span class="comment_date">2013-07-25 20:03</span> | <a id="a_comment_author_2735567" href="http://home.cnblogs.com/u/551596/" target="_blank">流浪先生</a> <a href="http://space.cnblogs.com/msg/send/%e6%b5%81%e6%b5%aa%e5%85%88%e7%94%9f" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2735567" class="blog_comment_body">谢谢 有用 不过能不能把全部代码都给出来啊。。。。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2735567,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2735567,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#2836525" class="layer">#2楼</a><a name="2836525" id="comment_anchor_2836525"></a> <span class="comment_date">2013-12-13 11:35</span> | <a id="a_comment_author_2836525" href="http://www.cnblogs.com/heyonggang/" target="_blank">夏雪冬日</a> <a href="http://space.cnblogs.com/msg/send/%e5%a4%8f%e9%9b%aa%e5%86%ac%e6%97%a5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2836525" class="blog_comment_body">受用。赞一个！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2836525,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2836525,'Bury',this)">反对(0)</a></div><span id="comment_2836525_avatar" style="display:none;">http://pic.cnitblog.com/face/u478153.jpg?id=28172557</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="#2889118" class="layer">#3楼</a><a name="2889118" id="comment_anchor_2889118"></a><span id="comment-maxId" style="display:none;">2889118</span><span id="comment-maxDate" style="display:none;">2014/3/5 18:13:25</span> <span class="comment_date">2014-03-05 18:13</span> | <a id="a_comment_author_2889118" href="http://home.cnblogs.com/u/592297/" target="_blank">kissweng</a> <a href="http://space.cnblogs.com/msg/send/kissweng" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2889118" class="blog_comment_body">赞一个。。。。。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2889118,'Digg',this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2889118,'Bury',this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login('commentform');">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="开发者的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    var enableGoogleAd = true;var googletag = googletag || {};googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</script>
+<div id="ad_under_post_holder">
+<script type="text/javascript">
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        var gads = document.createElement('script');
+        gads.async = true;
+        gads.type = 'text/javascript';
+        var useSSL = 'https:' == document.location.protocol;
+        gads.src = (useSSL ? 'https:' : 'http:') +'//www.googletagservices.com/tag/js/gpt.js';
+        var node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(gads, node);
+    })();
+</script>
+<script type="text/javascript">
+    try {
+        googletag.cmd.push(function () {
+            googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    } catch (e) { }
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+    <div id="div-gpt-ad-1346480159711-0" style="width: 300px; height: 250px;">
+    <script type="text/javascript">
+    try{
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });
+    } catch (e) { }
+    </script>
+    <div style="border: 0pt none;" id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__container__"><iframe src="javascript:&quot;<html><body style='background:transparent'></body></html>&quot;" style="border: 0px none; vertical-align: bottom;" marginheight="0" marginwidth="0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" frameborder="0" height="250" scrolling="no" width="300"></iframe></div><iframe src="javascript:&quot;<html><body style='background:transparent'></body></html>&quot;" style="border: 0px none; vertical-align: bottom; visibility: hidden; display: none;" marginheight="0" marginwidth="0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" frameborder="0" height="0" scrolling="no" width="0"></iframe></div>
+</div>
+</div>
+<div id="blog_news_kb"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/212276/" target="_blank">皮尤研究中心：未来互联网世界“威胁”重重</a><br> ·  <a href="http://news.cnblogs.com/n/212235/" target="_blank">欧洲掀起反对数字殖民战争：阻击硅谷科技巨头</a><br> ·  <a href="http://news.cnblogs.com/n/212217/" target="_blank">谷歌收购Songza物美价廉 苹果收购Beats是浪费</a><br> ·  <a href="http://news.cnblogs.com/n/212216/" target="_blank">智能手表缺乏卖点 Android Wear任重道远</a><br> ·  <a href="http://news.cnblogs.com/n/212215/" target="_blank">12招让你的孩子成为科技大富翁</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/211867/" target="_blank">程序员的自我修养(2)——计算机网络</a><br> ·  <a href="http://kb.cnblogs.com/page/188386/" target="_blank">你是否中了工程师文化的毒？</a><br> ·  <a href="http://kb.cnblogs.com/page/187094/" target="_blank">不安分的工程师</a><br> ·  <a href="http://kb.cnblogs.com/page/211670/" target="_blank">流量劫持——浮层登录框的隐患</a><br> ·  <a href="http://kb.cnblogs.com/page/201982/" target="_blank">Amazon前技术副总裁解剖完美技术面试</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    $.ajax({ url: 'http://counter.cnblogs.com/blog/post/' + cb_entryId, type: 'get', dataType: 'script', cache: true });
+});
+</script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/jay-dong/">gagag</a><br>园龄：<a href="http://home.cnblogs.com/u/jay-dong/" title="入园时间：2012-04-27">2年2个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/jay-dong/followers/">9</a><br>关注：<a href="http://home.cnblogs.com/u/jay-dong/followees/">3</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger('4d16182c-4490-e111-aa3f-842b2b196315')">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" title="日历" cellpadding="0" cellspacing="0">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar('2012/11/01');return false;">&lt;</a></td><td align="center">2012年12月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar('2013/01/01');return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" abbr="日" scope="col" align="center">日</th><th class="CalDayHeader" abbr="一" scope="col" align="center">一</th><th class="CalDayHeader" abbr="二" scope="col" align="center">二</th><th class="CalDayHeader" abbr="三" scope="col" align="center">三</th><th class="CalDayHeader" abbr="四" scope="col" align="center">四</th><th class="CalDayHeader" abbr="五" scope="col" align="center">五</th><th class="CalDayHeader" abbr="六" scope="col" align="center">六</th></tr><tr><td class="CalOtherMonthDay" align="center">25</td><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalWeekendDay" align="center">1</td></tr><tr><td class="CalWeekendDay" align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td class="CalWeekendDay" align="center">8</td></tr><tr><td class="CalWeekendDay" align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center"><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/13.html"><u>13</u></a></td><td align="center">14</td><td class="CalWeekendDay" align="center">15</td></tr><tr><td class="CalWeekendDay" align="center">16</td><td align="center"><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/17.html"><u>17</u></a></td><td align="center"><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/18.html"><u>18</u></a></td><td align="center">19</td><td align="center">20</td><td align="center"><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/21.html"><u>21</u></a></td><td class="CalWeekendDay" align="center">22</td></tr><tr><td class="CalWeekendDay" align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td align="center">27</td><td align="center"><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/28.html"><u>28</u></a></td><td class="CalWeekendDay" align="center">29</td></tr><tr><td class="CalWeekendDay" align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+<div class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk" type="text">&nbsp;<input onclick="zzk_go()" value="找找看" id="btnZzk" class="btn_my_zzk" type="button"></div>
+<div id="widget_my_google" class="div_my_zzk"><input name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk" type="text">&nbsp;<input onclick="google_go()" value="谷歌搜索" class="btn_my_zzk" type="button"></div>
+</div>
+
+
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/jay-dong/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/jay-dong/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/jay-dong/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/jay-dong/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/jay-dong/tag/" title="我的博客的标签列表">我的标签</a></li>
+<li><a id="itemListLink" onclick="this.blur();WarpClass('itemListLink', 'itemListLin_con');return false;" href="#">更多链接</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/jay-dong/tag/iOS%20%E7%99%BE%E5%BA%A6%E5%9C%B0%E5%9B%BE%20%E7%99%BE%E5%BA%A6%E5%9D%90%E6%A0%87%E7%B3%BB%20%E7%81%AB%E6%98%9F%E5%9D%90%E6%A0%87%E7%B3%BB%20%E5%9C%B0%E7%90%83%E5%9D%90%E6%A0%87%E7%B3%BB/">iOS 百度地图 百度坐标系 火星坐标系 地球坐标系</a>(1)</li>
+</ul>
+</div>
+<div class="catListPostCategory">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/jay-dong/category/492039.html">IOS6编程实践(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/jay-dong/category/459387.html">IOS开发_地图(1)</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catListPostArchive">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/jay-dong/archive/2013/09.html">2013年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/jay-dong/archive/2013/07.html">2013年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/jay-dong/archive/2013/06.html">2013年6月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/jay-dong/archive/2013/05.html">2013年5月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/jay-dong/archive/2013/03.html">2013年3月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/jay-dong/archive/2013/02.html">2013年2月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/jay-dong/archive/2013/01.html">2013年1月 (9)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/jay-dong/archive/2012/12.html">2012年12月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/jay-dong/archive/2012/11.html">2012年11月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/jay-dong/archive/2012/10.html">2012年10月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/jay-dong/archive/2012/09.html">2012年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/jay-dong/archive/2012/08.html">2012年8月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/jay-dong/archive/2012/07.html">2012年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/jay-dong/archive/2012/06.html">2012年6月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/jay-dong/archive/2012/05.html">2012年5月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/jay-dong/archive/2012/04.html">2012年4月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/jay-dong/archive/2012/09/26/2704188.html#2975647">1. Re:贝塞尔曲线初探</a></li>
+    <li class="recent_comment_body">霸气。。。</li>
+    <li class="recent_comment_author">--jsRunner</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/13/2815778.html#2889118">2. Re:KVC</a></li>
+    <li class="recent_comment_body">赞一个。。。。。</li>
+    <li class="recent_comment_author">--kissweng</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/13/2815778.html#2836525">3. Re:KVC</a></li>
+    <li class="recent_comment_body">受用。赞一个！</li>
+    <li class="recent_comment_author">--夏雪冬日</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/jay-dong/archive/2012/05/11/2496352.html#2768507">4. Re:cocos2d 动作</a></li>
+    <li class="recent_comment_body">不错。</li>
+    <li class="recent_comment_author">--畅游网络世界</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/jay-dong/archive/2013/03/13/2957648.html#2766535">5. Re:IOS定位与坐标系算法</a></li>
+    <li class="recent_comment_body">@Lexyconst double x_pi = 3.14159265358979324 * 3000.0 / 180.0;...</li>
+    <li class="recent_comment_author">--gagag</li>
+</ul>
+</div>
+</div>
+</div><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/jay-dong/archive/2013/01/21/2870414.html">1. IOS管理文件和目录(5026)</a></li><li><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/13/2815778.html">2. KVC(4001)</a></li><li><a href="http://www.cnblogs.com/jay-dong/archive/2012/05/11/2496352.html">3. cocos2d 动作(2988)</a></li><li><a href="http://www.cnblogs.com/jay-dong/archive/2012/07/23/2604916.html">4. oc 中随机数的用法（arc4random() 、random()、CCRANDOM_0_1()(2842)</a></li><li><a href="http://www.cnblogs.com/jay-dong/archive/2012/06/13/2547489.html">5. UIView相关方法(2429)</a></li></ul></div>
+</div>
+</div><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/13/2815778.html">1. KVC(3)</a></li><li><a href="http://www.cnblogs.com/jay-dong/archive/2013/03/13/2957648.html">2. IOS定位与坐标系算法(2)</a></li><li><a href="http://www.cnblogs.com/jay-dong/archive/2012/05/11/2496352.html">3. cocos2d 动作(1)</a></li><li><a href="http://www.cnblogs.com/jay-dong/archive/2012/09/26/2704188.html">4. 贝塞尔曲线初探(1)</a></li></ul></div>
+</div>
+</div><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/jay-dong/archive/2012/12/13/2815778.html">1. KVC(2)</a></li><li><a href="http://www.cnblogs.com/jay-dong/archive/2012/06/13/2547489.html">2. UIView相关方法(1)</a></li><li><a href="http://www.cnblogs.com/jay-dong/archive/2012/09/26/2704188.html">3. 贝塞尔曲线初探(1)</a></li></ul></div>
+</div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2014 gagag
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>

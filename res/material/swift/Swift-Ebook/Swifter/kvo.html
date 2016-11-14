@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>KVO | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_61">KVO</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="kvo" class="calibre1">KVO</h1>
+<p class="calibre9">KVO (Key-Value Observing) 是 Cocoa 中公认的最强大的特性之一，但是同时它也以烂到家的 API 和极其难用著称。和<a href="property-observer.html" class="pcalibre pcalibre2 pcalibre1 calibre4">属性观察</a>不同，KVO 的目的并不是为当前类的属性提供一个钩子方法，而是为了其他不同实例对当前的某个属性 (严格来说是 keypath) 进行监听时使用的。其他实例可以充当一个订阅者的角色，当被监听的属性发生变化时，订阅者将得到通知。</p>
+<p class="calibre9">这是一个很强大的属性，通过 KVO 我们可以实现很多松耦合的结构，使代码更加灵活和强大：像通过监听 model 的值来自动更新 UI 的绑定这样的工作，基本都是基于 KVO 来完成的。</p>
+<p class="calibre9">在 Swift 中我们也是可以使用 KVO 的，但是仅限于在 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的子类中。这是可以理解的，因为 KVO 是基于 KVC (Key-Value Coding) 以及动态派发技术实现的，而这些东西都是 Objective-C 运行时的概念。另外由于 Swift 为了效率，默认禁用了动态派发，因此想用 Swift 来实现 KVO，我们还需要做额外的工作，那就是将想要观测的对象标记为 <code class="calibre13 pcalibre6 pcalibre5">dynamic</code>。</p>
+<p class="calibre9">在 Swift 中，为一个 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的子类实现 KVO 的最简单的例子看起来是这样的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>: <span class="hljs-title">NSObject</span> </span>{
+    dynamic <span class="hljs-keyword">var</span> date = <span class="hljs-func">NSDate</span>()
+}
+
+private <span class="hljs-keyword">var</span> myContext = <span class="hljs-params">0</span>
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Class</span>: <span class="hljs-title">NSObject</span> </span>{
+
+    <span class="hljs-keyword">var</span> myObject: <span class="hljs-func">MyClass</span>!
+
+    <span class="hljs-keyword">override</span> <span class="hljs-keyword">init</span>() {
+        <span class="hljs-keyword">super</span>.<span class="hljs-keyword">init</span>()
+        myObject = <span class="hljs-func">MyClass</span>()
+        <span class="hljs-params">print</span>(<span class="hljs-string">"初始化 MyClass，当前日期: <span class="hljs-func">\(myObject.date)</span>"</span>)
+        myObject.addObserver(<span class="hljs-keyword">self</span>,
+            forKeyPath: <span class="hljs-string">"date"</span>,
+            options: .<span class="hljs-func">New</span>,
+            context: &amp;myContext)
+
+        delay(<span class="hljs-params">3</span>) {
+            <span class="hljs-keyword">self</span>.myObject.date = <span class="hljs-func">NSDate</span>()
+        }
+    }
+
+    <span class="hljs-keyword">override</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">observeValueForKeyPath</span><span class="hljs-params">(keyPath: String?,
+            ofObject object: AnyObject?,
+            change: [String : AnyObject]?,
+            context: UnsafeMutablePointer&lt;Void&gt;)</span></span>
+    {
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> change = change <span class="hljs-keyword">where</span> context == &amp;myContext {
+            <span class="hljs-keyword">let</span> a = change[<span class="hljs-func">NSKeyValueChangeNewKey</span>]
+            <span class="hljs-params">print</span>(<span class="hljs-string">"日期发生变化 <span class="hljs-func">\(a)</span>"</span>)
+        }
+    }
+}
+
+<span class="hljs-keyword">let</span> obj = <span class="hljs-func">Class</span>()
+</code></pre>
+<blockquote class="calibre6">
+<p class="calibre7">这段代码中用到了一个叫做 <code class="calibre13 pcalibre6 pcalibre5">delay</code> 的方法，这不是 Swift 的方法，而是本书在<a href="gcd-delay-call.html" class="pcalibre pcalibre2 pcalibre1 calibre4">延时调用</a>一节中实现的一个方法。这里您只需要理解我们是过了三秒以后在主线程将 <code class="calibre13 pcalibre6 pcalibre5">myObject</code> 中的时间更新到了当前时间即可。</p>
+</blockquote>
+<p class="calibre9">我们标明了 <code class="calibre13 pcalibre6 pcalibre5">MyClass</code> 的 <code class="calibre13 pcalibre6 pcalibre5">date</code> 为 <code class="calibre13 pcalibre6 pcalibre5">dynamic</code>，然后在一个 <code class="calibre13 pcalibre6 pcalibre5">Class</code> 的 <code class="calibre13 pcalibre6 pcalibre5">init</code> 中将自己添加为该实例的观察者。接下来等待了三秒钟之后改变了这个对象的被观察属性，这时我们的观察方法就将被调用。运行这段代码，输出应该类似于：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">初始化 MyClass，当前日期: 2014-08-23 16:37:20 +0000
+日期发生变化 Optional(2014-08-23 16:37:23 +0000)
+</code></pre><p class="calibre9">别忘了，新的值是从字典中取出的。虽然我们能够确定 (其实是 Cocoa 向我们保证) 这个字典中会有相应的键值，但是在实际使用的时候我们最好还是进行一下判断或者 Optional Binding 后再加以使用，毕竟世事难料。</p>
+<p class="calibre9">在 Swift 中使用 KVO 有两个显而易见的问题。</p>
+<p class="calibre9">首先是 Swift 的 KVO 需要依赖的东西比原来多。在 Objective-C 中我们几乎可以没有限制地对所有满足 KVC 的属性进行监听，而现在我们需要属性有 <code class="calibre13 pcalibre6 pcalibre5">dynamic</code> 进行修饰。大多数情况下，我们想要观察的类不一定是 <code class="calibre13 pcalibre6 pcalibre5">dynamic</code> 修饰的 (除非这个类的开发者有意为之，否则一般也不会有人愿意多花功夫在属性前加上 <code class="calibre13 pcalibre6 pcalibre5">dynamic</code>，因为这毕竟要损失一部分性能)，并且有时候我们很可能也无法修改想要观察的类的源码。遇到这样的情况的话，一个可能可行的方案是继承这个类并且将需要观察的属性使用 <code class="calibre13 pcalibre6 pcalibre5">dynamic</code> 进行重写。比如刚才我们的 <code class="calibre13 pcalibre6 pcalibre5">MyClass</code> 中如果 <code class="calibre13 pcalibre6 pcalibre5">date</code> 没有 <code class="calibre13 pcalibre6 pcalibre5">dynamic</code> 的话，我们可能就需要一个新的 <code class="calibre13 pcalibre6 pcalibre5">MyChildClass</code> 了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>: <span class="hljs-title">NSObject</span> </span>{
+    <span class="hljs-keyword">var</span> date = <span class="hljs-func">NSDate</span>()
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyChildClass</span>: <span class="hljs-title">MyClass</span> </span>{
+    dynamic <span class="hljs-keyword">override</span> <span class="hljs-keyword">var</span> date: <span class="hljs-func">NSDate</span> {
+        <span class="hljs-keyword">get</span> { <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.date }
+        <span class="hljs-keyword">set</span> { <span class="hljs-keyword">super</span>.date = newValue }
+    }
+}
+</code></pre>
+<p class="calibre9">对于这种重载，我们没有必要改变什么逻辑，所以在子类中简单地用 <code class="calibre13 pcalibre6 pcalibre5">super</code> 去调用父类里相关的属性就可以了。</p>
+<p class="calibre9">另一个大问题是对于那些非 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的 Swift 类型怎么办。因为 Swift 类型并没有通过 KVC 进行实现，所以更不用谈什么对属性进行 KVO 了。对于 Swift 类型，语言中现在暂时还没有原生的类似 KVO 的观察机制。我们可能只能通过<a href="property-observer.html" class="pcalibre pcalibre2 pcalibre1 calibre4">属性观察</a>来实现一套自己的类似替代了。结合泛型和闭包这些 Swift 的先进特性 (当然是相对于 Objective-C 来说的先进特性)，把 API 做得比原来的 KVO 更优雅其实不是一件难事。<a href="https://github.com/slazyk/Observable-Swift/tree/master/Observable-Swift" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">Observable-Swift</a> 就利用了这个思路实现了一套对 Swift 类型进行观察的机制，如果您也有类似的需求，不妨可以参考看看。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

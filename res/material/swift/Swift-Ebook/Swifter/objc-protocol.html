@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>可选接口和接口扩展 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_50">可选接口和接口扩展</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%8F%AF%E9%80%89%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8E%A5%E5%8F%A3%E6%89%A9%E5%B1%95" class="calibre1">可选接口和接口扩展</h1>
+<p class="calibre9">Objective-C 中的 <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 里存在 <code class="calibre13 pcalibre6 pcalibre5">@optional</code> 关键字，被这个关键字修饰的方法并非必须要被实现。我们可以通过接口定义一系列方法，然后由实现接口的类选择性地实现其中几个方法。在 Cocoa API 中很多情况下接口方法都是可选的，这点和 Swift 中的 <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 的所有方法都必须被实现这一特性完全不同。</p>
+<p class="calibre9">那些如果没有实现则接口就无法正常工作的方法一般是必须的，而相对地像作为事件通知或者对非关键属性进行配置的方法一般都是可选的。最好的例子我想应该是 <code class="calibre13 pcalibre6 pcalibre5">UITableViewDataSource</code> 和 <code class="calibre13 pcalibre6 pcalibre5">UITableViewDelegate</code>。前者中有两个必要方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">-tableView:numberOfRowsInSection:
+-tableView:cellForRowAtIndexPath:
+</code></pre>
+<p class="calibre9">分别用来计算和准备 tableView 的高度以及提供每一个 cell 的样式，而其他的像是返回 section 个数或者询问 cell 是否能被编辑的方法都有默认的行为，都是可选方法；后者 (<code class="calibre13 pcalibre6 pcalibre5">UITableViewDelegate</code>) 中的所有方法都是详细的配置和事件回传，因此全部都是可选的。</p>
+<p class="calibre9">原生的 Swift <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 里没有可选项，所有定义的方法都是必须实现的。如果我们想要像 Objective-C 里那样定义可选的接口方法，就需要将接口本身定义为 Objective-C 的，也即在 <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 定义之前加上 <code class="calibre13 pcalibre6 pcalibre5">@objc</code>。另外和 Objective-C 中的 <code class="calibre13 pcalibre6 pcalibre5">@optional</code> 不同，我们使用没有 <code class="calibre13 pcalibre6 pcalibre5">@</code> 符号的关键字 <code class="calibre13 pcalibre6 pcalibre5">optional</code> 来定义可选方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">@objc</span> <span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">OptionalProtocol</span> </span>{
+    optional <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">optionalMethod</span><span class="hljs-params">()</span></span>
+}
+</code></pre>
+<p class="calibre9">另外，对于所有的声明，它们的前缀修饰是完全分开的。也就是说你不能像是在 Objective-C 里那样用一个 <code class="calibre13 pcalibre6 pcalibre5">@optional</code> 指定接下来的若干个方法都是可选的了，必须对每一个可选方法添加前缀，对于没有前缀的方法来说，它们是默认必须实现的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">@objc</span> <span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">OptionalProtocol</span> </span>{
+    optional <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">optionalMethod</span><span class="hljs-params">()</span></span>  <span class="hljs-title">// 可选</span>
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">necessaryMethod</span><span class="hljs-params">()</span></span>          <span class="hljs-title">// 必须</span>
+    optional <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">anotherOptionalMethod</span><span class="hljs-params">()</span></span> <span class="hljs-title">// 可选</span>
+}
+</code></pre>
+<p class="calibre9">一个不可避免的限制是，使用 <code class="calibre13 pcalibre6 pcalibre5">@objc</code> 修饰的 <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 就只能被 <code class="calibre13 pcalibre6 pcalibre5">class</code> 实现了，也就是说，对于 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 和 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 类型，我们是无法令它们所实现的接口中含有可选方法或者属性的。另外，实现它的 class 中的方法还必须也被标注为 <code class="calibre13 pcalibre6 pcalibre5">@objc</code>，或者整个类就是继承自 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code>。这对我们写代码来说是一种很让人郁闷的限制。</p>
+<p class="calibre9">在 Swift 2.0 中，我们有了另一种选择，那就是使用 protocol extension。我们可以在声明一个 protocol 之后再用 extension 的方式给出部分方法默认的实现。这样这些方法在实际的类中就是可选实现的了。还是举上面的例子，使用接口扩展的话，会是这个样子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">OptionalProtocol</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">optionalMethod</span><span class="hljs-params">()</span></span>        <span class="hljs-title">// 可选</span>
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">necessaryMethod</span><span class="hljs-params">()</span></span>       <span class="hljs-title">// 必须</span>
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">anotherOptionalMethod</span><span class="hljs-params">()</span></span> <span class="hljs-title">// 可选</span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">OptionalProtocol</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">optionalMethod</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Implemented in extension"</span>)
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">anotherOptionalMethod</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Implemented in extension"</span>)
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span>: <span class="hljs-title">OptionalProtocol</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">necessaryMethod</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Implemented in Class3"</span>)
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">optionalMethod</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Implemented in Class3"</span>)
+    }
+}
+
+<span class="hljs-keyword">let</span> obj = <span class="hljs-func">MyClass</span>()
+obj.necessaryMethod() <span class="hljs-title">// Implemented in Class3</span>
+obj.optionalMethod()  <span class="hljs-title">// Implemented in Class3</span>
+obj.anotherOptionalMethod() <span class="hljs-title">// Implemented in extension</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

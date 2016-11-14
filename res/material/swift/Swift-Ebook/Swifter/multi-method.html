@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>动态类型和多方法 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_31">动态类型和多方法</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%A4%9A%E6%96%B9%E6%B3%95" class="calibre1">动态类型和多方法</h1>
+<p class="calibre9">Swift 中我们虽然可以通过 <code class="calibre13 pcalibre6 pcalibre5">dynamicType</code> 来获取一个对象的动态类型 (也就是运行时的实际类型，而非代码指定或编译器看到的类型)。但是在使用中，Swift 现在却是不支持多方法的，也就是说，不能根据对象在动态时的类型进行合适的重载方法调用。</p>
+<p class="calibre9">举个例子来说，在 Swift 里我们可以重载同样名字的方法，而只需要保证参数类型不同：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Pet</span> </span>{}
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Cat</span>: <span class="hljs-title">Pet</span> </span>{}
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Dog</span>: <span class="hljs-title">Pet</span> </span>{}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">printPet</span><span class="hljs-params">(pet: Pet)</span></span> {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"Pet"</span>)
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">printPet</span><span class="hljs-params">(cat: Cat)</span></span> {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"Meow"</span>)
+}
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">printPet</span><span class="hljs-params">(dog: Dog)</span></span> {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"Bark"</span>)
+}
+</code></pre>
+<p class="calibre9">在对这些方法进行调用时，编译器将帮助我们找到最精确的匹配：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">printPet(<span class="hljs-func">Cat</span>()) <span class="hljs-title">// Meow</span>
+printPet(<span class="hljs-func">Dog</span>()) <span class="hljs-title">// Bark</span>
+printPet(<span class="hljs-func">Pet</span>()) <span class="hljs-title">// Pet</span>
+</code></pre>
+<p class="calibre9">对于 <code class="calibre13 pcalibre6 pcalibre5">Cat</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">Dog</code> 的实例，总是会寻找最合适的方法，而不会去调用一个通用的父类 <code class="calibre13 pcalibre6 pcalibre5">Pet</code> 的方法。这一切的行为都是发生在编译时的，如果我们写了下面这样的代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">printThem</span><span class="hljs-params">(pet: Pet, <span class="hljs-params">_</span> cat: Cat)</span></span> {
+    printPet(pet)
+    printPet(cat)
+}
+
+printThem(<span class="hljs-func">Dog</span>(), <span class="hljs-func">Cat</span>())
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// Pet</span>
+<span class="hljs-title">// Meow</span>
+</code></pre>
+<p class="calibre9">打印时的 <code class="calibre13 pcalibre6 pcalibre5">Dog()</code> 的类型信息并没有被用来在运行时选择合适的 <code class="calibre13 pcalibre6 pcalibre5">printPet(dog: Dog)</code> 版本的方法，而是被忽略掉，并采用了编译期间决定的 <code class="calibre13 pcalibre6 pcalibre5">Pet</code> 版本的方法。因为 Swift 默认情况下是不采用动态派发的，因此方法的调用只能在编译时决定。</p>
+<p class="calibre9">要想绕过这个限制，我们可能需要进行通过对输入类型做判断和转换：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">printThem</span><span class="hljs-params">(pet: Pet, <span class="hljs-params">_</span> cat: Cat)</span></span> {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> aCat = pet <span class="hljs-keyword">as</span>? <span class="hljs-func">Cat</span> {
+        printPet(aCat)
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> aDog = pet <span class="hljs-keyword">as</span>? <span class="hljs-func">Dog</span> {
+        printPet(aDog)
+    }
+    printPet(cat)
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// Bark</span>
+<span class="hljs-title">// Meow</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

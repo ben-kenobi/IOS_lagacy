@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>值类型和引用类型 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_53">值类型和引用类型</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%80%BC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B" class="calibre1">值类型和引用类型</h1>
+<p class="calibre9">Swift 的类型分为值类型和引用类型两种，值类型在传递和赋值时将进行复制，而引用类型则只会使用引用对象的一个 "指向"。Swift 中的 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 和 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 定义的类型是值类型，使用 <code class="calibre13 pcalibre6 pcalibre5">class</code> 定义的为引用类型。很有意思的是，Swift 中的所有的内建类型都是值类型，不仅包括了传统意义像 <code class="calibre13 pcalibre6 pcalibre5">Int</code>，<code class="calibre13 pcalibre6 pcalibre5">Bool</code> 这些，甚至连 <code class="calibre13 pcalibre6 pcalibre5">String</code>，<code class="calibre13 pcalibre6 pcalibre5">Array</code> 以及 <code class="calibre13 pcalibre6 pcalibre5">Dictionary</code> 都是值类型的。这在程序设计上绝对算得上一个震撼的改动，因为据我所知现在流行的编程语言中，像数组和字典这样的类型，几乎清一色都是引用类型。</p>
+<p class="calibre9">那么使用值类型有什么好处呢？相较于传统的引用类型来说，一个很显而易见的优势就是减少了堆上内存分配和回收的次数。首先我们需要知道，Swift 的值类型，特别是数组和字典这样的容器，在内存管理上经过了精心的设计。值类型的一个特点是在传递和赋值时进行复制，每次复制肯定会产生额外开销，但是在 Swift 中这个消耗被控制在了最小范围内，在没有必要复制的时候，值类型的复制都是不会发生的。也就是说，简单的赋值，参数的传递等等普通操作，虽然我们可能用不同的名字来回设置和传递值类型，但是在内存上它们都是同一块内容。比如下面这样的代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">test</span><span class="hljs-params">(arr: [Int])</span></span> {
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> arr {
+        <span class="hljs-params">print</span>(i)
+    }
+}
+
+<span class="hljs-keyword">var</span> a = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>]
+<span class="hljs-keyword">var</span> b = a
+<span class="hljs-keyword">let</span> <span class="hljs-params">c</span> = b
+test(a)
+</code></pre>
+<p class="calibre9">这么折腾一圈下来，其实我们只在第一句 <code class="calibre13 pcalibre6 pcalibre5">a</code> 初始化赋值时发生了内存分配，而之后的 <code class="calibre13 pcalibre6 pcalibre5">b</code>，<code class="calibre13 pcalibre6 pcalibre5">c</code> 甚至传递到 <code class="calibre13 pcalibre6 pcalibre5">test</code> 方法内的 <code class="calibre13 pcalibre6 pcalibre5">arr</code>，和最开始的 <code class="calibre13 pcalibre6 pcalibre5">a</code> 在物理内存上都是同一个东西。而且这个 <code class="calibre13 pcalibre6 pcalibre5">a</code> 还只在栈空间上，于是这个过程对于数组来说，只发生了指针移动，而完全没有堆内存的分配和释放的问题，这样的运行效率可以说极高。</p>
+<p class="calibre9">值类型被复制的时机是值类型的内容发生改变时，比如下面在 <code class="calibre13 pcalibre6 pcalibre5">b</code> 中又加入了一个数，此时值复制就是必须的了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">var</span> a = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>]
+<span class="hljs-keyword">var</span> b = a
+b.append(<span class="hljs-params">5</span>)
+<span class="hljs-title">// 此时 a 和 b 的内存地址不再相同</span>
+</code></pre>
+<p class="calibre9">值类型在复制时，会将存储在其中的值类型一并进行复制，而对于其中的引用类型的话，则只复制一份引用。这是合理的行为，因为我们不会希望引用类型莫名其妙地引用到了我们设定以外其他对象：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyObject</span> </span>{
+    <span class="hljs-keyword">var</span> num = <span class="hljs-params">0</span>
+}
+
+<span class="hljs-keyword">var</span> myObject = <span class="hljs-func">MyObject</span>()
+<span class="hljs-keyword">var</span> a = [myObject]
+<span class="hljs-keyword">var</span> b = a
+
+b.append(myObject)
+
+myObject.num = <span class="hljs-params">100</span>
+<span class="hljs-params">println</span>(b[<span class="hljs-params">0</span>].num)   <span class="hljs-title">//100</span>
+<span class="hljs-params">println</span>(b[<span class="hljs-params">1</span>].num)   <span class="hljs-title">//100</span>
+
+<span class="hljs-title">// myObject 的改动同时影响了 b[0] 和 b[1]</span>
+</code></pre>
+<p class="calibre9">虽然将数组和字典设计为值类型最大的考虑是为了线程安全，但是这样的设计在存储的元素或条目数量较少时，给我们带来了另一个优点，那就是非常高效，因为 "一旦赋值就不太会变化" 这种使用情景在 Cocoa 框架中是占有绝大多数的，这有效减少了内存的分配和回收。但是在少数情况下，我们显然也可能会在数组或者字典中存储非常多的东西，并且还要对其中的内容进行添加或者删除。在这时，Swift 内建的值类型的容器类型在每次操作时都需要复制一遍，即使是存储的都是引用类型，在复制时我们还是需要存储大量的引用，这个开销就变得不容忽视了。幸好我们还有 Cocoa 中的引用类型的容器类来对应这种情况，那就是 <code class="calibre13 pcalibre6 pcalibre5">NSMutableArray</code> 和 <code class="calibre13 pcalibre6 pcalibre5">NSMutableDictionary</code>。</p>
+<p class="calibre9">所以，在使用数组合字典时的最佳实践应该是，按照具体的数据规模和操作特点来决定到时是使用值类型的容器还是引用类型的容器：在需要处理大量数据并且频繁操作 (增减) 其中元素时，选择 <code class="calibre13 pcalibre6 pcalibre5">NSMutableArray</code> 和 <code class="calibre13 pcalibre6 pcalibre5">NSMutableDictionary</code> 会更好，而对于容器内条目小而容器本身数目多的情况，应该使用 Swift 语言内建的 <code class="calibre13 pcalibre6 pcalibre5">Array</code> 和 <code class="calibre13 pcalibre6 pcalibre5">Dictionary</code>。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

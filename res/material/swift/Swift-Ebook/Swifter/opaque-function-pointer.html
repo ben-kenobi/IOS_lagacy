@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>COpaquePointer 和 C convention | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_57">COpaquePointer 和 C convention</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="copaquepointer-%E5%92%8C-c-convention" class="calibre1">COpaquePointer 和 C convention</h1>
+<p class="calibre9">在 C 中有一类指针，你在头文件中无法找到具体的定义，只能拿到类型的名字，而所有的实现细节都是隐藏的。这类指针在 C 或 C++ 中被叫做不透明指针 (Opaque Pointer)，顾名思义，它的实现和表意对使用者来说是不透明的。</p>
+<p class="calibre9">我们在这里不想过多讨论 C 中不透明指针的应用场景和特性，毕竟这是一本关于 Swift 的书。在 Swift 中对应这类不透明指针的类型是 <code class="calibre13 pcalibre6 pcalibre5">COpaquePointer</code>，它用来表示那些在 Swift 中无法进行类型描述的 C 指针。那些能够确定类型的指针所表示的是其指向的内存是可以用某个 Swift 中的类型来描述的，因此都使用更准确的 <code class="calibre13 pcalibre6 pcalibre5">UnsafePointer&lt;T&gt;</code> 来存储。而对于另外那些 Swift 无法表述的指针，就统一写为 <code class="calibre13 pcalibre6 pcalibre5">COpaquePointer</code>，以作补充。</p>
+<p class="calibre9">在 Swift 早期 beta 的时候，曾经有不少 API 返回或者接受的是 <code class="calibre13 pcalibre6 pcalibre5">COpaquePointer</code> 类型。但是随着 Swift 的逐渐完善，大部分涉及到指针的 API 里的 <code class="calibre13 pcalibre6 pcalibre5">COpaquePointer</code> 都被正确地归类到了合适的 <code class="calibre13 pcalibre6 pcalibre5">Unsafe</code> 指针中，因此现在在开发中可能很少能再看到 <code class="calibre13 pcalibre6 pcalibre5">COpaquePointer</code> 了。最多的使用场景可能就是 <code class="calibre13 pcalibre6 pcalibre5">COpaquePointer</code> 和某个特定的 <code class="calibre13 pcalibre6 pcalibre5">Unsafe</code> 之间的转换了，我们可以分别使用这两个类型的初始化方法将一个指针转换从某个类型强制地转为另一个类型：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">public <span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">UnsafeMutablePointer</span>&lt;<span class="hljs-title">Memory</span>&gt; :
+                        <span class="hljs-title">Equatable</span>, <span class="hljs-title">Hashable</span> ... </span>{
+
+    <span class="hljs-title">//..</span>
+
+    <span class="hljs-keyword">init</span>(<span class="hljs-params">_</span> other: <span class="hljs-func">COpaquePointer</span>)
+
+    <span class="hljs-title">//..</span>
+}
+
+public <span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">COpaquePointer</span>:
+                <span class="hljs-title">Equatable</span>,
+                <span class="hljs-title">Hashable</span>,
+                <span class="hljs-title">NilLiteralConvertible</span> </span>{
+    <span class="hljs-title">//..</span>
+
+    <span class="hljs-keyword">init</span>&lt;<span class="hljs-func">T</span>&gt;(<span class="hljs-params">_</span> source: <span class="hljs-func">UnsafePointer</span>&lt;<span class="hljs-func">T</span>&gt;)
+
+    <span class="hljs-title">//..</span>
+}
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">COpaquePointer</code> 在 Swift 中扮演的是指针转换的中间人的角色，我们可以通过这个类型在不同指针类型减进行转换。当然了，这些转换都是不安全的，除非你知道自己在干什么，以及有十足的把握，否则不要这么做！</p>
+<p class="calibre9">另外一种重要的指针形式是指向函数的指针，在 C 中这种情况也并不少见，即一块存储了某个函数实际所在的位置的内存空间。从 Swift 2.0 开始，与这类指针可以被转化为闭包，不过和其他普通闭包不同，我们需要为它添加上 <code class="calibre13 pcalibre6 pcalibre5">@convention</code> 标注。</p>
+<p class="calibre9">举个例子，如果我们在 C 中有这样一个函数：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">cFunction</span><span class="hljs-params">(<span class="hljs-keyword">int</span> (callback)</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span>) </span>{
+    <span class="hljs-keyword">return</span> callback(<span class="hljs-params">1</span>, <span class="hljs-params">2</span>);
+}
+</code></pre>
+<p class="calibre9">这个函数接受一个 callback，这个 callback 有两个 <code class="calibre13 pcalibre6 pcalibre5">int</code> 类型的参数，<code class="calibre13 pcalibre6 pcalibre5">cFunction</code> 本身返回这个 <code class="calibre13 pcalibre6 pcalibre5">callback</code> 的结果。如果我们想在 Swift 中使用这个 C 函数的话，应该这样写：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> callback: @convention(<span class="hljs-params">c</span>) (<span class="hljs-func">Int32</span>, <span class="hljs-func">Int32</span>) -&gt; <span class="hljs-func">Int32</span> = {
+    (x, y) -&gt; <span class="hljs-func">Int32</span> <span class="hljs-keyword">in</span>
+    <span class="hljs-keyword">return</span> x + y
+}
+
+<span class="hljs-keyword">let</span> result = cFunction(callback)
+<span class="hljs-params">print</span>(result)
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// 3</span>
+</code></pre>
+<p class="calibre9">在没有歧义的情况下，我们甚至可以省掉这个标注，而直接将它以一个 Swift 闭包的形式传递给 C：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> result = cFunction {
+    (x, y) -&gt; <span class="hljs-func">Int32</span> <span class="hljs-keyword">in</span>
+    <span class="hljs-keyword">return</span> x + y
+}
+<span class="hljs-params">print</span>(result)
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// 3</span>
+</code></pre>
+<p class="calibre9">完美，你甚至感觉不到自己是在和 C 打交道！</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

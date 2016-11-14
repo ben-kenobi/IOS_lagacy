@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Disc Con-->
+        <scene sceneID="Jfg-L0-yEY">
+            <objects>
+                <tableViewController storyboardIdentifier="discovery" id="hSB-lU-hi3" customClass="DiscCon" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="c8G-E9-La8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="9Pa-2T-oqo">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="miO-Di-nzf">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="miO-Di-nzf" id="cyR-RS-Ien">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="discovery_groupBuy_title" translatesAutoresizingMaskIntoConstraints="NO" id="CLS-fI-t6E">
+                                                    <rect key="frame" x="15" y="13" width="54" height="23"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wejflwflkwjeflkwjelfkjwelkjf" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ek-xT-HW7">
+                                                    <rect key="frame" x="20" y="65" width="201" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="discovery_groupBuy_icon" translatesAutoresizingMaskIntoConstraints="NO" id="CpN-CN-t4m">
+                                                    <rect key="frame" x="479" y="17" width="113" height="67"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="CpN-CN-t4m" secondAttribute="centerY" id="0Ue-mo-i0i"/>
+                                                <constraint firstItem="CLS-fI-t6E" firstAttribute="top" secondItem="cyR-RS-Ien" secondAttribute="top" constant="13" id="7hN-Hw-I5N"/>
+                                                <constraint firstItem="CLS-fI-t6E" firstAttribute="leading" secondItem="cyR-RS-Ien" secondAttribute="leading" constant="15" id="DES-Cl-CGS"/>
+                                                <constraint firstItem="2Ek-xT-HW7" firstAttribute="top" secondItem="CLS-fI-t6E" secondAttribute="bottom" constant="29" id="UAx-hU-Bhv"/>
+                                                <constraint firstItem="2Ek-xT-HW7" firstAttribute="leading" secondItem="cyR-RS-Ien" secondAttribute="leadingMargin" constant="12" id="eA8-1V-M0v"/>
+                                                <constraint firstAttribute="trailing" secondItem="CpN-CN-t4m" secondAttribute="trailing" constant="8" id="eX0-TB-Q11"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="yFi-by-NST">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="myV-YT-Uet">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="myV-YT-Uet" id="6yA-Hu-Fyv">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="discovery_groupBuy_title" translatesAutoresizingMaskIntoConstraints="NO" id="OkY-Fg-LCe">
+                                                    <rect key="frame" x="15" y="13" width="54" height="23"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wejflwflkwjeflkwjelfkjwelkjf" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRr-dw-nT4">
+                                                    <rect key="frame" x="20" y="65" width="201" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="discovery_groupBuy_icon" translatesAutoresizingMaskIntoConstraints="NO" id="DXE-D0-v4H">
+                                                    <rect key="frame" x="479" y="17" width="113" height="67"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="DXE-D0-v4H" secondAttribute="trailing" constant="8" id="53i-vw-bcM"/>
+                                                <constraint firstItem="OkY-Fg-LCe" firstAttribute="top" secondItem="6yA-Hu-Fyv" secondAttribute="top" constant="13" id="7Tp-n2-Vfs"/>
+                                                <constraint firstItem="FRr-dw-nT4" firstAttribute="top" secondItem="OkY-Fg-LCe" secondAttribute="bottom" constant="29" id="ADF-Sd-IVj"/>
+                                                <constraint firstItem="FRr-dw-nT4" firstAttribute="leading" secondItem="6yA-Hu-Fyv" secondAttribute="leadingMargin" constant="12" id="a75-Zh-hAt"/>
+                                                <constraint firstItem="OkY-Fg-LCe" firstAttribute="leading" secondItem="6yA-Hu-Fyv" secondAttribute="leading" constant="15" id="f57-EV-Umf"/>
+                                                <constraint firstAttribute="centerY" secondItem="DXE-D0-v4H" secondAttribute="centerY" id="iI6-ME-sjI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="IZi-vK-uvE">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="KfJ-wT-HBt">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KfJ-wT-HBt" id="5yw-w4-NgR">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="discovery_groupBuy_title" translatesAutoresizingMaskIntoConstraints="NO" id="4Ci-UG-wfe">
+                                                    <rect key="frame" x="15" y="13" width="54" height="23"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wejflwflkwjeflkwjelfkjwelkjf" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ex6-o2-xO3">
+                                                    <rect key="frame" x="20" y="65" width="201" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="discovery_groupBuy_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Lbk-BY-bdw">
+                                                    <rect key="frame" x="479" y="17" width="113" height="67"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ex6-o2-xO3" firstAttribute="leading" secondItem="5yw-w4-NgR" secondAttribute="leadingMargin" constant="12" id="3qw-I8-j9j"/>
+                                                <constraint firstAttribute="centerY" secondItem="Lbk-BY-bdw" secondAttribute="centerY" id="CvP-yT-WtC"/>
+                                                <constraint firstItem="4Ci-UG-wfe" firstAttribute="leading" secondItem="5yw-w4-NgR" secondAttribute="leading" constant="15" id="D0a-MZ-PJy"/>
+                                                <constraint firstItem="ex6-o2-xO3" firstAttribute="top" secondItem="4Ci-UG-wfe" secondAttribute="bottom" constant="29" id="K7K-BT-zHt"/>
+                                                <constraint firstAttribute="trailing" secondItem="Lbk-BY-bdw" secondAttribute="trailing" constant="8" id="O3f-iw-5oW"/>
+                                                <constraint firstItem="4Ci-UG-wfe" firstAttribute="top" secondItem="5yw-w4-NgR" secondAttribute="top" constant="13" id="iCc-S5-ovq"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="np6-W7-DDc">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="BOD-Ha-7Gf">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BOD-Ha-7Gf" id="vef-sw-cao">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="discovery_groupBuy_title" translatesAutoresizingMaskIntoConstraints="NO" id="jAq-zO-phG">
+                                                    <rect key="frame" x="15" y="13" width="54" height="23"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wejflwflkwjeflkwjelfkjwelkjf" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyi-uw-DKq">
+                                                    <rect key="frame" x="20" y="65" width="201" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="discovery_groupBuy_icon" translatesAutoresizingMaskIntoConstraints="NO" id="AbZ-qV-i9w">
+                                                    <rect key="frame" x="479" y="17" width="113" height="67"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="AbZ-qV-i9w" secondAttribute="trailing" constant="8" id="Jj2-ly-F15"/>
+                                                <constraint firstAttribute="centerY" secondItem="AbZ-qV-i9w" secondAttribute="centerY" id="KOM-c4-1KV"/>
+                                                <constraint firstItem="jAq-zO-phG" firstAttribute="leading" secondItem="vef-sw-cao" secondAttribute="leading" constant="15" id="R94-Zm-Ln6"/>
+                                                <constraint firstItem="jAq-zO-phG" firstAttribute="top" secondItem="vef-sw-cao" secondAttribute="top" constant="13" id="RJ3-nS-Ia6"/>
+                                                <constraint firstItem="iyi-uw-DKq" firstAttribute="top" secondItem="jAq-zO-phG" secondAttribute="bottom" constant="29" id="U1B-H4-pNQ"/>
+                                                <constraint firstItem="iyi-uw-DKq" firstAttribute="leading" secondItem="vef-sw-cao" secondAttribute="leadingMargin" constant="12" id="VEc-vI-dtm"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="hSB-lU-hi3" id="UG9-xx-KKI"/>
+                            <outlet property="delegate" destination="hSB-lU-hi3" id="2Xn-AX-VhO"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GsP-qk-ljt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="683" y="-37"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="discovery_groupBuy_icon" width="113" height="67"/>
+        <image name="discovery_groupBuy_title" width="54" height="23"/>
+    </resources>
+</document>

@@ -1,0 +1,27 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "6d1b4a98-9c5b-aa46-a5b9-04dad4d9b641++1455",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "6d1b4a98-9c5b-aa46-a5b9-04dad4d9b641++1455" : {
+      "DVTSourceControlWorkingCopyRepositoryBranchesLocationKey" : "%E4%BA%A7%E5%93%81\/%E7%A6%8F%E5%BB%BA%E7%9C%81%E5%9C%B0%E9%9C%87%E5%BA%94%E6%80%A5%E8%BE%85%E5%8A%A9%E5%86%B3%E7%AD%96%E7%B3%BB%E7%BB%9F\/branches",
+      "DVTSourceControlWorkingCopyRepositoryTagsLocationKey" : "%E4%BA%A7%E5%93%81\/%E7%A6%8F%E5%BB%BA%E7%9C%81%E5%9C%B0%E9%9C%87%E5%BA%94%E6%80%A5%E8%BE%85%E5%8A%A9%E5%86%B3%E7%AD%96%E7%B3%BB%E7%BB%9F\/tags",
+      "DVTSourceControlWorkingCopyRepositoryPrimaryBranchLocationKey" : "%E4%BA%A7%E5%93%81\/%E7%A6%8F%E5%BB%BA%E7%9C%81%E5%9C%B0%E9%9C%87%E5%BA%94%E6%80%A5%E8%BE%85%E5%8A%A9%E5%86%B3%E7%AD%96%E7%B3%BB%E7%BB%9F\/trunk"
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6d1b4a98-9c5b-aa46-a5b9-04dad4d9b641++1455" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F40C10B5-65FE-4B5E-AD0E-9E0A01DA5BA2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6d1b4a98-9c5b-aa46-a5b9-04dad4d9b641++1455" : "fjseism_ios\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "EqApp",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "EqApp.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/3dspace.xicp.net:8443\/svn\/%E7%9B%AE%E5%BD%95",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6d1b4a98-9c5b-aa46-a5b9-04dad4d9b641++1455"
+    }
+  ]
+}

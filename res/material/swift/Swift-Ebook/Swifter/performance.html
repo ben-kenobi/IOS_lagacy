@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>性能考虑 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_93">性能考虑</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E6%80%A7%E8%83%BD%E8%80%83%E8%99%91" class="calibre1">性能考虑</h1>
+<p class="calibre9">在 WWDC 14 的 Keynote 上，Swift 相比于其他语言的速度优势被特别进行了强调。但是这种速度优势是有条件的，虽然由于编译器的进步我们可能可以在不了解语言特性的时候随便写也能得到性能上的改善，但是如果能够稍微理解背后的机制的话，我们就能投 “编译器所好”，写出更高效的代码。</p>
+<p class="calibre9">相比于 Objective-C，Swift 最大的改变就在于方法调用上的优化。在 Objective-C 中，所有的对于 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的方法调用在编译时会被转为 <code class="calibre13 pcalibre6 pcalibre5">objc_msgSend</code> 方法。这个方法运用 Objective-C 的运行时特性，使用派发的方式在运行时对方法进行查找。因为 Objective-C 的类型并不是编译时确定的，我们在代码中所写的类型不过只是向编译器的一种“建议”，不论对于怎样的方法，这种查找的代价基本都是同样的。</p>
+<p class="calibre9">这个过程的等效的表述可能类似这样 (注意这只是一种表述，与实际的代码和工作方式无关)：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">methodToCall = findMethodInClass(class, selector);
+<span class="hljs-title">// 这个查找一般需要遍历类的方法表，需要花费一定时间</span>
+
+methodToCall();  <span class="hljs-title">// 调用</span>
+</code></pre>
+<p class="calibre9">Objective-C 运行时十分高效，相比于 I/O 这样的操作来说，单次的方法派发和查找并不会花费太多的时间，但实事求是地说，这确实也是 Objective-C 性能上可以改进的地方，这种改善在短时间内大量方法调用时会比较明显。</p>
+<p class="calibre9">Swift 因为使用了更安全和严格的类型，如果我们在编写代码中指明了某个实际的类型的话 (注意，需要的是实际具体的类型，而不是像 <code class="calibre13 pcalibre6 pcalibre5">Any</code> 这样的抽象的接口)，我们就可以向编译器保证在运行时该对象一定属于被声明的类型。这对编译器进行代码优化来说是非常有帮助的，因为有了更多更明确的类型信息，编译器就可以在类型中处理多态时建立虚函数表 (vtable)，这是一个带有索引的保存了方法所在位置的数组。在方法调用时，与原来动态派发和查找方法不同，现在只需要通过索引就可以直接拿到方法并进行调用了，这是实实在在的性能提升。这个过程大概相当于：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> methodToCall = <span class="hljs-func"><span class="hljs-keyword">class</span>.<span class="hljs-title">vtable</span>[<span class="hljs-title">methodIndex</span>]
+// 直接使用 <span class="hljs-title">methodIndex</span> 获取实现
+
+<span class="hljs-title">methodToCall</span>();  // 调用
+</span></code></pre>
+<p class="calibre9">更进一步，在确定的情况下，编译器对 Swift 的优化甚至可以做到将某些方法调用优化为 inline 的形式。比如在某个方法被 <a href="final.html" class="pcalibre pcalibre2 pcalibre1 calibre4"><code class="calibre13 pcalibre6 pcalibre5">final</code></a> 标记时，由于不存在被重写的可能，vtable 中该方法的实现就完全固定了。对于这样的方法，编译器在合适的情况下可以在生成代码的阶段就将方法内容提取到调用的地方，从而完全避免调用。</p>
+<p class="calibre9">通过 Benchmark 我们可以看出，在一些基本的算法上，Swift 的速度是要<a href="http://www.jessesquires.com/apples-to-apples-part-two/" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">远胜过 Objective-C</a> 的，而就算相较于世界上无可匹敌的 C，也<a href="http://www.jessesquires.com/apples-to-apples-part-three/" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">没有逊色太多</a>。</p>
+<p class="calibre9">所以对于性能方面，我们应该注意的地方就很明显了。如果遇到性能敏感和关键的代码部分，我们最好避免使用 Objective-C 和 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 的子类。在以前我们可能会选择使用混编一些 C 或者 C++ 代码来处理这些关键部分，而现在我们多了 Swift 这个选项。相比起 C 或者 C++，Swift 的语言特性上要先进得多，而使用 Swift 类型和标准库进行编码和构建的难度，比起使用 C 或 C++ 来要简单太多。另外，即使不是性能关键部分，我们也应该尽量考虑在没有必要时减少使用 <code class="calibre13 pcalibre6 pcalibre5">NSObject</code> 和它的子类。如果没有动态特性的需求的话，保持在 Swift 基本类型中会让我们得到更多的性能提升。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>mems</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>132123lk1j23ioj12oiej12oiejoi12jeio12jeio12jeoi21jeoi12jeoi12joeij12ioe</string>
+				<key>imgl</key>
+				<string>discovery_groupBuy_title</string>
+				<key>imgr</key>
+				<string>discovery_groupBuy_icon</string>
+				<key>vc</key>
+				<string>YFDiscSub01VC</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>mems</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>gklejwkljglkwjgklwjgwe</string>
+				<key>imgl</key>
+				<string>discovery_groupBuy_title</string>
+				<key>imgr</key>
+				<string>discovery_groupBuy_icon</string>
+				<key>vc</key>
+				<string>YFDiscSub02VC</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>mems</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>gklejwkljglkwjgklwjgwe</string>
+				<key>imgl</key>
+				<string>discovery_groupBuy_title</string>
+				<key>imgr</key>
+				<string>discovery_groupBuy_icon</string>
+				<key>vc</key>
+				<string>YFDiscSub03VC</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>mems</key>
+		<array>
+			<dict>
+				<key>title</key>
+				<string>gklejwkljglkwjgklwjgwe</string>
+				<key>imgl</key>
+				<string>discovery_groupBuy_title</string>
+				<key>imgr</key>
+				<string>discovery_groupBuy_icon</string>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

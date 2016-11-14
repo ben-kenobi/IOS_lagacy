@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>泛型扩展 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_101">泛型扩展</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E6%B3%9B%E5%9E%8B%E6%89%A9%E5%B1%95" class="calibre1">泛型扩展</h1>
+<p class="calibre9">Swift 对于泛型的支持使得我们可以避免为类似的功能多次书写重复的代码，这是一种很好的简化。而对于泛型类型，我们也可以使用 <code class="calibre13 pcalibre6 pcalibre5">extension</code> 为泛型类型添加新的方法。</p>
+<p class="calibre9">与为普通的类型添加扩展不同的是，泛型类型在类型定义时就引入了类型标志，我们可以直接使用。例如 Swift 的 <code class="calibre13 pcalibre6 pcalibre5">Array</code> 类型的定义是：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">public <span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">Array</span>&lt;<span class="hljs-title">Element</span>&gt; : <span class="hljs-title">CollectionType</span>, <span class="hljs-title">Indexable</span>, ... </span>{
+    <span class="hljs-title">//...</span>
+}
+</code></pre>
+<p class="calibre9">在这个定义中，已经声明了 <code class="calibre13 pcalibre6 pcalibre5">Element</code> 为泛型类型。在为类似这样的泛型类型写扩展的时候，我们不需要在 <code class="calibre13 pcalibre6 pcalibre5">extension</code> 关键字后的声明中重复地去写 <code class="calibre13 pcalibre6 pcalibre5">&lt;Element&gt;</code> 这样的泛型类型名字 (其实编译器也不允许我们这么做)，在扩展中可以使用和原来所定义一样的符号即可指代类型本体声明的泛型。比如我们想在扩展中实现一个 <code class="calibre13 pcalibre6 pcalibre5">random</code> 方法来随机地取出 Array 中的一个元素：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">Array</span> </span>{
+    <span class="hljs-keyword">var</span> random: <span class="hljs-func">Element</span>? {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>.<span class="hljs-params">count</span> != <span class="hljs-params">0</span> ?
+            <span class="hljs-keyword">self</span>[<span class="hljs-func">Int</span>(arc4random_uniform(<span class="hljs-func">UInt32</span>(<span class="hljs-keyword">self</span>.<span class="hljs-params">count</span>)))] :
+        <span class="hljs-params">nil</span>
+    }
+}
+
+<span class="hljs-keyword">let</span> languages = [<span class="hljs-string">"Swift"</span>,<span class="hljs-string">"ObjC"</span>,<span class="hljs-string">"C++"</span>,<span class="hljs-string">"Java"</span>]
+languages.random!
+<span class="hljs-title">// 随机输出是这四个字符串中的某个</span>
+
+<span class="hljs-keyword">let</span> ranks = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>,<span class="hljs-params">4</span>]
+ranks.random!
+<span class="hljs-title">// 随机输出是这四个数字中的某个</span>
+</code></pre>
+<p class="calibre9">在扩展中是不能添加整个类型可用的新泛型符号的，但是对于某个特定的方法来说，我们可以添加 <code class="calibre13 pcalibre6 pcalibre5">T</code> 以外的其他泛型符号。比如在刚才的扩展中加上：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">appendRandomDescription</span>
+    <span class="hljs-func">&lt;U: CustomStringConvertible&gt;</span><span class="hljs-params">(input: U)</span></span> -&gt; <span class="hljs-func">String</span> {
+
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> element = <span class="hljs-keyword">self</span>.random {
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"<span class="hljs-func">\(element)</span> "</span> + input.description
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"empty array"</span>
+        }
+}
+</code></pre>
+<p class="calibre9">我们限定了只接受实现了 <code class="calibre13 pcalibre6 pcalibre5">CustomStringConvertible</code> 的参数作为参数，然后将这个内容附加到自身的某个随机元素的描述上。因为参数 <code class="calibre13 pcalibre6 pcalibre5">input</code> 实现了 <code class="calibre13 pcalibre6 pcalibre5">CustomStringConvertible</code>，所以在方法中我们可以使用 <code class="calibre13 pcalibre6 pcalibre5">description</code> 来获取描述字符串。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> languages = [<span class="hljs-string">"Swift"</span>,<span class="hljs-string">"ObjC"</span>,<span class="hljs-string">"C++"</span>,<span class="hljs-string">"Java"</span>]
+languages.random!
+
+<span class="hljs-keyword">let</span> ranks = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>,<span class="hljs-params">4</span>]
+ranks.random!
+
+languages.appendRandomDescription(ranks.random!)
+<span class="hljs-title">// 随机组合 languages 和 ranks 中的各一个元素，然后输出</span>
+</code></pre>
+<p class="calibre9">虽然这是个生造的需求，但是能说明泛型在扩展里的使用方式。简单说就是我们不能通过扩展来重新定义当前已有的泛型符号，但是可以对其进行使用；在扩展中也不能为这个类型添加泛型符号；但只要名字不冲突，我们是可以在新声明的方法中定义和使用新的泛型符号的。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

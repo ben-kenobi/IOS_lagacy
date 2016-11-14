@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+
+        div{
+          /*  background-color: black !important;
+            color: white !important;
+            */
+        }
+
+        div[name]{
+            background-color: green;
+            color: yellow;
+        }
+
+        div[name = "zhangsan"]{
+            background-color: blue;
+            color: red;
+            display: inline;
+            display: inline-block;
+            display: block;
+            display: none;
+        }
+
+        div[name][age]{
+            background-color: red;
+            color: blue;
+        }
+
+        div[name = "lisi"]{
+            background-color: greenyellow;
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+<div name = "zhangsan"> 我名字叫 zhangsan </div>
+<br/>
+<div name = "lisi"> 我名字叫 lisi </div>
+<br/>
+<div name = "wangwu" age = 18> 我名字叫 wangwu </div>
+</body>
+</html>

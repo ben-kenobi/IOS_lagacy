@@ -1,0 +1,597 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0072)http://goodcandle.cnblogs.com/archive/2005/12/10/294652.aspx -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml"><HEAD><META 
+content="IE=10.0000" http-equiv="X-UA-Compatible">
+ 
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<TITLE>揭开Socket编程的面纱 - 源码工作室 - 博客园</TITLE> <LINK href="揭开Socket编程的面纱%20-%20源码工作室%20-%20博客园_files/blog-common.css" 
+rel="stylesheet" type="text/css"> <LINK id="MainCss" href="揭开Socket编程的面纱%20-%20源码工作室%20-%20博客园_files/style.css" 
+rel="stylesheet" type="text/css"> <LINK title="RSS" href="http://www.cnblogs.com/goodcandle/rss" 
+rel="alternate" type="application/rss+xml"> <LINK title="RSD" href="http://www.cnblogs.com/goodcandle/rsd.xml" 
+rel="EditURI" type="application/rsd+xml"> <LINK href="http://www.cnblogs.com/goodcandle/wlwmanifest.xml" 
+rel="wlwmanifest" type="application/wlwmanifest+xml"> 
+<SCRIPT src="揭开Socket编程的面纱%20-%20源码工作室%20-%20博客园_files/jquery.js" type="text/javascript"></SCRIPT>
+  
+<SCRIPT type="text/javascript">var currentBlogApp = 'goodcandle', cb_enable_mathjax=false;</SCRIPT>
+ 
+<SCRIPT src="揭开Socket编程的面纱%20-%20源码工作室%20-%20博客园_files/blog-common.js" type="text/javascript"></SCRIPT>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.9600.17207"></HEAD> 
+<BODY><A name="top"></A> 
+<TABLE width="100%" class="Framework" cellspacing="0" cellpadding="0">
+  <TBODY>
+  <TR>
+    <TD colspan="3">
+      <DIV id="top">
+      <TABLE cellspacing="0" cellpadding="10">
+        <TBODY>
+        <TR>
+          <TD nowrap="">
+            <H1><A class="headermaintitle" id="Header1_HeaderTitle" href="http://www.cnblogs.com/goodcandle/">源码工作室</A></H1>
+            			目标：通俗的语言说出通俗的技术 3D试衣室：www.3d414.com		 </TD></TR></TBODY></TABLE></DIV>
+      <DIV id="sub">
+      <DIV id="sub-right">
+      <DIV class="BlogStats">posts - 100, comments - 1085, trackbacks - 7, 
+      articles - 0</DIV></DIV>	&nbsp;<A id="Header1_MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</A>&nbsp;:: 
+      <A id="Header1_MyLinks1_MyHomeLink" href="http://www.cnblogs.com/goodcandle/">首页</A>&nbsp;:: 
+      <A id="Header1_MyLinks1_NewPostLink" href="http://i.cnblogs.com/EditPosts.aspx?opt=1" 
+      rel="nofollow">新随笔</A>&nbsp;:: <A id="Header1_MyLinks1_ContactLink" 
+      accesskey="9" href="http://space.cnblogs.com/msg/send/%e6%ba%90%e7%a0%81%e5%b7%a5%e4%bd%9c%e5%ae%a4" 
+      rel="nofollow">联系</A>&nbsp;::&nbsp; :: <A id="Header1_MyLinks1_Admin" 
+      href="http://i.cnblogs.com/" rel="nofollow">管理</A> </DIV></TD></TR>
+  <TR>
+    <TD class="LeftCell">
+      <DIV id="leftmenu">
+      <DIV id="blog-calendar" style="display: none;"></DIV>
+<SCRIPT type="text/javascript">loadBlogDefaultCalendar();</SCRIPT>
+      		             
+      <DIV id="cell"><IMG align="left" src="揭开Socket编程的面纱%20-%20源码工作室%20-%20博客园_files/icon-group.jpg" 
+      vspace="2" hspace="5">
+      <H3>公告</H3>
+      <DIV id="news">
+      <DIV id="blog-news"></DIV>
+<SCRIPT type="text/javascript">loadBlogNews();</SCRIPT>
+       </DIV></DIV>
+      <DIV id="blog-sidecolumn"></DIV>
+<SCRIPT type="text/javascript">loadBlogSideColumn();</SCRIPT>
+      			 </DIV></TD>
+    <TD class="MainCell">
+      <DIV id="main">
+      <DIV class="post">
+      <DIV class="posthead">
+      <H2><A class="singleposttitle" id="cb_post_title_url" href="http://www.cnblogs.com/goodcandle/archive/2005/12/10/socket.html">揭开Socket编程的面纱</A>
+      			 </H2>Posted on <SPAN id="post-date">2005-12-10 22:59</SPAN> <A href="http://www.cnblogs.com/goodcandle/">源码工作室</A> 
+      阅读(<SPAN id="post_view_count">...</SPAN>) 评论(<SPAN 
+      id="post_comment_count">...</SPAN>)  <A href="http://i.cnblogs.com/EditPosts.aspx?postid=294652" 
+      rel="nofollow">编辑</A> <A onclick="AddToWz(294652);return false;" href="http://goodcandle.cnblogs.com/archive/2005/12/10/294652.aspx#">收藏</A>
+      			 
+<SCRIPT type="text/javascript">var allowComments=true,isLogined=true,cb_blogId=14034,cb_entryId=294652,cb_blogApp=currentBlogApp,cb_blogUserGuid='4f43360b-63cf-dd11-9e4d-001cf0cd104b',cb_entryCreatedDate='2005/12/10 22:59:00';loadViewCount(cb_entryId);</SCRIPT>
+      					 </DIV>
+      <DIV class="postbody">
+      <DIV id="cnblogs_post_body"><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      对</SPAN><SPAN lang="EN-US">TCP/IP</SPAN><SPAN>、</SPAN><SPAN 
+      lang="EN-US">UDP</SPAN><SPAN>、</SPAN><SPAN 
+      lang="EN-US">Socket</SPAN><SPAN>编程这些词你不会很陌生吧？随着网络技术的发展，这些词充斥着我们的耳朵。那么我想问：<BR><BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>1.<SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN></SPAN><SPAN>什么是</SPAN><SPAN 
+      lang="EN-US">TCP/IP</SPAN><SPAN>、</SPAN><SPAN 
+      lang="EN-US">UDP</SPAN><SPAN>？<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>2.<SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN></SPAN><SPAN lang="EN-US">Socket</SPAN><SPAN>在哪里呢？<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>3.<SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN></SPAN><SPAN lang="EN-US">Socket</SPAN><SPAN>是什么呢？<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>4.<SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN></SPAN><SPAN>你会使用它们吗？<BR><BR></SPAN><B><SPAN>什么是</SPAN><SPAN lang="EN-US">TCP/IP</SPAN></B><B><SPAN>、</SPAN><SPAN 
+      lang="EN-US">UDP</SPAN></B><B><SPAN>？</SPAN></B> 
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN lang="EN-US">TCP/IP</SPAN><SPAN>（</SPAN><SPAN 
+      lang="EN-US">Transmission Control Protocol/Internet 
+      Protocol</SPAN><SPAN>）即传输控制协议</SPAN><SPAN 
+      lang="EN-US">/</SPAN><SPAN>网间协议，是一个工业标准的协议集，它是为广域网（</SPAN><SPAN lang="EN-US">WANs</SPAN><SPAN>）设计的。<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN lang="EN-US">UDP</SPAN><SPAN>（</SPAN><SPAN lang="EN-US">User 
+      Data Protocol</SPAN><SPAN>，用户数据报协议）是与</SPAN><SPAN 
+      lang="EN-US">TCP</SPAN><SPAN>相对应的协议。它是属于</SPAN><SPAN 
+      lang="EN-US">TCP/IP</SPAN><SPAN>协议族中的一种。<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>这里有一张图，表明了这些协议的关系。<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      <BR><IMG width="596" height="448" src="揭开Socket编程的面纱%20-%20源码工作室%20-%20博客园_files/socket1.jpg" 
+      hspace="0"><BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      图</SPAN><SPAN lang="EN-US">1</SPAN></SPAN></SPAN></SPAN></SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>TCP/IP</SPAN><SPAN>协议族包括运输层、网络层、链路层。现在你知道</SPAN><SPAN 
+      lang="EN-US">TCP/IP</SPAN><SPAN>与</SPAN><SPAN 
+      lang="EN-US">UDP</SPAN><SPAN>的关系了吧。<BR></SPAN><B><SPAN 
+      lang="EN-US">Socket</SPAN></B><B><SPAN>在哪里呢？<BR></SPAN></B><B><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN></SPAN></B><SPAN>在图</SPAN><SPAN 
+      lang="EN-US">1</SPAN><SPAN>中，我们没有看到</SPAN><SPAN 
+      lang="EN-US">Socket</SPAN><SPAN>的影子，那么它到底在哪里呢？还是用图来说话，一目了然。</SPAN></P>
+      <P></P>
+      <P align="center"><SPAN><BR><IMG width="542" height="476" src="揭开Socket编程的面纱%20-%20源码工作室%20-%20博客园_files/socket2.jpg" 
+      hspace="0"><BR>图</SPAN><SPAN lang="EN-US">2</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>原来</SPAN><SPAN 
+      lang="EN-US">Socket</SPAN><SPAN>在这里。<BR></SPAN><B><SPAN 
+      lang="EN-US">Socket</SPAN></B><B><SPAN>是什么呢？<BR></SPAN></B><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN lang="EN-US">Socket</SPAN><SPAN>是应用层与</SPAN><SPAN lang="EN-US">TCP/IP</SPAN><SPAN>协议族通信的中间软件抽象层，它是一组接口。在设计模式中，</SPAN><SPAN 
+      lang="EN-US">Socket</SPAN><SPAN>其实就是一个门面模式，它把复杂的</SPAN><SPAN 
+      lang="EN-US">TCP/IP</SPAN><SPAN>协议族隐藏在</SPAN><SPAN 
+      lang="EN-US">Socket</SPAN><SPAN>接口后面，对用户来说，一组简单的接口就是全部，让</SPAN><SPAN lang="EN-US">Socket</SPAN><SPAN>去组织数据，以符合指定的协议。<BR></SPAN><B><SPAN>你会使用它们吗？<BR></SPAN></B><B><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN></SPAN></B><SPAN>前人已经给我们做了好多的事了，网络间的通信也就简单了许多，但毕竟还是有挺多工作要做的。以前听到</SPAN><SPAN 
+      lang="EN-US">Socket</SPAN><SPAN>编程，觉得它是比较高深的编程知识，但是只要弄清</SPAN><SPAN lang="EN-US">Socket</SPAN><SPAN>编程的工作原理，神秘的面纱也就揭开了。<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>一个生活中的场景。你要打电话给一个朋友，先拨号，朋友听到电话铃声后提起电话，这时你和你的朋友就建立起了连接，就可以讲话了。等交流结束，挂断电话结束此次交谈。</SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>生活中的场景就解释了这工作原理，也许</SPAN><SPAN 
+      lang="EN-US">TCP/IP</SPAN><SPAN>协议族就是诞生于生活中，这也不一定。</SPAN></SPAN></SPAN></SPAN></SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN><IMG width="478" height="491" src="揭开Socket编程的面纱%20-%20源码工作室%20-%20博客园_files/socket3.jpg" 
+      hspace="0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN></SPAN></P>
+      <P align="center"><SPAN>图</SPAN><SPAN lang="EN-US">3</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>先从服务器端说起。服务器端先初始化</SPAN><SPAN 
+      lang="EN-US">Socket</SPAN><SPAN>，然后与端口绑定</SPAN><SPAN 
+      lang="EN-US">(bind)</SPAN><SPAN>，对端口进行监听</SPAN><SPAN 
+      lang="EN-US">(listen)</SPAN><SPAN>，调用</SPAN><SPAN 
+      lang="EN-US">accept</SPAN><SPAN>阻塞，等待客户端连接。在这时如果有个客户端初始化一个</SPAN><SPAN 
+      lang="EN-US">Socket</SPAN><SPAN>，然后连接服务器</SPAN><SPAN 
+      lang="EN-US">(connect)</SPAN><SPAN>，如果连接成功，这时客户端与服务器端的连接就建立了。客户端发送数据请求，服务器端接收请求并处理请求，然后把回应数据发送给客户端，客户端读取数据，最后关闭连接，一次交互结束。<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>在这里我就举个简单的例子，我们走的是</SPAN><SPAN 
+      lang="EN-US">TCP</SPAN><SPAN>协议这条路（见图</SPAN><SPAN 
+      lang="EN-US">2</SPAN><SPAN>）。例子用</SPAN><SPAN 
+      lang="EN-US">MFC</SPAN><SPAN>编写，运行的界面如下：</SPAN></SPAN></SPAN></P>
+      <P align="center"></P>
+      <P align="center"><SPAN><BR><IMG width="482" height="228" src="揭开Socket编程的面纱%20-%20源码工作室%20-%20博客园_files/socket4.jpg" 
+      hspace="0"><BR>图</SPAN><SPAN lang="EN-US">4</SPAN></P>
+      <P align="center"></P>
+      <P align="center"><SPAN><BR><IMG width="504" height="144" src="揭开Socket编程的面纱%20-%20源码工作室%20-%20博客园_files/socket5.jpg" 
+      hspace="0"><BR>图</SPAN><SPAN lang="EN-US">5</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>在客户端输入服务器端的</SPAN><SPAN 
+      lang="EN-US">IP</SPAN><SPAN>地址和发送的数据，然后按发送按钮，服务器端接收到数据，然后回应客户端。客户端读取回应的数据，显示在界面上。<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>下面是接收数据和发送数据的函数：</SPAN></SPAN></SPAN></P>
+      <P><SPAN lang="EN-US">int<SPAN>&nbsp;&nbsp;&nbsp; </SPAN>Receive(SOCKET 
+      fd,char *szText,int len)</SPAN></P>
+      <P><SPAN lang="EN-US">{<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>int 
+      cnt;<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>int 
+      rc;<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>cnt=len;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>while(cnt&gt;0)<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>{<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>rc=recv(fd,szText,cnt,0);<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>if(rc==SOCKET_ERROR)<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>{<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return -1;<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>}</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>if(rc==0) </SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return len-cnt;</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>szText+=rc;</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>cnt-=rc;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>}</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return len;</SPAN></P>
+      <P><SPAN lang="EN-US">}<BR><BR></SPAN><SPAN lang="EN-US">int Send(SOCKET 
+      fd,char *szText,int len)<BR></SPAN><SPAN lang="EN-US">{</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>int cnt;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>int rc;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>cnt=len;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>while(cnt&gt;0)</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>{</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>rc=send(fd,szText,cnt,0);</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>if(rc==SOCKET_ERROR)</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>{</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return -1;</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>}</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>if(rc==0)</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return len-cnt;</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>szText+=rc;</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>cnt-=rc;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>}</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return len;</SPAN></P>
+      <P><SPAN lang="EN-US">}</SPAN></P>
+      <P><B><SPAN>服务器端：</SPAN></B></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>在服务器端，主要是启动</SPAN><SPAN 
+      lang="EN-US">Socket</SPAN><SPAN>和监听线程。</SPAN></SPAN></P>
+      <P><SPAN lang="EN-US">#define 
+      DEFAULT_PORT<SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>2000</SPAN></P>
+      <P><SPAN lang="EN-US">void CServerDlg::OnStart() </SPAN></P>
+      <P><SPAN lang="EN-US">{</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>sockaddr_in local;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>DWORD<SPAN></SPAN>dwThreadID = 0;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN></SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>local.sin_family=AF_INET;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>设置的端口为</SPAN><SPAN 
+      lang="EN-US">DEFAULT_PORT</SPAN><SPAN>。</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>local.sin_port=htons(DEFAULT_PORT);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//IP</SPAN><SPAN>地址设置成</SPAN><SPAN 
+      lang="EN-US">INADDR_ANY,</SPAN><SPAN>让系统自动获取本机的</SPAN><SPAN 
+      lang="EN-US">IP</SPAN><SPAN>地址。</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>local.sin_addr.S_un.S_addr=INADDR_ANY;</SPAN></P>
+      <P><SPAN lang="EN-US">&nbsp;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>初始化</SPAN><SPAN lang="EN-US">Socket</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>m_Listening = socket(AF_INET,SOCK_STREAM,0);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>if(m_Listening == INVALID_SOCKET)</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>{</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return ;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>}</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>将本地地址绑定到所创建的套接字上</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>if(bind(m_Listening,(LPSOCKADDR)&amp;local,sizeof(local)) == 
+      SOCKET_ERROR )</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>{</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>closesocket(m_Listening);</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return ;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>}</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>创建监听线程，这样也能响应界面上操作。</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>m_hListenThread = 
+      ::CreateThread(NULL,0,ListenThread,this,0,&amp;dwThreadID);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>m_StartBtn.EnableWindow(FALSE);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>m_StopBtn.EnableWindow(TRUE);</SPAN></P>
+      <P><SPAN lang="EN-US">}<BR><BR></SPAN><SPAN>监听线程函数：<BR></SPAN><SPAN lang="EN-US">DWORD 
+      WINAPI CServerDlg::ListenThread(LPVOID lpparam)<BR></SPAN><SPAN lang="EN-US">{</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>CServerDlg* pDlg = (CServerDlg*)lpparam;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>if(pDlg == NULL)</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return 0;</SPAN></P>
+      <P><SPAN lang="EN-US">&nbsp;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>SOCKET<SPAN>&nbsp; </SPAN>Listening = 
+      pDlg-&gt;m_Listening;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>开始监听是否有客户端连接。</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>if(listen(Listening,40) == SOCKET_ERROR)</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>{</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return 0;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>}</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>char szBuf[MAX_PATH];</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>初始化</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>memset(szBuf,0,MAX_PATH);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>while(1)</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>{</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>SOCKET ConnectSocket;</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>sockaddr_in<SPAN>&nbsp;&nbsp;&nbsp; </SPAN>ClientAddr;</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>int<SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>nLen = sizeof(sockaddr);</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>阻塞直到有客户端连接，不然多浪费</SPAN><SPAN 
+      lang="EN-US">CPU</SPAN><SPAN>资源。</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>ConnectSocket = 
+      accept(Listening,(sockaddr*)&amp;ClientAddr,&amp;nLen);</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>都到客户端的</SPAN><SPAN 
+      lang="EN-US">IP</SPAN><SPAN>地址。</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>char *pAddrname = inet_ntoa(ClientAddr.sin_addr);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>pDlg-&gt;Receive(ConnectSocket,szBuf,100);</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>界面上显示请求数据。</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>pDlg-&gt;SetRequestText(szBuf);</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>strcat(szBuf," :</SPAN><SPAN>我是老猫，收到（</SPAN><SPAN 
+      lang="EN-US">");</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>strcat(szBuf,pAddrname);</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>strcat(szBuf,"</SPAN><SPAN>）</SPAN><SPAN 
+lang="EN-US">");</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>向客户端发送回应数据</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>pDlg-&gt;Send(ConnectSocket,szBuf,100);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>}</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return 0;</SPAN></P>
+      <P><SPAN lang="EN-US">}</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>服务器端一直在监听是否有客户端连接，如有连接，处理客户端的请求，给出回应，然后继续监听。</SPAN></SPAN></P>
+      <P><B><SPAN>客户端：</SPAN></B></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>客户端的发送函数：</SPAN></SPAN></P>
+      <P><SPAN lang="EN-US">#define 
+      DEFAULT_PORT<SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>2000</SPAN></P>
+      <P><SPAN lang="EN-US">void CClientDlg::OnSend() </SPAN></P>
+      <P><SPAN lang="EN-US">{</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>DWORD<SPAN></SPAN>dwIP = 
+      0;<SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN></SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>TCHAR szText[MAX_PATH];</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>memset(szText,0,MAX_PATH);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>m_IP.GetWindowText(szText,MAX_PATH);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>把字符串形式的</SPAN><SPAN 
+      lang="EN-US">IP</SPAN><SPAN>地址转成</SPAN><SPAN 
+      lang="EN-US">IN_ADDR</SPAN><SPAN>结构需要的形式。</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>dwIP = inet_addr(szText);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>m_RequestEdit.GetWindowText(szText,MAX_PATH);</SPAN></P>
+      <P><SPAN lang="EN-US">&nbsp;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>sockaddr_in local;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>SOCKET socketTmp;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>必须是</SPAN><SPAN 
+      lang="EN-US">AF_INET,</SPAN><SPAN>表示该</SPAN><SPAN 
+      lang="EN-US">socket</SPAN><SPAN>在</SPAN><SPAN 
+      lang="EN-US">Internet</SPAN><SPAN>域中进行通信</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>local.sin_family=AF_INET;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>端口号</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>local.sin_port=htons(DEFAULT_PORT);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>服务器的</SPAN><SPAN 
+      lang="EN-US">IP</SPAN><SPAN>地址。</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>local.sin_addr.S_un.S_addr=dwIP;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN></SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>////</SPAN><SPAN>初始化</SPAN><SPAN lang="EN-US">Socket</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>socketTmp=socket(AF_INET,SOCK_STREAM,0);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>连接服务器</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>if(connect(socketTmp,(LPSOCKADDR)&amp;local,sizeof(local)) &lt; 
+      0)</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>{</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>closesocket(socketTmp);</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>MessageBox("</SPAN><SPAN>连接服务器失败。</SPAN><SPAN 
+      lang="EN-US">");</SPAN></P>
+      <P><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>return ;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>}</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>发送请求，为简单只发</SPAN><SPAN 
+      lang="EN-US">100</SPAN><SPAN>字节，在服务器端也规定</SPAN><SPAN 
+      lang="EN-US">100</SPAN><SPAN>字节。</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>Send(socketTmp,szText,100);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>读取服务器端返回的数据。</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>memset(szText,0,MAX_PATH);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>接收服务器端的回应。</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>Receive(socketTmp,szText,100);</SPAN></P>
+      <P><SPAN lang="EN-US">&nbsp;</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>TCHAR szMessage[MAX_PATH];</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>memset(szMessage,0,MAX_PATH);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>strcat(szMessage,szText);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>//</SPAN><SPAN>界面上显示回应数据。</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>m_ReplyBtn.SetWindowText(szMessage);</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN>closesocket(socketTmp);</SPAN></P>
+      <P><SPAN lang="EN-US">}</SPAN></P>
+      <P><SPAN lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>客户端就一个函数完成了一次通信。在这里</SPAN><SPAN 
+      lang="EN-US">IP</SPAN><SPAN>地址为何用</SPAN><SPAN 
+      lang="EN-US">127.0.0.1</SPAN><SPAN>呢？使用这个</SPAN><SPAN 
+      lang="EN-US">IP</SPAN><SPAN>地址，服务器端和客户端就能运行在同一台机器上，这样调试方便多了。当然你可以在你朋友的机器上运行</SPAN><SPAN 
+      lang="EN-US">Server</SPAN><SPAN>程序</SPAN><SPAN 
+      lang="EN-US">(</SPAN><SPAN>本人在局域网中测试过</SPAN><SPAN 
+      lang="EN-US">)</SPAN><SPAN>，在自己的机器上运行</SPAN><SPAN 
+      lang="EN-US">Client</SPAN><SPAN>程序，当然输入的</SPAN><SPAN 
+      lang="EN-US">IP</SPAN><SPAN>地址就该是你朋友机器的</SPAN><SPAN 
+      lang="EN-US">IP</SPAN><SPAN>地址了。<BR></SPAN><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN><SPAN>简单的理论和实践都说了，现在</SPAN><SPAN 
+      lang="EN-US">Socket</SPAN><SPAN>编程不神秘了吧？希望对你有些帮助。</SPAN><SPAN 
+      lang="EN-US"><SPAN 
+      lang="EN-US"><SPAN>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      </SPAN></SPAN></SPAN></SPAN></SPAN></P></SPAN></SPAN></SPAN></SPAN></SPAN></DIV>
+      <DIV id="MySignature"></DIV>
+      <DIV class="clear"></DIV>
+      <DIV id="blog_post_info_block">
+      <DIV id="BlogPostCategory"></DIV>
+      <DIV id="EntryTag"></DIV>
+      <DIV id="blog_post_info"></DIV>
+      <DIV class="clear"></DIV>
+      <DIV id="post_next_prev"></DIV></DIV></DIV></DIV><A name="!comments"></A>
+      <DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+       
+      <DIV class="commentform" id="comment_form"><A name="commentform"></A> 
+      <DIV id="divCommentShow"></DIV>
+      <DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+      onclick="return RefreshCommentList();" 
+      href="javascript:void(0);">刷新评论</A><A onclick="return RefreshPage();" 
+      href="http://goodcandle.cnblogs.com/archive/2005/12/10/294652.aspx#">刷新页面</A><A 
+      href="http://goodcandle.cnblogs.com/archive/2005/12/10/294652.aspx#top">返回顶部</A></DIV>
+      <DIV id="comment_form_container"></DIV>
+      <DIV class="ad_text_commentbox" id="ad_text_under_commentbox"></DIV>
+      <DIV id="site_nav_under"><A title="开发者的网上家园" href="http://www.cnblogs.com/" 
+      target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" 
+      target="_blank">博问</A><A title="IT新闻" href="http://news.cnblogs.com/" 
+      target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" target="_blank">闪存</A><A 
+      href="http://job.cnblogs.com/" target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+      target="_blank">知识库</A></DIV>
+      <DIV id="opt_under_post"></DIV>
+<SCRIPT type="text/javascript">
+    var enableGoogleAd = true;var googletag = googletag || {};googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</SCRIPT>
+       
+      <DIV id="ad_under_post_holder">
+<SCRIPT type="text/javascript">
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        var gads = document.createElement('script');
+        gads.async = true;
+        gads.type = 'text/javascript';
+        var useSSL = 'https:' == document.location.protocol;
+        gads.src = (useSSL ? 'https:' : 'http:') +'//www.googletagservices.com/tag/js/gpt.js';
+        var node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(gads, node);
+    })();
+</SCRIPT>
+       
+<SCRIPT type="text/javascript">
+    try {
+        googletag.cmd.push(function () {
+            googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    } catch (e) { }
+</SCRIPT>
+       
+      <DIV class="c_ad_block" id="google_ad_c1">
+      <DIV id="div-gpt-ad-1346480159711-0" style="width: 300px; height: 250px;">
+<SCRIPT type="text/javascript">
+    try{
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });
+    } catch (e) { }
+    </SCRIPT>
+           </DIV></DIV></DIV>
+      <DIV id="blog_news_kb"></DIV>
+      <DIV class="c_ad_block" id="HistoryToday"></DIV>
+<SCRIPT type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    $.ajax({ url: 'http://counter.cnblogs.com/blog/post/' + cb_entryId, type: 'get', dataType: 'script', cache: true });
+});
+</SCRIPT>
+       </DIV></DIV></TD></TR>
+  <TR>
+    <TD class="FooterCell" colspan="2">
+      <P id="footer">	Powered by: 	 <BR><A name="Hyperlink1" id="Footer1_Hyperlink3" 
+      style="font-family: Verdana; font-size: 12px;" href="http://www.cnblogs.com/">博客园</A>
+      	 <BR>Copyright © 源码工作室 </P></TD></TR></TBODY></TABLE></BODY></HTML>

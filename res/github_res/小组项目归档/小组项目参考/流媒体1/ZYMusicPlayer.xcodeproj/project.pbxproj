@@ -1,0 +1,912 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		09294B141BCB8E5500110549 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B131BCB8E5500110549 /* main.m */; };
+		09294B201BCB8E5500110549 /* ZYMusicPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 09294B1E1BCB8E5500110549 /* ZYMusicPlayer.xcdatamodeld */; };
+		09294B221BCB8E5500110549 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09294B211BCB8E5500110549 /* Assets.xcassets */; };
+		09294B301BCB8E5500110549 /* ZYMusicPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B2F1BCB8E5500110549 /* ZYMusicPlayerTests.m */; };
+		09294B3B1BCB8E5500110549 /* ZYMusicPlayerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B3A1BCB8E5500110549 /* ZYMusicPlayerUITests.m */; };
+		09294B561BCB8F0A00110549 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B531BCB8F0A00110549 /* AppDelegate.m */; };
+		09294B591BCB90B400110549 /* ZYAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B581BCB90B400110549 /* ZYAudioManager.m */; };
+		09294B5C1BCB915C00110549 /* ZYMusicTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B5B1BCB915C00110549 /* ZYMusicTool.m */; };
+		09294B5F1BCB9EB700110549 /* ZYMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B5E1BCB9EB700110549 /* ZYMusic.m */; };
+		09294B621BCB9EFE00110549 /* ZYLrcLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B611BCB9EFE00110549 /* ZYLrcLine.m */; };
+		09294B761BCBA93C00110549 /* MJConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B681BCBA93C00110549 /* MJConst.m */; };
+		09294B771BCBA93C00110549 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B6B1BCBA93C00110549 /* MJFoundation.m */; };
+		09294B781BCBA93C00110549 /* MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B6D1BCBA93C00110549 /* MJIvar.m */; };
+		09294B791BCBA93C00110549 /* MJType.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B6F1BCBA93C00110549 /* MJType.m */; };
+		09294B7A1BCBA93C00110549 /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B711BCBA93C00110549 /* NSObject+MJCoding.m */; };
+		09294B7B1BCBA93C00110549 /* NSObject+MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B731BCBA93C00110549 /* NSObject+MJIvar.m */; };
+		09294B7C1BCBA93C00110549 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 09294B751BCBA93C00110549 /* NSObject+MJKeyValue.m */; };
+		09294BA61BCBAA0600110549 /* bb@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B7F1BCBAA0600110549 /* bb@2x.jpg */; };
+		09294BA71BCBAA0600110549 /* bb_icon@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B801BCBAA0600110549 /* bb_icon@2x.jpg */; };
+		09294BA81BCBAA0600110549 /* dzq@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B811BCBAA0600110549 /* dzq@2x.jpg */; };
+		09294BA91BCBAA0600110549 /* dzq_icon@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B821BCBAA0600110549 /* dzq_icon@2x.jpg */; };
+		09294BAA1BCBAA0600110549 /* eason@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B831BCBAA0600110549 /* eason@2x.jpg */; };
+		09294BAB1BCBAA0600110549 /* eason_icon@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B841BCBAA0600110549 /* eason_icon@2x.jpg */; };
+		09294BAC1BCBAA0600110549 /* jay@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B851BCBAA0600110549 /* jay@2x.jpg */; };
+		09294BAD1BCBAA0600110549 /* jay_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 09294B861BCBAA0600110549 /* jay_icon@2x.png */; };
+		09294BAE1BCBAA0600110549 /* jj@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B871BCBAA0600110549 /* jj@2x.jpg */; };
+		09294BAF1BCBAA0600110549 /* jj_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 09294B881BCBAA0600110549 /* jj_icon@2x.png */; };
+		09294BB01BCBAA0600110549 /* kzxd@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B891BCBAA0600110549 /* kzxd@2x.jpg */; };
+		09294BB11BCBAA0600110549 /* kzxd_icon@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B8A1BCBAA0600110549 /* kzxd_icon@2x.jpg */; };
+		09294BB21BCBAA0600110549 /* nanquan@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B8B1BCBAA0600110549 /* nanquan@2x.jpg */; };
+		09294BB31BCBAA0600110549 /* nanquan_icon@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B8C1BCBAA0600110549 /* nanquan_icon@2x.jpg */; };
+		09294BB41BCBAA0600110549 /* wf@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B8D1BCBAA0600110549 /* wf@2x.jpg */; };
+		09294BB51BCBAA0600110549 /* wf_icon@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B8E1BCBAA0600110549 /* wf_icon@2x.jpg */; };
+		09294BB61BCBAA0600110549 /* zxy@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B8F1BCBAA0600110549 /* zxy@2x.jpg */; };
+		09294BB71BCBAA0600110549 /* zxy_icon@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 09294B901BCBAA0600110549 /* zxy_icon@2x.jpg */; };
+		09294BB81BCBAA0600110549 /* 10405520.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 09294B921BCBAA0600110549 /* 10405520.lrc */; };
+		09294BB91BCBAA0600110549 /* 10736444.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 09294B931BCBAA0600110549 /* 10736444.lrc */; };
+		09294BBA1BCBAA0600110549 /* 120125029.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 09294B941BCBAA0600110549 /* 120125029.lrc */; };
+		09294BBB1BCBAA0600110549 /* 12309111.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 09294B951BCBAA0600110549 /* 12309111.lrc */; };
+		09294BBC1BCBAA0600110549 /* 14945107.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 09294B961BCBAA0600110549 /* 14945107.lrc */; };
+		09294BBD1BCBAA0600110549 /* 235319.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 09294B971BCBAA0600110549 /* 235319.lrc */; };
+		09294BBE1BCBAA0600110549 /* 255319.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 09294B981BCBAA0600110549 /* 255319.lrc */; };
+		09294BBF1BCBAA0600110549 /* 309769.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 09294B991BCBAA0600110549 /* 309769.lrc */; };
+		09294BC01BCBAA0600110549 /* 339744.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 09294B9A1BCBAA0600110549 /* 339744.lrc */; };
+		09294BC11BCBAA0600110549 /* 10405520.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09294B9C1BCBAA0600110549 /* 10405520.mp3 */; };
+		09294BC21BCBAA0600110549 /* 10736444.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09294B9D1BCBAA0600110549 /* 10736444.mp3 */; };
+		09294BC31BCBAA0600110549 /* 120125029.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09294B9E1BCBAA0600110549 /* 120125029.mp3 */; };
+		09294BC41BCBAA0600110549 /* 12309111.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09294B9F1BCBAA0600110549 /* 12309111.mp3 */; };
+		09294BC51BCBAA0600110549 /* 14945107.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09294BA01BCBAA0600110549 /* 14945107.mp3 */; };
+		09294BC61BCBAA0600110549 /* 235319.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09294BA11BCBAA0600110549 /* 235319.mp3 */; };
+		09294BC71BCBAA0600110549 /* 255319.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09294BA21BCBAA0600110549 /* 255319.mp3 */; };
+		09294BC81BCBAA0600110549 /* 309769.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09294BA31BCBAA0600110549 /* 309769.mp3 */; };
+		09294BC91BCBAA0600110549 /* 339744.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09294BA41BCBAA0600110549 /* 339744.mp3 */; };
+		09294BCA1BCBAA0600110549 /* Musics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09294BA51BCBAA0600110549 /* Musics.plist */; };
+		098597E51BD0C0D200937BCC /* ZYAudioManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 098597E41BD0C0D200937BCC /* ZYAudioManagerTests.m */; };
+		098D20EF1BE1D287002F9690 /* ZYLrcLineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 098D20EE1BE1D287002F9690 /* ZYLrcLineTests.m */; };
+		09AC632F1BDB531E005C0808 /* ZYLrcView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AC632E1BDB531E005C0808 /* ZYLrcView.m */; };
+		09AC63421BDB7C96005C0808 /* ZYLrcCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AC63411BDB7C96005C0808 /* ZYLrcCell.m */; };
+		09AC63451BDCAAB9005C0808 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AC63441BDCAAB9005C0808 /* UIView+AutoLayout.m */; };
+		09AC63481BDCB2A0005C0808 /* ZYMusicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AC63471BDCB2A0005C0808 /* ZYMusicCell.m */; };
+		09B020491BCCA3A20065D767 /* ZYMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B020481BCCA3A20065D767 /* ZYMusicViewController.m */; };
+		09B0204D1BCCA4820065D767 /* ZYPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B0204B1BCCA4820065D767 /* ZYPlayingViewController.m */; };
+		09B0204E1BCCA4820065D767 /* ZYPlayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09B0204C1BCCA4820065D767 /* ZYPlayingViewController.xib */; };
+		09B020511BCCB15F0065D767 /* ZYImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B020501BCCB15F0065D767 /* ZYImageTool.m */; };
+		09B020551BCCB40E0065D767 /* Colours.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B020541BCCB40E0065D767 /* Colours.m */; };
+		09B020591BCCF0DA0065D767 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 09B020581BCCF0DA0065D767 /* UIView+Extension.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		09294B2C1BCB8E5500110549 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 09294B071BCB8E5500110549 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09294B0E1BCB8E5500110549;
+			remoteInfo = ZYMusicPlayer;
+		};
+		09294B371BCB8E5500110549 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 09294B071BCB8E5500110549 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09294B0E1BCB8E5500110549;
+			remoteInfo = ZYMusicPlayer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		09294B0F1BCB8E5500110549 /* ZYMusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZYMusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		09294B131BCB8E5500110549 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		09294B1F1BCB8E5500110549 /* ZYMusicPlayer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZYMusicPlayer.xcdatamodel; sourceTree = "<group>"; };
+		09294B211BCB8E5500110549 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		09294B261BCB8E5500110549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09294B2B1BCB8E5500110549 /* ZYMusicPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZYMusicPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		09294B2F1BCB8E5500110549 /* ZYMusicPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZYMusicPlayerTests.m; sourceTree = "<group>"; };
+		09294B311BCB8E5500110549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09294B361BCB8E5500110549 /* ZYMusicPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZYMusicPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		09294B3A1BCB8E5500110549 /* ZYMusicPlayerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZYMusicPlayerUITests.m; sourceTree = "<group>"; };
+		09294B3C1BCB8E5500110549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09294B521BCB8F0A00110549 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		09294B531BCB8F0A00110549 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		09294B571BCB90B400110549 /* ZYAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYAudioManager.h; sourceTree = "<group>"; };
+		09294B581BCB90B400110549 /* ZYAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYAudioManager.m; sourceTree = "<group>"; };
+		09294B5A1BCB915C00110549 /* ZYMusicTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYMusicTool.h; sourceTree = "<group>"; };
+		09294B5B1BCB915C00110549 /* ZYMusicTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYMusicTool.m; sourceTree = "<group>"; };
+		09294B5D1BCB9EB700110549 /* ZYMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYMusic.h; sourceTree = "<group>"; };
+		09294B5E1BCB9EB700110549 /* ZYMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYMusic.m; sourceTree = "<group>"; };
+		09294B601BCB9EFE00110549 /* ZYLrcLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYLrcLine.h; sourceTree = "<group>"; };
+		09294B611BCB9EFE00110549 /* ZYLrcLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYLrcLine.m; sourceTree = "<group>"; };
+		09294B671BCBA93C00110549 /* MJConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJConst.h; sourceTree = "<group>"; };
+		09294B681BCBA93C00110549 /* MJConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJConst.m; sourceTree = "<group>"; };
+		09294B691BCBA93C00110549 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
+		09294B6A1BCBA93C00110549 /* MJFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJFoundation.h; sourceTree = "<group>"; };
+		09294B6B1BCBA93C00110549 /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
+		09294B6C1BCBA93C00110549 /* MJIvar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJIvar.h; sourceTree = "<group>"; };
+		09294B6D1BCBA93C00110549 /* MJIvar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJIvar.m; sourceTree = "<group>"; };
+		09294B6E1BCBA93C00110549 /* MJType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJType.h; sourceTree = "<group>"; };
+		09294B6F1BCBA93C00110549 /* MJType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJType.m; sourceTree = "<group>"; };
+		09294B701BCBA93C00110549 /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
+		09294B711BCBA93C00110549 /* NSObject+MJCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJCoding.m"; sourceTree = "<group>"; };
+		09294B721BCBA93C00110549 /* NSObject+MJIvar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJIvar.h"; sourceTree = "<group>"; };
+		09294B731BCBA93C00110549 /* NSObject+MJIvar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJIvar.m"; sourceTree = "<group>"; };
+		09294B741BCBA93C00110549 /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
+		09294B751BCBA93C00110549 /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
+		09294B7F1BCBAA0600110549 /* bb@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bb@2x.jpg"; sourceTree = "<group>"; };
+		09294B801BCBAA0600110549 /* bb_icon@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bb_icon@2x.jpg"; sourceTree = "<group>"; };
+		09294B811BCBAA0600110549 /* dzq@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "dzq@2x.jpg"; sourceTree = "<group>"; };
+		09294B821BCBAA0600110549 /* dzq_icon@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "dzq_icon@2x.jpg"; sourceTree = "<group>"; };
+		09294B831BCBAA0600110549 /* eason@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "eason@2x.jpg"; sourceTree = "<group>"; };
+		09294B841BCBAA0600110549 /* eason_icon@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "eason_icon@2x.jpg"; sourceTree = "<group>"; };
+		09294B851BCBAA0600110549 /* jay@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "jay@2x.jpg"; sourceTree = "<group>"; };
+		09294B861BCBAA0600110549 /* jay_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jay_icon@2x.png"; sourceTree = "<group>"; };
+		09294B871BCBAA0600110549 /* jj@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "jj@2x.jpg"; sourceTree = "<group>"; };
+		09294B881BCBAA0600110549 /* jj_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jj_icon@2x.png"; sourceTree = "<group>"; };
+		09294B891BCBAA0600110549 /* kzxd@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "kzxd@2x.jpg"; sourceTree = "<group>"; };
+		09294B8A1BCBAA0600110549 /* kzxd_icon@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "kzxd_icon@2x.jpg"; sourceTree = "<group>"; };
+		09294B8B1BCBAA0600110549 /* nanquan@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "nanquan@2x.jpg"; sourceTree = "<group>"; };
+		09294B8C1BCBAA0600110549 /* nanquan_icon@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "nanquan_icon@2x.jpg"; sourceTree = "<group>"; };
+		09294B8D1BCBAA0600110549 /* wf@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wf@2x.jpg"; sourceTree = "<group>"; };
+		09294B8E1BCBAA0600110549 /* wf_icon@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wf_icon@2x.jpg"; sourceTree = "<group>"; };
+		09294B8F1BCBAA0600110549 /* zxy@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "zxy@2x.jpg"; sourceTree = "<group>"; };
+		09294B901BCBAA0600110549 /* zxy_icon@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "zxy_icon@2x.jpg"; sourceTree = "<group>"; };
+		09294B921BCBAA0600110549 /* 10405520.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 10405520.lrc; sourceTree = "<group>"; };
+		09294B931BCBAA0600110549 /* 10736444.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 10736444.lrc; sourceTree = "<group>"; };
+		09294B941BCBAA0600110549 /* 120125029.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 120125029.lrc; sourceTree = "<group>"; };
+		09294B951BCBAA0600110549 /* 12309111.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 12309111.lrc; sourceTree = "<group>"; };
+		09294B961BCBAA0600110549 /* 14945107.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 14945107.lrc; sourceTree = "<group>"; };
+		09294B971BCBAA0600110549 /* 235319.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 235319.lrc; sourceTree = "<group>"; };
+		09294B981BCBAA0600110549 /* 255319.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 255319.lrc; sourceTree = "<group>"; };
+		09294B991BCBAA0600110549 /* 309769.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 309769.lrc; sourceTree = "<group>"; };
+		09294B9A1BCBAA0600110549 /* 339744.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 339744.lrc; sourceTree = "<group>"; };
+		09294B9C1BCBAA0600110549 /* 10405520.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 10405520.mp3; sourceTree = "<group>"; };
+		09294B9D1BCBAA0600110549 /* 10736444.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 10736444.mp3; sourceTree = "<group>"; };
+		09294B9E1BCBAA0600110549 /* 120125029.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 120125029.mp3; sourceTree = "<group>"; };
+		09294B9F1BCBAA0600110549 /* 12309111.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 12309111.mp3; sourceTree = "<group>"; };
+		09294BA01BCBAA0600110549 /* 14945107.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 14945107.mp3; sourceTree = "<group>"; };
+		09294BA11BCBAA0600110549 /* 235319.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 235319.mp3; sourceTree = "<group>"; };
+		09294BA21BCBAA0600110549 /* 255319.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 255319.mp3; sourceTree = "<group>"; };
+		09294BA31BCBAA0600110549 /* 309769.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 309769.mp3; sourceTree = "<group>"; };
+		09294BA41BCBAA0600110549 /* 339744.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 339744.mp3; sourceTree = "<group>"; };
+		09294BA51BCBAA0600110549 /* Musics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Musics.plist; sourceTree = "<group>"; };
+		098597E41BD0C0D200937BCC /* ZYAudioManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYAudioManagerTests.m; sourceTree = "<group>"; };
+		098D20EE1BE1D287002F9690 /* ZYLrcLineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYLrcLineTests.m; sourceTree = "<group>"; };
+		09AC632D1BDB531E005C0808 /* ZYLrcView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYLrcView.h; sourceTree = "<group>"; };
+		09AC632E1BDB531E005C0808 /* ZYLrcView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYLrcView.m; sourceTree = "<group>"; };
+		09AC63401BDB7C96005C0808 /* ZYLrcCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYLrcCell.h; sourceTree = "<group>"; };
+		09AC63411BDB7C96005C0808 /* ZYLrcCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYLrcCell.m; sourceTree = "<group>"; };
+		09AC63431BDCAAB9005C0808 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AutoLayout.h"; sourceTree = "<group>"; };
+		09AC63441BDCAAB9005C0808 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AutoLayout.m"; sourceTree = "<group>"; };
+		09AC63461BDCB2A0005C0808 /* ZYMusicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYMusicCell.h; sourceTree = "<group>"; };
+		09AC63471BDCB2A0005C0808 /* ZYMusicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYMusicCell.m; sourceTree = "<group>"; };
+		09B020471BCCA3A20065D767 /* ZYMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYMusicViewController.h; sourceTree = "<group>"; };
+		09B020481BCCA3A20065D767 /* ZYMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYMusicViewController.m; sourceTree = "<group>"; };
+		09B0204A1BCCA4820065D767 /* ZYPlayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYPlayingViewController.h; sourceTree = "<group>"; };
+		09B0204B1BCCA4820065D767 /* ZYPlayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYPlayingViewController.m; sourceTree = "<group>"; };
+		09B0204C1BCCA4820065D767 /* ZYPlayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZYPlayingViewController.xib; sourceTree = "<group>"; };
+		09B0204F1BCCB15F0065D767 /* ZYImageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYImageTool.h; sourceTree = "<group>"; };
+		09B020501BCCB15F0065D767 /* ZYImageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYImageTool.m; sourceTree = "<group>"; };
+		09B020531BCCB40E0065D767 /* Colours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colours.h; sourceTree = "<group>"; };
+		09B020541BCCB40E0065D767 /* Colours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colours.m; sourceTree = "<group>"; };
+		09B020571BCCF0DA0065D767 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		09B020581BCCF0DA0065D767 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		09294B0C1BCB8E5500110549 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09294B281BCB8E5500110549 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09294B331BCB8E5500110549 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		09294B061BCB8E5500110549 = {
+			isa = PBXGroup;
+			children = (
+				09294B111BCB8E5500110549 /* ZYMusicPlayer */,
+				09294B2E1BCB8E5500110549 /* ZYMusicPlayerTests */,
+				09294B391BCB8E5500110549 /* ZYMusicPlayerUITests */,
+				09294B101BCB8E5500110549 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		09294B101BCB8E5500110549 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				09294B0F1BCB8E5500110549 /* ZYMusicPlayer.app */,
+				09294B2B1BCB8E5500110549 /* ZYMusicPlayerTests.xctest */,
+				09294B361BCB8E5500110549 /* ZYMusicPlayerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		09294B111BCB8E5500110549 /* ZYMusicPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				09294B4E1BCB8F0A00110549 /* Class */,
+				09294B211BCB8E5500110549 /* Assets.xcassets */,
+				09294B261BCB8E5500110549 /* Info.plist */,
+				09294B1E1BCB8E5500110549 /* ZYMusicPlayer.xcdatamodeld */,
+				09294B121BCB8E5500110549 /* Supporting Files */,
+			);
+			path = ZYMusicPlayer;
+			sourceTree = "<group>";
+		};
+		09294B121BCB8E5500110549 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				09294B7D1BCBAA0600110549 /* Resources */,
+				09294B131BCB8E5500110549 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		09294B2E1BCB8E5500110549 /* ZYMusicPlayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				09294B2F1BCB8E5500110549 /* ZYMusicPlayerTests.m */,
+				098597E41BD0C0D200937BCC /* ZYAudioManagerTests.m */,
+				098D20EE1BE1D287002F9690 /* ZYLrcLineTests.m */,
+				09294B311BCB8E5500110549 /* Info.plist */,
+			);
+			path = ZYMusicPlayerTests;
+			sourceTree = "<group>";
+		};
+		09294B391BCB8E5500110549 /* ZYMusicPlayerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				09294B3A1BCB8E5500110549 /* ZYMusicPlayerUITests.m */,
+				09294B3C1BCB8E5500110549 /* Info.plist */,
+			);
+			path = ZYMusicPlayerUITests;
+			sourceTree = "<group>";
+		};
+		09294B4E1BCB8F0A00110549 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				09B020561BCCF0DA0065D767 /* Category */,
+				09294B651BCBA92300110549 /* Library */,
+				09294B4F1BCB8F0A00110549 /* Controller */,
+				09294B501BCB8F0A00110549 /* Model */,
+				09294B511BCB8F0A00110549 /* Other */,
+				09294B541BCB8F0A00110549 /* Tool */,
+				09294B551BCB8F0A00110549 /* View */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
+		09294B4F1BCB8F0A00110549 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				09B020471BCCA3A20065D767 /* ZYMusicViewController.h */,
+				09B020481BCCA3A20065D767 /* ZYMusicViewController.m */,
+				09B0204A1BCCA4820065D767 /* ZYPlayingViewController.h */,
+				09B0204B1BCCA4820065D767 /* ZYPlayingViewController.m */,
+				09B0204C1BCCA4820065D767 /* ZYPlayingViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		09294B501BCB8F0A00110549 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				09294B5D1BCB9EB700110549 /* ZYMusic.h */,
+				09294B5E1BCB9EB700110549 /* ZYMusic.m */,
+				09294B601BCB9EFE00110549 /* ZYLrcLine.h */,
+				09294B611BCB9EFE00110549 /* ZYLrcLine.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		09294B511BCB8F0A00110549 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				09294B521BCB8F0A00110549 /* AppDelegate.h */,
+				09294B531BCB8F0A00110549 /* AppDelegate.m */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		09294B541BCB8F0A00110549 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				09294B571BCB90B400110549 /* ZYAudioManager.h */,
+				09294B581BCB90B400110549 /* ZYAudioManager.m */,
+				09294B5A1BCB915C00110549 /* ZYMusicTool.h */,
+				09294B5B1BCB915C00110549 /* ZYMusicTool.m */,
+				09B0204F1BCCB15F0065D767 /* ZYImageTool.h */,
+				09B020501BCCB15F0065D767 /* ZYImageTool.m */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		09294B551BCB8F0A00110549 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				09AC632D1BDB531E005C0808 /* ZYLrcView.h */,
+				09AC632E1BDB531E005C0808 /* ZYLrcView.m */,
+				09AC63401BDB7C96005C0808 /* ZYLrcCell.h */,
+				09AC63411BDB7C96005C0808 /* ZYLrcCell.m */,
+				09AC63461BDCB2A0005C0808 /* ZYMusicCell.h */,
+				09AC63471BDCB2A0005C0808 /* ZYMusicCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		09294B651BCBA92300110549 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				09B020521BCCB40E0065D767 /* Colours */,
+				09294B661BCBA93C00110549 /* MJExtension */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		09294B661BCBA93C00110549 /* MJExtension */ = {
+			isa = PBXGroup;
+			children = (
+				09294B671BCBA93C00110549 /* MJConst.h */,
+				09294B681BCBA93C00110549 /* MJConst.m */,
+				09294B691BCBA93C00110549 /* MJExtension.h */,
+				09294B6A1BCBA93C00110549 /* MJFoundation.h */,
+				09294B6B1BCBA93C00110549 /* MJFoundation.m */,
+				09294B6C1BCBA93C00110549 /* MJIvar.h */,
+				09294B6D1BCBA93C00110549 /* MJIvar.m */,
+				09294B6E1BCBA93C00110549 /* MJType.h */,
+				09294B6F1BCBA93C00110549 /* MJType.m */,
+				09294B701BCBA93C00110549 /* NSObject+MJCoding.h */,
+				09294B711BCBA93C00110549 /* NSObject+MJCoding.m */,
+				09294B721BCBA93C00110549 /* NSObject+MJIvar.h */,
+				09294B731BCBA93C00110549 /* NSObject+MJIvar.m */,
+				09294B741BCBA93C00110549 /* NSObject+MJKeyValue.h */,
+				09294B751BCBA93C00110549 /* NSObject+MJKeyValue.m */,
+			);
+			path = MJExtension;
+			sourceTree = "<group>";
+		};
+		09294B7D1BCBAA0600110549 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				09294B7E1BCBAA0600110549 /* Images */,
+				09294B911BCBAA0600110549 /* Lrcs */,
+				09294B9B1BCBAA0600110549 /* MP3s */,
+				09294BA51BCBAA0600110549 /* Musics.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		09294B7E1BCBAA0600110549 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				09294B7F1BCBAA0600110549 /* bb@2x.jpg */,
+				09294B801BCBAA0600110549 /* bb_icon@2x.jpg */,
+				09294B811BCBAA0600110549 /* dzq@2x.jpg */,
+				09294B821BCBAA0600110549 /* dzq_icon@2x.jpg */,
+				09294B831BCBAA0600110549 /* eason@2x.jpg */,
+				09294B841BCBAA0600110549 /* eason_icon@2x.jpg */,
+				09294B851BCBAA0600110549 /* jay@2x.jpg */,
+				09294B861BCBAA0600110549 /* jay_icon@2x.png */,
+				09294B871BCBAA0600110549 /* jj@2x.jpg */,
+				09294B881BCBAA0600110549 /* jj_icon@2x.png */,
+				09294B891BCBAA0600110549 /* kzxd@2x.jpg */,
+				09294B8A1BCBAA0600110549 /* kzxd_icon@2x.jpg */,
+				09294B8B1BCBAA0600110549 /* nanquan@2x.jpg */,
+				09294B8C1BCBAA0600110549 /* nanquan_icon@2x.jpg */,
+				09294B8D1BCBAA0600110549 /* wf@2x.jpg */,
+				09294B8E1BCBAA0600110549 /* wf_icon@2x.jpg */,
+				09294B8F1BCBAA0600110549 /* zxy@2x.jpg */,
+				09294B901BCBAA0600110549 /* zxy_icon@2x.jpg */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		09294B911BCBAA0600110549 /* Lrcs */ = {
+			isa = PBXGroup;
+			children = (
+				09294B921BCBAA0600110549 /* 10405520.lrc */,
+				09294B931BCBAA0600110549 /* 10736444.lrc */,
+				09294B941BCBAA0600110549 /* 120125029.lrc */,
+				09294B951BCBAA0600110549 /* 12309111.lrc */,
+				09294B961BCBAA0600110549 /* 14945107.lrc */,
+				09294B971BCBAA0600110549 /* 235319.lrc */,
+				09294B981BCBAA0600110549 /* 255319.lrc */,
+				09294B991BCBAA0600110549 /* 309769.lrc */,
+				09294B9A1BCBAA0600110549 /* 339744.lrc */,
+			);
+			path = Lrcs;
+			sourceTree = "<group>";
+		};
+		09294B9B1BCBAA0600110549 /* MP3s */ = {
+			isa = PBXGroup;
+			children = (
+				09294B9C1BCBAA0600110549 /* 10405520.mp3 */,
+				09294B9D1BCBAA0600110549 /* 10736444.mp3 */,
+				09294B9E1BCBAA0600110549 /* 120125029.mp3 */,
+				09294B9F1BCBAA0600110549 /* 12309111.mp3 */,
+				09294BA01BCBAA0600110549 /* 14945107.mp3 */,
+				09294BA11BCBAA0600110549 /* 235319.mp3 */,
+				09294BA21BCBAA0600110549 /* 255319.mp3 */,
+				09294BA31BCBAA0600110549 /* 309769.mp3 */,
+				09294BA41BCBAA0600110549 /* 339744.mp3 */,
+			);
+			path = MP3s;
+			sourceTree = "<group>";
+		};
+		09B020521BCCB40E0065D767 /* Colours */ = {
+			isa = PBXGroup;
+			children = (
+				09B020531BCCB40E0065D767 /* Colours.h */,
+				09B020541BCCB40E0065D767 /* Colours.m */,
+			);
+			path = Colours;
+			sourceTree = "<group>";
+		};
+		09B020561BCCF0DA0065D767 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				09AC63431BDCAAB9005C0808 /* UIView+AutoLayout.h */,
+				09AC63441BDCAAB9005C0808 /* UIView+AutoLayout.m */,
+				09B020571BCCF0DA0065D767 /* UIView+Extension.h */,
+				09B020581BCCF0DA0065D767 /* UIView+Extension.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		09294B0E1BCB8E5500110549 /* ZYMusicPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09294B3F1BCB8E5500110549 /* Build configuration list for PBXNativeTarget "ZYMusicPlayer" */;
+			buildPhases = (
+				09294B0B1BCB8E5500110549 /* Sources */,
+				09294B0C1BCB8E5500110549 /* Frameworks */,
+				09294B0D1BCB8E5500110549 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZYMusicPlayer;
+			productName = ZYMusicPlayer;
+			productReference = 09294B0F1BCB8E5500110549 /* ZYMusicPlayer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		09294B2A1BCB8E5500110549 /* ZYMusicPlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09294B421BCB8E5500110549 /* Build configuration list for PBXNativeTarget "ZYMusicPlayerTests" */;
+			buildPhases = (
+				09294B271BCB8E5500110549 /* Sources */,
+				09294B281BCB8E5500110549 /* Frameworks */,
+				09294B291BCB8E5500110549 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				09294B2D1BCB8E5500110549 /* PBXTargetDependency */,
+			);
+			name = ZYMusicPlayerTests;
+			productName = ZYMusicPlayerTests;
+			productReference = 09294B2B1BCB8E5500110549 /* ZYMusicPlayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		09294B351BCB8E5500110549 /* ZYMusicPlayerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09294B451BCB8E5500110549 /* Build configuration list for PBXNativeTarget "ZYMusicPlayerUITests" */;
+			buildPhases = (
+				09294B321BCB8E5500110549 /* Sources */,
+				09294B331BCB8E5500110549 /* Frameworks */,
+				09294B341BCB8E5500110549 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				09294B381BCB8E5500110549 /* PBXTargetDependency */,
+			);
+			name = ZYMusicPlayerUITests;
+			productName = ZYMusicPlayerUITests;
+			productReference = 09294B361BCB8E5500110549 /* ZYMusicPlayerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		09294B071BCB8E5500110549 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = ZY;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "王志盼";
+				TargetAttributes = {
+					09294B0E1BCB8E5500110549 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 8L93L5QT7E;
+					};
+					09294B2A1BCB8E5500110549 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 09294B0E1BCB8E5500110549;
+					};
+					09294B351BCB8E5500110549 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 09294B0E1BCB8E5500110549;
+					};
+				};
+			};
+			buildConfigurationList = 09294B0A1BCB8E5500110549 /* Build configuration list for PBXProject "ZYMusicPlayer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 09294B061BCB8E5500110549;
+			productRefGroup = 09294B101BCB8E5500110549 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				09294B0E1BCB8E5500110549 /* ZYMusicPlayer */,
+				09294B2A1BCB8E5500110549 /* ZYMusicPlayerTests */,
+				09294B351BCB8E5500110549 /* ZYMusicPlayerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		09294B0D1BCB8E5500110549 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09294BB51BCBAA0600110549 /* wf_icon@2x.jpg in Resources */,
+				09294BB01BCBAA0600110549 /* kzxd@2x.jpg in Resources */,
+				09294BAB1BCBAA0600110549 /* eason_icon@2x.jpg in Resources */,
+				09294BB71BCBAA0600110549 /* zxy_icon@2x.jpg in Resources */,
+				09294BB61BCBAA0600110549 /* zxy@2x.jpg in Resources */,
+				09294BA61BCBAA0600110549 /* bb@2x.jpg in Resources */,
+				09294BAD1BCBAA0600110549 /* jay_icon@2x.png in Resources */,
+				09294BC11BCBAA0600110549 /* 10405520.mp3 in Resources */,
+				09294BC61BCBAA0600110549 /* 235319.mp3 in Resources */,
+				09294BB11BCBAA0600110549 /* kzxd_icon@2x.jpg in Resources */,
+				09294BCA1BCBAA0600110549 /* Musics.plist in Resources */,
+				09294BA91BCBAA0600110549 /* dzq_icon@2x.jpg in Resources */,
+				09294BB31BCBAA0600110549 /* nanquan_icon@2x.jpg in Resources */,
+				09294BC81BCBAA0600110549 /* 309769.mp3 in Resources */,
+				09294B221BCB8E5500110549 /* Assets.xcassets in Resources */,
+				09294BC41BCBAA0600110549 /* 12309111.mp3 in Resources */,
+				09294BB21BCBAA0600110549 /* nanquan@2x.jpg in Resources */,
+				09294BBB1BCBAA0600110549 /* 12309111.lrc in Resources */,
+				09294BBC1BCBAA0600110549 /* 14945107.lrc in Resources */,
+				09294BC21BCBAA0600110549 /* 10736444.mp3 in Resources */,
+				09B0204E1BCCA4820065D767 /* ZYPlayingViewController.xib in Resources */,
+				09294BC31BCBAA0600110549 /* 120125029.mp3 in Resources */,
+				09294BA71BCBAA0600110549 /* bb_icon@2x.jpg in Resources */,
+				09294BC91BCBAA0600110549 /* 339744.mp3 in Resources */,
+				09294BC71BCBAA0600110549 /* 255319.mp3 in Resources */,
+				09294BBD1BCBAA0600110549 /* 235319.lrc in Resources */,
+				09294BC51BCBAA0600110549 /* 14945107.mp3 in Resources */,
+				09294BB91BCBAA0600110549 /* 10736444.lrc in Resources */,
+				09294BB41BCBAA0600110549 /* wf@2x.jpg in Resources */,
+				09294BAF1BCBAA0600110549 /* jj_icon@2x.png in Resources */,
+				09294BBA1BCBAA0600110549 /* 120125029.lrc in Resources */,
+				09294BB81BCBAA0600110549 /* 10405520.lrc in Resources */,
+				09294BAA1BCBAA0600110549 /* eason@2x.jpg in Resources */,
+				09294BBF1BCBAA0600110549 /* 309769.lrc in Resources */,
+				09294BAC1BCBAA0600110549 /* jay@2x.jpg in Resources */,
+				09294BBE1BCBAA0600110549 /* 255319.lrc in Resources */,
+				09294BC01BCBAA0600110549 /* 339744.lrc in Resources */,
+				09294BA81BCBAA0600110549 /* dzq@2x.jpg in Resources */,
+				09294BAE1BCBAA0600110549 /* jj@2x.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09294B291BCB8E5500110549 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09294B341BCB8E5500110549 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		09294B0B1BCB8E5500110549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09B020511BCCB15F0065D767 /* ZYImageTool.m in Sources */,
+				09AC63451BDCAAB9005C0808 /* UIView+AutoLayout.m in Sources */,
+				09AC632F1BDB531E005C0808 /* ZYLrcView.m in Sources */,
+				09B020491BCCA3A20065D767 /* ZYMusicViewController.m in Sources */,
+				09294B781BCBA93C00110549 /* MJIvar.m in Sources */,
+				09294B621BCB9EFE00110549 /* ZYLrcLine.m in Sources */,
+				09AC63481BDCB2A0005C0808 /* ZYMusicCell.m in Sources */,
+				09294B5F1BCB9EB700110549 /* ZYMusic.m in Sources */,
+				09294B761BCBA93C00110549 /* MJConst.m in Sources */,
+				09B020591BCCF0DA0065D767 /* UIView+Extension.m in Sources */,
+				09294B771BCBA93C00110549 /* MJFoundation.m in Sources */,
+				09B020551BCCB40E0065D767 /* Colours.m in Sources */,
+				09294B791BCBA93C00110549 /* MJType.m in Sources */,
+				09294B141BCB8E5500110549 /* main.m in Sources */,
+				09294B5C1BCB915C00110549 /* ZYMusicTool.m in Sources */,
+				09294B7A1BCBA93C00110549 /* NSObject+MJCoding.m in Sources */,
+				09B0204D1BCCA4820065D767 /* ZYPlayingViewController.m in Sources */,
+				09294B201BCB8E5500110549 /* ZYMusicPlayer.xcdatamodeld in Sources */,
+				09294B7C1BCBA93C00110549 /* NSObject+MJKeyValue.m in Sources */,
+				09294B7B1BCBA93C00110549 /* NSObject+MJIvar.m in Sources */,
+				09AC63421BDB7C96005C0808 /* ZYLrcCell.m in Sources */,
+				09294B561BCB8F0A00110549 /* AppDelegate.m in Sources */,
+				09294B591BCB90B400110549 /* ZYAudioManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09294B271BCB8E5500110549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09294B301BCB8E5500110549 /* ZYMusicPlayerTests.m in Sources */,
+				098597E51BD0C0D200937BCC /* ZYAudioManagerTests.m in Sources */,
+				098D20EF1BE1D287002F9690 /* ZYLrcLineTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09294B321BCB8E5500110549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09294B3B1BCB8E5500110549 /* ZYMusicPlayerUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		09294B2D1BCB8E5500110549 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09294B0E1BCB8E5500110549 /* ZYMusicPlayer */;
+			targetProxy = 09294B2C1BCB8E5500110549 /* PBXContainerItemProxy */;
+		};
+		09294B381BCB8E5500110549 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09294B0E1BCB8E5500110549 /* ZYMusicPlayer */;
+			targetProxy = 09294B371BCB8E5500110549 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		09294B3D1BCB8E5500110549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		09294B3E1BCB8E5500110549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		09294B401BCB8E5500110549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = ZYMusicPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.chutong.www;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		09294B411BCB8E5500110549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = ZYMusicPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.chutong.www;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		09294B431BCB8E5500110549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = ZYMusicPlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = operation11.ZYMusicPlayerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZYMusicPlayer.app/ZYMusicPlayer";
+			};
+			name = Debug;
+		};
+		09294B441BCB8E5500110549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = ZYMusicPlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = operation11.ZYMusicPlayerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZYMusicPlayer.app/ZYMusicPlayer";
+			};
+			name = Release;
+		};
+		09294B461BCB8E5500110549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ZYMusicPlayerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = operation11.ZYMusicPlayerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = ZYMusicPlayer;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		09294B471BCB8E5500110549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ZYMusicPlayerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = operation11.ZYMusicPlayerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = ZYMusicPlayer;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		09294B0A1BCB8E5500110549 /* Build configuration list for PBXProject "ZYMusicPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09294B3D1BCB8E5500110549 /* Debug */,
+				09294B3E1BCB8E5500110549 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		09294B3F1BCB8E5500110549 /* Build configuration list for PBXNativeTarget "ZYMusicPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09294B401BCB8E5500110549 /* Debug */,
+				09294B411BCB8E5500110549 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		09294B421BCB8E5500110549 /* Build configuration list for PBXNativeTarget "ZYMusicPlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09294B431BCB8E5500110549 /* Debug */,
+				09294B441BCB8E5500110549 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		09294B451BCB8E5500110549 /* Build configuration list for PBXNativeTarget "ZYMusicPlayerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09294B461BCB8E5500110549 /* Debug */,
+				09294B471BCB8E5500110549 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		09294B1E1BCB8E5500110549 /* ZYMusicPlayer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				09294B1F1BCB8E5500110549 /* ZYMusicPlayer.xcdatamodel */,
+			);
+			currentVersion = 09294B1F1BCB8E5500110549 /* ZYMusicPlayer.xcdatamodel */;
+			path = ZYMusicPlayer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 09294B071BCB8E5500110549 /* Project object */;
+}

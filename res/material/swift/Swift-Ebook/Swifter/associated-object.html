@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Associated Object | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_75">Associated Object</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="associated-object" class="calibre1">Associated Object</h1>
+<p class="calibre9">不知道是从什么时候开始，“是否能通过 Category 给已有的类添加成员变量” 就成为了一道 Objective-C 面试中的常见题目。不幸的消息是这个面试题目在 Swift 中可能依旧会存在。</p>
+<p class="calibre9">得益于 Objective-C 的运行时和 Key-Value Coding 的特性，我们可以在运行时向一个对象添加值存储。而在使用 Category 扩展现有的类的功能的时候，直接添加实例变量这种行为是不被允许的，这时候一般就使用 property 配合 Associated Object 的方式，将一个对象 “关联” 到已有的要扩展的对象上。进行关联后，在对这个目标对象访问的时候，从外界看来，就似乎是直接在通过属性访问对象的实例变量一样，可以非常方便。</p>
+<p class="calibre9">在 Swift 中这样的方法依旧有效，只不过在写法上可能有些不同。两个对应的运行时的 get 和 set Associated Object 的 API 是这样的：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">objc_getAssociatedObject</span><span class="hljs-params">(object: AnyObject!,
+                                 key: UnsafePointer&lt;Void&gt;
+                             )</span></span>  -&gt; <span class="hljs-func">AnyObject</span>!
+
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">objc_setAssociatedObject</span><span class="hljs-params">(object: AnyObject!,
+                                 key: UnsafePointer&lt;Void&gt;,
+                               value: AnyObject!,
+                              policy: objc_AssociationPolicy)</span></span>
+</code></pre>
+<p class="calibre9">这两个 API 所接受的参数也都 Swift 化了，并且因为 Swift 的安全性，在类型检查上严格了不少，因此我们有必要也进行一些调整。在 Swift 中向某个 <code class="calibre13 pcalibre6 pcalibre5">extension</code> 里使用
+Associated Object 的方式将对象进行关联的写法是：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// MyClass.swift</span>
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+}
+
+<span class="hljs-title">// MyClassExtension.swift</span>
+private <span class="hljs-keyword">var</span> key: <span class="hljs-func">Void</span>?
+
+<span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-keyword">var</span> title: <span class="hljs-func">String</span>? {
+        <span class="hljs-keyword">get</span> {
+            <span class="hljs-keyword">return</span> objc_getAssociatedObject(<span class="hljs-keyword">self</span>, &amp;key) <span class="hljs-keyword">as</span>? <span class="hljs-func">String</span>
+        }
+
+        <span class="hljs-keyword">set</span> {
+            objc_setAssociatedObject(<span class="hljs-keyword">self</span>,
+                &amp;key, newValue,
+                .<span class="hljs-func">OBJC_ASSOCIATION_RETAIN_NONATOMIC</span>)
+        }
+    }
+}
+
+
+<span class="hljs-title">// 测试</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">printTitle</span><span class="hljs-params">(input: MyClass)</span></span> {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> title = input.title {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Title: <span class="hljs-func">\(title)</span>"</span>)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"没有设置"</span>)
+    }
+}
+
+<span class="hljs-keyword">let</span> a = <span class="hljs-func">MyClass</span>()
+printTitle(a)
+a.title = <span class="hljs-string">"Swifter.tips"</span>
+printTitle(a)
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// 没有设置</span>
+<span class="hljs-title">// Title: Swifter.tips</span>
+</code></pre>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">key</code> 的类型在这里声明为了 <code class="calibre13 pcalibre6 pcalibre5">Void?</code>，并且通过 <code class="calibre13 pcalibre6 pcalibre5">&amp;</code> 操作符取地址并作为 <code class="calibre13 pcalibre6 pcalibre5">UnsafePointer&lt;Void&gt;</code> 类型被传入。这在 Swift 与 C 协作和指针操作时是一种很常见的用法。关于 C 的指针操作和这些 <code class="calibre13 pcalibre6 pcalibre5">unsafe</code> 开头的类型的用法，可以参看 <a href="unsafe.html" class="pcalibre pcalibre2 pcalibre1 calibre4">UnsafePointer</a> 一节的内容。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

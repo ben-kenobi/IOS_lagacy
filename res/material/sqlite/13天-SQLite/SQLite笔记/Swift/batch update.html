@@ -1,0 +1,466 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>批量更新 | SQLite</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.5.0-beta.6">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../fmdb.html" />
+    
+    
+    <link rel="prev" href="../Swift/bind insert.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book" data-level="0.1.8" data-basepath=".." data-revision="Sun Dec 20 2015 06:19:55 GMT+0800 (CST)">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        SQL Lite
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="0.1" data-path="Swift/index.html">
+            
+                
+                    <a href="../Swift/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.</b>
+                        
+                        在 Swift 中使用 SQLite
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="0.1.1" data-path="Swift/preparation.html">
+            
+                
+                    <a href="../Swift/preparation.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.1.</b>
+                        
+                        准备工作
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.2" data-path="Swift/open db.html">
+            
+                
+                    <a href="../Swift/open db.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.2.</b>
+                        
+                        打开数据库
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.3" data-path="Swift/create table.html">
+            
+                
+                    <a href="../Swift/create table.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.3.</b>
+                        
+                        创建数据表
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.4" data-path="Swift/insert.html">
+            
+                
+                    <a href="../Swift/insert.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.4.</b>
+                        
+                        新增数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.5" data-path="Swift/update and delete.html">
+            
+                
+                    <a href="../Swift/update and delete.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.5.</b>
+                        
+                        修改和删除数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.6" data-path="Swift/select.html">
+            
+                
+                    <a href="../Swift/select.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.6.</b>
+                        
+                        查询数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.7" data-path="Swift/bind insert.html">
+            
+                
+                    <a href="../Swift/bind insert.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.7.</b>
+                        
+                        利用绑定参数插入数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="0.1.8" data-path="Swift/batch update.html">
+            
+                
+                    <a href="../Swift/batch update.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.8.</b>
+                        
+                        批量更新
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="0.2" data-path="fmdb.html">
+            
+                
+                    <a href="../fmdb.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.</b>
+                        
+                        FMDB
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.3" data-path="SQL/index.html">
+            
+                
+                    <a href="../SQL/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.</b>
+                        
+                        常用 SQL
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.4" data-path="谓词.html">
+            
+                
+                    <a href="../谓词.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.</b>
+                        
+                        谓词
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >SQLite</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="%E6%89%B9%E9%87%8F%E6%9B%B4%E6%96%B0">&#x6279;&#x91CF;&#x66F4;&#x65B0;</h1>
+<h2 id="%E7%9B%AE%E6%A0%87">&#x76EE;&#x6807;</h2>
+<ul>
+<li>&#x638C;&#x63E1;<code>&#x4E8B;&#x52A1;</code>&#x7684;&#x6982;&#x5FF5;</li>
+<li>&#x4E86;&#x89E3;&#x6570;&#x636E;&#x7ED1;&#x5B9A;</li>
+</ul>
+<h2 id="%E4%BA%8B%E5%8A%A1">&#x4E8B;&#x52A1;</h2>
+<ul>
+<li>&#x5728;&#x51C6;&#x5907;&#x505A;<code>&#x5927;&#x89C4;&#x6A21;&#x6570;&#x636E;&#x64CD;&#x4F5C;&#x524D;</code>&#xFF0C;&#x9996;&#x5148;&#x5F00;&#x542F;&#x4E00;&#x4E2A;&#x4E8B;&#x52A1;&#xFF0C;&#x4FDD;&#x5B58;&#x64CD;&#x4F5C;&#x524D;&#x7684;&#x6570;&#x636E;&#x5E93;&#x7684;&#x72B6;&#x6001;</li>
+<li>&#x5F00;&#x59CB;&#x6570;&#x636E;&#x64CD;&#x4F5C;</li>
+<li>&#x5982;&#x679C;&#x6570;&#x636E;&#x64CD;&#x4F5C;&#x6210;&#x529F;&#xFF0C;<code>&#x63D0;&#x4EA4;</code>&#x4E8B;&#x52A1;&#xFF0C;&#x8BA9;&#x6570;&#x636E;&#x5E93;&#x66F4;&#x65B0;&#x5230;&#x6570;&#x636E;&#x64CD;&#x4F5C;&#x540E;&#x7684;&#x72B6;&#x6001;</li>
+<li>&#x5982;&#x679C;&#x6570;&#x636E;&#x64CD;&#x4F5C;&#x5931;&#x8D25;&#xFF0C;<code>&#x56DE;&#x6EDA;</code>&#x4E8B;&#x52A1;&#xFF0C;&#x8BA9;&#x6570;&#x636E;&#x5E93;&#x8FD8;&#x539F;&#x5230;&#x64CD;&#x4F5C;&#x524D;&#x7684;&#x72B6;&#x6001;</li>
+</ul>
+<h2 id="%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">&#x4EE3;&#x7801;&#x5B9E;&#x73B0;</h2>
+<h3 id="%E5%87%86%E5%A4%87%E4%BA%8B%E5%8A%A1%E4%BB%A3%E7%A0%81">&#x51C6;&#x5907;&#x4E8B;&#x52A1;&#x4EE3;&#x7801;</h3>
+<pre><code class="lang-swift"><span class="hljs-comment">// MARK: - &#x4E8B;&#x52A1;&#x5904;&#x7406;</span>
+<span class="hljs-comment">/// &#x5F00;&#x542F;&#x4E8B;&#x52A1;</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">beginTransaction</span><span class="hljs-params">()</span></span> {
+    sqlite3_exec(db, <span class="hljs-string">&quot;BEGIN TRANSACTION;&quot;</span>, <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>)
+}
+
+<span class="hljs-comment">/// &#x63D0;&#x4EA4;&#x4E8B;&#x52A1;</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">commitTransaction</span><span class="hljs-params">()</span></span> {
+    sqlite3_exec(db, <span class="hljs-string">&quot;COMMIT TRANSACTION;&quot;</span>, <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>)
+}
+
+<span class="hljs-comment">/// &#x56DE;&#x6EDA;&#x4E8B;&#x52A1;</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">rollbackTransaction</span><span class="hljs-params">()</span></span> {
+    sqlite3_exec(db, <span class="hljs-string">&quot;ROLLBACK TRANSACTION;&quot;</span>, <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>)
+}
+</code></pre>
+<h3 id="%E7%94%A8%E4%BA%8B%E5%8A%A1%E6%8F%92%E5%85%A5%E5%A4%A7%E9%87%8F%E6%95%B0%E6%8D%AE">&#x7528;&#x4E8B;&#x52A1;&#x63D2;&#x5165;&#x5927;&#x91CF;&#x6570;&#x636E;</h3>
+<ul>
+<li>&#x4E0D;&#x4F7F;&#x7528;&#x4E8B;&#x52A1;&#x63D2;&#x5165;&#x6570;&#x636E;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x4E0D;&#x4F7F;&#x7528;&#x4E8B;&#x52A1;&#x63D2;&#x5165;&#x591A;&#x6761;&#x8BB0;&#x5F55; - &#x6D4B;&#x8BD5;&#x8BB0;&#x5F55; 5s</span>
+private <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">manyPerson1</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;start&quot;</span>)
+    <span class="hljs-keyword">let</span> start = <span class="hljs-type">CACurrentMediaTime</span>()
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;<span class="hljs-number">10000</span> {
+        <span class="hljs-type">Person</span>(dict: [<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;zhang - <span class="hljs-subst">\(i)</span>&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">18</span>, <span class="hljs-string">&quot;height&quot;</span>: <span class="hljs-number">1.7</span>]).insertPerson()
+    }
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;over <span class="hljs-subst">\(CACurrentMediaTime()</span> - start)&quot;</span>)
+}
+</code></pre>
+<ul>
+<li>&#x4F7F;&#x7528;&#x4E8B;&#x52A1;&#x63D2;&#x5165;&#x6570;&#x636E;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x4F7F;&#x7528;&#x4E8B;&#x52A1;&#x63D2;&#x5165;&#x591A;&#x6761;&#x6570;&#x636E; - &#x6D4B;&#x8BD5;&#x8BB0;&#x5F55; 0.4s</span>
+private <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">manyPerson2</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;start&quot;</span>)
+    <span class="hljs-keyword">let</span> start = <span class="hljs-type">CACurrentMediaTime</span>()
+
+    <span class="hljs-type">SQLiteManager</span>.sharedManager.execSQL(<span class="hljs-string">&quot;BEGIN TRANSACTION;&quot;</span>)
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;<span class="hljs-number">10000</span> {
+        <span class="hljs-type">Person</span>(dict: [<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;zhang - <span class="hljs-subst">\(i)</span>&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">18</span>, <span class="hljs-string">&quot;height&quot;</span>: <span class="hljs-number">1.7</span>]).insertPerson()
+    }
+
+    <span class="hljs-type">SQLiteManager</span>.sharedManager.execSQL(<span class="hljs-string">&quot;COMMIT TRANSACTION;&quot;</span>)
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;over <span class="hljs-subst">\(CACurrentMediaTime()</span> - start)&quot;</span>)
+}
+</code></pre>
+<blockquote>
+<p>&#x539F;&#x56E0;&#xFF1A;&#x5728; SQLite &#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x4E3B;&#x52A8;&#x5F00;&#x542F;&#x4E8B;&#x52A1;&#xFF0C;&#x6BCF;&#x4E2A;&#x6570;&#x636E;&#x66F4;&#x65B0;&#x64CD;&#x4F5C; (INSERT / UPDATE / DELETE) &#x90FD;&#x4F1A;&#x9ED8;&#x8BA4;&#x5F00;&#x542F;&#x4E00;&#x4E2A;&#x4E8B;&#x52A1;&#xFF0C;&#x6570;&#x636E;&#x66F4;&#x65B0;&#x7ED3;&#x675F;&#x540E;&#x81EA;&#x52A8;&#x63D0;&#x4EA4;&#x4E8B;&#x52A1;</p>
+</blockquote>
+<ul>
+<li>&#x6A21;&#x62DF;&#x5931;&#x8D25;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x6A21;&#x62DF;&#x5931;&#x8D25;</span>
+private <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">manyPerson3</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;start&quot;</span>)
+    <span class="hljs-keyword">let</span> start = <span class="hljs-type">CACurrentMediaTime</span>()
+
+    <span class="hljs-type">SQLiteManager</span>.sharedManager.execSQL(<span class="hljs-string">&quot;BEGIN TRANSACTION;&quot;</span>)
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;<span class="hljs-number">10000</span> {
+        <span class="hljs-type">Person</span>(dict: [<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;zhang - <span class="hljs-subst">\(i)</span>&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">18</span>, <span class="hljs-string">&quot;height&quot;</span>: <span class="hljs-number">1.7</span>]).insertPerson()
+
+        <span class="hljs-keyword">if</span> i == <span class="hljs-number">1000</span> {
+            <span class="hljs-type">SQLiteManager</span>.sharedManager.execSQL(<span class="hljs-string">&quot;ROLLBACK TRANSACTION;&quot;</span>)
+            <span class="hljs-comment">// &#x6CE8;&#x610F;&#xFF1A;&#x4E00;&#x5B9A;&#x8981;&#x4F7F;&#x7528; break &#x9000;&#x51FA;&#x5FAA;&#x73AF;</span>
+            <span class="hljs-keyword">break</span>;
+        }
+    }
+
+    <span class="hljs-type">SQLiteManager</span>.sharedManager.execSQL(<span class="hljs-string">&quot;COMMIT TRANSACTION;&quot;</span>)
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;over <span class="hljs-subst">\(CACurrentMediaTime()</span> - start)&quot;</span>)
+}
+</code></pre>
+<ul>
+<li>&#x6807;&#x51C6;&#x5199;&#x6CD5;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x6807;&#x51C6;&#x5199;&#x6CD5;</span>
+private <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">manyPerson4</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;start&quot;</span>)
+    <span class="hljs-keyword">let</span> start = <span class="hljs-type">CACurrentMediaTime</span>()
+
+    <span class="hljs-type">SQLiteManager</span>.sharedManager.execSQL(<span class="hljs-string">&quot;BEGIN TRANSACTION;&quot;</span>)
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;<span class="hljs-number">10000</span> {
+        <span class="hljs-keyword">if</span> !<span class="hljs-type">Person</span>(dict: [<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;zhang - <span class="hljs-subst">\(i)</span>&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">18</span>, <span class="hljs-string">&quot;height&quot;</span>: <span class="hljs-number">1.7</span>]).insertPerson() {
+            <span class="hljs-type">SQLiteManager</span>.sharedManager.execSQL(<span class="hljs-string">&quot;ROLLBACK TRANSACTION;&quot;</span>)
+            <span class="hljs-keyword">break</span>;
+        }
+    }
+
+    <span class="hljs-type">SQLiteManager</span>.sharedManager.execSQL(<span class="hljs-string">&quot;COMMIT TRANSACTION;&quot;</span>)
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;over <span class="hljs-subst">\(CACurrentMediaTime()</span> - start)&quot;</span>)
+}
+</code></pre>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../Swift/bind insert.html" class="navigation navigation-prev " aria-label="Previous page: 利用绑定参数插入数据"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../fmdb.html" class="navigation navigation-next " aria-label="Next page: FMDB"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"highlight":{},"search":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

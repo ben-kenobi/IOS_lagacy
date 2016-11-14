@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>命名空间 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_15">命名空间</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4" class="calibre1">命名空间</h1>
+<p class="calibre9">Objective-C 一个一直以来令人诟病的地方就是没有命名空间，在应用开发时，所有的代码和引用的静态库最终都会被编译到同一个域和二进制中。这样的后果是一旦我们有重复的类名的话，就会导致编译时的冲突和失败。为了避免这种事情的发生，Objective-C 的类型一般都会加上两到三个字母的前缀，比如 Apple 保留的 <code class="calibre13 pcalibre6 pcalibre5">NS</code> 和 <code class="calibre13 pcalibre6 pcalibre5">UI</code> 前缀，各个系统框架的前缀 <code class="calibre13 pcalibre6 pcalibre5">SK</code> (StoreKit)，<code class="calibre13 pcalibre6 pcalibre5">CG</code> (CoreGraphic) 等。Objective-C 社区的大部分开发者也遵守了这个约定，一般都会将自己名字缩写作为前缀，把类库命名为 <code class="calibre13 pcalibre6 pcalibre5">AFNetworking</code> 或者 <code class="calibre13 pcalibre6 pcalibre5">MBProgressHUD</code> 这样。这种做法可以解决部分问题，至少我们在直接引用不同人的库时冲突的概率大大降低了，但是前缀并不意味着不会冲突，有时候我们确实还是会遇到即使使用前缀也仍然相同的情况。另外一种情况是可能你想使用的两个不同的库，分别在它们里面引用了另一个相同的很流行的第三方库，而又没有更改名字。在你分别使用这两个库中的一个时是没有问题的，但是一旦你将这两个库同时加到你的项目中的话，这个大家共用的第三方库就会和自己发生冲突了。</p>
+<p class="calibre9">在 Swift 中，由于可以使用命名空间了，即使是名字相同的类型，只要是来自不同的命名空间的话，都是可以和平共处的。和 C# 这样的显式在文件中指定命名空间的做法不同，Swift 的命名空间是基于 module 而不是在代码中显式地指明，每个 module 代表了 Swift 中的一个命名空间。也就是说，同一个 target 里的类型名称还是不能相同的。在我们进行 app 开发时，默认添加到 app 的主 target 的内容都是处于同一个命名空间中的，我们可以通过创建 Cocoa (Touch) Framework 的 target 的方法来新建一个 module，这样我们就可以在两个不同的 target 中添加同样名字的类型了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// MyFramework.swift</span>
+<span class="hljs-title">// 这个文件存在于 MyFramework.framework 中</span>
+public <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    public <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">hello</span>() </span>{
+        <span class="hljs-params">print</span>(<span class="hljs-string">"hello from framework"</span>)
+    }
+}
+
+<span class="hljs-title">// MyApp.swift</span>
+<span class="hljs-title">// 这个文件存在于 app 的主 target 中</span>
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">hello</span>() </span>{
+        <span class="hljs-params">print</span>(<span class="hljs-string">"hello from app"</span>)
+    }
+}
+</code></pre>
+<p class="calibre9">在使用时，如果出现可能冲突的时候，我们需要在类型名称前面加上 module 的名字 (也就是 target 的名字)：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func">MyClass</span>.hello()
+<span class="hljs-title">// hello from app</span>
+
+<span class="hljs-func">MyFramework</span>.<span class="hljs-func">MyClass</span>.hello()
+<span class="hljs-title">// hello from framework</span>
+</code></pre>
+<p class="calibre9">因为是在 app 的 target 中调用的，所以第一个 <code class="calibre13 pcalibre6 pcalibre5">MyClass</code> 会直接使用 app 中的版本，第二个调用我们指定了 <code class="calibre13 pcalibre6 pcalibre5">MyFramework</code> 中的版本。</p>
+<p class="calibre9">另一种策略是使用类型嵌套的方法来指定访问的范围。常见做法是将名字重复的类型定义到不同的 struct 中，以此避免冲突。这样在不使用多个 module 的情况下也能取得隔离同样名字的类型的效果：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">MyClassContainer1</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+        <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">hello</span>() </span>{
+            <span class="hljs-params">print</span>(<span class="hljs-string">"hello from MyClassContainer1"</span>)
+        }
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">MyClassContainer2</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+        <span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">func</span> <span class="hljs-title">hello</span>() </span>{
+            <span class="hljs-params">print</span>(<span class="hljs-string">"hello from MyClassContainer2"</span>)
+        }
+    }
+}
+</code></pre>
+<p class="calibre9">使用时：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func">MyClassContainer1</span>.<span class="hljs-func">MyClass</span>.hello()
+<span class="hljs-func">MyClassContainer2</span>.<span class="hljs-func">MyClass</span>.hello()
+</code></pre>
+<p class="calibre9">其实不管哪种方式都和传统意义上的命名空间有所不同，把它叫做命名空间，更多的是一种概念上的宣传。不过在实际使用中只要遵守这套规则的话，还是能避免很多不必要的麻烦的，至少唾手可得的是我们不再需要给类名加上各种奇怪的前缀了。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

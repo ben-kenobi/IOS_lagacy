@@ -1,0 +1,448 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>利用绑定参数插入数据 | SQLite</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.5.0-beta.6">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-highlight/website.css">
+        
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-search/search.css">
+        
+    
+        
+        <link rel="stylesheet" href="../gitbook/plugins/gitbook-plugin-fontsettings/website.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../Swift/batch update.html" />
+    
+    
+    <link rel="prev" href="../Swift/select.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book" data-level="0.1.7" data-basepath=".." data-revision="Sun Dec 20 2015 06:19:55 GMT+0800 (CST)">
+    
+
+<div class="book-summary">
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        SQL Lite
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="0.1" data-path="Swift/index.html">
+            
+                
+                    <a href="../Swift/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.</b>
+                        
+                        在 Swift 中使用 SQLite
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="0.1.1" data-path="Swift/preparation.html">
+            
+                
+                    <a href="../Swift/preparation.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.1.</b>
+                        
+                        准备工作
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.2" data-path="Swift/open db.html">
+            
+                
+                    <a href="../Swift/open db.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.2.</b>
+                        
+                        打开数据库
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.3" data-path="Swift/create table.html">
+            
+                
+                    <a href="../Swift/create table.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.3.</b>
+                        
+                        创建数据表
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.4" data-path="Swift/insert.html">
+            
+                
+                    <a href="../Swift/insert.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.4.</b>
+                        
+                        新增数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.5" data-path="Swift/update and delete.html">
+            
+                
+                    <a href="../Swift/update and delete.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.5.</b>
+                        
+                        修改和删除数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.6" data-path="Swift/select.html">
+            
+                
+                    <a href="../Swift/select.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.6.</b>
+                        
+                        查询数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="0.1.7" data-path="Swift/bind insert.html">
+            
+                
+                    <a href="../Swift/bind insert.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.7.</b>
+                        
+                        利用绑定参数插入数据
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.1.8" data-path="Swift/batch update.html">
+            
+                
+                    <a href="../Swift/batch update.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.1.8.</b>
+                        
+                        批量更新
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="0.2" data-path="fmdb.html">
+            
+                
+                    <a href="../fmdb.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.2.</b>
+                        
+                        FMDB
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.3" data-path="SQL/index.html">
+            
+                
+                    <a href="../SQL/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.3.</b>
+                        
+                        常用 SQL
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="0.4" data-path="谓词.html">
+            
+                
+                    <a href="../谓词.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>0.4.</b>
+                        
+                        谓词
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >SQLite</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="%E5%88%A9%E7%94%A8%E7%BB%91%E5%AE%9A%E5%8F%82%E6%95%B0%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">&#x5229;&#x7528;&#x7ED1;&#x5B9A;&#x53C2;&#x6570;&#x63D2;&#x5165;&#x6570;&#x636E;</h1>
+<h2 id="%E7%9B%AE%E6%A0%87">&#x76EE;&#x6807;</h2>
+<ul>
+<li>&#x4E86;&#x89E3; STMT &#x7ED1;&#x5B9A;&#x66F4;&#x65B0;&#x6570;&#x636E;&#x7684;&#x65B9;&#x5F0F;</li>
+<li>&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x6709;&#x4E9B;&#x7E41;&#x7410;&#xFF0C;&#x4E0D;&#x8FC7;&#x662F;&#x5176;&#x4ED6;&#x7B2C;&#x4E09;&#x65B9;&#x5DE5;&#x5177;&#x4F7F;&#x7528;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x6709;&#x5FC5;&#x8981;&#x4E86;&#x89E3;</li>
+</ul>
+<h2 id="%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">&#x4EE3;&#x7801;&#x5B9E;&#x73B0;</h2>
+<ul>
+<li>&#x51C6;&#x5907;&#x51FD;&#x6570;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x5229;&#x7528;&#x7ED1;&#x5B9A;&#x53C2;&#x6570;&#x63D2;&#x5165;&#x6570;&#x636E;</span>
+<span class="hljs-comment">///</span>
+<span class="hljs-comment">/// - parameter sql:  SQL</span>
+<span class="hljs-comment">/// - parameter args: &#x53C2;&#x6570;&#x5217;&#x8868;</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">execInsert</span><span class="hljs-params">(sql: String, args: CVarArgType...)</span></span> {
+    <span class="hljs-built_in">print</span>(args)
+}
+</code></pre>
+<ul>
+<li>&#x589E;&#x52A0;&#x6D4B;&#x8BD5;&#x51FD;&#x6570;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">/// &#x7ED1;&#x5B9A;&#x53C2;&#x6570;&#x63D2;&#x5165;&#x6570;&#x636E;</span>
+<span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">bindInsert</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-keyword">let</span> sql = <span class="hljs-string">&quot;INSERT INTO T_Person (name, age, height) VALUES (?, ?, ?);&quot;</span>
+
+    <span class="hljs-type">SQLiteManager</span>.sharedManager.execInsert(sql, args: <span class="hljs-string">&quot;&#x5F20;&#x4E09;&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-number">1.7</span>)
+}
+</code></pre>
+<h3 id="%E9%A2%84%E7%BC%96%E8%AF%91-sql">&#x9884;&#x7F16;&#x8BD1; SQL</h3>
+<pre><code class="lang-swift"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">execInsert</span><span class="hljs-params">(sql: String, args: CVarArgType...)</span></span> -&gt; <span class="hljs-type">Bool</span> {
+
+    <span class="hljs-comment">// 1. &#x9884;&#x7F16;&#x8BD1; SQL</span>
+    <span class="hljs-keyword">var</span> stmt: <span class="hljs-type">COpaquePointer</span> = <span class="hljs-literal">nil</span>
+    <span class="hljs-keyword">if</span> sqlite3_prepare_v2(db, sql, -<span class="hljs-number">1</span>, &amp;stmt, <span class="hljs-literal">nil</span>) != <span class="hljs-type">SQLITE_OK</span> {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;SQL &#x9519;&#x8BEF;&quot;</span>)
+        sqlite3_finalize(stmt)
+
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+    }
+
+    <span class="hljs-comment">// 3. &#x91CA;&#x653E; stmt</span>
+    sqlite3_finalize(stmt)
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+}
+</code></pre>
+<ul>
+<li>&#x7ED1;&#x5B9A;&#x53C2;&#x6570;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">// 2. &#x7ED1;&#x5B9A;&#x53C2;&#x6570;</span>
+<span class="hljs-keyword">var</span> index: <span class="hljs-type">Int32</span> = <span class="hljs-number">1</span>
+<span class="hljs-keyword">for</span> arg <span class="hljs-keyword">in</span> args {
+
+    <span class="hljs-keyword">if</span> arg <span class="hljs-keyword">is</span> <span class="hljs-type">Double</span> {
+        sqlite3_bind_double(stmt, index, arg <span class="hljs-keyword">as</span>! <span class="hljs-type">Double</span>)
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> arg <span class="hljs-keyword">is</span> <span class="hljs-type">Int</span> {
+        sqlite3_bind_int64(stmt, index, sqlite3_int64(arg <span class="hljs-keyword">as</span>! <span class="hljs-type">Int</span>))
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> arg <span class="hljs-keyword">is</span> <span class="hljs-type">String</span> {
+        <span class="hljs-keyword">let</span> str = (arg <span class="hljs-keyword">as</span>! <span class="hljs-type">String</span>).cStringUsingEncoding(<span class="hljs-type">NSUTF8StringEncoding</span>)
+        sqlite3_bind_text(stmt, index, str!, -<span class="hljs-number">1</span>, <span class="hljs-literal">nil</span>)
+    }
+
+    index++
+}
+</code></pre>
+<ul>
+<li>&#x5355;&#x6B65;&#x6267;&#x884C; SQL &#x4EE5;&#x53CA;&#x590D;&#x4F4D;</li>
+</ul>
+<pre><code class="lang-swift"><span class="hljs-comment">// 3. &#x5355;&#x6B65;&#x6267;&#x884C;</span>
+<span class="hljs-keyword">if</span> sqlite3_step(stmt) != <span class="hljs-type">SQLITE_DONE</span> {
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&#x63D2;&#x5165;&#x5931;&#x8D25;&quot;</span>)
+}
+
+<span class="hljs-comment">// 4. &#x91CA;&#x653E; stmt</span>
+sqlite3_finalize(stmt)
+
+<span class="hljs-keyword">return</span> <span class="hljs-type">Int</span>(sqlite3_last_insert_rowid(db))
+</code></pre>
+<h4 id="%E7%AC%AC5%E4%B8%AA%E5%8F%82%E6%95%B0">&#x7B2C;5&#x4E2A;&#x53C2;&#x6570;</h4>
+<ul>
+<li>&#x5982;&#x679C;&#x7B2C;5&#x4E2A;&#x53C2;&#x6570;&#x4F20;&#x9012; <code>NULL</code> &#x6216;&#x8005; <code>SQLITE_STATIC</code> &#x5E38;&#x91CF;&#xFF0C;SQlite &#x4F1A;&#x5047;&#x5B9A;&#x8FD9;&#x5757; buffer &#x662F;&#x9759;&#x6001;&#x5185;&#x5B58;&#xFF0C;&#x6216;&#x8005;&#x5BA2;&#x6237;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4F1A;&#x5C0F;&#x5FC3;&#x7684;&#x7BA1;&#x7406;&#x548C;&#x91CA;&#x653E;&#x8FD9;&#x5757; buffer&#xFF0C;&#x6240;&#x4EE5;SQlite&#x653E;&#x624B;&#x4E0D;&#x7BA1;</li>
+<li>&#x5982;&#x679C;&#x7B2C;5&#x4E2A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x7684;&#x662F; <code>SQLITE_TRANSIENT</code> &#x5E38;&#x91CF;&#xFF0C;&#x5219; SQlite &#x4F1A;&#x5728;&#x5185;&#x90E8;&#x590D;&#x5236;&#x8FD9;&#x5757; buffer &#x7684;&#x5185;&#x5BB9;&#x3002;&#x8FD9;&#x5C31;&#x5141;&#x8BB8;&#x5BA2;&#x6237;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x5728;&#x8C03;&#x7528;&#x5B8C; bind &#x51FD;&#x6570;&#x4E4B;&#x540E;&#xFF0C;&#x7ACB;&#x523B;&#x91CA;&#x653E;&#x8FD9;&#x5757; buffer&#xFF08;&#x6216;&#x8005;&#x662F;&#x4E00;&#x5757;&#x6808;&#x4E0A;&#x7684; buffer &#x5728;&#x79BB;&#x5F00;&#x4F5C;&#x7528;&#x57DF;&#x4E4B;&#x540E;&#x81EA;&#x52A8;&#x9500;&#x6BC1;&#xFF09;&#x3002;SQlite&#x4F1A;&#x81EA;&#x52A8;&#x5728;&#x5408;&#x9002;&#x7684;&#x65F6;&#x673A;&#x91CA;&#x653E;&#x5B83;&#x5185;&#x90E8;&#x590D;&#x5236;&#x7684;&#x8FD9;&#x5757; buffer</li>
+</ul>
+<p>&#x7531;&#x4E8E;&#x5728; SQLite.h &#x4E2D; <code>SQLITE_TRANSIENT</code> &#x662F;&#x4EE5;&#x5B8F;&#x7684;&#x5F62;&#x5F0F;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x800C;&#x5728; swift &#x4E2D;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x5229;&#x7528;&#x5B8F;&#x4F20;&#x9012;&#x51FD;&#x6570;&#x6307;&#x9488;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#x8F6C;&#x6362;&#x4E00;&#x4E0B;</p>
+<pre><code class="lang-swift"><span class="hljs-comment">/*
+typedef void (*sqlite3_destructor_type)(void*);
+#define SQLITE_STATIC      ((sqlite3_destructor_type)0)
+#define SQLITE_TRANSIENT   ((sqlite3_destructor_type)-1)
+*/</span>
+private <span class="hljs-keyword">let</span> <span class="hljs-type">SQLITE_STATIC</span> = unsafeBitCast(<span class="hljs-number">0</span>, sqlite3_destructor_type.<span class="hljs-keyword">self</span>)
+private <span class="hljs-keyword">let</span> <span class="hljs-type">SQLITE_TRANSIENT</span> = unsafeBitCast(-<span class="hljs-number">1</span>, sqlite3_destructor_type.<span class="hljs-keyword">self</span>)
+</code></pre>
+<ul>
+<li>&#x4FEE;&#x6539;&#x5B57;&#x7B26;&#x4E32;&#x7ED1;&#x5B9A;&#x4EE3;&#x7801;</li>
+</ul>
+<pre><code class="lang-swift">sqlite3_bind_text(stmt, col, str, -<span class="hljs-number">1</span>, <span class="hljs-type">SQLITE_TRANSIENT</span>)
+</code></pre>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../Swift/select.html" class="navigation navigation-prev " aria-label="Previous page: 查询数据"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../Swift/batch update.html" class="navigation navigation-next " aria-label="Next page: 批量更新"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-search/lunr.min.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-search/search.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-sharing/buttons.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-fontsettings/buttons.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"highlight":{},"search":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>断言 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_83">断言</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E6%96%AD%E8%A8%80" class="calibre1">断言</h1>
+<p class="calibre9">断言 (assertion) 在 Cocoa 开发里一般用来在检查输入参数是否满足一定条件，并对其进行“论断”。这是一个编码世界中的哲学问题，我们代码的使用者 (有可能是别的程序员，也有可能是未来的自己) 很难做到在不知道实现细节的情况下去对自己的输入进行限制。大多数时候编译器可以帮助我们进行输入类型的检查，但是如果代码需要在特定的输入条件下才能正确运行的话，这种更细致的条件就难以控制了。在超过边界条件的输入的情况下，我们的代码可能无法正确工作，这就需要我们在代码实现中进行一些额外工作。</p>
+<p class="calibre9">一种容易想到的做法是在方法内部使用 <code class="calibre13 pcalibre6 pcalibre5">if</code> 这样的条件控制来检测输入，如果遇到无法继续的情况，就提前返回或者抛出错误。但是这样的做法无疑增加了 API 使用的复杂度，也导致了很多运行时的额外开销。对于像判定输入是否满足某种条件的运用情景，我们有更好的选择，那就是断言。</p>
+<p class="calibre9">Swift 为我们提供了一系列的 <code class="calibre13 pcalibre6 pcalibre5">assert</code> 方法来使用断言，其中最常用的一个是：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">assert</span><span class="hljs-params">(@autoclosure condition: <span class="hljs-params">()</span></span></span> -&gt; <span class="hljs-func">Bool</span>,
+            @autoclosure <span class="hljs-params">_</span> message: () -&gt; <span class="hljs-func">String</span> = <span class="hljs-keyword">default</span>,
+                              file: <span class="hljs-func">StaticString</span> = <span class="hljs-keyword">default</span>,
+                              line: <span class="hljs-func">UInt</span> = <span class="hljs-keyword">default</span>)
+</code></pre>
+<blockquote class="calibre6">
+<p class="calibre7">如果您对参数的默认值的 default 感兴趣的话，可以看看<a href="default-param.html" class="pcalibre pcalibre2 pcalibre1 calibre4">默认参数</a>一节的内容，有简单介绍。</p>
+</blockquote>
+<p class="calibre9">在使用时，最常见的情况是给定条件和一个简单的说明。举一个在温度转换时候的例子，
+我们想要把摄氏温度转为开尔文温度的时候，因为<a href="http://en.wikipedia.org/wiki/Absolute_zero" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">绝对零度</a>永远不能达到，所以我们不可能接受一个小于 -273.15 摄氏度的温度作为输入：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">convertToKelvin</span><span class="hljs-params">(# celsius: Double)</span></span> -&gt; <span class="hljs-func">Double</span> {
+    <span class="hljs-params">assert</span>(celsius &gt; absoluteZeroInCelsius, <span class="hljs-string">"输入的摄氏温度不能低于绝对零度"</span>)
+    <span class="hljs-keyword">return</span> celsius - absoluteZeroInCelsius
+}
+
+<span class="hljs-keyword">let</span> roomTemperature = convertToKelvin(celsius: <span class="hljs-params">27</span>)
+<span class="hljs-title">// roomTemperature = 300.15</span>
+
+<span class="hljs-keyword">let</span> tooCold = convertToKelvin(celsius: -<span class="hljs-params">300</span>)
+<span class="hljs-title">// 运行时错误:</span>
+<span class="hljs-title">// assertion failed:</span>
+<span class="hljs-title">// 输入的摄氏温度不能低于绝对零度 : file {YOUR_FILE_PATH}, line {LINE_NUMBER}</span>
+</code></pre>
+<p class="calibre9">在遇到无法处理的输入时，运行会产生错误，保留堆栈，并抛出我们预设的信息，用来提醒调用这段代码的用户。</p>
+<p class="calibre9">断言的另一个优点是它是一个开发时的特性，只有在 Debug 编译的时候有效，而在运行时是不被编译执行的，因此断言并不会消耗运行时的性能。这些特点使得断言成为面向程序员的在调试开发阶段非常合适的调试判断，而在代码发布的时候，我们也不需要刻意去将这些断言手动清理掉，非常方便。</p>
+<p class="calibre9">虽然默认情况下只在 Release 的情况下断言才会被禁用，但是有时候我们可能出于某些目的希望断言在调试开发时也暂时停止工作，或者是在发布版本中也继续有效。我们可以通过显式地添加编译标记达到这个目的。在对应 target 的 Build Settings 中，我们在 Swift Compiler - Custom Flags 中的 Other Swift Flags 中添加 <code class="calibre13 pcalibre6 pcalibre5">-assert-config Debug</code> 来强制启用断言，或者 <code class="calibre13 pcalibre6 pcalibre5">-assert-config Release</code> 来强制禁用断言。当然，除非有充足的理由，否则并不建议做这样的改动。如果我们需要在 Release 发布时在无法继续时将程序强行终止的话，应该选择使用 <a href="fatalerror.html" class="pcalibre pcalibre2 pcalibre1 calibre4"><code class="calibre13 pcalibre6 pcalibre5">fatalError</code></a>。</p>
+<blockquote class="calibre6">
+<p class="calibre7">原来在 Objective-C 中使用的断言函数 <code class="calibre13 pcalibre6 pcalibre5">NSAssert</code> 在 Swift 中已经被彻底移除，和我们永远地说再见了。</p>
+</blockquote>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

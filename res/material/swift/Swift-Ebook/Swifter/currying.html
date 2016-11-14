@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>柯里化 (Currying) | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_3">柯里化 (Currying)</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E6%9F%AF%E9%87%8C%E5%8C%96-currying" class="calibre1">柯里化 (Currying)</h1>
+<p class="calibre9">Swift 里可以将方法进行<a href="http://en.wikipedia.org/wiki/Currying" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">柯里化 (Currying)</a>，也就是把接受多个参数的方法变换成接受第一个参数的方法，并且返回接受余下的参数并且返回结果的新方法。举个例子，Swift 中我们可以这样写出多个括号的方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">addTwoNumbers</span><span class="hljs-params">(a: Int)</span></span>(num: <span class="hljs-func">Int</span>) -&gt; <span class="hljs-func">Int</span> {
+    <span class="hljs-keyword">return</span> a + num
+}
+</code></pre>
+<p class="calibre9">然后通过只传入第一个括号内的参数进行调用，这样将返回另一个方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> addToFour = addTwoNumbers(<span class="hljs-params">4</span>)    <span class="hljs-title">// addToFour 是一个 Int -&gt; Int</span>
+<span class="hljs-keyword">let</span> result = addToFour(num: <span class="hljs-params">6</span>)      <span class="hljs-title">// result = 10</span>
+</code></pre>
+<p class="calibre9">或者</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">greaterThan</span><span class="hljs-params">(comparor: Int)</span></span>(input : <span class="hljs-func">Int</span>) -&gt; <span class="hljs-func">Bool</span>{
+    <span class="hljs-keyword">return</span> input &gt; comparor;
+}
+
+<span class="hljs-keyword">let</span> greaterThan10 = greaterThan(<span class="hljs-params">10</span>);
+
+greaterThan10(input : <span class="hljs-params">13</span>)    <span class="hljs-title">// 结果是 true</span>
+greaterThan10(input : <span class="hljs-params">9</span>)     <span class="hljs-title">// 结果是 false</span>
+</code></pre>
+<p class="calibre9">柯里化是一种量产相似方法的好办法，可以通过柯里化一个方法模板来避免写出很多重复代码，也方便了今后维护。</p>
+<p class="calibre9">举一个实际应用时候的例子，在 <a href="selector.html" class="pcalibre pcalibre2 pcalibre1 calibre4">Selector</a> 一节中，我们提到了在 Swift 中 <code class="calibre13 pcalibre6 pcalibre5">Selector</code> 只能使用字符串在生成。这面临一个很严重的问题，就是难以重构，并且无法在编译期间进行检查，其实这是十分危险的行为。但是 target-action 又是 Cocoa 中如此重要的一种设计模式，无论如何我们都想安全地使用的话，应该怎么办呢？一种可能的解决方式就是利用方法的柯里化。Ole Begemann 在<a href="http://oleb.net/blog/2014/07/swift-instance-methods-curried-functions/?utm_campaign=iOS_Dev_Weekly_Issue_157&amp;utm_medium=email&amp;utm_source=iOS%2BDev%2BWeekly" target="_blank" class="pcalibre pcalibre2 pcalibre1 calibre4">这篇帖子</a>里提到了一种很好封装，这为我们如何借助柯里化，安全地改造和利用 target-action 提供了不少思路。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">TargetAction</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">performAction</span><span class="hljs-params">()</span></span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">struct</span> <span class="hljs-title">TargetActionWrapper</span>&lt;<span class="hljs-title">T</span>: <span class="hljs-title">AnyObject</span>&gt;:
+                            <span class="hljs-title">TargetAction</span> </span>{
+    <span class="hljs-keyword">weak</span> <span class="hljs-keyword">var</span> target: <span class="hljs-func">T</span>?
+    <span class="hljs-keyword">let</span> action: (<span class="hljs-func">T</span>) -&gt; () -&gt; ()
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">performAction</span><span class="hljs-params">()</span></span> -&gt; () {
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> t = target {
+            action(t)()
+        }
+    }
+}
+
+<span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">ControlEvent</span> </span>{
+    <span class="hljs-keyword">case</span> <span class="hljs-func">TouchUpInside</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-func">ValueChanged</span>
+    <span class="hljs-title">// ...</span>
+}
+
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">Control</span> </span>{
+    <span class="hljs-keyword">var</span> actions = [<span class="hljs-func">ControlEvent</span>: <span class="hljs-func">TargetAction</span>]()
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">setTarget</span><span class="hljs-func">&lt;T: AnyObject&gt;</span><span class="hljs-params">(target: T,
+                   action: <span class="hljs-params">(T)</span></span></span> -&gt; () -&gt; (),
+                controlEvent: <span class="hljs-func">ControlEvent</span>) {
+
+        actions[controlEvent] = <span class="hljs-func">TargetActionWrapper</span>(
+            target: target, action: action)
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">removeTargetForControlEvent</span><span class="hljs-params">(controlEvent: ControlEvent)</span></span> {
+        actions[controlEvent] = <span class="hljs-params">nil</span>
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">performActionForControlEvent</span><span class="hljs-params">(controlEvent: ControlEvent)</span></span> {
+        actions[controlEvent]?.performAction()
+    }
+}
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

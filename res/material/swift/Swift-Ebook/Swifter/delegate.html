@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>delegate | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_74">delegate</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="delegate" class="calibre1">delegate</h1>
+<p class="calibre9">Cocoa 开发中接口-委托 (protocol-delegate) 模式是一种常用的设计模式，它贯穿于整个 Cocoa 框架中，为代码之间的关系清理和解耦合做出了不可磨灭的贡献。</p>
+<p class="calibre9">在 ARC 中，对于一般的 delegate，我们会在声明中将其指定为 weak，在这个 delegate 实际的对象被释放的时候，会被重置回 <code class="calibre13 pcalibre6 pcalibre5">nil</code>。这可以保证即使 delegate 已经不存在时，我们也不会由于访问到已被回收的内存而导致崩溃。ARC 的这个特性杜绝了 Cocoa 开发中一种非常常见的崩溃错误，说是救万千程序员于水火之中也毫不为过。</p>
+<p class="calibre9">在 Swift 中我们当然也会希望这么做。但是当我们尝试书写这样的代码的时候，编译器不会让我们通过：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">MyClassDelegate</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span>
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+    <span class="hljs-keyword">weak</span> <span class="hljs-keyword">var</span> delegate: <span class="hljs-func">MyClassDelegate</span>?
+}
+
+<span class="hljs-func"><span class="hljs-keyword">class</span> <span class="hljs-title">ViewController</span>: <span class="hljs-title">UIViewController</span>, <span class="hljs-title">MyClassDelegate</span> </span>{
+    <span class="hljs-title">// ...</span>
+    <span class="hljs-keyword">var</span> someInstance: <span class="hljs-func">MyClass</span>!
+
+    <span class="hljs-keyword">override</span> <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">viewDidLoad</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-keyword">super</span>.viewDidLoad()
+
+        someInstance = <span class="hljs-func">MyClass</span>()
+        someInstance.delegate = <span class="hljs-keyword">self</span>
+    }
+
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-params">print</span>(<span class="hljs-string">"Do something"</span>)
+    }
+
+    <span class="hljs-title">//...</span>
+}
+
+<span class="hljs-title">// weak var delegate: MyClassDelegate? 编译错误</span>
+<span class="hljs-title">// 'weak' cannot be applied to non-class type 'MyClassDelegate'</span>
+</code></pre>
+<p class="calibre9">这是因为 Swift 的 <code class="calibre13 pcalibre6 pcalibre5">protocol</code> 是可以被除了 <code class="calibre13 pcalibre6 pcalibre5">class</code> 以外的其他类型遵守的，而对于像 <code class="calibre13 pcalibre6 pcalibre5">struct</code> 或是 <code class="calibre13 pcalibre6 pcalibre5">enum</code> 这样的类型，本身就不通过引用计数来管理内存，所以也不可能用 <code class="calibre13 pcalibre6 pcalibre5">weak</code> 这样的 ARC 的概念来进行修饰。</p>
+<p class="calibre9">想要在 Swift 中使用 weak delegate，我们就需要将 protocol 限制在 class 内。一种做法是将 protocol 声明为 Objective-C 的，这可以通过在 protocol 前面加上 <code class="calibre13 pcalibre6 pcalibre5">@objc</code> 关键字来达到，Objective-C 的 protocol 都只有类能实现，因此使用 weak 来修饰就合理了：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">@objc</span> <span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">MyClassDelegate</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span>
+}
+</code></pre>
+<p class="calibre9">另一种可能更好的办法是在 protocol 声明的名字后面加上 <code class="calibre13 pcalibre6 pcalibre5">class</code>，这可以为编译器显式地指明这个 protocol 只能由 <code class="calibre13 pcalibre6 pcalibre5">class</code> 来实现。</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">protocol</span> <span class="hljs-title">MyClassDelegate</span>: <span class="hljs-title">class</span> </span>{
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span>
+}
+</code></pre>
+<p class="calibre9">相比起添加 <code class="calibre13 pcalibre6 pcalibre5">@objc</code>，后一种方法更能表现出问题的实质，同时也避免了过多的不必要的 Objective-C 兼容，可以说是一种更好的解决方式。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

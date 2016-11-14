@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>尾递归 | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_104">尾递归</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="%E5%B0%BE%E9%80%92%E5%BD%92" class="calibre1">尾递归</h1>
+<p class="calibre9">递归在程序设计中是一种很有用的方法，它可以将复杂的过程用易于理解的方式转化和描述。举个例子，比如我们想要写一个从 0 累加到 n 的函数，如果我们不知道等差数列求和公示的话，就可以用递归的方式来做：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">sum</span><span class="hljs-params">(n: UInt)</span></span> -&gt; <span class="hljs-func">UInt</span> {
+    <span class="hljs-keyword">if</span> n == <span class="hljs-params">0</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-params">0</span>
+    }
+    <span class="hljs-keyword">return</span> n + sum(n - <span class="hljs-params">1</span>)
+}
+
+sum(<span class="hljs-params">4</span>) <span class="hljs-title">// 10</span>
+sum(<span class="hljs-params">100</span>) <span class="hljs-title">// 5050</span>
+</code></pre>
+<p class="calibre9">看起来没问题。但是我们如果用一个大一点的数的话，运行时就会出现错误，比如</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">sum(<span class="hljs-params">1000000</span>)
+<span class="hljs-title">// EXC_BAD_ACCESS (code=2, address=...)</span>
+</code></pre>
+<p class="calibre9">这是因为每次对于 <code class="calibre13 pcalibre6 pcalibre5">sum</code> 的递归调用都需要在调用栈上保存当前状态，否则我们就无法计算最后的 <code class="calibre13 pcalibre6 pcalibre5">n + sum(n - 1)</code>。当 <code class="calibre13 pcalibre6 pcalibre5">n</code> 足够大，调用栈足够深的时候，栈空间将被耗尽而导致错误，也就是我们常说的栈溢出了。</p>
+<p class="calibre9">一般对于递归，解决栈溢出的一个好方法是采用尾递归的写法。顾名思义，尾递归就是让函数里的最后一个动作是一个函数调用的形式，这个调用的返回值将直接被当前函数返回，从而避免在栈上保存状态。这样一来程序就可以更新最后的栈帧，而不是新建一个，来避免栈溢出的发生。在 Swift 2.0 中，编译器现在支持嵌套方法的递归调用了 (Swift 1.x 中如果你尝试递归调用一个嵌套函数的话会出现编译错误)，因此 <code class="calibre13 pcalibre6 pcalibre5">sum</code> 函数的尾递归版本可以写为：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">tailSum</span><span class="hljs-params">(n: UInt)</span></span> -&gt; <span class="hljs-func">UInt</span> {
+    <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">sumInternal</span><span class="hljs-params">(n: UInt, current: UInt)</span></span> -&gt; <span class="hljs-func">UInt</span> {
+        <span class="hljs-keyword">if</span> n == <span class="hljs-params">0</span> {
+            <span class="hljs-keyword">return</span> current
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> sumInternal(n - <span class="hljs-params">1</span>, current: current + n)
+        }
+    }
+
+    <span class="hljs-keyword">return</span> sumInternal(n, current: <span class="hljs-params">0</span>)
+}
+
+tailSum(<span class="hljs-params">1000000</span>)
+</code></pre>
+<p class="calibre9">但是如果你在项目中直接尝试运行这段代码的话还是会报错，因为在 Debug 模式下 Swift 编译器并不会对尾递归进行优化。我们可以在 scheme 设置中将 Run 的配置从 Debug 改为 Release，这段代码就能正确运行了。</p>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

@@ -1,0 +1,394 @@
+{\rtf1\ansi\ansicpg936\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset134 STHeitiSC-Light;\f1\fnil\fcharset0 Verdana;\f2\fmodern\fcharset0 CourierNewPSMT;
+}
+{\colortbl;\red255\green255\blue255;\red66\green66\blue66;\red217\green11\blue0;\red76\green76\blue76;
+\red242\green242\blue242;\red0\green0\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww17240\viewh12500\viewkind0
+\deftab720
+\pard\pardeftab720\sa100
+
+\f0\fs26 \cf2 \'b1\'be\'d5\'c2\'d6\'d0\'d0\'c4\'ca\'c7\'c1\'bd\'b8\'f6\'c4\'dc\'b9\'bb\'c8\'c3\'b4\'fa\'c2\'eb\'b8\'fc\'bc\'f2\'bd\'e0\'b5\'c4\'cc\'d8\'d0\'d4\'a1\'a3\'cb\'fc\'c3\'c7\'b5\'c4\'c4\'bf\'b5\'c4\'bd\'d8\'c8\'bb\'b2\'bb\'cd\'ac\'a3\'ba\'bc\'fc\'d6\'b5\'b6\'d4\'b1\'e0\'c2\'eb\'bf\'c9\'d2\'d4\'cd\'a8\'b9\'fd\'d1\'a1\'d4\'f1\'b5\'da\'d2\'bb\'b8\'f6\'b7\'fb\'ba\'cf\'cc\'f5\'bc\'fe\'b5\'c4\'ca\'b5\'cf\'d6\'b6\'f8\'bd\'e2\'be\'f6\'bc\'e4\'bd\'d3\'b7\'bd\'b7\'a8\'b5\'f7\'d3\'c3\'a3\'bb\'bc\'fc\'d6\'b5\'b6\'d4\'b1\'e0\'c2\'eb\'ca\'b5\'bc\'ca\'c9\'cf\'ca\'c7
+\f1  Cocoa 
+\f0 \'d2\'fd\'c8\'eb\'b5\'c4\'a1\'a3\'a1\'a3\
+\'ca\'f4\'d0\'d4\'d4\'f2\'bf\'c9\'d2\'d4\'c8\'c3\'b1\'e0\'d2\'eb\'c6\'f7\'b0\'ef\'ce\'d2\'c3\'c7\'c9\'fa\'b3\'c9\'b2\'bf\'b7\'d6\'b4\'fa\'c2\'eb\'a1\'a3\'a3\'ac\'ca\'f4\'d0\'d4\'d4\'f2\'ca\'c7
+\f1  Objective-C 2.0 
+\f0 \'d3\'ef\'d1\'d4\'d0\'c2\'d4\'f6\'bc\'d3\'b5\'c4\
+\
+
+\b \'bc\'fc\'d6\'b5\'b6\'d4\'b1\'e0\'c2\'eb\'a3\'a8
+\f1\fs48 KVC
+\f0\fs26 \'a3\'a9
+\f1\b0 \
+
+\f0\b \'d4\'ad\'d4\'f2
+\f1\b0 \
+
+\f0 \'bc\'fc\'d6\'b5\'b6\'d4\'b1\'e0\'c2\'eb\'d2\'e2\'cb\'bc\'ca\'c7\'a3\'ac\'c4\'dc\'b9\'bb\cf3 \'cd\'a8\'b9\'fd\'ca\'fd\'be\'dd\'b3\'c9\'d4\'b1\'b5\'c4\'c3\'fb\'d7\'d6\'c0\'b4\'b7\'c3\'ce\'ca\'b5\'bd\'cb\'fc\'b5\'c4\'d6\'b5\cf2 \'a1\'a3\'d5\'e2\'d6\'d6\'d3\'ef\'b7\'a8\'ba\'dc\cf3 \'c0\'e0\'cb\'c6\cf2 \'d3\'da\'b9\'d8\'c1\'aa\'ca\'fd\'d7\'e9\'a3\'a8\'d4\'da
+\f1  Cocoa 
+\f0 \'d6\'d0\'be\'cd\'ca\'c7
+\f1  \cf3 NSDictionary
+\f0 \cf2 \'a3\'a9\'a3\'ac\'ca\'fd\'be\'dd\'b3\'c9\'d4\'b1\'b5\'c4\'c3\'fb\'d7\'d6\'be\'cd\'ca\'c7\'d5\'e2\'c0\'ef\'b5\'c4\'bc\'fc\'a1\'a3\
+
+\f1 NSObject 
+\f0 \'d3\'d0\'d2\'bb\'b8\'f6
+\f1  \cf3 valueForKey:\cf2  
+\f0 \'ba\'cd
+\f1 \cf3  setValue:forKey:\cf2  
+\f0 \'b7\'bd\'b7\'a8\'a1\'a3\'c8\'e7\'b9\'fb\'ca\'fd\'be\'dd\'b3\'c9\'d4\'b1\'be\'cd\'ca\'c7\'b6\'d4\'cf\'f3\'d7\'d4\'bc\'ba\'a3\'ac\'d1\'b0\'d6\'b5\'b9\'fd\'b3\'cc\'be\'cd\'bb\'e1\'cf\'f2\'cf\'c2\'c9\'ee\'c8\'eb\'cf\'c2\'c8\'a5\'a3\'ac\'b4\'cb\'ca\'b1\'a3\'ac\'d5\'e2\'b8\'f6\'bc\'fc\'d3\'a6\'b8\'c3\'ca\'c7\'d2\'bb\'b8\'f6\'c2\'b7\'be\'b6\'a3\'ac\'ca\'b9\'d3\'c3\'b5\'e3\'ba\'c5
+\f1  . 
+\f0 \'b7\'d6\'b8\'ee\'a3\'ac\'b6\'d4\'d3\'a6\'b5\'c4\'b7\'bd\'b7\'a8\'ca\'c7
+\f1  valueForKeyPath: 
+\f0 \'ba\'cd
+\f1  setValue:forKeyPath:
+\f0 \'a1\'a3
+\f1 \
+@interface A \{\
+\'a0\'a0\'a0 NSString* foo;\
+\}\
+...\'a0
+\i // 
+\f0\i0 \'c6\'e4\'cb\'fc\'b4\'fa\'c2\'eb
+\f1 \
+@end\
+\'a0\
+@interface B \{\
+\'a0\'a0\'a0 NSString* bar;\
+\'a0\'a0\'a0 A* myA;\
+\}\
+...\'a0
+\i // 
+\f0\i0 \'c6\'e4\'cb\'fc\'b4\'fa\'c2\'eb
+\f1 \
+@end\
+\'a0\
+@implementation B\
+...\
+\pard\pardeftab720\sa100
+
+\i \cf2 // 
+\f0\i0 \'bc\'d9\'c9\'e8
+\f1\i  A 
+\f0\i0 \'c0\'e0\'d0\'cd\'b5\'c4\'b6\'d4\'cf\'f3
+\f1\i  a
+\f0\i0 \'a3\'ac
+\f1\i B 
+\f0\i0 \'c0\'e0\'d0\'cd\'b5\'c4\'b6\'d4\'cf\'f3
+\f1\i  b
+\i0 \
+A* a = ...;\
+B* b = ...;\
+NSString* s1 = [a valueForKey:@"foo"];\'a0
+\i // 
+\f0\i0 \'d5\'fd\'c8\'b7
+\f1 \
+NSString* s2 = [b valueForKey:@"bar"];\'a0
+\i // 
+\f0\i0 \'d5\'fd\'c8\'b7
+\f1 \
+NSString* s3 = [b valueForKey:@"myA"];\'a0
+\i // 
+\f0\i0 \'d5\'fd\'c8\'b7
+\f1 \
+NSString* s4 = [b valueForKeyPath:@"myA.foo"];\'a0
+\i // 
+\f0\i0 \'d5\'fd\'c8\'b7
+\f1 \
+NSString* s5 = [b valueForKey:@"myA.foo"];\'a0
+\i // 
+\f0\i0 \'b4\'ed\'ce\'f3
+\f1 \
+NSString* s6 = [b valueForKeyPath:@"bar"];\'a0
+\i // 
+\f0\i0 \'d5\'fd\'c8\'b7
+\f1 \
+...\
+@end\
+\pard\pardeftab720\sa100
+
+\f0 \cf2 \'d5\'e2\'d6\'d6\'d3\'ef\'b7\'a8\'c4\'dc\'b9\'bb\'c8\'c3\'ce\'d2\'c3\'c7\'b6\'d4\'b2\'bb\'cd\'ac\'b5\'c4\'c0\'e0\'ca\'b9\'d3\'c3\'cf\'e0\'cd\'ac\'b5\'c4\'b4\'fa\'c2\'eb\'c0\'b4\'b4\'a6\'c0\'ed\'cd\'ac\'c3\'fb\'ca\'fd\'be\'dd\'a1\'a3\'d7\'a2\'d2\'e2\'a3\'ac\'d5\'e2\'c0\'ef\'b5\'c4\cf3 \'ca\'fd\'be\'dd\'b3\'c9\'d4\'b1\'b5\'c4\'c3\'fb\'d7\'d6\cf2 \'b6\'bc\'ca\'c7\cf3 \'ca\'b9\'d3\'c3\'b5\'c4\'d7\'d6\'b7\'fb\'b4\'ae\'b5\'c4\'d0\'ce\'ca\'bd\cf2 \'a1\'a3\'d5\'e2\'d6\'d6\'ca\'b9\'d3\'c3\'b7\'bd\'b7\'a8\'b5\'c4\'d7\'ee\'ba\'c3\'b5\'c4\'d3\'c3\'b4\'a6\'d4\'da\'d3\'da\cf3 \'bd\'ab\'ca\'fd\'be\'dd\'a3\'a8\'c3\'fb\'d7\'d6\'a3\'a9\'b0\'f3\'b6\'a8\'b5\'bd\'d2\'bb\'d0\'a9\'b4\'a5\'b7\'a2\'c6\'f7\'a3\'a8\'d3\'c8\'c6\'e4\'ca\'c7\'b7\'bd\'b7\'a8\'b5\'f7\'d3\'c3\'a3\'a9\'c9\'cf\cf2 \'a3\'ac\'c0\'fd\'c8\'e7\cf3 \'bc\'fc\'d6\'b5\'b6\'d4\'b9\'db\'b2\'ec\'a3\'a8
+\f1 Key-Value Observing, KVO
+\f0 \'a3\'a9\cf2 \'b5\'c8\'a1\'a3\
+
+\f1 \
+
+\f0\b \'c0\'b9\'bd\'d8
+\f1\b0 \
+
+\f0 \'cd\'a8\'b9\'fd
+\f1  valueForKey: 
+\f0 \'bb\'f2\'d5\'df
+\f1  setValue:forKey: 
+\f0 \cf3 \'b7\'c3\'ce\'ca\'ca\'fd\'be\'dd\'b2\'bb\'ca\'c7\'d4\'ad\'d7\'d3\'b2\'d9\'d7\'f7\cf2 \'a1\'a3\'d5\'e2\'b8\'f6\'b2\'d9\'d7\'f7\'b1\'be\'d6\'ca\'c9\'cf\'bb\'b9\'ca\'c7\'d2\'bb\'b8\'f6\'b7\'bd\'b7\'a8\'b5\'f7\'d3\'c3\'a1\'a3\'ca\'c2\'ca\'b5\'c9\'cf\'a3\'ac\'d5\'e2\'d6\'d6\'b7\'c3\'ce\'ca\'b5\'b1\'c4\'b3\'d0\'a9\'b7\'bd\'ca\'bd\'ca\'b5\'cf\'d6\'b5\'c4\'c7\'e9\'bf\'f6\'cf\'c2\'b2\'c5\'ca\'c7\'bf\'c9\'d3\'c3\'b5\'c4\'a3\'ac\'c0\'fd\'c8\'e7\'ca\'b9\'d3\'c3\'ca\'f4\'d0\'d4\'d7\'d4\'b6\'af\'cc\'ed\'bc\'d3\'b5\'c4\'b4\'fa\'c2\'eb\'b5\'c8\'b5\'c8\'a3\'ac\'bb\'f2\'d5\'df\'cf\'d4\'ca\'bd\'d4\'ca\'d0\'ed\'d6\'b1\'bd\'d3\'b7\'c3\'ce\'ca\'ca\'fd\'be\'dd\'a1\'a3
+\f1 \
+Apple 
+\f0 \'b5\'c4\'ce\'c4\'b5\'b5\'b6\'d4
+\f1  valueForKey: 
+\f0 \'ba\'cd
+\f1  setValue:forKey: 
+\f0 \'b5\'c4\'ca\'b9\'d3\'c3\'d3\'d0\'c7\'e5\'ce\'fa\'b5\'c4\'ce\'c4\'b5\'b5\'a3\'ba
+\f1 \
+
+\f0 \'b6\'d4\'d3\'da
+\f1  valueForKey:@\'94foo\'94 
+\f0 \'b5\'c4\'b5\'f7\'d3\'c3\'a3\'ba
+\f1 \
+\'b7\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f0 \'c8\'e7\'b9\'fb\'d3\'d0\'b7\'bd\'b7\'a8\'c3\'fb\'ce\'aa
+\f1  getFoo
+\f0 \'a3\'ac\'d4\'f2\'b5\'f7\'d3\'c3
+\f1  getFoo
+\f0 \'a3\'bb
+\f1 \
+\'b7\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f0 \'b7\'f1\'d4\'f2\'a3\'ac\'c8\'e7\'b9\'fb\'d3\'d0\'b7\'bd\'b7\'a8\'c3\'fb\'ce\'aa
+\f1  foo
+\f0 \'a3\'ac\'d4\'f2\'b5\'f7\'d3\'c3
+\f1  foo
+\f0 \'a3\'a8\'d5\'e2\'ca\'c7\'b6\'d4\'b3\'a3\'bc\'fb\'b5\'c4\'c7\'e9\'bf\'f6\'a3\'a9\'a3\'bb
+\f1 \
+\'b7\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f0 \'b7\'f1\'d4\'f2\'a3\'ac\'c8\'e7\'b9\'fb\'d3\'d0\'b7\'bd\'b7\'a8\'c3\'fb\'ce\'aa
+\f1  isFoo
+\f0 \'a3\'ac\'d4\'f2\'b5\'f7\'d3\'c3
+\f1  isFoo
+\f0 \'a3\'a8\'d6\'f7\'d2\'aa\'ca\'c7\'b2\'bc\'b6\'fb\'d6\'b5\'b5\'c4\'ca\'b1\'ba\'f2\'a3\'a9\'a3\'bb
+\f1 \
+\'b7\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f0 \'b7\'f1\'d4\'f2\'a3\'ac\'c8\'e7\'b9\'fb\'c0\'e0\'b5\'c4
+\f1  accessInstanceVariablesDirectly 
+\f0 \'b7\'bd\'b7\'a8\'b7\'b5\'bb\'d8
+\f1  YES
+\f0 \'a3\'ac\'d4\'f2\'b3\'a2\'ca\'d4\'b7\'c3\'ce\'ca
+\f1  _foo 
+\f0 \'ca\'fd\'be\'dd\'b3\'c9\'d4\'b1\'a3\'a8\'c8\'e7\'b9\'fb\'d3\'d0\'b5\'c4\'bb\'b0\'a3\'a9\'a3\'ac\'b7\'f1\'d4\'f2\'d1\'b0\'d5\'d2
+\f1  _isFoo
+\f0 \'a3\'ac\'c8\'bb\'ba\'f3\'ca\'c7
+\f1  foo
+\f0 \'a3\'ac\'c8\'bb\'ba\'f3\'ca\'c7
+\f1  isFoo
+\f0 \'a3\'bb
+\f1 \
+\'b7\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f0 \'c8\'e7\'b9\'fb\'c7\'b0\'d2\'bb\'b8\'f6\'b2\'bd\'d6\'e8\'b3\'c9\'b9\'a6\'a3\'ac\'d4\'f2\'b7\'b5\'bb\'d8\'b6\'d4\'d3\'a6\'b5\'c4\'d6\'b5\'a3\'bb
+\f1 \
+\'b7\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f0 \'c8\'e7\'b9\'fb\'ca\'a7\'b0\'dc\'a3\'ac\'d4\'f2\'b5\'f7\'d3\'c3
+\f1  valueForUndefinedKey:
+\f0 \'a3\'ac\'d5\'e2\'b8\'f6\'b7\'bd\'b7\'a8\'b5\'c4\'c4\'ac\'c8\'cf\'ca\'b5\'cf\'d6\'ca\'c7\'c5\'d7\'b3\'f6\'d2\'bb\'b8\'f6\'d2\'ec\'b3\'a3\'a1\'a3
+\f1 \
+
+\f0 \'b6\'d4\'d3\'da
+\f1  forKey:@\'94foo\'94 
+\f0 \'b5\'c4\'b5\'f7\'d3\'c3\'a3\'ba
+\f1 \
+\'b7\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f0 \'c8\'e7\'b9\'fb\'d3\'d0\'b7\'bd\'b7\'a8\'c3\'fb\'ce\'aa
+\f1  setFoo:
+\f0 \'a3\'ac\'d4\'f2\'b5\'f7\'d3\'c3
+\f1  setFoo:
+\f0 \'a3\'bb
+\f1 \
+\'b7\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f0 \'b7\'f1\'d4\'f2\'a3\'ac\'c8\'e7\'b9\'fb\'c0\'e0\'b5\'c4
+\f1  accessInstanceVariablesDirectly 
+\f0 \'b7\'b5\'bb\'d8
+\f1  YES
+\f0 \'a3\'ac\'d4\'f2\'b3\'a2\'ca\'d4\'d6\'b1\'bd\'d3\'d0\'b4\'c8\'eb\'ca\'fd\'be\'dd\'b3\'c9\'d4\'b1
+\f1  _foo
+\f0 \'a3\'a8\'c8\'e7\'b9\'fb\'b4\'e6\'d4\'da\'b5\'c4\'bb\'b0\'a3\'a9\'a3\'ac\'b7\'f1\'d4\'f2\'d1\'b0\'d5\'d2
+\f1  _isFoo
+\f0 \'a3\'ac\'c8\'bb\'ba\'f3\'ca\'c7
+\f1  foo
+\f0 \'a3\'ac\'c8\'bb\'ba\'f3\'ca\'c7
+\f1  isFoo
+\f0 \'a3\'bb
+\f1 \
+\'b7\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0
+\f0 \'c8\'e7\'b9\'fb\'ca\'a7\'b0\'dc\'a3\'ac\'d4\'f2\'b5\'f7\'d3\'c3
+\f1  setValue:forUndefinedKey:
+\f0 \'a3\'ac\'c6\'e4\'c4\'ac\'c8\'cf\'ca\'b5\'cf\'d6\'ca\'c7\'c5\'d7\'b3\'f6\'d2\'bb\'b8\'f6\'d2\'ec\'b3\'a3\'a1\'a3
+\f1 \
+
+\f0 \'d7\'a2\'d2\'e2
+\f1  valueForKey: 
+\f0 \'ba\'cd
+\f1  setValue:forKey: 
+\f0 \'b5\'c4\'b5\'f7\'d3\'c3\'bf\'c9\'d2\'d4\'d3\'c3\'d3\'da\'b4\'a5\'b7\'a2\'c8\'ce\'ba\'ce\'cf\'e0\'b9\'d8\'b7\'bd\'b7\'a8\'a1\'a3\'c8\'e7\'b9\'fb\'c3\'bb\'d3\'d0\'d5\'e2\'b8\'f6\'c3\'fb\'d7\'d6\'b5\'c4\'ca\'fd\'be\'dd\'b3\'c9\'d4\'b1\'a3\'ac\'d4\'f2\'be\'cd\'ca\'c7\'d2\'bb\'b8\'f6\'d0\'e9\'bc\'d9\'b5\'c4\'b5\'f7\'d3\'c3\'a1\'a3\'c0\'fd\'c8\'e7\'a3\'ac
+\f1  
+\f0 \'d4\'da\'d7\'d6\'b7\'fb\'b4\'ae\'b1\'e4\'c1\'bf\'c9\'cf\'b5\'f7\'d3\'c3
+\f1  valueForKey:@\'94length\'94 
+\f0 \'b5\'c8\'bc\'db\'d3\'da\'d6\'b1\'bd\'d3\'b5\'f7\'d3\'c3
+\f1  length 
+\f0 \'b7\'bd\'b7\'a8\'a3\'ac\'d2\'f2\'ce\'aa\'d5\'e2\'ca\'c7
+\f1  KVC 
+\f0 \'c4\'dc\'b9\'bb\'d5\'d2\'b5\'bd\'b5\'c4\'b5\'da\'d2\'bb\'b8\'f6\'c6\'a5\'c5\'e4\'a1\'a3\'b5\'ab\'ca\'c7\'a3\'ac
+\f1 \cf3 KVC 
+\f0 \'b5\'c4\'d0\'d4\'c4\'dc\'b2\'bb\'c8\'e7\'d6\'b1\'bd\'d3\'b5\'f7\'d3\'c3\'b7\'bd\'b7\'a8\'a3\'ac\'cb\'f9\'d2\'d4\'d3\'a6\'b5\'b1\'be\'a1\'c1\'bf\'b1\'dc\'c3\'e2\cf2 \'a1\'a3\
+
+\f1 \
+
+\f0\b \'d4\'ad\'d0\'cd
+\f1\b0 \
+
+\f0 \cf3 \'ca\'b9\'d3\'c3
+\f1  KVC 
+\f0 \'d3\'d0\'d2\'bb\'b6\'a8\'b5\'c4\'b7\'bd\'b7\'a8\'d4\'ad\'d0\'cd\'b5\'c4\'d2\'aa\'c7\'f3\cf2 \'a3\'ba
+\f1 getters 
+\f0 \'b2\'bb\'c4\'dc\'d3\'d0\'b2\'ce\'ca\'fd\'a3\'ac\'b2\'a2\'c7\'d2\'d2\'aa\'b7\'b5\'bb\'d8\'d2\'bb\'b8\'f6\'b6\'d4\'cf\'f3\'a3\'bb
+\f1 setters 
+\f0 \'d0\'e8\'d2\'aa\'d3\'d0\'d2\'bb\'b8\'f6\'b6\'d4\'cf\'f3\'d7\'f7\'ce\'aa\'b2\'ce\'ca\'fd\'a3\'ac\'b2\'bb\'c4\'dc\'d3\'d0\'b7\'b5\'bb\'d8\'d6\'b5\'a1\'a3\'b2\'ce\'ca\'fd\'b5\'c4\'c0\'e0\'d0\'cd\'b2\'bb\'ca\'c7\'ba\'dc\'d6\'d8\'d2\'aa\'b5\'c4\'a3\'ac\'d2\'f2\'ce\'aa\'c4\'e3\'bf\'c9\'d2\'d4\'ca\'b9\'d3\'c3
+\f1  id 
+\f0 \'d7\'f7\'ce\'aa\'b2\'ce\'ca\'fd\'c0\'e0\'d0\'cd\'a1\'a3\'d7\'a2\'d2\'e2\'a3\'ac
+\f1 struct 
+\f0 \'ba\'cd\'d4\'ad\'c9\'fa\'c0\'e0\'d0\'cd\'a3\'a8
+\f1 int
+\f0 \'a3\'ac
+\f1 float 
+\f0 \'b5\'c8\'a3\'a9\'b6\'bc\'ca\'c7\'d6\'a7\'b3\'d6\'b5\'c4\'a3\'ba
+\f1 Objective-C 
+\f0 \'d3\'d0\'d2\'bb\'b8\'f6\'d7\'d4\'b6\'af\'d7\'b0\'cf\'e4\'bb\'fa\'d6\'c6\'a3\'ac\'bf\'c9\'d2\'d4\'bd\'ab\'d5\'e2\'d0\'a9\'d4\'ad\'c9\'fa\'c0\'e0\'d0\'cd\'b7\'e2\'d7\'b0\'b3\'c9
+\f1  NSNumber 
+\f0 \'bb\'f2\'d5\'df
+\f1  NSValue 
+\f0 \'b6\'d4\'cf\'f3\'a1\'a3\'d2\'f2\'b4\'cb\'a3\'ac
+\f1 valueForKey: 
+\f0 \'b7\'b5\'bb\'d8\'d6\'b5\'b6\'bc\'ca\'c7\'d2\'bb\'b8\'f6\'b6\'d4\'cf\'f3\'a1\'a3\'c8\'e7\'b9\'fb\'d0\'e8\'d2\'aa\'cf\'f2
+\f1  setValue:forKey: 
+\f0 \'b4\'ab\'c8\'eb
+\f1  nil
+\f0 \'a3\'ac\'d0\'e8\'d2\'aa\'ca\'b9\'d3\'c3
+\f1  setNilValueForKey:
+\f0 \'a1\'a3
+\f1 \
+
+\f0\b \'b8\'df\'bc\'b6\'cc\'d8\'d0\'d4
+\f1\b0 \
+
+\f0 \'d3\'d0\'bc\'b8\'b5\'e3\'cf\'b8\'bd\'da\'d0\'e8\'d2\'aa\'d7\'a2\'d2\'e2\'a3\'ac\'be\'a1\'b9\'dc\'d4\'da\'d5\'e2\'c0\'ef\'b2\'a2\'b2\'bb\'bb\'e1\'ba\'dc\'cf\'ea\'cf\'b8\'b5\'d8\'cc\'d6\'c2\'db\'d5\'e2\'b8\'f6\'ce\'ca\'cc\'e2\'a3\'ba
+\f1 \
+1.\'a0\'a0\'a0\'a0keypath 
+\f0 \'bf\'c9\'d2\'d4\'b0\'fc\'ba\'ac\'bc\'c6\'cb\'e3\'d6\'b5\'a3\'ac\'c0\'fd\'c8\'e7\'c7\'f3\'ba\'cd\'a1\'a2\'c7\'f3\'c6\'bd\'be\'f9\'a1\'a2\'d7\'ee\'b4\'f3\'d6\'b5\'a1\'a2\'d7\'ee\'d0\'a1\'d6\'b5\'b5\'c8\'a3\'bb\'ca\'b9\'d3\'c3
+\f1  @ 
+\f0 \'b1\'ea\'bc\'c7\'a3\'bb
+\f1 \
+2.\'a0\'a0\'a0\'a0
+\f0 \'d7\'a2\'d2\'e2\'b7\'bd\'b7\'a8\'d2\'bb\'d6\'c2\'d0\'d4\'a3\'ac\'c0\'fd\'c8\'e7
+\f1  valueForKey: 
+\f0 \'bb\'f2\'d5\'df
+\f1  setValue:forKey: 
+\f0 \'d2\'d4\'bc\'b0\'b9\'d8\'c1\'aa\'ca\'fd\'d7\'e9\'bc\'af\'ba\'cf\'d6\'d0\'b3\'a3\'bc\'fb\'b5\'c4
+\f1  objectForKey: 
+\f0 \'ba\'cd
+\f1  setObject:forKey:
+\f0 \'a1\'a3\'d5\'e2\'c0\'ef\'a3\'ac\'cd\'ac\'d1\'f9\'ca\'b9\'d3\'c3
+\f1  @ 
+\f0 \'bd\'f8\'d0\'d0\'c7\'f8\'b7\'d6\'a1\'a3\
+\
+\pard\pardeftab720\sa200\qj
+
+\f1\b\fs48 \cf4 Kvo
+\f0\b0\fs26 \cf2 \
+\pard\pardeftab720\sa100
+\cf2 \
+\pard\pardeftab720\sa200\qj
+
+\f1 \cf4 Kvo
+\f0 \'ca\'c7
+\f1 Cocoa
+\f0 \'b5\'c4\'d2\'bb\'b8\'f6\'d6\'d8\'d2\'aa\'bb\'fa\'d6\'c6\'a3\'ac\'cb\'fb\'cc\'e1\'b9\'a9\'c1\'cb\'b9\'db\'b2\'ec\'c4\'b3\'d2\'bb\'ca\'f4\'d0\'d4\'b1\'e4\'bb\'af\'b5\'c4\'b7\'bd\'b7\'a8\'a3\'ac\'bc\'ab\'b4\'f3\'b5\'c4\'bc\'f2\'bb\'af\'c1\'cb\'b4\'fa\'c2\'eb\'a1\'a3\'d5\'e2\'d6\'d6\'b9\'db\'b2\'ec\'a3\'ad\'b1\'bb\'b9\'db\'b2\'ec\'c4\'a3\'d0\'cd\'ca\'ca\'d3\'c3\'d3\'da\'d5\'e2\'d1\'f9\'b5\'c4\'c7\'e9\'bf\'f6\'a3\'ac\'b1\'c8\'b7\'bd\'cb\'b5\'b8\'f9\'be\'dd
+\f1 A
+\f0 \'a3\'a8\'ca\'fd
+\f1  
+\f0 \'be\'dd\'c0\'e0\'a3\'a9\'b5\'c4\'c4\'b3\'b8\'f6\'ca\'f4\'d0\'d4\'d6\'b5\'b1\'e4\'bb\'af\'a3\'ac
+\f1 B
+\f0 \'a3\'a8
+\f1 view
+\f0 \'c0\'e0\'a3\'a9\'d6\'d0\'b5\'c4\'c4\'b3\'b8\'f6\'ca\'f4\'d0\'d4\'d7\'f6\'b3\'f6\'cf\'e0\'d3\'a6\'b1\'e4\'bb\'af\'a1\'a3\'b6\'d4\'d3\'da\'cd\'c6\'b3\'e7
+\f1 MVC
+\f0 \'b5\'c4
+\f1 cocoa
+\f0 \'b6\'f8\'d1\'d4\'a3\'ac
+\f1 kvo
+\f0 \'d3\'a6\'d3\'c3\'b5\'c4\'b5\'d8\'b7\'bd\'b7\'c7\'b3\'a3\'b9\'e3\'b7\'ba\'a1\'a3\'a3\'a8\'d5\'e2\'d1\'f9\'b5\'c4\'bb\'fa\'d6\'c6\'cc\'fd\'c6\'f0\'c0\'b4\'c0\'e0
+\f1  
+\f0 \'cb\'c6
+\f1 Notification
+\f0 \'a3\'ac\'b5\'ab\'ca\'c7
+\f1 notification
+\f0 \'ca\'c7\'d0\'e8\'d2\'aa\'d2\'bb\'b8\'f6\'b7\'a2\'cb\'cd
+\f1 notification
+\f0 \'b5\'c4\'b6\'d4\'cf\'f3\'a3\'ac\'d2\'bb\'b0\'e3\'ca\'c7
+\f1  notificationCenter
+\f0 \'a3\'ac\'c0\'b4\'cd\'a8\'d6\'aa\'b9\'db\'b2\'ec\'d5\'df\'a1\'a3\'b6\'f8
+\f1 kvo
+\f0 \'ca\'c7\'d6\'b1\'bd\'d3\'cd\'a8\'d6\'aa\'b5\'bd\'b9\'db\'b2\'ec\'b6\'d4\'cf\'f3\'a1\'a3\'a3\'a9
+\f1 \
+
+\f0 \'ca\'ca\'d3\'c3
+\f1 kvo
+\f0 \'ca\'b1\'a3\'ac\'cd\'a8\'b3\'a3\'d7\'f1\'d1\'ad\'c8\'e7\'cf\'c2\'c1\'f7\'b3\'cc\'a3\'ba
+\f1 \
+1 
+\f0 \'d7\'a2\'b2\'e1\'a3\'ba
+\f1 \
+\pard\pardeftab720\qj
+
+\f2\fs24 \cf0 \cb5 -(\cf6 void\cf0 )addObserver:(NSObject *)anObserver forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(\cf6 void\cf0 *)context\
+\pard\pardeftab720\sa200\qj
+
+\f1 \cf4 \cb1 keyPath
+\f0 \'be\'cd\'ca\'c7\'d2\'aa\'b9\'db\'b2\'ec\'b5\'c4\'ca\'f4\'d0\'d4\'d6\'b5\'a3\'ac
+\f1 options
+\f0 \'b8\'f8\'c4\'e3\'b9\'db\'b2\'ec\'bc\'fc\'d6\'b5\'b1\'e4\'bb\'af\'b5\'c4\'d1\'a1\'d4\'f1\'a3\'ac\'b6\'f8
+\f1 context
+\f0 \'b7\'bd\'b1\'e3\'b4\'ab\'ca\'e4\'c4\'e3\'d0\'e8\'d2\'aa\'b5\'c4\'ca\'fd\'be\'dd\'a3\'a8\'d7\'a2\'d2\'e2\'d5\'e2\'ca\'c7\'d2\'bb\'b8\'f6
+\f1 void
+\f0 \'d0\'cd\'a3\'a9
+\f1\fs26 \
+
+\fs24 2 
+\f0 \'ca\'b5\'cf\'d6\'b1\'e4\'bb\'af\'b7\'bd\'b7\'a8\'a3\'ba
+\f1\fs26 \
+\pard\pardeftab720\qj
+
+\f2\fs24 \cf0 \cb5 -(\cf6 void\cf0 ) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)\cf6 object\cf0 \
+change:(NSDictionary *)change context:(\cf6 void\cf0 *)context\
+\pard\pardeftab720\sa200\qj
+
+\f1 \cf4 \cb1 change
+\f0 \'c0\'ef\'b4\'e6\'b4\'a2\'c1\'cb\'d2\'bb\'d0\'a9\'b1\'e4\'bb\'af\'b5\'c4\'ca\'fd\'be\'dd\'a3\'ac\'b1\'c8\'c8\'e7\'b1\'e4\'bb\'af\'c7\'b0\'b5\'c4\'ca\'fd\'be\'dd\'a3\'ac\'b1\'e4\'bb\'af\'ba\'f3\'b5\'c4\'ca\'fd\'be\'dd\'a3\'bb\'c8\'e7\'b9\'fb\'d7\'a2\'b2\'e1\'ca\'b1
+\f1 context
+\f0 \'b2\'bb\'ce\'aa\'bf\'d5\'a3\'ac\'d5\'e2\'c0\'ef
+\f1 context
+\f0 \'be\'cd\'c4\'dc\'bd\'d3\'ca\'d5\'b5\'bd\'a1\'a3
+\f1\fs26 \
+\pard\pardeftab720\sa200\qj
+
+\f0 \cf4 \'ca\'c7\'b2\'bb\'ca\'c7\'ba\'dc\'bc\'f2\'b5\'a5\'a3\'bf
+\f1 kvo
+\f0 \'b5\'c4\'c2\'df\'bc\'ad\'b7\'c7\'b3\'a3\'c7\'e5\'ce\'fa\'a3\'ac\'ca\'b5\'cf\'d6\'b2\'bd\'d6\'e8\'bc\'f2\'b5\'a5\'a1\'a3
+\f1 \
+
+\f0 \'cb\'b5\'c1\'cb\'d5\'e2\'c3\'b4\'b6\'e0\'a3\'ac\'b4\'f3\'bc\'d2\'b6\'bc\'d2\'aa\'d4\'be\'d4\'be\'d3\'fb\'ca\'d4\'c1\'cb\'b0\'c9\'a1\'a3\'bf\'c9\'ca\'c7\'a3\'ac\'d4\'da\'b4\'cb\'d6\'ae\'c7\'b0\'a3\'ac\'ce\'d2\'c3\'c7\'bb\'b9\'d0\'e8\'d2\'aa\'c1\'cb\'bd\'e2
+\f1 KVC
+\f0 \'bb\'fa\'d6\'c6\'a1\'a3\'c6\'e4\'ca\'b5\'a3\'ac\'d6\'aa\'b5\'c0\'c1\'cb
+\f1 kvo
+\f0 \'b5\'c4\'c2\'df\'bc\'ad\'d6\'bb\'ca\'c7\'b0\'ef\'d6\'fa\'c4\'e3\'c0\'ed\'bd\'e2\'b6\'f8\'d2\'d1\'a3\'ac\'d2\'aa\'d5\'e6\'d5\'fd\'d5\'c6\'ce\'d5\'b5\'c4\'a3\'ac\'b2\'bb\'d4\'da
+\f1  
+\f0 \'d3\'da
+\f1 kvo
+\f0 \'b5\'c4\'ca\'b5\'cf\'d6\'b2\'bd\'d6\'e8\'ca\'c7\'ca\'b2\'c3\'b4\'a3\'ac\'b6\'f8\'d4\'da\'d3\'da
+\f1 KVC
+\f0 \'a3\'ac\'d2\'f2\'ce\'aa\'d6\'bb\'d3\'d0\'b7\'fb\'ba\'cf
+\f1 KVC
+\f0 \'b1\'ea\'d7\'bc\'b5\'c4\'b6\'d4\'cf\'f3\'b2\'c5\'c4\'dc\'ca\'b9\'d3\'c3
+\f1 kvo
+\f0 \'a3\'a8\'c7\'bf\'c1\'d2\'cd\'c6\'bc\'f6\'d2\'aa\'ca\'b9\'d3\'c3
+\f1 kvo
+\f0 \'b5\'c4\'c8\'cb\'cf\'c8\'c0\'ed\'bd\'e2
+\f1 KVC
+\f0 \'a3\'a9\'a1\'a3\cf2 \
+\pard\pardeftab720\sa100
+\cf2 \
+\
+}

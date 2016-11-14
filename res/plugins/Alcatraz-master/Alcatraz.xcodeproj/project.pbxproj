@@ -1,0 +1,616 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		079C9E03183D8BB8009F5A17 /* link_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 079C9E02183D8BB8009F5A17 /* link_icon.png */; };
+		079C9E05183D8BBD009F5A17 /* link_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 079C9E04183D8BBD009F5A17 /* link_icon@2x.png */; };
+		0C7AF650186B4E890064EE7B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C7AF64F186B4E890064EE7B /* QuartzCore.framework */; };
+		32BDEBC3173A46A900513A7C /* eye_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 32BDEBC2173A46A900513A7C /* eye_icon.png */; };
+		32D86505173A4555009C724B /* eye_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D86503173A4555009C724B /* eye_icon@2x.png */; };
+		64EDC501188CB55A00D45F1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64EDC500188CB55A00D45F1D /* Cocoa.framework */; };
+		890A4B43171F031300AFE577 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 890A4B42171F031300AFE577 /* AppKit.framework */; };
+		890A4B45171F031300AFE577 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 890A4B44171F031300AFE577 /* Foundation.framework */; };
+		890A4B4B171F031300AFE577 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 890A4B49171F031300AFE577 /* InfoPlist.strings */; };
+		890A4B4E171F031300AFE577 /* Alcatraz.m in Sources */ = {isa = PBXBuildFile; fileRef = 890A4B4D171F031300AFE577 /* Alcatraz.m */; };
+		8917D9F31726B4EE00F0B2D2 /* ATZColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917D9E81726B4EE00F0B2D2 /* ATZColorScheme.m */; };
+		8917D9F41726B4EE00F0B2D2 /* ATZFileTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917D9EA1726B4EE00F0B2D2 /* ATZFileTemplate.m */; };
+		8917D9F51726B4EE00F0B2D2 /* ATZPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917D9EC1726B4EE00F0B2D2 /* ATZPackage.m */; };
+		8917D9F61726B4EE00F0B2D2 /* ATZPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917D9EE1726B4EE00F0B2D2 /* ATZPlugin.m */; };
+		8917D9F71726B4EE00F0B2D2 /* ATZProjectTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917D9F01726B4EE00F0B2D2 /* ATZProjectTemplate.m */; };
+		8917D9F81726B4EE00F0B2D2 /* ATZTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917D9F21726B4EE00F0B2D2 /* ATZTemplate.m */; };
+		8917DA051726B53000F0B2D2 /* ATZColorSchemeInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917D9FB1726B53000F0B2D2 /* ATZColorSchemeInstaller.m */; };
+		8917DA061726B53000F0B2D2 /* ATZFileTemplateInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917D9FD1726B53000F0B2D2 /* ATZFileTemplateInstaller.m */; };
+		8917DA071726B53000F0B2D2 /* ATZPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917DA001726B53000F0B2D2 /* ATZPluginInstaller.m */; };
+		8917DA081726B53000F0B2D2 /* ATZProjectTemplateInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917DA021726B53000F0B2D2 /* ATZProjectTemplateInstaller.m */; };
+		8917DA091726B53000F0B2D2 /* ATZTemplateInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917DA041726B53000F0B2D2 /* ATZTemplateInstaller.m */; };
+		8917DA0D1726B57B00F0B2D2 /* NSFileManager+Alcatraz.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917DA0C1726B57B00F0B2D2 /* NSFileManager+Alcatraz.m */; };
+		8917DA101726B5BA00F0B2D2 /* ATZPackageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917DA0F1726B5BA00F0B2D2 /* ATZPackageFactory.m */; };
+		8917DA181726B63B00F0B2D2 /* ATZDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917DA131726B63B00F0B2D2 /* ATZDownloader.m */; };
+		8917DA191726B63B00F0B2D2 /* ATZGit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917DA151726B63B00F0B2D2 /* ATZGit.m */; };
+		8917DA1A1726B63B00F0B2D2 /* ATZShell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8917DA171726B63B00F0B2D2 /* ATZShell.m */; };
+		894714E817302F63003CDDA7 /* ATZInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 894714E717302F63003CDDA7 /* ATZInstaller.m */; };
+		897F7899173FC54C006C43E5 /* ATZAlcatrazPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 897F7898173FC54C006C43E5 /* ATZAlcatrazPackage.m */; };
+		89B4F2BE172FF5AC001FD2E3 /* ATZPBXProjParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B4F2BD172FF5AC001FD2E3 /* ATZPBXProjParser.m */; };
+		89D40AFC1721CBD600A67BB3 /* ATZPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D40AFB1721CBD600A67BB3 /* ATZPluginWindowController.m */; };
+		8A133EE319C235FD0068FCB9 /* ATZPackageListTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A133EE219C235FD0068FCB9 /* ATZPackageListTableCellView.m */; };
+		8A1732A81A2694BB002033D6 /* NSColor+Alcatraz.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1732A71A2694BB002033D6 /* NSColor+Alcatraz.m */; };
+		8A4C621A19C2D6F1003580BD /* ATZFilterBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4C621919C2D6F1003580BD /* ATZFilterBarView.m */; };
+		8A56ED9B19C20CCE00309B3C /* ATZPluginWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A56ED9A19C20CCE00309B3C /* ATZPluginWindowController.xib */; };
+		8A6025B919C2978900D47F3F /* bitbucket_grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6025A419C2978900D47F3F /* bitbucket_grayscale.png */; };
+		8A6025BA19C2978900D47F3F /* bitbucket_grayscale@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6025A519C2978900D47F3F /* bitbucket_grayscale@2x.png */; };
+		8A6025BB19C2978900D47F3F /* bitbucket_grayscale@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6025A619C2978900D47F3F /* bitbucket_grayscale@3x.png */; };
+		8A6025BC19C2978900D47F3F /* git_grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6025A719C2978900D47F3F /* git_grayscale.png */; };
+		8A6025BD19C2978900D47F3F /* git_grayscale@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6025A819C2978900D47F3F /* git_grayscale@2x.png */; };
+		8A6025BE19C2978900D47F3F /* git_grayscale@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6025A919C2978900D47F3F /* git_grayscale@3x.png */; };
+		8A6025BF19C2978900D47F3F /* github_grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6025AA19C2978900D47F3F /* github_grayscale.png */; };
+		8A6025C019C2978900D47F3F /* github_grayscale@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6025AB19C2978900D47F3F /* github_grayscale@2x.png */; };
+		8A6025C119C2978900D47F3F /* github_grayscale@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A6025AC19C2978900D47F3F /* github_grayscale@3x.png */; };
+		8A6025C419C29B0C00D47F3F /* ATZPackageTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6025C319C29B0C00D47F3F /* ATZPackageTableViewDelegate.m */; };
+		8A6025C819C29E3100D47F3F /* ATZPackageListTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A6025C719C29E3100D47F3F /* ATZPackageListTableCellView.xib */; };
+		8AA0F57A19C2210600556AAF /* ATZFillableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA0F57919C2210600556AAF /* ATZFillableButton.m */; };
+		8AA0F57D19C2225A00556AAF /* ATZStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA0F57C19C2225A00556AAF /* ATZStyleKit.m */; };
+		8AD5249F174102F9008B451F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8AD524A2174102F9008B451F /* Localizable.strings */; };
+		8ADC22341A2AD5B800DB7BCA /* ATZPreviewImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADC22331A2AD5B800DB7BCA /* ATZPreviewImageButton.m */; };
+		8AF670C919C2DE8A00E1C168 /* ATZSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF670C819C2DE8A00E1C168 /* ATZSegmentedControl.m */; };
+		F0DF961E1B40416400DF68CC /* ATZSegmentedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F0DF961D1B40416400DF68CC /* ATZSegmentedCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		079C9E02183D8BB8009F5A17 /* link_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = link_icon.png; sourceTree = "<group>"; };
+		079C9E04183D8BBD009F5A17 /* link_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "link_icon@2x.png"; sourceTree = "<group>"; };
+		0C7AF64F186B4E890064EE7B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		32BDEBC2173A46A900513A7C /* eye_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye_icon.png; sourceTree = "<group>"; };
+		32D86503173A4555009C724B /* eye_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eye_icon@2x.png"; sourceTree = "<group>"; };
+		6449530218CE826C009494BD /* ATZVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZVersion.h; sourceTree = "<group>"; };
+		64EDC500188CB55A00D45F1D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		890A4B3F171F031300AFE577 /* Alcatraz.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Alcatraz.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		890A4B42171F031300AFE577 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		890A4B44171F031300AFE577 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		890A4B48171F031300AFE577 /* Alcatraz-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Alcatraz-Info.plist"; sourceTree = "<group>"; };
+		890A4B4A171F031300AFE577 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		890A4B4C171F031300AFE577 /* Alcatraz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Alcatraz.h; sourceTree = "<group>"; };
+		890A4B4D171F031300AFE577 /* Alcatraz.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alcatraz.m; sourceTree = "<group>"; };
+		890A4B4F171F031300AFE577 /* Alcatraz-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Alcatraz-Prefix.pch"; sourceTree = "<group>"; };
+		8917D9E71726B4EE00F0B2D2 /* ATZColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZColorScheme.h; sourceTree = "<group>"; };
+		8917D9E81726B4EE00F0B2D2 /* ATZColorScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZColorScheme.m; sourceTree = "<group>"; };
+		8917D9E91726B4EE00F0B2D2 /* ATZFileTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZFileTemplate.h; sourceTree = "<group>"; };
+		8917D9EA1726B4EE00F0B2D2 /* ATZFileTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZFileTemplate.m; sourceTree = "<group>"; };
+		8917D9EB1726B4EE00F0B2D2 /* ATZPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZPackage.h; sourceTree = "<group>"; };
+		8917D9EC1726B4EE00F0B2D2 /* ATZPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZPackage.m; sourceTree = "<group>"; };
+		8917D9ED1726B4EE00F0B2D2 /* ATZPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZPlugin.h; sourceTree = "<group>"; };
+		8917D9EE1726B4EE00F0B2D2 /* ATZPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZPlugin.m; sourceTree = "<group>"; };
+		8917D9EF1726B4EE00F0B2D2 /* ATZProjectTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZProjectTemplate.h; sourceTree = "<group>"; };
+		8917D9F01726B4EE00F0B2D2 /* ATZProjectTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZProjectTemplate.m; sourceTree = "<group>"; };
+		8917D9F11726B4EE00F0B2D2 /* ATZTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZTemplate.h; sourceTree = "<group>"; };
+		8917D9F21726B4EE00F0B2D2 /* ATZTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZTemplate.m; sourceTree = "<group>"; };
+		8917D9FA1726B53000F0B2D2 /* ATZColorSchemeInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZColorSchemeInstaller.h; sourceTree = "<group>"; };
+		8917D9FB1726B53000F0B2D2 /* ATZColorSchemeInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZColorSchemeInstaller.m; sourceTree = "<group>"; };
+		8917D9FC1726B53000F0B2D2 /* ATZFileTemplateInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZFileTemplateInstaller.h; sourceTree = "<group>"; };
+		8917D9FD1726B53000F0B2D2 /* ATZFileTemplateInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZFileTemplateInstaller.m; sourceTree = "<group>"; };
+		8917D9FE1726B53000F0B2D2 /* ATZInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZInstaller.h; sourceTree = "<group>"; };
+		8917D9FF1726B53000F0B2D2 /* ATZPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZPluginInstaller.h; sourceTree = "<group>"; };
+		8917DA001726B53000F0B2D2 /* ATZPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZPluginInstaller.m; sourceTree = "<group>"; };
+		8917DA011726B53000F0B2D2 /* ATZProjectTemplateInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZProjectTemplateInstaller.h; sourceTree = "<group>"; };
+		8917DA021726B53000F0B2D2 /* ATZProjectTemplateInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZProjectTemplateInstaller.m; sourceTree = "<group>"; };
+		8917DA031726B53000F0B2D2 /* ATZTemplateInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZTemplateInstaller.h; sourceTree = "<group>"; };
+		8917DA041726B53000F0B2D2 /* ATZTemplateInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZTemplateInstaller.m; sourceTree = "<group>"; };
+		8917DA0B1726B57B00F0B2D2 /* NSFileManager+Alcatraz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Alcatraz.h"; sourceTree = "<group>"; };
+		8917DA0C1726B57B00F0B2D2 /* NSFileManager+Alcatraz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Alcatraz.m"; sourceTree = "<group>"; };
+		8917DA0E1726B5BA00F0B2D2 /* ATZPackageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZPackageFactory.h; sourceTree = "<group>"; };
+		8917DA0F1726B5BA00F0B2D2 /* ATZPackageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZPackageFactory.m; sourceTree = "<group>"; };
+		8917DA121726B63B00F0B2D2 /* ATZDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZDownloader.h; sourceTree = "<group>"; };
+		8917DA131726B63B00F0B2D2 /* ATZDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZDownloader.m; sourceTree = "<group>"; };
+		8917DA141726B63B00F0B2D2 /* ATZGit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZGit.h; sourceTree = "<group>"; };
+		8917DA151726B63B00F0B2D2 /* ATZGit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZGit.m; sourceTree = "<group>"; };
+		8917DA161726B63B00F0B2D2 /* ATZShell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZShell.h; sourceTree = "<group>"; };
+		8917DA171726B63B00F0B2D2 /* ATZShell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZShell.m; sourceTree = "<group>"; };
+		894714E717302F63003CDDA7 /* ATZInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZInstaller.m; sourceTree = "<group>"; };
+		897F7897173FC54C006C43E5 /* ATZAlcatrazPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZAlcatrazPackage.h; sourceTree = "<group>"; };
+		897F7898173FC54C006C43E5 /* ATZAlcatrazPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZAlcatrazPackage.m; sourceTree = "<group>"; };
+		89B4F2BC172FF5AC001FD2E3 /* ATZPBXProjParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZPBXProjParser.h; sourceTree = "<group>"; };
+		89B4F2BD172FF5AC001FD2E3 /* ATZPBXProjParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZPBXProjParser.m; sourceTree = "<group>"; };
+		89D40AFA1721CBD600A67BB3 /* ATZPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATZPluginWindowController.h; path = Controllers/ATZPluginWindowController.h; sourceTree = "<group>"; };
+		89D40AFB1721CBD600A67BB3 /* ATZPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATZPluginWindowController.m; path = Controllers/ATZPluginWindowController.m; sourceTree = "<group>"; };
+		8A133EE119C235FD0068FCB9 /* ATZPackageListTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATZPackageListTableCellView.h; path = Views/ATZPackageListTableCellView.h; sourceTree = "<group>"; };
+		8A133EE219C235FD0068FCB9 /* ATZPackageListTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATZPackageListTableCellView.m; path = Views/ATZPackageListTableCellView.m; sourceTree = "<group>"; };
+		8A1732A61A2694BB002033D6 /* NSColor+Alcatraz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+Alcatraz.h"; sourceTree = "<group>"; };
+		8A1732A71A2694BB002033D6 /* NSColor+Alcatraz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Alcatraz.m"; sourceTree = "<group>"; };
+		8A4C621819C2D6F1003580BD /* ATZFilterBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATZFilterBarView.h; path = Views/ATZFilterBarView.h; sourceTree = "<group>"; };
+		8A4C621919C2D6F1003580BD /* ATZFilterBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATZFilterBarView.m; path = Views/ATZFilterBarView.m; sourceTree = "<group>"; };
+		8A56ED9A19C20CCE00309B3C /* ATZPluginWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ATZPluginWindowController.xib; sourceTree = "<group>"; };
+		8A6025A419C2978900D47F3F /* bitbucket_grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitbucket_grayscale.png; sourceTree = "<group>"; };
+		8A6025A519C2978900D47F3F /* bitbucket_grayscale@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bitbucket_grayscale@2x.png"; sourceTree = "<group>"; };
+		8A6025A619C2978900D47F3F /* bitbucket_grayscale@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bitbucket_grayscale@3x.png"; sourceTree = "<group>"; };
+		8A6025A719C2978900D47F3F /* git_grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = git_grayscale.png; sourceTree = "<group>"; };
+		8A6025A819C2978900D47F3F /* git_grayscale@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "git_grayscale@2x.png"; sourceTree = "<group>"; };
+		8A6025A919C2978900D47F3F /* git_grayscale@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "git_grayscale@3x.png"; sourceTree = "<group>"; };
+		8A6025AA19C2978900D47F3F /* github_grayscale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = github_grayscale.png; sourceTree = "<group>"; };
+		8A6025AB19C2978900D47F3F /* github_grayscale@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "github_grayscale@2x.png"; sourceTree = "<group>"; };
+		8A6025AC19C2978900D47F3F /* github_grayscale@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "github_grayscale@3x.png"; sourceTree = "<group>"; };
+		8A6025C219C29B0C00D47F3F /* ATZPackageTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATZPackageTableViewDelegate.h; path = Controllers/ATZPackageTableViewDelegate.h; sourceTree = "<group>"; };
+		8A6025C319C29B0C00D47F3F /* ATZPackageTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATZPackageTableViewDelegate.m; path = Controllers/ATZPackageTableViewDelegate.m; sourceTree = "<group>"; };
+		8A6025C719C29E3100D47F3F /* ATZPackageListTableCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ATZPackageListTableCellView.xib; path = Views/ATZPackageListTableCellView.xib; sourceTree = "<group>"; };
+		8AA0F57819C2210600556AAF /* ATZFillableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATZFillableButton.h; path = Views/ATZFillableButton.h; sourceTree = "<group>"; };
+		8AA0F57919C2210600556AAF /* ATZFillableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATZFillableButton.m; path = Views/ATZFillableButton.m; sourceTree = "<group>"; };
+		8AA0F57B19C2225A00556AAF /* ATZStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZStyleKit.h; sourceTree = "<group>"; };
+		8AA0F57C19C2225A00556AAF /* ATZStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZStyleKit.m; sourceTree = "<group>"; };
+		8AD524A1174102F9008B451F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8ADC22321A2AD5B800DB7BCA /* ATZPreviewImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATZPreviewImageButton.h; path = Views/ATZPreviewImageButton.h; sourceTree = "<group>"; };
+		8ADC22331A2AD5B800DB7BCA /* ATZPreviewImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATZPreviewImageButton.m; path = Views/ATZPreviewImageButton.m; sourceTree = "<group>"; };
+		8AF670C719C2DE8A00E1C168 /* ATZSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATZSegmentedControl.h; path = Views/ATZSegmentedControl.h; sourceTree = "<group>"; };
+		8AF670C819C2DE8A00E1C168 /* ATZSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATZSegmentedControl.m; path = Views/ATZSegmentedControl.m; sourceTree = "<group>"; };
+		F0DF961C1B40416300DF68CC /* ATZSegmentedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATZSegmentedCell.h; sourceTree = "<group>"; };
+		F0DF961D1B40416400DF68CC /* ATZSegmentedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATZSegmentedCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		890A4B3C171F031300AFE577 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64EDC501188CB55A00D45F1D /* Cocoa.framework in Frameworks */,
+				0C7AF650186B4E890064EE7B /* QuartzCore.framework in Frameworks */,
+				890A4B43171F031300AFE577 /* AppKit.framework in Frameworks */,
+				890A4B45171F031300AFE577 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		64C28A4818136FF30025C0B1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8A6025A419C2978900D47F3F /* bitbucket_grayscale.png */,
+				8A6025A519C2978900D47F3F /* bitbucket_grayscale@2x.png */,
+				8A6025A619C2978900D47F3F /* bitbucket_grayscale@3x.png */,
+				8A6025A719C2978900D47F3F /* git_grayscale.png */,
+				8A6025A819C2978900D47F3F /* git_grayscale@2x.png */,
+				8A6025A919C2978900D47F3F /* git_grayscale@3x.png */,
+				8A6025AA19C2978900D47F3F /* github_grayscale.png */,
+				8A6025AB19C2978900D47F3F /* github_grayscale@2x.png */,
+				8A6025AC19C2978900D47F3F /* github_grayscale@3x.png */,
+			);
+			path = Resources;
+			sourceTree = SOURCE_ROOT;
+		};
+		890A4B36171F031300AFE577 = {
+			isa = PBXGroup;
+			children = (
+				890A4B46171F031300AFE577 /* Alcatraz */,
+				890A4B41171F031300AFE577 /* Frameworks */,
+				890A4B40171F031300AFE577 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		890A4B40171F031300AFE577 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				890A4B3F171F031300AFE577 /* Alcatraz.xcplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		890A4B41171F031300AFE577 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				64EDC500188CB55A00D45F1D /* Cocoa.framework */,
+				0C7AF64F186B4E890064EE7B /* QuartzCore.framework */,
+				890A4B42171F031300AFE577 /* AppKit.framework */,
+				890A4B44171F031300AFE577 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		890A4B46171F031300AFE577 /* Alcatraz */ = {
+			isa = PBXGroup;
+			children = (
+				64C28A4818136FF30025C0B1 /* Resources */,
+				8917DA111726B63B00F0B2D2 /* Helpers */,
+				8917DA0A1726B57B00F0B2D2 /* Categories */,
+				8917D9F91726B53000F0B2D2 /* Installers */,
+				8917D9E61726B4EE00F0B2D2 /* Packages */,
+				892C7DD7171F2A2000A21B12 /* Controllers */,
+				8A0C0A4A1726C04A006E7AD2 /* Views */,
+				890A4B4C171F031300AFE577 /* Alcatraz.h */,
+				890A4B4D171F031300AFE577 /* Alcatraz.m */,
+				890A4B47171F031300AFE577 /* Supporting Files */,
+				6449530218CE826C009494BD /* ATZVersion.h */,
+			);
+			path = Alcatraz;
+			sourceTree = "<group>";
+		};
+		890A4B47171F031300AFE577 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8A62D2D1174101AC0059745B /* en.lproj */,
+				8A62D2D0174101990059745B /* Images */,
+				890A4B48171F031300AFE577 /* Alcatraz-Info.plist */,
+				890A4B4F171F031300AFE577 /* Alcatraz-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8917D9E61726B4EE00F0B2D2 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				8917DA0E1726B5BA00F0B2D2 /* ATZPackageFactory.h */,
+				8917DA0F1726B5BA00F0B2D2 /* ATZPackageFactory.m */,
+				8917D9E71726B4EE00F0B2D2 /* ATZColorScheme.h */,
+				8917D9E81726B4EE00F0B2D2 /* ATZColorScheme.m */,
+				8917D9E91726B4EE00F0B2D2 /* ATZFileTemplate.h */,
+				8917D9EA1726B4EE00F0B2D2 /* ATZFileTemplate.m */,
+				8917D9EB1726B4EE00F0B2D2 /* ATZPackage.h */,
+				8917D9EC1726B4EE00F0B2D2 /* ATZPackage.m */,
+				8917D9ED1726B4EE00F0B2D2 /* ATZPlugin.h */,
+				8917D9EE1726B4EE00F0B2D2 /* ATZPlugin.m */,
+				8917D9EF1726B4EE00F0B2D2 /* ATZProjectTemplate.h */,
+				8917D9F01726B4EE00F0B2D2 /* ATZProjectTemplate.m */,
+				8917D9F11726B4EE00F0B2D2 /* ATZTemplate.h */,
+				8917D9F21726B4EE00F0B2D2 /* ATZTemplate.m */,
+				897F7897173FC54C006C43E5 /* ATZAlcatrazPackage.h */,
+				897F7898173FC54C006C43E5 /* ATZAlcatrazPackage.m */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		8917D9F91726B53000F0B2D2 /* Installers */ = {
+			isa = PBXGroup;
+			children = (
+				8917D9FE1726B53000F0B2D2 /* ATZInstaller.h */,
+				894714E717302F63003CDDA7 /* ATZInstaller.m */,
+				8917D9FA1726B53000F0B2D2 /* ATZColorSchemeInstaller.h */,
+				8917D9FB1726B53000F0B2D2 /* ATZColorSchemeInstaller.m */,
+				8917D9FC1726B53000F0B2D2 /* ATZFileTemplateInstaller.h */,
+				8917D9FD1726B53000F0B2D2 /* ATZFileTemplateInstaller.m */,
+				8917D9FF1726B53000F0B2D2 /* ATZPluginInstaller.h */,
+				8917DA001726B53000F0B2D2 /* ATZPluginInstaller.m */,
+				8917DA011726B53000F0B2D2 /* ATZProjectTemplateInstaller.h */,
+				8917DA021726B53000F0B2D2 /* ATZProjectTemplateInstaller.m */,
+				8917DA031726B53000F0B2D2 /* ATZTemplateInstaller.h */,
+				8917DA041726B53000F0B2D2 /* ATZTemplateInstaller.m */,
+			);
+			path = Installers;
+			sourceTree = "<group>";
+		};
+		8917DA0A1726B57B00F0B2D2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				8917DA0B1726B57B00F0B2D2 /* NSFileManager+Alcatraz.h */,
+				8917DA0C1726B57B00F0B2D2 /* NSFileManager+Alcatraz.m */,
+				8A1732A61A2694BB002033D6 /* NSColor+Alcatraz.h */,
+				8A1732A71A2694BB002033D6 /* NSColor+Alcatraz.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		8917DA111726B63B00F0B2D2 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8AA0F57B19C2225A00556AAF /* ATZStyleKit.h */,
+				8AA0F57C19C2225A00556AAF /* ATZStyleKit.m */,
+				8917DA121726B63B00F0B2D2 /* ATZDownloader.h */,
+				8917DA131726B63B00F0B2D2 /* ATZDownloader.m */,
+				8917DA141726B63B00F0B2D2 /* ATZGit.h */,
+				8917DA151726B63B00F0B2D2 /* ATZGit.m */,
+				8917DA161726B63B00F0B2D2 /* ATZShell.h */,
+				8917DA171726B63B00F0B2D2 /* ATZShell.m */,
+				89B4F2BC172FF5AC001FD2E3 /* ATZPBXProjParser.h */,
+				89B4F2BD172FF5AC001FD2E3 /* ATZPBXProjParser.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		892C7DD7171F2A2000A21B12 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A6025C219C29B0C00D47F3F /* ATZPackageTableViewDelegate.h */,
+				8A6025C319C29B0C00D47F3F /* ATZPackageTableViewDelegate.m */,
+				89D40AFA1721CBD600A67BB3 /* ATZPluginWindowController.h */,
+				89D40AFB1721CBD600A67BB3 /* ATZPluginWindowController.m */,
+				8A56ED9A19C20CCE00309B3C /* ATZPluginWindowController.xib */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		8A0C0A4A1726C04A006E7AD2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8AA0F57819C2210600556AAF /* ATZFillableButton.h */,
+				8AA0F57919C2210600556AAF /* ATZFillableButton.m */,
+				8A4C621819C2D6F1003580BD /* ATZFilterBarView.h */,
+				8A4C621919C2D6F1003580BD /* ATZFilterBarView.m */,
+				8A133EE119C235FD0068FCB9 /* ATZPackageListTableCellView.h */,
+				8A133EE219C235FD0068FCB9 /* ATZPackageListTableCellView.m */,
+				8A6025C719C29E3100D47F3F /* ATZPackageListTableCellView.xib */,
+				8ADC22321A2AD5B800DB7BCA /* ATZPreviewImageButton.h */,
+				8ADC22331A2AD5B800DB7BCA /* ATZPreviewImageButton.m */,
+				8AF670C719C2DE8A00E1C168 /* ATZSegmentedControl.h */,
+				8AF670C819C2DE8A00E1C168 /* ATZSegmentedControl.m */,
+				F0DF961C1B40416300DF68CC /* ATZSegmentedCell.h */,
+				F0DF961D1B40416400DF68CC /* ATZSegmentedCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		8A62D2D0174101990059745B /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				079C9E02183D8BB8009F5A17 /* link_icon.png */,
+				079C9E04183D8BBD009F5A17 /* link_icon@2x.png */,
+				32D86503173A4555009C724B /* eye_icon@2x.png */,
+				32BDEBC2173A46A900513A7C /* eye_icon.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		8A62D2D1174101AC0059745B /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				8AD524A2174102F9008B451F /* Localizable.strings */,
+				890A4B49171F031300AFE577 /* InfoPlist.strings */,
+			);
+			name = en.lproj;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		890A4B3E171F031300AFE577 /* Alcatraz */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 890A4B52171F031300AFE577 /* Build configuration list for PBXNativeTarget "Alcatraz" */;
+			buildPhases = (
+				890A4B3B171F031300AFE577 /* Sources */,
+				890A4B3C171F031300AFE577 /* Frameworks */,
+				890A4B3D171F031300AFE577 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Alcatraz;
+			productName = Alcatraz;
+			productReference = 890A4B3F171F031300AFE577 /* Alcatraz.xcplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		890A4B37171F031300AFE577 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = ATZ;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = supermar.in;
+			};
+			buildConfigurationList = 890A4B3A171F031300AFE577 /* Build configuration list for PBXProject "Alcatraz" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 890A4B36171F031300AFE577;
+			productRefGroup = 890A4B40171F031300AFE577 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				890A4B3E171F031300AFE577 /* Alcatraz */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		890A4B3D171F031300AFE577 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A56ED9B19C20CCE00309B3C /* ATZPluginWindowController.xib in Resources */,
+				890A4B4B171F031300AFE577 /* InfoPlist.strings in Resources */,
+				8A6025BC19C2978900D47F3F /* git_grayscale.png in Resources */,
+				8A6025BF19C2978900D47F3F /* github_grayscale.png in Resources */,
+				8A6025BD19C2978900D47F3F /* git_grayscale@2x.png in Resources */,
+				8A6025BE19C2978900D47F3F /* git_grayscale@3x.png in Resources */,
+				079C9E05183D8BBD009F5A17 /* link_icon@2x.png in Resources */,
+				079C9E03183D8BB8009F5A17 /* link_icon.png in Resources */,
+				32D86505173A4555009C724B /* eye_icon@2x.png in Resources */,
+				8A6025C819C29E3100D47F3F /* ATZPackageListTableCellView.xib in Resources */,
+				8A6025C019C2978900D47F3F /* github_grayscale@2x.png in Resources */,
+				8A6025C119C2978900D47F3F /* github_grayscale@3x.png in Resources */,
+				32BDEBC3173A46A900513A7C /* eye_icon.png in Resources */,
+				8A6025BB19C2978900D47F3F /* bitbucket_grayscale@3x.png in Resources */,
+				8A6025B919C2978900D47F3F /* bitbucket_grayscale.png in Resources */,
+				8A6025BA19C2978900D47F3F /* bitbucket_grayscale@2x.png in Resources */,
+				8AD5249F174102F9008B451F /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		890A4B3B171F031300AFE577 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				890A4B4E171F031300AFE577 /* Alcatraz.m in Sources */,
+				89D40AFC1721CBD600A67BB3 /* ATZPluginWindowController.m in Sources */,
+				8917D9F31726B4EE00F0B2D2 /* ATZColorScheme.m in Sources */,
+				8917D9F41726B4EE00F0B2D2 /* ATZFileTemplate.m in Sources */,
+				8917D9F51726B4EE00F0B2D2 /* ATZPackage.m in Sources */,
+				8917D9F61726B4EE00F0B2D2 /* ATZPlugin.m in Sources */,
+				8ADC22341A2AD5B800DB7BCA /* ATZPreviewImageButton.m in Sources */,
+				8917D9F71726B4EE00F0B2D2 /* ATZProjectTemplate.m in Sources */,
+				8917D9F81726B4EE00F0B2D2 /* ATZTemplate.m in Sources */,
+				8917DA051726B53000F0B2D2 /* ATZColorSchemeInstaller.m in Sources */,
+				8917DA061726B53000F0B2D2 /* ATZFileTemplateInstaller.m in Sources */,
+				8AF670C919C2DE8A00E1C168 /* ATZSegmentedControl.m in Sources */,
+				8A6025C419C29B0C00D47F3F /* ATZPackageTableViewDelegate.m in Sources */,
+				8917DA071726B53000F0B2D2 /* ATZPluginInstaller.m in Sources */,
+				8917DA081726B53000F0B2D2 /* ATZProjectTemplateInstaller.m in Sources */,
+				8917DA091726B53000F0B2D2 /* ATZTemplateInstaller.m in Sources */,
+				8AA0F57D19C2225A00556AAF /* ATZStyleKit.m in Sources */,
+				8917DA0D1726B57B00F0B2D2 /* NSFileManager+Alcatraz.m in Sources */,
+				8917DA101726B5BA00F0B2D2 /* ATZPackageFactory.m in Sources */,
+				8917DA181726B63B00F0B2D2 /* ATZDownloader.m in Sources */,
+				8AA0F57A19C2210600556AAF /* ATZFillableButton.m in Sources */,
+				8917DA191726B63B00F0B2D2 /* ATZGit.m in Sources */,
+				8917DA1A1726B63B00F0B2D2 /* ATZShell.m in Sources */,
+				89B4F2BE172FF5AC001FD2E3 /* ATZPBXProjParser.m in Sources */,
+				F0DF961E1B40416400DF68CC /* ATZSegmentedCell.m in Sources */,
+				8A133EE319C235FD0068FCB9 /* ATZPackageListTableCellView.m in Sources */,
+				8A1732A81A2694BB002033D6 /* NSColor+Alcatraz.m in Sources */,
+				894714E817302F63003CDDA7 /* ATZInstaller.m in Sources */,
+				897F7899173FC54C006C43E5 /* ATZAlcatrazPackage.m in Sources */,
+				8A4C621A19C2D6F1003580BD /* ATZFilterBarView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		890A4B49171F031300AFE577 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				890A4B4A171F031300AFE577 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		8AD524A2174102F9008B451F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8AD524A1174102F9008B451F /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		890A4B50171F031300AFE577 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = Alcatraz;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		890A4B51171F031300AFE577 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_MODULE_NAME = Alcatraz;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		890A4B53171F031300AFE577 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Alcatraz/Alcatraz-Prefix.pch";
+				INFOPLIST_FILE = "Alcatraz/Alcatraz-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Debug;
+		};
+		890A4B54171F031300AFE577 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Alcatraz/Alcatraz-Prefix.pch";
+				INFOPLIST_FILE = "Alcatraz/Alcatraz-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		890A4B3A171F031300AFE577 /* Build configuration list for PBXProject "Alcatraz" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				890A4B50171F031300AFE577 /* Debug */,
+				890A4B51171F031300AFE577 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		890A4B52171F031300AFE577 /* Build configuration list for PBXNativeTarget "Alcatraz" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				890A4B53171F031300AFE577 /* Debug */,
+				890A4B54171F031300AFE577 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 890A4B37171F031300AFE577 /* Project object */;
+}

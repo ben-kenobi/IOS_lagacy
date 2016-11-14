@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HMDiscoverSearchView" customModule="Weibo11" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FVO-nH-YTX">
+                    <rect key="frame" x="275" y="0.0" width="45" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="45" id="0YP-Ka-4kE"/>
+                    </constraints>
+                    <state key="normal" title="取消">
+                        <color key="titleColor" red="1" green="0.62749970470000005" blue="0.25043499289999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelButtonClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="g7a-1j-RMe"/>
+                    </connections>
+                </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="听说下雨天音乐和辣条更配哟~" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HHU-8l-A8P" customClass="HMTextField" customModule="Weibo11" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                    <color key="backgroundColor" red="0.40000000596046448" green="0.80000001192092896" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                            <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="3"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="5AV-ih-tM0"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="FVO-nH-YTX" secondAttribute="trailing" id="3FL-xg-L3z"/>
+                <constraint firstAttribute="trailing" secondItem="HHU-8l-A8P" secondAttribute="trailing" id="KzZ-aZ-Ndp"/>
+                <constraint firstAttribute="bottom" secondItem="FVO-nH-YTX" secondAttribute="bottom" id="US9-Hm-KPe"/>
+                <constraint firstItem="FVO-nH-YTX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="apv-sH-Oh5"/>
+                <constraint firstAttribute="bottom" secondItem="HHU-8l-A8P" secondAttribute="bottom" id="eLM-cE-lTY"/>
+                <constraint firstItem="HHU-8l-A8P" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="v4l-nI-a9w"/>
+                <constraint firstItem="HHU-8l-A8P" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vY2-7l-5Vm"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="cancelButton" destination="FVO-nH-YTX" id="enE-gb-5gY"/>
+                <outlet property="textFieldRightCons" destination="KzZ-aZ-Ndp" id="9Od-dM-gOo"/>
+                <outlet property="textfield" destination="HHU-8l-A8P" id="dJf-JL-djB"/>
+            </connections>
+            <point key="canvasLocation" x="446" y="324.5"/>
+        </view>
+    </objects>
+</document>

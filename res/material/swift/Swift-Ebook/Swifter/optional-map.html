@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>Optional Map | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_38">Optional Map</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="optional-map" class="calibre1">Optional Map</h1>
+<p class="calibre9">我们经常会对 <code class="calibre13 pcalibre6 pcalibre5">Array</code> 类型使用 <code class="calibre13 pcalibre6 pcalibre5">map</code> 方法，这个方法能对数组中的所有元素应用某个规则，然后返回一个新的数组。我们可以在 <code class="calibre13 pcalibre6 pcalibre5">CollectionType</code> 的 extension 中找到这个方法的定义：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-func"><span class="hljs-keyword">extension</span> <span class="hljs-title">CollectionType</span> </span>{
+    public <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">map</span><span class="hljs-func">&lt;T&gt;</span><span class="hljs-params">(@noescape transform: 
+                    <span class="hljs-params">(<span class="hljs-keyword">Self</span>.Generator.Element)</span></span></span> -&gt; <span class="hljs-func">T</span>) -&gt; [<span class="hljs-func">T</span>]
+
+    <span class="hljs-title">//...</span>
+}
+</code></pre>
+<p class="calibre9">举个一个简单的使用例子：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> arr = [<span class="hljs-params">1</span>,<span class="hljs-params">2</span>,<span class="hljs-params">3</span>]
+<span class="hljs-keyword">let</span> doubled = arr.<span class="hljs-params">map</span>{
+    $<span class="hljs-params">0</span> * <span class="hljs-params">2</span>
+}
+
+<span class="hljs-params">print</span>(doubled)
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// [2,4,6]</span>
+</code></pre>
+<p class="calibre9">这很方便，而且在其他一些语言里 <code class="calibre13 pcalibre6 pcalibre5">map</code> 可以说是很常见也很常用的一个语言特性了。因此当这个特性出现在 Swift 中时，也赢得了 iOS/Mac 开发者们的欢迎。</p>
+<p class="calibre9">现在假设我们有个需求，要将某个 <code class="calibre13 pcalibre6 pcalibre5">Int?</code> 乘 2。一个合理的策略是如果这个 <code class="calibre13 pcalibre6 pcalibre5">Int?</code> 有值的话，就取出值进行乘 2 的操作，如果是 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 的话就直接将 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 赋给结果。依照这个策略，我们可以写出如下代码：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> num: <span class="hljs-func">Int</span>? = <span class="hljs-params">3</span>
+
+<span class="hljs-keyword">var</span> result: <span class="hljs-func">Int</span>?
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> realNum = num {
+    result = realNum * <span class="hljs-params">2</span>
+} <span class="hljs-keyword">else</span> {
+    result = <span class="hljs-params">nil</span>
+}
+</code></pre>
+<p class="calibre9">其实我们有更优雅简洁的方式，那就是使用 Optional 的 <code class="calibre13 pcalibre6 pcalibre5">map</code>。对的，不仅在 <code class="calibre13 pcalibre6 pcalibre5">Array</code> 或者说 <code class="calibre13 pcalibre6 pcalibre5">CollectionType</code> 里可以用 <code class="calibre13 pcalibre6 pcalibre5">map</code>，如果我们仔细看过 <code class="calibre13 pcalibre6 pcalibre5">Optional</code> 的声明的话，会发现它也有一个 <code class="calibre13 pcalibre6 pcalibre5">map</code> 方法：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4">public <span class="hljs-func"><span class="hljs-keyword">enum</span> <span class="hljs-title">Optional</span>&lt;<span class="hljs-title">T</span>&gt; :
+    <span class="hljs-title">_Reflectable</span>, <span class="hljs-title">NilLiteralConvertible</span> </span>{
+
+    <span class="hljs-title">//...</span>
+
+    <span class="hljs-title">/// If `self == nil`, returns `nil`.  Otherwise, returns `f(self!)`.</span>
+    public <span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">map</span><span class="hljs-func">&lt;U&gt;</span><span class="hljs-params">(@noescape f: <span class="hljs-params">(T)</span></span></span> -&gt; <span class="hljs-func">U</span>) -&gt; <span class="hljs-func">U</span>?
+
+    <span class="hljs-title">//...</span>
+}
+</code></pre>
+<p class="calibre9">这个方法能让我们很方便地对一个 Optional 值做变化和操作，而不必进行手动的解包工作。输入会被自动用类似 Optinal Binding 的方式进行判断，如果有值，则进入 <code class="calibre13 pcalibre6 pcalibre5">f</code> 的闭包进行变换，并返回一个 <code class="calibre13 pcalibre6 pcalibre5">U?</code>；如果输入就是 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 的话，则直接返回值为 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 的 <code class="calibre13 pcalibre6 pcalibre5">U?</code>。</p>
+<p class="calibre9">有了这个方法，上面的代码就可以大大简化，而且 <code class="calibre13 pcalibre6 pcalibre5">result</code> 甚至可以使用常量值：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-keyword">let</span> num: <span class="hljs-func">Int</span>? = <span class="hljs-params">3</span>
+<span class="hljs-keyword">let</span> result = num.<span class="hljs-params">map</span> {
+    $<span class="hljs-params">0</span> * <span class="hljs-params">2</span>
+}
+
+<span class="hljs-title">// result 为 {Some 6}</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>

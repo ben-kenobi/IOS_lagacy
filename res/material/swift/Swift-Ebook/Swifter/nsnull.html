@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn" xml:lang="zh-cn">
+  <head>
+    <title>NSNull | Swifter - 100 个 Swift 必备 Tips (第二版)</title>
+    <meta content="" name="description"/>
+    <meta content="GitBook 2.2.0" name="generator"/>
+    <meta content="王巍 (onevcat)" name="author"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        
+        
+<div class="page">
+    <h1 class="book-chapter" id="calibre_toc_91">NSNull</h1>
+    
+        <div class="normal" id="section-">
+        
+            <h1 id="nsnull" class="calibre1">NSNull</h1>
+<p class="calibre9"><code class="calibre13 pcalibre6 pcalibre5">NSNull</code> 出场最多的时候就是在 JSON 解析了。</p>
+<p class="calibre9">在 Objective-C 中，因为 <code class="calibre13 pcalibre6 pcalibre5">NSDictionay</code> 和 <code class="calibre13 pcalibre6 pcalibre5">NSArray</code> 只能存储对象，对于像 JSON 中可能存在的 <code class="calibre13 pcalibre6 pcalibre5">null</code> 值，<code class="calibre13 pcalibre6 pcalibre5">NSDictionay</code> 和 <code class="calibre13 pcalibre6 pcalibre5">NSArray</code> 中就只能用 <code class="calibre13 pcalibre6 pcalibre5">NSNull</code> 对象来表示。Objective-C 中的 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 实在是太方便了，我们向 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 发送任何消息时都将返回默认值，因此很多时候我们过于依赖这个特性，而不再去进行检查就直接使用对象。大部分时候这么做没有问题，但是在处理 JSON 时，<code class="calibre13 pcalibre6 pcalibre5">NSNull</code> 却无法使用像 <code class="calibre13 pcalibre6 pcalibre5">nil</code> 那样的对所有方法都响应的特性。而又因为 Objective-C 是没有强制的类型检查的，我们可以任意向一个对象发送任何消息，这就导致如果 JSON 对象中存在 <code class="calibre13 pcalibre6 pcalibre5">null</code> 时 (不论这是有意为之还是服务器方面出现了某种问题) 的话，对其映射为的 <code class="calibre13 pcalibre6 pcalibre5">NSNull</code> 直接发送消息时，app 将发生崩溃。相信有过一定和后端协作的开发经验的读者，可能都遇到过这样的问题：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-params">NSInteger</span> voteCount = [jsonDic objectForKey:<span class="hljs-string">@"voteCount"</span>] integerValue];
+<span class="hljs-title">// 如果在 JSON 中 voteCount 对应的是 null 的话</span>
+<span class="hljs-title">// [NSNull intValue]: unrecognized selector sent to instance 崩溃</span>
+</code></pre>
+<p class="calibre9">在 Objective-C 中，我们一般通过严密的判断来解决这个问题：即在每次发送消息的时候都进行类型检查，以确保将要接收消息的对象不是 <code class="calibre13 pcalibre6 pcalibre5">NSNull</code> 的对象。另一种方法是添加 <code class="calibre13 pcalibre6 pcalibre5">NSNull</code> 的 category，让它响应各种常见的方法 (比如 <code class="calibre13 pcalibre6 pcalibre5">integerValue</code> 等)，并返回默认值。两种方式都不是非常完美，前一种过于麻烦，后一种难免有疏漏。</p>
+<p class="calibre9">而在 Swift 中，这个问题被语言的特性彻底解决了。因为 Swift 所强调的就是类型安全，无论怎么说都需要一层转换。因此除非我们故意犯二不去将 <code class="calibre13 pcalibre6 pcalibre5">AnyObject</code> 转换为我们需要的类型，否则我们绝对不会错误地向一个 <code class="calibre13 pcalibre6 pcalibre5">NSNull</code> 发送消息。<code class="calibre13 pcalibre6 pcalibre5">NSNull</code> 会默默地被通过 Optional Binding 被转换为 <code class="calibre13 pcalibre6 pcalibre5">nil</code>，从而避免被执行：</p>
+<pre class="calibre12"><code class="pcalibre3 lang-swift pcalibre4"><span class="hljs-title">// 假设 jsonValue 是从一个 JSON 中取出的 NSNull</span>
+<span class="hljs-keyword">let</span> jsonValue: <span class="hljs-func">AnyObject</span> = <span class="hljs-func">NSNull</span>()
+
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> string = jsonValue <span class="hljs-keyword">as</span>? <span class="hljs-func">String</span> {
+    <span class="hljs-params">print</span>(string.hasPrefix(<span class="hljs-string">"a"</span>))
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-params">print</span>(<span class="hljs-string">"不能解析"</span>)
+}
+
+<span class="hljs-title">// 输出：</span>
+<span class="hljs-title">// 不能解析</span>
+</code></pre>
+
+        
+        </div>
+    
+</div>
+
+        
+        
+    
+    
+
+</body></html>
