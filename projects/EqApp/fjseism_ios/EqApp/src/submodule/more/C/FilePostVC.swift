@@ -57,6 +57,7 @@ class FilePostVC: FilePreviewVC {
                 (sender) in
                 if sender.tag == 1{
                     let df = self.dcs[0]
+                    print(df.path!)
                     if !iFm.fileExistsAtPath(df.path!){
                         self.dl2F(df.url!, path: df.path!,delegate: self, cb: {
                             (path) in
@@ -94,7 +95,8 @@ class FilePostVC: FilePreviewVC {
     
      func dl2F(url:String,path:String,delegate:NSURLSessionDownloadDelegate,cb:((path:String)->())){
         var stop:Bool = false
-        
+        let url = NetUtil.fullUrl(url).urlEncoded()
+        print(url+"---------")
         let session = NSURLSession(configuration:         NSURLSessionConfiguration.defaultSessionConfiguration()
             , delegate: delegate, delegateQueue: NSOperationQueue())
         session.downloadTaskWithRequest(NSURLRequest(URL: iUrl(url)!, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 15)).resume()

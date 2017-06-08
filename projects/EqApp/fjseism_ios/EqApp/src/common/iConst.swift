@@ -16,7 +16,8 @@ class iConst{
 
    static  let EmoClickNoti="emoclickednoti"
     static  let EmoDelClickNoti="emoDelclickednoti"
-    static let defServerIp="3dspace.xicp.net:20080"
+    //    static let defServerIp="3dspace.xicp.net:20080"
+    static let defServerIp="218.5.2.76:20080"
     static let defHttpPref="http://"
     
     static let ID="_id"

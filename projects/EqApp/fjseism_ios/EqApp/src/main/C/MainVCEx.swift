@@ -87,6 +87,7 @@ extension MainVC{
       
         let pop = EQInfoPop.eqInfoPopWith { (str, pos) in
             self.locateEq()
+            
         }
         pop.show(self,anchor:sender)
     }
@@ -115,7 +116,7 @@ extension MainVC{
                 
             }
         }
-       
+        mapV.callout.dismiss()
         controlflowPop?.show(self,anchor:sender)
 
     }

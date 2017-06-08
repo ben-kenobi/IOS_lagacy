@@ -20,7 +20,6 @@ class EmerPrescripVC: UITableViewController {
         tableView.tableFooterView=UIView()
         tableView.bounces=false
         loadDatas()
-        
     }
     var datas:[String]=["福建省地震局机关及事业单位地震应急预案","福建省地震系统地震应急预案"]
     func loadDatas(){

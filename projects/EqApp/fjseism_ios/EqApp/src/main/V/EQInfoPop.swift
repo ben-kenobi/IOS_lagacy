@@ -70,6 +70,7 @@ class EQInfoPop: DropdownPop {
     }
     func locate(sender:UIButton){
         cb?(str: "",pos:0)
+        dismiss()
     }
     
     

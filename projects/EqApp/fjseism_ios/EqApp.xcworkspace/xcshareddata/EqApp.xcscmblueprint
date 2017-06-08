@@ -8,11 +8,13 @@
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "6d1b4a98-9c5b-aa46-a5b9-04dad4d9b641++1455" : 9223372036854775807
+    "6d1b4a98-9c5b-aa46-a5b9-04dad4d9b641++1455" : 9223372036854775807,
+    "D6A4DF23A5AE6CC6E28DF8F466D54937580D4736" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F40C10B5-65FE-4B5E-AD0E-9E0A01DA5BA2",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "6d1b4a98-9c5b-aa46-a5b9-04dad4d9b641++1455" : "fjseism_ios\/"
+    "6d1b4a98-9c5b-aa46-a5b9-04dad4d9b641++1455" : "fjseism_ios\/",
+    "D6A4DF23A5AE6CC6E28DF8F466D54937580D4736" : "..\/.."
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "EqApp",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -22,6 +24,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/3dspace.xicp.net:8443\/svn\/%E7%9B%AE%E5%BD%95",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6d1b4a98-9c5b-aa46-a5b9-04dad4d9b641++1455"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ben-kenobi\/IOS_lagacy.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D6A4DF23A5AE6CC6E28DF8F466D54937580D4736"
     }
   ]
 }

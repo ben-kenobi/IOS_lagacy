@@ -148,7 +148,9 @@ class INet{
         return resp
     }
     class func contentLenBy(url:String)->Int64{
-        return synResponseByURL(NSURL(string: url)!)?.expectedContentLength ?? 0
+        let url = NetUtil.fullUrl(url).urlEncoded()
+        let resp:NSURLResponse? = synResponseByURL(NSURL(string: url)!)
+        return resp?.expectedContentLength ?? 0
     }
     class func mimeTypeBy(url:String)->String?{
         return synResponseByURL(NSURL(string: url)!)?.MIMEType

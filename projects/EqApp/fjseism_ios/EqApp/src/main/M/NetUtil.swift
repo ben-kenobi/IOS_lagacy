@@ -97,6 +97,9 @@ class NetUtil {
             
             }) { (err, resp) -> () in
                 iPop.dismProg()
+//                let str=String(data: (err.userInfo["com.alamofire.serialization.response.error.data"] as! NSData), encoding: NSUTF8StringEncoding)!
+//                
+//                print(str)
                 iPop.toast("请求失败 \(err)")
                 failcb?()
 

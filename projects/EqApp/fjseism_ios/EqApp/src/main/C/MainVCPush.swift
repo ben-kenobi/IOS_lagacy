@@ -22,7 +22,14 @@ extension MainVC{
     }
     
     func handleLayerNoti(content:String){
-        let dict = try! NSJSONSerialization.JSONObjectWithData(content.dataUsingEncoding(4)!, options: []) as! [String:AnyObject]
+        var dict1:[String:AnyObject]?=nil
+        do{
+         dict1 = try NSJSONSerialization.JSONObjectWithData(content.dataUsingEncoding(4)!, options: []) as? [String:AnyObject]
+        }catch{}
+
+        guard let dict = dict1 else{
+            return
+        }
         
         let serverId = "\(dict["serviceId"]!)"
         

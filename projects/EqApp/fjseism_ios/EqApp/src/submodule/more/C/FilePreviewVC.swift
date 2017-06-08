@@ -44,6 +44,9 @@ extension FilePreviewVC:UIDocumentInteractionControllerDelegate{
         
     }
     func previewFile(path:String){
+//        if iFm.fileExistsAtPath(path){
+//            print(try! iFm.attributesOfItemAtPath(path))
+//        }
         preview(NSURL(fileURLWithPath: path))
     }
     

@@ -28,14 +28,17 @@ class DocFile: NSObject {
     class func  getByPrefix(pref:String,showPref:String,info:EQInfo)->DocFile{
         let dc =  DocFile()
         dc.showname="\(showPref)\(info.obsTime).doc"
-        dc.name="\(pref)\(info.obsTime).doc"
-        
+        //        dc.name="\(pref)\(info.obsTime).doc"
+        dc.name="\(pref)\(info.occurTime!.stringByReplacingOccurrencesOfString(",", withString: "").stringByReplacingOccurrencesOfString(":", withString: "").stringByReplacingOccurrencesOfString(".0000", withString: "")).doc"
         
         dc.path = dc.name?.strByAp2Doc()
         dc.genTime = NSDate()
         dc.url = iConst.eqFilePrefix+dc.name!
         if iFm.fileExistsAtPath(dc.path!){
+            
             dc.size = Int64(iData4F(dc.path!)?.length ?? 0)
+//            dc.genTime = (try! iFm.attributesOfItemAtPath(dc.path!))[NSFileModificationDate] as! NSDate
+
         }
         return dc
     }
